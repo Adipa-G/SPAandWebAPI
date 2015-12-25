@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="AngularAuthApp">
+<head>
+    <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
+    <title>Angular/Owin/OAuth/NHibernate Seed</title>
+    <link href="content/css/app.css" rel="stylesheet" />
+    <link href="content/css/bootstrap.css" rel="stylesheet" />
+    <link href="content/css/loading-bar.css" rel="stylesheet" />
+    <link href="content/css/font-awesome.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+<body>
+<div class="navbar navbar-inverse" role="navigation" data-ng-controller="indexController">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navCollapseMenu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span data-ng-hide="!authentication.isAuth" class="navbar-brand">
+                Welcome {{authentication.userName}}
+            </span>
+        </div>
+        <div class="collapse navbar-collapse" id="navCollapseMenu">
+            <ul class="nav navbar-nav navbar-right">
+                <li data-ng-hide="!authentication.isAuth"><a href="#/user">Users</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a href="#/logMessage">System Log</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a href="#/logHttp">Http Log</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
+                <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
+                <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron" data-ng-hide="authentication.isAuth" data-ng-controller="indexController">
+    <div class="container">
+        <div class="page-header text-center">
+            <h1>Angular/Owin/OAuth/NHibernate Seed</h1>
+        </div>
+        <p>A seed app for angular using Owin, along with OAuth using forms auth provider. NHibernate used as the ORM</p>
+    </div>
+</div>
+
+<div class="container">
+    <div data-ng-view="">
+    </div>
+</div>
+
+<hr/>
+
+<div class="container" ng-controller="errorController">
+    <div class="row alert alert-danger" ng-repeat="error in errors">
+        <div class="col-md-10 col-md-offset-1">{{error.message}}</div>
+    </div>
+</div>
+
+<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted">&copy;Copyright Company 2015</p>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3rd party libraries -->
+<script src="scripts/jquery-2.1.4.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+
+<script src="scripts/angular.min.js"></script>
+<script src="scripts/angular-route.min.js"></script>
+<script src="scripts/angular-local-storage.min.js"></script>
+<script src="scripts/loading-bar.min.js"></script>
+<script src="scripts/ngFormValidator.1.4.1.0.js"></script>
+<script src="scripts/ui-bootstrap-tpls-0.14.3.js"></script>
+<script src="scripts/moment.js"></script>
+
+<!-- Load non angular scripts -->
+<script src="scripts/common-scripts.js"></script>
+
+<!-- Load app main script -->
+<script src="app/app.js?v=2"></script>
+
+<!-- Load services -->
+<script src="app/services/authInterceptorService.js?v=2"></script>
+<script src="app/services/authService.js?v=2"></script>
+<script src="app/services/userService.js?v=2"></script>
+<script src="app/services/logService.js?v=2"></script>
+<script src="app/services/utilsService.js?v=2"></script>
+
+<!-- Load controllers -->
+<script src="app/controllers/errorController.js?v=2"></script>
+<script src="app/controllers/indexController.js?v=2"></script>
+<script src="app/controllers/homeController.js?v=2"></script>
+<script src="app/controllers/loginController.js?v=2"></script>
+<script src="app/controllers/signupController.js?v=2"></script>
+<script src="app/controllers/userController.js?v=2"></script>
+<script src="app/controllers/logMessageController.js?v=2"></script>
+<script src="app/controllers/logHttpController.js?v=2"></script>
+
+<!-- Load directives -->
+<script src="app/directives/sortHeader.js?v=2"></script>
+<script src="app/directives/tablePager.js?v=2"></script>
+<script src="app/directives/utcView.js?v=2"></script>
+</body>
+</html>
