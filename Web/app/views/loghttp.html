@@ -76,13 +76,17 @@
                         <dt>Url</dt>
                         <dd>{{ log.requestUri }}</dd>
                         <dt>Request</dt>
-                        <dd>{{ log.request }}</dd>
+                        <dd json-format-heighlight="{{log.request}}"></dd>
                         <dt>Response</dt>
-                        <dd>{{ log.response }}</dd>
-                        <dt>Request Headers</dt>
-                        <dd>{{ log.requestHeaders }}</dd>
-                        <dt>Response Headers</dt>
-                        <dd>{{ log.responseHeaders }}</dd>
+                        <dd json-format-heighlight="{{log.response}}"></dd>
+                        <dt ng-show="!log.showHeaders">Headers</dt>
+                        <dd ng-show="!log.showHeaders">
+                            <div class="btn btn-sm btn-success" ng-click="log.showHeaders = !log.showHeaders">Show</div>
+                        </dd>
+                        <dt ng-show="log.showHeaders">Request Headers</dt>
+                        <dd ng-show="log.showHeaders">{{ log.requestHeaders }}</dd>
+                        <dt ng-show="log.showHeaders">Response Headers</dt>
+                        <dd ng-show="log.showHeaders">{{ log.responseHeaders }}</dd>
                     </dl>
                 </td>
             </tr>

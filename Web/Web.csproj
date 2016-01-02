@@ -181,6 +181,7 @@
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\signupController.js" />
+    <Content Include="app\directives\jsonFormatHeighlight.js" />
     <Content Include="app\directives\sortHeader.js" />
     <Content Include="app\directives\tablePager.js" />
     <Content Include="app\directives\utcView.js" />
@@ -198,6 +199,7 @@
     <Content Include="authComplete.html" />
     <Content Include="content\css\app.css" />
     <Content Include="content\css\font-awesome.min.css" />
+    <Content Include="content\css\idea.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\bootstrap.css" />
@@ -210,11 +212,13 @@
     <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\common-scripts.js" />
+    <Content Include="scripts\highlight.pack.js" />
     <Content Include="scripts\jquery-2.1.4.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
     <Content Include="scripts\moment.js" />
     <Content Include="scripts\ngFormValidator.1.4.1.0.js" />
     <Content Include="scripts\ui-bootstrap-tpls-0.14.3.js" />
+    <Content Include="scripts\vkbeautify.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

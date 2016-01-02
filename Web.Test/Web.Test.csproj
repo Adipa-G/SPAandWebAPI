@@ -116,6 +116,7 @@
     <Content Include="app\controllers\signupControllerTest.js" />
     <Content Include="app\controllers\loginControllerTest.js" />
     <Content Include="app\controllers\indexControllerTest.js" />
+    <Content Include="app\directives\jsonFormatHeighlightTest.js" />
     <Content Include="app\directives\utcViewTest.js" />
     <Content Include="app\directives\tablePagerTest.js" />
     <Content Include="app\directives\sortHeaderTest.js" />
