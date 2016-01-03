@@ -5,7 +5,7 @@
     app.directive('tablePager', function ($compile) {
         var getTemplate = function (sortData) {
             var template = '<uib-pagination class="pagination-sm top-margin-zero" ng-show="' + sortData + '.totalCount>' + sortData + '.PageSize" ' +
-                'direction-links="false" boundary-links="false" total-items="' + sortData + '.totalCount" ' +
+                'direction-links="true" boundary-links="true" total-items="' + sortData + '.totalCount" max-size="5" ' +
                 'ng-model="' + sortData + '.PageNumber" items-per-page="' + sortData + '.PageSize" ' +
                 'ng-change="' + sortData + '.onChange()"></uib-pagination>';
             return template;
