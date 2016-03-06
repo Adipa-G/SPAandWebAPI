@@ -28,7 +28,7 @@
 
             return $http.post(serviceBase + 'token', data, headers)
             .then(function (response) {
-                localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName });
+                localStorageService.set('authorizationData', { token: response.data.access_token, userName: loginData.userName });
                 authentication.isAuth = true;
                 authentication.userName = loginData.userName;
 

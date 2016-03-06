@@ -6,10 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
-using NHibernate;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
-using Ninject.Web.WebApi;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using Web;
@@ -33,8 +31,11 @@ namespace Web
             app.Use(typeof(RequestResponseLog), kernel);
             app.Use(typeof(CreateTransaction),kernel);
             app.Use(typeof(ValidateAntiForgeryToken));
-            
+
             var config = new HttpConfiguration();
+            config.Services.Add(typeof(IExceptionLogger), kernel.Get<IExceptionLogger>());
+            config.Filters.Add(new AuthorizeAttribute());
+
             WebApiConfig.Register(config);
             app.UseWebApi(config);
             app.UseNinjectWebApi(config);
