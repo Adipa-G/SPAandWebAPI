@@ -16,9 +16,6 @@ This is a seed application to build upon, with following stack
 * Unit tests for controllers
 * Jasmine unit tests for angular services, controllers and directives 
 
-###License
-GNU GPL V3
-
 ###How to use
 Simpy update the web.config connection string.
 
@@ -35,3 +32,6 @@ Simpy update the web.config connection string.
 ![Alt text](readme_images/systemlog.png?raw=true "System Logs")
 ####Http Logs
 ![Alt text](readme_images/httplog.png?raw=true "Http Logs")
+
+###License
+GNU GPL V3
