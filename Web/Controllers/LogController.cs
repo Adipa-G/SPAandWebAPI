@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
 
@@ -32,6 +33,7 @@ namespace Web.Controllers
         [Route("logMessages")]
         public IHttpActionResult LogMessages(LogMessageListRequest request)
         {
+            //throw new Exception("sfuffed");
             return Ok(_logViewRepository.GetLogMessages(request));
         }
 

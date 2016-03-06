@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces.Config;
+﻿using System.Web.Http.ExceptionHandling;
+using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
 using Infrastructure.Config;
 using Infrastructure.Plumbing;
@@ -6,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using NHibernate;
 using NHibernate.AspNet.Identity;
 using Ninject.Modules;
+using ExceptionLogger = Infrastructure.Plumbing.ExceptionLogger;
 
 namespace Infrastructure.Modules
 {
@@ -22,6 +24,7 @@ namespace Infrastructure.Modules
             Bind<INHibernateSessionFactory>().To<NHibernateSessionFactory>();
             Bind<ISessionFactory>().ToProvider<NhibernateSessionFactoryProvider>().InSingletonScope();
             Bind<ISQLStatementInterceptor>().To<SQLStatementInterceptor>();
+            Bind<IExceptionLogger>().To<ExceptionLogger>();
         }
     }
 }
