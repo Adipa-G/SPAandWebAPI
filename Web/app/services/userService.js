@@ -11,7 +11,7 @@
         };
 
         var deleteUser = function (userName) {
-            return $http.delete(serviceBase + 'api/Account/delete/' + userName).catch(function (err) {
+            return $http.delete(serviceBase + 'api/Account/' + userName).catch(function (err) {
                 $log.error(err);
             });
         };

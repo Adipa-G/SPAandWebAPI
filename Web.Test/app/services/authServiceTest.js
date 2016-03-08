@@ -45,7 +45,7 @@ describe('auth service test', function () {
         spyOn(localStorageService, 'set').and.callThrough();
         spyOn($http, 'post').and.returnValue({
             then : function (sucF) {
-                sucF({ access_token: 'tkn' });
+                sucF({ data: { access_token: 'tkn' } });
                 return {
                     catch: function () {
                     }
