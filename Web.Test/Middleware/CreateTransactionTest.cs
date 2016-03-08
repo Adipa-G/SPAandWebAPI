@@ -66,7 +66,6 @@ namespace Web.Test.Middleware
         }
 
         [Test]
-        [ExpectedException]
         public void GivenMiddleware_WhenInvokePostWithException_TransactionRollback()
         {
             _next.ThrowException = true;
@@ -74,8 +73,8 @@ namespace Web.Test.Middleware
             _request.Method.Returns("POST");
 
             var result = _createTransaction.Invoke(_context);
-            result.Wait();
-
+            Assert.That(() => result.Wait(),Throws.TypeOf<AggregateException>());
+            
             _session.Received(1).BeginTransaction();
             _transaction.Received(0).Commit();
             _transaction.Received(1).Rollback();
