@@ -1,6 +1,13 @@
 #Introduction
 This is a set of seed applications to build upon, with following stack
 
+###In folder MVC6 
+* MVC 6
+* IdentityServer4
+* NHibernate
+* AngularJs
+* Bootstrap
+
 ###In folder OwinIdentityServer3 
 * Owin
 * IdentityServer3
