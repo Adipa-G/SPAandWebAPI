@@ -6,8 +6,11 @@ using Microsoft.Extensions.PlatformAbstractions;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Infrastructure.Modules;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc.Filters;
 using Microsoft.AspNet.Mvc.Formatters;
 using Newtonsoft.Json.Serialization;
+using Web.Middleware;
 using Web.Modules;
 
 namespace Web
@@ -36,13 +39,17 @@ namespace Web
                                            options.SigningCertificate = cert;
                                        });
 
+            var defaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+
+            var jsonOutputFormatter = new JsonOutputFormatter();
+            jsonOutputFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             services.AddMvc(options =>
                             {
-
-                                var jsonOutputFormatter = new JsonOutputFormatter();
-                                jsonOutputFormatter.SerializerSettings.ContractResolver =
-                                    new CamelCasePropertyNamesContractResolver();
                                 options.OutputFormatters.Insert(0, jsonOutputFormatter);
+                                options.Filters.Add(new AuthorizeFilter(defaultPolicy));
                             });
         }
 
@@ -53,10 +60,23 @@ namespace Web
 
             app.UseDeveloperExceptionPage();
             app.UseIISPlatformHandler();
+            app.UseStaticFiles();
+
+            app.UseMiddleware<ValidateAntiForgeryToken>();
+            app.UseMiddleware<CreateTransaction>();
 
             app.UseIdentityServer();
+            app.UseIdentityServerAuthentication(options =>
+            {
+                options.Authority = _environment.ApplicationBasePath;
+                options.ScopeName = "all";
+                options.ScopeSecret = "no-secret";
 
-            app.UseStaticFiles();
+                options.AutomaticAuthenticate = true;
+                options.AutomaticChallenge = true;
+            });
+
+            app.UseMiddleware<RequestResponseLog>();
             app.UseMvcWithDefaultRoute();
         }
 
