@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Infrastructure.Test": "1.0.0"
+  },
+  "runtimes": {
+    "win": {},
+    "win-anycpu": {
+      "#import": [
+        "win"
+      ]
+    }
+  },
+  "commands": {
+    "test": "Infrastructure.Test"
+  },
+  "frameworks": {
+    "dnx451": {
+      "dependencies": {
+        "Domain": "1.0.0-*",
+        "Infrastructure": "1.0.0-*"
+      }
+    }
+  },
+  "exclude": [],
+  "publishExclude": [
+    "**.user",
+    "**.vspscc"
+  ],
+  "scripts": {
+    "prepublish": [
+      "npm install",
+      "bower install",
+      "gulp clean",
+      "gulp min"
+    ]
+  },
+  "entryPoint": "Infrastructure.Test",
+  "loadable": false
+}
