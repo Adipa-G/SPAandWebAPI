@@ -6156,7 +6156,6 @@
       "Domain >= 1.0.0-*",
       "FluentNHibernate >= 2.0.3",
       "Microsoft.AspNet.Mvc >= 6.0.0-rc1-final",
-      "Microsoft.Extensions.Configuration >= 1.0.0-rc1-final",
       "Microsoft.Extensions.Configuration.Json >= 1.0.0-rc1-final",
       "IdentityServer4 >= 1.0.0-beta1-update1"
     ],
