@@ -30,9 +30,7 @@ namespace Web
             RepositoryModule.Load(services);
             WebModule.Load(services);
 
-            var cert =
-                new X509Certificate2(Path.Combine(_environment.ApplicationBasePath, "Configuration", "idsrv4test.pfx"),
-                    "idsrv3test");
+            var cert = GetCertificate();
 
             services.AddIdentityServer(options =>
                                        {
@@ -66,18 +64,57 @@ namespace Web
             app.UseMiddleware<CreateTransaction>();
 
             app.UseIdentityServer();
-            app.UseIdentityServerAuthentication(options =>
+            app.UseCookieAuthentication(options =>
             {
-                options.Authority = _environment.ApplicationBasePath;
-                options.ScopeName = "all";
-                options.ScopeSecret = "no-secret";
-
+                options.AuthenticationScheme = "cookies";
                 options.AutomaticAuthenticate = true;
-                options.AutomaticChallenge = true;
             });
 
+            var authority = "http://localhost:5000";
+
+            /*
+            TODO: can't use identity server right now as "IdentityServer4" and "IdentityServer4.AccessTokenValidation" 
+            packages are using two different identityModels and results in conflicts. Once this is fixed, remove openID
+            and use following lines
+            app.UseIdentityServerAuthentication(options =>
+                                                {
+                                                    options.Authority = authority";
+                                                    options.ScopeName = "all";
+                                                    options.ScopeSecret = "no-secret";
+
+                                                    options.AutomaticAuthenticate = true;
+                                                    options.AutomaticChallenge = true;
+                                                });
+            */
+
+            /*
+            var cert = GetCertificate();
+            TODO:  can't use this either.. damn...
+            app.UseJwtBearerAuthentication(options =>
+            {
+                options.AutomaticAuthenticate = true;
+                options.AutomaticChallenge = true;
+                options.RequireHttpsMetadata = false;
+                options.Audience = authority;
+                options.Authority = authority;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                                                    {
+                                                        IssuerSigningKey = new X509SecurityKey(cert)
+                                                    };
+            });*/
+
+            //TODO the tokenDecoder should be removed, and one of above should be used once identity server/mvc6 is fixed
+            app.UseMiddleware<TokenDecoder>(authority);
             app.UseMiddleware<RequestResponseLog>();
             app.UseMvcWithDefaultRoute();
+        }
+
+        private X509Certificate2 GetCertificate()
+        {
+            var cert =
+                new X509Certificate2(Path.Combine(_environment.ApplicationBasePath, "Configuration", "idsrv4test.pfx"),
+                    "idsrv3test");
+            return cert;
         }
 
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
