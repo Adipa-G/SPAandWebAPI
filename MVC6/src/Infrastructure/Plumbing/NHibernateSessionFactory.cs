@@ -97,7 +97,7 @@ namespace Infrastructure.Plumbing
 
         private IPersistenceConfigurer CreateTestDatabaseConfiguration()
         {
-            return SQLiteConfiguration
+            return  SQLiteConfiguration
                 .Standard
                 .InMemory()
                 .ShowSql();
