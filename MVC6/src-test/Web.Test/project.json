@@ -5,11 +5,11 @@
   },
 
   "dependencies": {
-    "FluentNHibernate": "2.0.3.0",
     "NUnit": "3.2.0",
     "NUnitLite": "3.2.0",
     "NSubstitute": "1.9.2",
-    "System.Data.SQLite.Core" : "1.0.99"
+    "Web": "1.0.0-*",
+    "Domain": "1.0.0-*"
   },
 
   "runtimes": {
@@ -20,14 +20,12 @@
   },
 
   "commands": {
-    "Infrastructure.Test": "Infrastructure.Test"
+    "Web.Test": "Web.Test"
   },
 
   "frameworks": {
     "dnx451": {
-      "dependencies": {
-        "Infrastructure": "1.0.0-*"
-      }
+      "dependencies": {     }
     }
   },
 

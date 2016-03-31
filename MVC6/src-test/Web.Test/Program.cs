@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using NUnitLite;
 
-namespace Infrastructure.Test
+namespace Web.Test
 {
     public class Program
     {
