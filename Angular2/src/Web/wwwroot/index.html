@@ -1,0 +1,142 @@
+﻿<html>
+<head>
+    <base href="/">
+    <meta charset="utf-8"/>
+    <title>Angular2/MVC6 Seed</title>
+
+    <!-- 1. Load Css -->
+    <link href="libs/css/app.css" rel="stylesheet" />
+    <link href="libs/css/bootstrap.css" rel="stylesheet"/>
+    <link href="libs/css/loading-bar.css" rel="stylesheet" />
+    <link href="libs/css/font-awesome.css" rel="stylesheet" />
+    <link href="libs/css/idea.css" rel="stylesheet" />
+
+    <!-- 2. Load libraries -->
+    <script src="libs/jquery.js"></script>
+    <script src="libs/bootstrap.js"></script>
+    <script src="libs/moment.js"></script>
+    <script src="libs/vkbeautify.js"></script>
+    <script src="libs/highlight.pack.js"></script>
+
+    <script src="libs/es6-shim.min.js"></script>
+    <script src="libs/system-polyfills.js"></script>
+    <script src="libs/shims_for_IE.js"></script>
+    <script src="libs/system.js"></script>
+    <script src="libs/rx.js"></script>
+    <script src="libs/angular2/angular2-polyfills.js"></script>
+    <script src="libs/angular2/angular2.dev.js"></script>
+
+    <!--<script src="libs/angular2/upgrade.dev.js"></script>
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <script src="libs/angular-local-storage.min.js"></script>
+    <script src="libs/loading-bar.js"></script>
+    <script src="libs/ngFormValidator.1.4.1.0.js"></script>
+    <script src="libs/ui-bootstrap-tpls-0.14.3.js"></script>-->
+
+    <!-- 4. Load angular v1 -->
+    <!-- 4.1 Load app main script -->
+    <!--<script src="app/app.js?v=2"></script>-->
+
+    <!-- 4.2 Load services -->
+    <!--<script src="app/services/authInterceptorService.js?v=2"></script>
+    <script src="app/services/authService.js?v=2"></script>
+    <script src="app/services/userService.js?v=2"></script>
+    <script src="app/services/logService.js?v=2"></script>
+    <script src="app/services/utilsService.js?v=2"></script>-->
+
+    <!-- 4.3 Load controllers -->
+    <!--<script src="app/controllers/errorController.js?v=2"></script>
+    <script src="app/controllers/indexController.js?v=2"></script>
+    <script src="app/controllers/homeController.js?v=2"></script>
+    <script src="app/controllers/loginController.js?v=2"></script>
+    <script src="app/controllers/signupController.js?v=2"></script>
+    <script src="app/controllers/userController.js?v=2"></script>
+    <script src="app/controllers/logMessageController.js?v=2"></script>
+    <script src="app/controllers/logHttpController.js?v=2"></script>-->
+
+    <!-- 4.4 Load directives -->
+    <!--<script src="app/directives/sortHeader.js?v=2"></script>
+    <script src="app/directives/tablePager.js?v=2"></script>
+    <script src="app/directives/utcView.js?v=2"></script>
+    <script src="app/directives/jsonFormatHeighlight.js?v=2"></script>-->
+
+    <!-- 5. Configure SystemJS -->
+    <script>
+        System.config({
+            packages: {
+                appScripts: {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+    </script>
+    <script>
+        System.import('appScripts/boot')
+            .then(null, console.error.bind(console));
+    </script>
+</head>
+<body>
+<angular-auth-app></angular-auth-app>
+<!--<div class="navbar navbar-inverse" role="navigation" data-ng-controller="indexController">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navCollapseMenu" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span data-ng-hide="!authentication.isAuth" class="navbar-brand">
+                    Welcome {{authentication.userName}}
+                </span>
+        </div>
+        <div class="collapse navbar-collapse" id="navCollapseMenu">
+            <ul class="nav navbar-nav navbar-right">
+                <li data-ng-hide="!authentication.isAuth"><a href="#/user">Users</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a href="#/logMessage">System Log</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a href="#/logHttp">Http Log</a></li>
+                <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
+                <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
+                <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
+            </ul>
+        </div>
+    </div>
+</div>-->
+
+<div class="jumbotron" data-ng-hide="authentication.isAuth" data-ng-controller="indexController">
+    <div class="container">
+        <div class="page-header text-center">
+            <h1>Angular/MVC6/Identity Server 4/NHibernate Seed</h1>
+        </div>
+        <p>A seed app for Angular2 using MVC6, along with Identity server 4 OAuth for authentication.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div data-ng-view="">
+    </div>
+</div>
+
+<hr/>
+
+<div class="container" ng-controller="errorController">
+    <div class="row alert alert-danger" ng-repeat="error in errors">
+        <div class="col-md-10 col-md-offset-1">{{error.message}}</div>
+    </div>
+</div>
+
+<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted">&copy;Copyright Company 2015</p>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
