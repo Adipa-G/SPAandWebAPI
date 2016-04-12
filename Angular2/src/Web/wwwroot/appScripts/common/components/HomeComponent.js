@@ -8,26 +8,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
-var AuthService_1 = require('../services/AuthService');
-var MenuComponent = (function () {
-    function MenuComponent(authService) {
+var AuthStoreService_1 = require("../services/AuthStoreService");
+var HomeComponent = (function () {
+    function HomeComponent(authStoreService) {
         var _this = this;
-        this.authService = authService;
-        authService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
-        this.currentAuth = authService.getCurrentAuth();
+        this.authStoreService = authStoreService;
+        authStoreService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
+        this.currentAuth = authStoreService.getCurrentAuth();
     }
-    MenuComponent.prototype.onAuthChanged = function (auth) {
+    HomeComponent.prototype.onAuthChanged = function (auth) {
         this.currentAuth = auth;
     };
-    MenuComponent = __decorate([
+    HomeComponent = __decorate([
         core_1.Component({
-            selector: 'shared-menu',
-            viewProviders: [AuthService_1.AuthService],
-            templateUrl: './templates/shared/components/MenuComponent.html'
+            selector: 'common-home',
+            viewProviders: [AuthStoreService_1.AuthStoreService],
+            templateUrl: './templates/common/components/HomeComponent.html'
         }), 
-        __metadata('design:paramtypes', [AuthService_1.AuthService])
-    ], MenuComponent);
-    return MenuComponent;
+        __metadata('design:paramtypes', [AuthStoreService_1.AuthStoreService])
+    ], HomeComponent);
+    return HomeComponent;
 })();
-exports.MenuComponent = MenuComponent;
-//# sourceMappingURL=MenuComponent.js.map
+exports.HomeComponent = HomeComponent;
+//# sourceMappingURL=HomeComponent.js.map

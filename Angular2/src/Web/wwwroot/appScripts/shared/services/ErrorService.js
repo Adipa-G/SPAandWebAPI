@@ -9,23 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var core_2 = require('angular2/core');
-var AuthenticationInfo_1 = require('../../domain/auth/AuthenticationInfo');
-var AuthService = (function () {
-    function AuthService() {
-        this.authChanged$ = new core_2.EventEmitter();
-        this.currentAuth = new AuthenticationInfo_1.AuthenticationInfo();
-        this.currentAuth.isAuth = false;
-        this.currentAuth.userName = '';
-        this.authChanged$.emit(this.currentAuth);
+var ErrorService = (function () {
+    function ErrorService() {
+        this.errorOccured$ = new core_2.EventEmitter();
     }
-    AuthService.prototype.getCurrentAuth = function () {
-        return this.currentAuth;
+    ErrorService.prototype.logError = function (errInfo) {
+        this.errorOccured$.emit(errInfo);
     };
-    AuthService = __decorate([
+    ErrorService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], AuthService);
-    return AuthService;
+    ], ErrorService);
+    return ErrorService;
 })();
-exports.AuthService = AuthService;
-//# sourceMappingURL=AuthService.js.map
+exports.ErrorService = ErrorService;
+//# sourceMappingURL=ErrorService.js.map

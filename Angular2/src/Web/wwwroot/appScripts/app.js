@@ -8,16 +8,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
-var MenuComponent_1 = require('./shared/components/MenuComponent');
+var router_1 = require('angular2/router');
+var MenuComponent_1 = require('./common/components/MenuComponent');
+var HomeComponent_1 = require('./common/components/HomeComponent');
+var ErrorComponent_1 = require('./common/components/ErrorComponent');
 var AppComponent = (function () {
     function AppComponent() {
     }
     AppComponent = __decorate([
         core_1.Component({
             selector: 'angular-auth-app',
-            template: '<shared-menu></shared-menu>',
-            directives: [MenuComponent_1.MenuComponent]
-        }), 
+            templateUrl: './templates/app.html',
+            directives: [router_1.ROUTER_DIRECTIVES, MenuComponent_1.MenuComponent, ErrorComponent_1.ErrorComponent, HomeComponent_1.HomeComponent],
+            providers: [router_1.ROUTER_PROVIDERS]
+        }),
+        router_1.RouteConfig([
+            {
+                path: '#/home',
+                name: 'Home',
+                component: HomeComponent_1.HomeComponent,
+                useAsDefault: true
+            }
+        ]), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
     return AppComponent;
