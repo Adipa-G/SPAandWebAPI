@@ -13,3 +13,7 @@
 .top-margin-lg {
     margin-top: 30px;
 }
+
+[hidden] {
+    display: none !important;
+}
