@@ -25,6 +25,7 @@
     <script src="libs/rx.js"></script>
     <script src="libs/angular2/angular2-polyfills.js"></script>
     <script src="libs/angular2/angular2.dev.js"></script>
+    <script src="libs/angular2/router.dev.js"></script>
 
     <!--<script src="libs/angular2/upgrade.dev.js"></script>
     <script src="libs/angular.min.js"></script>
@@ -77,55 +78,8 @@
     </script>
 </head>
 <body>
+
 <angular-auth-app></angular-auth-app>
-<!--<div class="navbar navbar-inverse" role="navigation" data-ng-controller="indexController">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navCollapseMenu" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span data-ng-hide="!authentication.isAuth" class="navbar-brand">
-                    Welcome {{authentication.userName}}
-                </span>
-        </div>
-        <div class="collapse navbar-collapse" id="navCollapseMenu">
-            <ul class="nav navbar-nav navbar-right">
-                <li data-ng-hide="!authentication.isAuth"><a href="#/user">Users</a></li>
-                <li data-ng-hide="!authentication.isAuth"><a href="#/logMessage">System Log</a></li>
-                <li data-ng-hide="!authentication.isAuth"><a href="#/logHttp">Http Log</a></li>
-                <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
-                <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
-                <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
-            </ul>
-        </div>
-    </div>
-</div>-->
-
-<div class="jumbotron" data-ng-hide="authentication.isAuth" data-ng-controller="indexController">
-    <div class="container">
-        <div class="page-header text-center">
-            <h1>Angular/MVC6/Identity Server 4/NHibernate Seed</h1>
-        </div>
-        <p>A seed app for Angular2 using MVC6, along with Identity server 4 OAuth for authentication.</p>
-    </div>
-</div>
-
-<div class="container">
-    <div data-ng-view="">
-    </div>
-</div>
-
-<hr/>
-
-<div class="container" ng-controller="errorController">
-    <div class="row alert alert-danger" ng-repeat="error in errors">
-        <div class="col-md-10 col-md-offset-1">{{error.message}}</div>
-    </div>
-</div>
 
 <div id="footer">
     <div class="container">
