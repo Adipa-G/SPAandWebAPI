@@ -7,11 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var core_1 = require('angular2/core');
 var core_2 = require('angular2/core');
+var http_1 = require('angular2/http');
+var LogService_1 = require('./LogService');
+var Constants_1 = require('./Constants');
 var AuthenticationInfo_1 = require('../../domain/auth/AuthenticationInfo');
 var AuthService = (function () {
-    function AuthService() {
+    function AuthService(http, constants, logService) {
+        this.http = http;
+        this.constants = constants;
+        this.logService = logService;
         this.authChanged$ = new core_2.EventEmitter();
         this.currentAuth = new AuthenticationInfo_1.AuthenticationInfo();
         this.currentAuth.isAuth = false;
@@ -21,9 +30,29 @@ var AuthService = (function () {
     AuthService.prototype.getCurrentAuth = function () {
         return this.currentAuth;
     };
+    AuthService.prototype.authenticate = function (authData) {
+        var _this = this;
+        var creds = "grant_type=password&username=" + authData.userName + "&password=" + authData.password
+            + "&client_id=default&client_secret=no-secret&scope=all";
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        this.http
+            .post(this.constants.getServiceBaseUrl() + 'connect/ token', creds, {
+            headers: headers
+        })
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) { return _this.saveJwt(data.id_token); }, function (err) { return _this.logService.log('error : ' + err); }, function () { return _this.logService.log('Authentication Complete'); });
+    };
+    AuthService.prototype.saveJwt = function (jwt) {
+        if (jwt) {
+            localStorage.setItem('id_token', jwt);
+        }
+    };
     AuthService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        core_1.Injectable(),
+        __param(1, core_1.Inject(Constants_1.Constants)),
+        __param(2, core_1.Inject(LogService_1.LogService)), 
+        __metadata('design:paramtypes', [http_1.Http, Constants_1.Constants, LogService_1.LogService])
     ], AuthService);
     return AuthService;
 })();
