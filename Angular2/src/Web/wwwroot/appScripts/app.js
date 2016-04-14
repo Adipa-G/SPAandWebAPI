@@ -24,7 +24,7 @@ var AppComponent = (function () {
         }),
         router_1.RouteConfig([
             {
-                path: '#/home',
+                path: '/home',
                 name: 'Home',
                 component: HomeComponent_1.HomeComponent,
                 useAsDefault: true
