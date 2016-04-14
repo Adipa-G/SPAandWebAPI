@@ -8,13 +8,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
-var AuthStoreService_1 = require("../services/AuthStoreService");
+var AuthService_1 = require("../services/AuthService");
 var MenuComponent = (function () {
-    function MenuComponent(authStoreService) {
+    function MenuComponent(authService) {
         var _this = this;
-        this.authStoreService = authStoreService;
-        authStoreService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
-        this.currentAuth = authStoreService.getCurrentAuth();
+        this.authService = authService;
+        authService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
+        this.currentAuth = authService.getCurrentAuth();
     }
     MenuComponent.prototype.onAuthChanged = function (auth) {
         this.currentAuth = auth;
@@ -22,10 +22,10 @@ var MenuComponent = (function () {
     MenuComponent = __decorate([
         core_1.Component({
             selector: 'common-menu',
-            viewProviders: [AuthStoreService_1.AuthStoreService],
+            viewProviders: [AuthService_1.AuthService],
             templateUrl: './templates/common/components/MenuComponent.html'
         }), 
-        __metadata('design:paramtypes', [AuthStoreService_1.AuthStoreService])
+        __metadata('design:paramtypes', [AuthService_1.AuthService])
     ], MenuComponent);
     return MenuComponent;
 })();
