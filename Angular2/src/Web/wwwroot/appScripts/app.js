@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
+require('rxjs/add/operator/map');
 var MenuComponent_1 = require('./common/components/MenuComponent');
 var HomeComponent_1 = require('./common/components/HomeComponent');
 var ErrorComponent_1 = require('./common/components/ErrorComponent');
+var LoginComponent_1 = require('./common/components/LoginComponent');
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -19,7 +21,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'angular-auth-app',
             templateUrl: './templates/app.html',
-            directives: [router_1.ROUTER_DIRECTIVES, MenuComponent_1.MenuComponent, ErrorComponent_1.ErrorComponent, HomeComponent_1.HomeComponent],
+            directives: [router_1.ROUTER_DIRECTIVES, MenuComponent_1.MenuComponent, ErrorComponent_1.ErrorComponent, HomeComponent_1.HomeComponent, LoginComponent_1.LoginComponent],
             providers: [router_1.ROUTER_PROVIDERS]
         }),
         router_1.RouteConfig([
@@ -28,6 +30,11 @@ var AppComponent = (function () {
                 name: 'Home',
                 component: HomeComponent_1.HomeComponent,
                 useAsDefault: true
+            },
+            {
+                path: '/login',
+                name: 'Login',
+                component: LoginComponent_1.LoginComponent,
             }
         ]), 
         __metadata('design:paramtypes', [])
