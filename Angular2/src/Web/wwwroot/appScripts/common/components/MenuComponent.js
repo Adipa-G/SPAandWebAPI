@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
+var router_1 = require('angular2/router');
 var AuthService_1 = require("../services/AuthService");
 var MenuComponent = (function () {
     function MenuComponent(authService) {
@@ -23,6 +24,7 @@ var MenuComponent = (function () {
         core_1.Component({
             selector: 'common-menu',
             viewProviders: [AuthService_1.AuthService],
+            directives: [router_1.ROUTER_DIRECTIVES],
             templateUrl: './templates/common/components/MenuComponent.html'
         }), 
         __metadata('design:paramtypes', [AuthService_1.AuthService])
