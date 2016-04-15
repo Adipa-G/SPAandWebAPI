@@ -19,6 +19,7 @@ var AuthenticationInfo_1 = require('../../domain/auth/AuthenticationInfo');
 var AuthService = (function () {
     function AuthService(http, constants, logService) {
         this.http = http;
+        this.http = http;
         this.constants = constants;
         this.logService = logService;
         this.authChanged$ = new core_2.EventEmitter();
@@ -31,17 +32,15 @@ var AuthService = (function () {
         return this.currentAuth;
     };
     AuthService.prototype.authenticate = function (authData) {
-        var _this = this;
         var creds = "grant_type=password&username=" + authData.userName + "&password=" + authData.password
             + "&client_id=default&client_secret=no-secret&scope=all";
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        this.http
-            .post(this.constants.getServiceBaseUrl() + 'connect/ token', creds, {
+        return this.http
+            .post(this.constants.getServiceBaseUrl() + 'connect/token', creds, {
             headers: headers
         })
-            .map(function (res) { return res.json(); })
-            .subscribe(function (data) { return _this.saveJwt(data.id_token); }, function (err) { return _this.logService.log('error : ' + err); }, function () { return _this.logService.log('Authentication Complete'); });
+            .map(function (res) { return res.json(); });
     };
     AuthService.prototype.saveJwt = function (jwt) {
         if (jwt) {

@@ -2,7 +2,7 @@
 
 @Injectable()
 export class LogService {
-    public log(logMsg: string) {
+    public log(logMsg:string) {
         console.log(logMsg);
     }
 }
