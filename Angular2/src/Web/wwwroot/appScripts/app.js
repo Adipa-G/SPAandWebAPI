@@ -14,6 +14,7 @@ var MenuComponent_1 = require('./common/components/MenuComponent');
 var HomeComponent_1 = require('./common/components/HomeComponent');
 var ErrorComponent_1 = require('./common/components/ErrorComponent');
 var LoginComponent_1 = require('./common/components/LoginComponent');
+var UserListComponent_1 = require('./admin/components/UserListComponent');
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -21,7 +22,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'angular-auth-app',
             templateUrl: './templates/app.html',
-            directives: [router_1.ROUTER_DIRECTIVES, MenuComponent_1.MenuComponent, ErrorComponent_1.ErrorComponent, HomeComponent_1.HomeComponent, LoginComponent_1.LoginComponent],
+            directives: [router_1.ROUTER_DIRECTIVES, MenuComponent_1.MenuComponent, ErrorComponent_1.ErrorComponent, HomeComponent_1.HomeComponent, LoginComponent_1.LoginComponent, UserListComponent_1.UserListComponent],
             providers: [router_1.ROUTER_PROVIDERS]
         }),
         router_1.RouteConfig([
@@ -35,6 +36,11 @@ var AppComponent = (function () {
                 path: '/login',
                 name: 'Login',
                 component: LoginComponent_1.LoginComponent,
+            },
+            {
+                path: '/userList',
+                name: 'UserList',
+                component: UserListComponent_1.UserListComponent,
             }
         ]), 
         __metadata('design:paramtypes', [])

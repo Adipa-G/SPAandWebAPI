@@ -14,7 +14,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navCollapseMenu">
             <ul class="nav navbar-nav navbar-right">
-                <li [hidden]="!currentAuth.isAuth"><a href="/user">Users</a></li>
+                <li [hidden]="!currentAuth.isAuth"><a [routerLink]="['UserList']">Users</a></li>
                 <li [hidden]="!currentAuth.isAuth"><a href="/logMessage">System Log</a></li>
                 <li [hidden]="!currentAuth.isAuth"><a href="/logHttp">Http Log</a></li>
                 <li [hidden]="!currentAuth.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
