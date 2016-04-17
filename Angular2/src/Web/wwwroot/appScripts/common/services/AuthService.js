@@ -15,13 +15,15 @@ var core_2 = require('angular2/core');
 var http_1 = require('angular2/http');
 var LogService_1 = require('./LogService');
 var Constants_1 = require('./Constants');
+var StorageService_1 = require('./StorageService');
 var AuthenticationInfo_1 = require('../../domain/auth/AuthenticationInfo');
 var AuthService = (function () {
-    function AuthService(http, constants, logService) {
+    function AuthService(http, constants, logService, storageService) {
         this.http = http;
         this.http = http;
         this.constants = constants;
         this.logService = logService;
+        this.storageService = storageService;
         this.authChanged$ = new core_2.EventEmitter();
         this.currentAuth = new AuthenticationInfo_1.AuthenticationInfo();
         this.currentAuth.isAuth = false;
@@ -36,22 +38,19 @@ var AuthService = (function () {
             + "&client_id=default&client_secret=no-secret&scope=all";
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('X-XSRF-TOKEN', this.storageService.getCookie('XSRF-TOKEN'));
         return this.http
             .post(this.constants.getServiceBaseUrl() + 'connect/token', creds, {
             headers: headers
         })
             .map(function (res) { return res.json(); });
     };
-    AuthService.prototype.saveJwt = function (jwt) {
-        if (jwt) {
-            localStorage.setItem('id_token', jwt);
-        }
-    };
     AuthService = __decorate([
         core_1.Injectable(),
         __param(1, core_1.Inject(Constants_1.Constants)),
-        __param(2, core_1.Inject(LogService_1.LogService)), 
-        __metadata('design:paramtypes', [http_1.Http, Constants_1.Constants, LogService_1.LogService])
+        __param(2, core_1.Inject(LogService_1.LogService)),
+        __param(3, core_1.Inject(StorageService_1.StorageService)), 
+        __metadata('design:paramtypes', [http_1.Http, Constants_1.Constants, LogService_1.LogService, StorageService_1.StorageService])
     ], AuthService);
     return AuthService;
 })();

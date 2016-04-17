@@ -4,7 +4,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Mvc.ViewFeatures;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.WebEncoders;
 
 namespace Web.Middleware
 {
@@ -25,10 +27,11 @@ namespace Web.Middleware
             var needValidation = new[] { "POST", "PUT", "DELETE" }.Contains(context.Request.Method);
 
             bool valid = true;
-            if (needValidation && context.Request.Cookies[XsrfTokenCookie] != StringValues.Empty)
+            if (needValidation 
+                && context.Request.Cookies[XsrfTokenCookie] != StringValues.Empty)
             {
                 var cookieValue = context.Request.Cookies[XsrfTokenCookie];
-                var header = context.Request.Headers[XsrfTokenHeader];
+                var header = WebUtility.UrlDecode(context.Request.Headers[XsrfTokenHeader]);
 
                 if (cookieValue != header)
                 {
