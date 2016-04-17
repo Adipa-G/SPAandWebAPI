@@ -7,10 +7,12 @@ import {HomeComponent} from './common/components/HomeComponent';
 import {ErrorComponent} from './common/components/ErrorComponent';
 import {LoginComponent} from './common/components/LoginComponent';
 
+import {UserListComponent} from './admin/components/UserListComponent';
+
 @Component({
     selector: 'angular-auth-app',
     templateUrl: './templates/app.html',
-    directives: [ROUTER_DIRECTIVES, MenuComponent, ErrorComponent, HomeComponent, LoginComponent],
+    directives: [ROUTER_DIRECTIVES, MenuComponent, ErrorComponent, HomeComponent, LoginComponent, UserListComponent],
     providers: [ROUTER_PROVIDERS]
 })
 
@@ -25,6 +27,11 @@ import {LoginComponent} from './common/components/LoginComponent';
         path: '/login',
         name: 'Login',
         component: LoginComponent,
+    },
+    {
+        path: '/userList',
+        name: 'UserList',
+        component: UserListComponent,
     }
 ])
 
