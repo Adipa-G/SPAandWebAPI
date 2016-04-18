@@ -29,6 +29,7 @@ var LoginComponent = (function () {
     LoginComponent.prototype.login = function () {
         var _this = this;
         this.authService.authenticate(this.loginInfo).subscribe(function (data) {
+            data.userName = _this.loginInfo.userName;
             _this.storageService.setLocalStorage('authorizationData', data);
             _this.router.navigate(['UserList']);
         }, function (err) {
