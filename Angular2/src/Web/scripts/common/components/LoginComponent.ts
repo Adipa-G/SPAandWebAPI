@@ -31,6 +31,7 @@ export class LoginComponent {
     public login() : void {
         this.authService.authenticate(this.loginInfo).subscribe(
             data => {
+                data.userName = this.loginInfo.userName;
                 this.storageService.setLocalStorage('authorizationData', data);
                 this.router.navigate(['UserList']);
             },

@@ -49,7 +49,7 @@ namespace Web.Controllers
         public ActionResult Delete(string userName)
         {
             _userRepository.Delete(userName);
-            return Ok();
+            return Ok(true);
         }
     }
 }

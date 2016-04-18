@@ -2,7 +2,9 @@
 import { ROUTER_DIRECTIVES } from 'angular2/router'
 
 import {AuthenticationInfo} from '../../domain/auth/AuthenticationInfo';
+
 import {AuthService} from "../services/AuthService";
+import {StorageService} from '../services/StorageService';
 
 @Component({
     selector: 'common-menu',
@@ -14,12 +16,17 @@ import {AuthService} from "../services/AuthService";
 export class MenuComponent {
     private currentAuth: AuthenticationInfo;
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService,
+        private storageService: StorageService) {
         authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
         this.currentAuth = authService.getCurrentAuth();
     }
 
     private onAuthChanged(auth: AuthenticationInfo): void {
         this.currentAuth = auth;
+    }
+
+    public logOut(): void {
+        this.storageService.setLocalStorage('authorizationData',{});
     }
 }
