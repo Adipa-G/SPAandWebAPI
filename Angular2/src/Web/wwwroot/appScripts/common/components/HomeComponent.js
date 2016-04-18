@@ -8,13 +8,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
+var router_1 = require('angular2/router');
 var AuthService_1 = require("../services/AuthService");
+var StorageService_1 = require('../services/StorageService');
 var HomeComponent = (function () {
-    function HomeComponent(authService) {
+    function HomeComponent(router, authService, storageService) {
         var _this = this;
+        this.router = router;
         this.authService = authService;
+        this.storageService = storageService;
+        this.router = router;
+        this.storageService = storageService;
         authService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
         this.currentAuth = authService.getCurrentAuth();
+        var authData = this.storageService.getLocalStorage('authorizationData');
+        if (authData.userName) {
+            this.currentAuth.isAuth = true;
+            this.currentAuth.userName = authData.userName;
+            this.onAuthChanged(this.currentAuth);
+        }
+        if (this.currentAuth.isAuth) {
+            this.router.navigate(['UserList']);
+        }
     }
     HomeComponent.prototype.onAuthChanged = function (auth) {
         this.currentAuth = auth;
@@ -25,7 +40,7 @@ var HomeComponent = (function () {
             viewProviders: [AuthService_1.AuthService],
             templateUrl: './templates/common/components/HomeComponent.html'
         }), 
-        __metadata('design:paramtypes', [AuthService_1.AuthService])
+        __metadata('design:paramtypes', [router_1.Router, AuthService_1.AuthService, StorageService_1.StorageService])
     ], HomeComponent);
     return HomeComponent;
 })();
