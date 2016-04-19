@@ -1,23 +1,24 @@
 ﻿import {Http, Headers} from 'angular2/http';
 import {Injectable, Inject} from 'angular2/core';
 
-import {AuthenticationToken} from '../../domain/auth/AuthenticationToken';
+import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
 
 import {StorageService} from './StorageService';
+import {AuthService} from './AuthService';
 
 @Injectable()
 export class HttpClient {
-    private http : Http;
-    private storageService: StorageService;
 
-    constructor(http: Http,
-        @Inject(StorageService) storageService: StorageService) {
+    constructor(private http: Http,
+        private storageService: StorageService,
+        private authService: AuthService) {
         this.http = http;
         this.storageService = storageService;
+        this.authService = authService;
     }
 
     private createHeaders(): Headers {
-        var authData = this.storageService.getLocalStorage<AuthenticationToken>('authorizationData');
+        var authData = this.authService.getCurrentAuth();
         var accessToken = authData != null ? authData.access_token : null;
         var xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
 

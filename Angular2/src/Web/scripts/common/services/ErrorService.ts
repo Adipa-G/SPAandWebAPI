@@ -7,7 +7,7 @@ export class ErrorService {
     public errorOccured$: EventEmitter<ErrorInfo>;
     
     constructor() {
-        this.errorOccured$ = new EventEmitter();
+        this.errorOccured$ = new EventEmitter<ErrorInfo>();
     }
 
     public logError(errInfo : ErrorInfo) {

@@ -1,32 +1,41 @@
 ﻿import {Component} from 'angular2/core';
-import { ROUTER_DIRECTIVES } from 'angular2/router'
+import {Router, ROUTER_DIRECTIVES } from 'angular2/router'
 
-import {AuthenticationInfo} from '../../domain/auth/AuthenticationInfo';
-
+import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
 import {AuthService} from "../services/AuthService";
-import {StorageService} from '../services/StorageService';
 
 @Component({
     selector: 'common-menu',
-    viewProviders: [AuthService],
     directives: [ROUTER_DIRECTIVES],
     templateUrl: './templates/common/components/MenuComponent.html'
 })
 
 export class MenuComponent {
-    private currentAuth: AuthenticationInfo;
+    private currentAuth: AuthenticationDetails;
+    private subscription: any;
 
-    constructor(private authService: AuthService,
-        private storageService: StorageService) {
-        authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
-        this.currentAuth = authService.getCurrentAuth();
+    constructor(private router: Router,
+        private authService: AuthService) {
+        this.router = router;
+        this.subscription = authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
+
+        this.currentAuth = new AuthenticationDetails();
     }
 
-    private onAuthChanged(auth: AuthenticationInfo): void {
+    private onAuthChanged(auth: AuthenticationDetails): void {
         this.currentAuth = auth;
+        if (this.currentAuth.isAuth) {
+            this.router.navigate(['UserList']);
+        } else {
+            this.router.navigate(['Home']);
+        }
     }
 
     public logOut(): void {
-        this.storageService.setLocalStorage('authorizationData',{});
+        this.authService.logout();
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
