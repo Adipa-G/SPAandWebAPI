@@ -14,17 +14,18 @@ var ErrorComponent = (function () {
     function ErrorComponent(errorService) {
         var _this = this;
         this.errorService = errorService;
-        errorService.errorOccured$.subscribe(function (error) { return _this.onError(error); });
-        this.currentError = new ErrorInfo_1.ErrorInfo();
-        this.currentError.message = '';
+        this.subscription = errorService.errorOccured$.subscribe(function (error) { return _this.onError(error); });
+        this.currentError = new ErrorInfo_1.ErrorInfo('');
     }
     ErrorComponent.prototype.onError = function (error) {
         this.currentError = error;
     };
+    ErrorComponent.prototype.ngOnDestroy = function () {
+        this.subscription.unsubscribe();
+    };
     ErrorComponent = __decorate([
         core_1.Component({
             selector: 'common-error',
-            viewProviders: [ErrorService_1.ErrorService],
             templateUrl: './templates/common/components/ErrorComponent.html'
         }), 
         __metadata('design:paramtypes', [ErrorService_1.ErrorService])

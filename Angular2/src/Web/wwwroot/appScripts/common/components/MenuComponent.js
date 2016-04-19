@@ -9,30 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
+var AuthenticationDetails_1 = require("../../domain/auth/AuthenticationDetails");
 var AuthService_1 = require("../services/AuthService");
-var StorageService_1 = require('../services/StorageService');
 var MenuComponent = (function () {
-    function MenuComponent(authService, storageService) {
+    function MenuComponent(router, authService) {
         var _this = this;
+        this.router = router;
         this.authService = authService;
-        this.storageService = storageService;
-        authService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
-        this.currentAuth = authService.getCurrentAuth();
+        this.router = router;
+        this.subscription = authService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
+        this.currentAuth = new AuthenticationDetails_1.AuthenticationDetails();
     }
     MenuComponent.prototype.onAuthChanged = function (auth) {
         this.currentAuth = auth;
+        if (this.currentAuth.isAuth) {
+            this.router.navigate(['UserList']);
+        }
+        else {
+            this.router.navigate(['Home']);
+        }
     };
     MenuComponent.prototype.logOut = function () {
-        this.storageService.setLocalStorage('authorizationData', {});
+        this.authService.logout();
+    };
+    MenuComponent.prototype.ngOnDestroy = function () {
+        this.subscription.unsubscribe();
     };
     MenuComponent = __decorate([
         core_1.Component({
             selector: 'common-menu',
-            viewProviders: [AuthService_1.AuthService],
             directives: [router_1.ROUTER_DIRECTIVES],
             templateUrl: './templates/common/components/MenuComponent.html'
         }), 
-        __metadata('design:paramtypes', [AuthService_1.AuthService, StorageService_1.StorageService])
+        __metadata('design:paramtypes', [router_1.Router, AuthService_1.AuthService])
     ], MenuComponent);
     return MenuComponent;
 })();

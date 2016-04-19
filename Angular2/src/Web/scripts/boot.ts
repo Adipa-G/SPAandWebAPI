@@ -3,9 +3,11 @@ import {bootstrap} from 'angular2/platform/browser'
 import {provide} from 'angular2/core';
 import {Http,HTTP_BINDINGS, HTTP_PROVIDERS, RequestOptions, XHRBackend} from 'angular2/http';
 
-import {LogService} from './common/services/LogService';
 import {Constants} from './common/services/Constants';
+import {LogService} from './common/services/LogService';
+import {ErrorService} from './common/services/ErrorService';
 import {StorageService} from './common/services/StorageService';
+import {AuthService} from './common/services/AuthService';
 import {HttpClient} from './common/services/HttpClient';
 
 import {AppComponent} from './app'
@@ -15,6 +17,8 @@ bootstrap(AppComponent, [
     HTTP_PROVIDERS,
     Constants,
     LogService,
+    ErrorService,
     StorageService,
+    AuthService,
     HttpClient
 ]);

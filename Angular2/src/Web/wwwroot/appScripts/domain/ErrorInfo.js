@@ -1,5 +1,6 @@
 var ErrorInfo = (function () {
-    function ErrorInfo() {
+    function ErrorInfo(message) {
+        this.message = message;
     }
     return ErrorInfo;
 })();

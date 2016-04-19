@@ -8,42 +8,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
-var router_1 = require('angular2/router');
-var AuthenticationInfo_1 = require('../../domain/auth/AuthenticationInfo');
+var LoginInfo_1 = require("../../domain/auth/LoginInfo");
 var AuthService_1 = require('../services/AuthService');
-var LogService_1 = require('../services/LogService');
-var StorageService_1 = require('../services/StorageService');
 var LoginComponent = (function () {
-    function LoginComponent(router, authService, logService, storageService) {
-        this.router = router;
+    function LoginComponent(authService) {
         this.authService = authService;
-        this.logService = logService;
-        this.storageService = storageService;
-        this.router = router;
         this.authService = authService;
-        this.logService = logService;
-        this.storageService = storageService;
-        this.loginInfo = new AuthenticationInfo_1.AuthenticationInfo();
-        this.errorMessage = '';
+        this.loginInfo = new LoginInfo_1.LoginInfo();
     }
     LoginComponent.prototype.login = function () {
-        var _this = this;
-        this.authService.authenticate(this.loginInfo).subscribe(function (data) {
-            data.userName = _this.loginInfo.userName;
-            _this.storageService.setLocalStorage('authorizationData', data);
-            _this.router.navigate(['UserList']);
-        }, function (err) {
-            _this.errorMessage = JSON.stringify(err);
-            _this.logService.log(JSON.stringify(err));
-        });
+        this.authService.authenticate(this.loginInfo);
     };
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'common-login',
-            viewProviders: [AuthService_1.AuthService],
             templateUrl: './templates/common/components/LoginComponent.html'
         }), 
-        __metadata('design:paramtypes', [router_1.Router, AuthService_1.AuthService, LogService_1.LogService, StorageService_1.StorageService])
+        __metadata('design:paramtypes', [AuthService_1.AuthService])
     ], LoginComponent);
     return LoginComponent;
 })();

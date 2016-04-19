@@ -1,4 +1,5 @@
-﻿export class AuthenticationToken {
+﻿export class AuthenticationDetails {
+    isAuth : boolean;
     userName: string;
     access_token: string;
     expires_in: string;
