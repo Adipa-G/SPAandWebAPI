@@ -1,3 +1,7 @@
 ﻿export class ErrorInfo {
-    message : string;
+    message: string;
+
+    constructor(message: string) {
+        this.message = message;
+    }   
 }

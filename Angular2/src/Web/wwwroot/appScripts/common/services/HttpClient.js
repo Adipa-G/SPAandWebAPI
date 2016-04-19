@@ -7,19 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var http_1 = require('angular2/http');
 var core_1 = require('angular2/core');
 var StorageService_1 = require('./StorageService');
+var AuthService_1 = require('./AuthService');
 var HttpClient = (function () {
-    function HttpClient(http, storageService) {
+    function HttpClient(http, storageService, authService) {
         this.http = http;
         this.storageService = storageService;
+        this.authService = authService;
+        this.http = http;
+        this.storageService = storageService;
+        this.authService = authService;
     }
     HttpClient.prototype.createHeaders = function () {
-        var authData = this.storageService.getLocalStorage('authorizationData');
+        var authData = this.authService.getCurrentAuth();
         var accessToken = authData != null ? authData.access_token : null;
         var xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
         return new http_1.Headers({
@@ -44,9 +46,8 @@ var HttpClient = (function () {
         });
     };
     HttpClient = __decorate([
-        core_1.Injectable(),
-        __param(1, core_1.Inject(StorageService_1.StorageService)), 
-        __metadata('design:paramtypes', [http_1.Http, StorageService_1.StorageService])
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http, StorageService_1.StorageService, AuthService_1.AuthService])
     ], HttpClient);
     return HttpClient;
 })();

@@ -1,23 +1,28 @@
 ﻿import {Component} from 'angular2/core';
+
 import {ErrorInfo} from '../../domain/ErrorInfo';
+
 import {ErrorService} from '../services/ErrorService';
 
 @Component({
     selector: 'common-error',
-    viewProviders: [ErrorService],
     templateUrl: './templates/common/components/ErrorComponent.html'
 })
 
 export class ErrorComponent {
-    private currentError : ErrorInfo;
+    private currentError: ErrorInfo;
+    private subscription:any;
 
     constructor(private errorService: ErrorService) {
-        errorService.errorOccured$.subscribe(error => this.onError(error));
-        this.currentError = new ErrorInfo();
-        this.currentError.message = '';
+        this.subscription = errorService.errorOccured$.subscribe(error => this.onError(error));
+        this.currentError = new ErrorInfo('');
     }
 
     private onError(error: ErrorInfo): void {
         this.currentError = error;
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
