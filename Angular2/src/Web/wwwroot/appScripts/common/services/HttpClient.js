@@ -9,14 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var http_1 = require('angular2/http');
 var core_1 = require('angular2/core');
+var LogService_1 = require('./LogService');
+var ErrorService_1 = require('./ErrorService');
 var StorageService_1 = require('./StorageService');
 var AuthService_1 = require('./AuthService');
 var HttpClient = (function () {
-    function HttpClient(http, storageService, authService) {
+    function HttpClient(http, logService, errorService, storageService, authService) {
         this.http = http;
+        this.logService = logService;
+        this.errorService = errorService;
         this.storageService = storageService;
         this.authService = authService;
         this.http = http;
+        this.logService = logService;
+        this.errorService = errorService;
         this.storageService = storageService;
         this.authService = authService;
     }
@@ -47,7 +53,7 @@ var HttpClient = (function () {
     };
     HttpClient = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, StorageService_1.StorageService, AuthService_1.AuthService])
+        __metadata('design:paramtypes', [http_1.Http, LogService_1.LogService, ErrorService_1.ErrorService, StorageService_1.StorageService, AuthService_1.AuthService])
     ], HttpClient);
     return HttpClient;
 })();
