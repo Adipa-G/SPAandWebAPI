@@ -9,14 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var SortAndPage_1 = require('../../domain/common/SortAndPage');
-var LogService_1 = require('../../common/services/LogService');
+var ErrorService_1 = require('../../common/services/ErrorService');
 var UserService_1 = require("../services/UserService");
 var UserListComponent = (function () {
-    function UserListComponent(logService, userService) {
+    function UserListComponent(errorService, userService) {
         var _this = this;
-        this.logService = logService;
+        this.errorService = errorService;
         this.userService = userService;
-        this.logService = logService;
+        this.errorService = errorService;
         this.userService = userService;
         this.users = [];
         this.sortAndPage = this.initSortDetails();
@@ -24,7 +24,7 @@ var UserListComponent = (function () {
             _this.users = data.results;
         }, function (err) {
             _this.errorMessage = JSON.stringify(err);
-            _this.logService.log(JSON.stringify(err));
+            _this.errorService.handleHttpError(err);
         });
     }
     UserListComponent.prototype.initSortDetails = function () {
@@ -46,7 +46,7 @@ var UserListComponent = (function () {
             }
         }, function (err) {
             _this.errorMessage = JSON.stringify(err);
-            _this.logService.log(JSON.stringify(err));
+            _this.errorService.handleHttpError(err);
         });
     };
     UserListComponent = __decorate([
@@ -55,7 +55,7 @@ var UserListComponent = (function () {
             viewProviders: [UserService_1.UserService],
             templateUrl: './templates/admin/components/UserListComponent.html'
         }), 
-        __metadata('design:paramtypes', [LogService_1.LogService, UserService_1.UserService])
+        __metadata('design:paramtypes', [ErrorService_1.ErrorService, UserService_1.UserService])
     ], UserListComponent);
     return UserListComponent;
 })();

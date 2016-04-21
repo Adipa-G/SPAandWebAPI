@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.IO;
+using System.Net;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -30,25 +31,33 @@ namespace Web.Middleware
         {
             if (context.Request.Headers.ContainsKey("Authorization"))
             {
-                var token = context.Request.Headers["Authorization"][0];
-                token = token.Replace("Bearer ", "");
-                
-                var cert =
-                    new X509Certificate2(
-                        Path.Combine(_environment.ApplicationBasePath, "Configuration", "idsrv4test.pfx"),
-                        "idsrv3test");
-
-                var handler = new JwtSecurityTokenHandler();
-                var validationParameters = new TokenValidationParameters()
+                try
                 {
-                    ValidAudience = $"{_authority}/resources",
-                    ValidIssuer = _authority,
-                    IssuerSigningTokens = new List<X509SecurityToken>() { new X509SecurityToken(cert) }
-                };
+                    var token = context.Request.Headers["Authorization"][0];
+                    token = token.Replace("Bearer ", "");
 
-                SecurityToken validatedToken;
-                var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
-                context.User = principal;
+                    var cert =
+                        new X509Certificate2(
+                            Path.Combine(_environment.ApplicationBasePath, "Configuration", "idsrv4test.pfx"),
+                            "idsrv3test");
+
+                    var handler = new JwtSecurityTokenHandler();
+                    var validationParameters = new TokenValidationParameters()
+                    {
+                        ValidAudience = $"{_authority}/resources",
+                        ValidIssuer = _authority,
+                        IssuerSigningTokens = new List<X509SecurityToken>() { new X509SecurityToken(cert) }
+                    };
+
+                    SecurityToken validatedToken;
+                    var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
+                    context.User = principal;
+                }
+                catch (Exception ex)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    await context.Response.WriteAsync($"Authentication error {ex.Message} {ex.StackTrace}");
+                }
             }
 
             await _next.Invoke(context);

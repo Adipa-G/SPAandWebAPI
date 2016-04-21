@@ -2,7 +2,7 @@
 import {SortAndPage} from '../../domain/common/SortAndPage';
 import {UserInfo} from '../../domain/admin/UserInfo';
 
-import {LogService} from '../../common/services/LogService';
+import {ErrorService} from '../../common/services/ErrorService';
 import {UserService} from "../services/UserService";
 
 @Component({
@@ -16,8 +16,8 @@ export class UserListComponent {
     private errorMessage: string;
     private users : UserInfo[];
 
-    constructor(private logService: LogService, private userService: UserService) {
-        this.logService = logService;
+    constructor(private errorService: ErrorService, private userService: UserService) {
+        this.errorService = errorService;
         this.userService = userService;
         this.users = [];
 
@@ -29,7 +29,7 @@ export class UserListComponent {
             },
             err => {
                 this.errorMessage = JSON.stringify(err);
-                this.logService.log(JSON.stringify(err));
+                this.errorService.handleHttpError(err);
             });
     }
 
@@ -54,7 +54,7 @@ export class UserListComponent {
             },
             err => {
                 this.errorMessage = JSON.stringify(err);
-                this.logService.log(JSON.stringify(err));
+                this.errorService.handleHttpError(err);
             });
     }
 }

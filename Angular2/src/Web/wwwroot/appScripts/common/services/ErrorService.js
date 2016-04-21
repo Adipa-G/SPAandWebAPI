@@ -9,16 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var core_2 = require('angular2/core');
+var router_1 = require('angular2/router');
+var ErrorInfo_1 = require('../../domain/ErrorInfo');
+var LogService_1 = require('./LogService');
 var ErrorService = (function () {
-    function ErrorService() {
+    function ErrorService(router, logService) {
+        this.router = router;
+        this.logService = logService;
+        this.router = router;
+        this.logService = logService;
         this.errorOccured$ = new core_2.EventEmitter();
     }
     ErrorService.prototype.logError = function (errInfo) {
         this.errorOccured$.emit(errInfo);
     };
+    ErrorService.prototype.handleHttpError = function (error) {
+        if (error.status === 401) {
+            this.router.navigate(['Login']);
+        }
+        else {
+            this.logService.log(JSON.stringify(error));
+            this.logError(new ErrorInfo_1.ErrorInfo(JSON.stringify(error)));
+        }
+    };
     ErrorService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router, LogService_1.LogService])
     ], ErrorService);
     return ErrorService;
 })();
