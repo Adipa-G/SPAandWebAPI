@@ -15,6 +15,8 @@ export class LoginComponent {
     constructor(private authService: AuthService) {
         this.authService = authService;
         this.loginInfo = new LoginInfo();
+
+        this.authService.logout();
     }
 
     public login() : void {

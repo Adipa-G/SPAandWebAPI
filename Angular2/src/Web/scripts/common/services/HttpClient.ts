@@ -1,8 +1,12 @@
-﻿import {Http, Headers} from 'angular2/http';
+﻿import {Http, Headers, Response} from 'angular2/http';
 import {Injectable, Inject} from 'angular2/core';
+import {Observable} from 'rxjs/Observable';
 
+import {ErrorInfo} from "../../domain/ErrorInfo";
 import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
 
+import {LogService} from './LogService';
+import {ErrorService} from './ErrorService';
 import {StorageService} from './StorageService';
 import {AuthService} from './AuthService';
 
@@ -10,9 +14,13 @@ import {AuthService} from './AuthService';
 export class HttpClient {
 
     constructor(private http: Http,
+        private logService: LogService,
+        private errorService: ErrorService,
         private storageService: StorageService,
         private authService: AuthService) {
         this.http = http;
+        this.logService = logService;
+        this.errorService = errorService;
         this.storageService = storageService;
         this.authService = authService;
     }
@@ -22,10 +30,10 @@ export class HttpClient {
         var accessToken = authData != null ? authData.access_token : null;
         var xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
 
-        return  new Headers({
-            'Content-Type' : 'application/json',
-            'X-XSRF-TOKEN' : xsrfToken,
-            'Authorization' : 'Bearer ' + accessToken
+        return new Headers({
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': xsrfToken,
+            'Authorization': 'Bearer ' + accessToken
         });
     }
 
@@ -46,4 +54,6 @@ export class HttpClient {
             headers: this.createHeaders()
         });
     }
+
+   
 }
