@@ -15,6 +15,7 @@ var LoginComponent = (function () {
         this.authService = authService;
         this.authService = authService;
         this.loginInfo = new LoginInfo_1.LoginInfo();
+        this.authService.logout();
     }
     LoginComponent.prototype.login = function () {
         this.authService.authenticate(this.loginInfo);
