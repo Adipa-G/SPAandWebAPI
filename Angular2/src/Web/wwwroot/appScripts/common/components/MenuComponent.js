@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11,29 +12,39 @@ var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
 var AuthenticationDetails_1 = require("../../domain/auth/AuthenticationDetails");
 var AuthService_1 = require("../services/AuthService");
+var ErrorService_1 = require("../services/ErrorService");
 var MenuComponent = (function () {
-    function MenuComponent(router, authService) {
+    function MenuComponent(router, authService, errorService) {
         var _this = this;
         this.router = router;
         this.authService = authService;
+        this.errorService = errorService;
         this.router = router;
-        this.subscription = authService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
+        this.authChangedSubscription = authService.authChanged$.subscribe(function (auth) { return _this.onAuthChanged(auth); });
+        this.authErrorSubscription = errorService.authErrorOccured$.subscribe(function (auth) { return _this.onAuthError(auth); });
         this.currentAuth = new AuthenticationDetails_1.AuthenticationDetails();
     }
     MenuComponent.prototype.onAuthChanged = function (auth) {
+        if (this.currentAuth.isAuth !== auth.isAuth) {
+            if (auth.isAuth) {
+                this.router.navigate(['UserList']);
+            }
+            else {
+                this.router.navigate(['Home']);
+            }
+        }
         this.currentAuth = auth;
-        if (this.currentAuth.isAuth) {
-            this.router.navigate(['UserList']);
-        }
-        else {
-            this.router.navigate(['Home']);
-        }
+    };
+    MenuComponent.prototype.onAuthError = function (errorInfo) {
+        this.authService.clearAuthData();
+        this.router.navigate(['Login']);
     };
     MenuComponent.prototype.logOut = function () {
         this.authService.logout();
     };
     MenuComponent.prototype.ngOnDestroy = function () {
-        this.subscription.unsubscribe();
+        this.authChangedSubscription.unsubscribe();
+        this.authErrorSubscription.unsubscribe();
     };
     MenuComponent = __decorate([
         core_1.Component({
@@ -41,9 +52,9 @@ var MenuComponent = (function () {
             directives: [router_1.ROUTER_DIRECTIVES],
             templateUrl: './templates/common/components/MenuComponent.html'
         }), 
-        __metadata('design:paramtypes', [router_1.Router, AuthService_1.AuthService])
+        __metadata('design:paramtypes', [router_1.Router, AuthService_1.AuthService, ErrorService_1.ErrorService])
     ], MenuComponent);
     return MenuComponent;
-})();
+}());
 exports.MenuComponent = MenuComponent;
 //# sourceMappingURL=MenuComponent.js.map

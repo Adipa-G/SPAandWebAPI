@@ -2,7 +2,10 @@
 import {Router, ROUTER_DIRECTIVES } from 'angular2/router'
 
 import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
+import {ErrorInfo} from "../../domain/ErrorInfo";
+
 import {AuthService} from "../services/AuthService";
+import {ErrorService} from "../services/ErrorService";
 
 @Component({
     selector: 'common-menu',
@@ -12,23 +15,35 @@ import {AuthService} from "../services/AuthService";
 
 export class MenuComponent {
     private currentAuth: AuthenticationDetails;
-    private subscription: any;
+
+    private authChangedSubscription: any;
+    private authErrorSubscription: any;
 
     constructor(private router: Router,
-        private authService: AuthService) {
+        private authService: AuthService,
+        private errorService: ErrorService) {
         this.router = router;
-        this.subscription = authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
+        this.authChangedSubscription = authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
+        this.authErrorSubscription = errorService.authErrorOccured$.subscribe(auth => this.onAuthError(auth));
 
         this.currentAuth = new AuthenticationDetails();
     }
 
     private onAuthChanged(auth: AuthenticationDetails): void {
-        this.currentAuth = auth;
-        if (this.currentAuth.isAuth) {
-            this.router.navigate(['UserList']);
-        } else {
-            this.router.navigate(['Home']);
+        if (this.currentAuth.isAuth !== auth.isAuth) {
+            if (auth.isAuth) {
+                this.router.navigate(['UserList']);
+            } else {
+                this.router.navigate(['Home']);
+            }    
         }
+
+        this.currentAuth = auth;
+    }
+
+    private onAuthError(errorInfo: ErrorInfo): void {
+        this.authService.clearAuthData();
+        this.router.navigate(['Login']);
     }
 
     public logOut(): void {
@@ -36,6 +51,7 @@ export class MenuComponent {
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.authChangedSubscription.unsubscribe();
+        this.authErrorSubscription.unsubscribe();
     }
 }

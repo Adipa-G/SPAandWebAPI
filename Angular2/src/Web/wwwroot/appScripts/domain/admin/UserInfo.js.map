@@ -1,1 +1,1 @@
-{"version":3,"file":"UserInfo.js","sourceRoot":"","sources":["../../../../scripts/domain/admin/UserInfo.ts"],"names":["UserInfo","UserInfo.constructor"],"mappings":"AAAA;IAAAA;IAEAC,CAACA;IAADD,eAACA;AAADA,CAACA,AAFD,IAEC;AAFY,gBAAQ,WAEpB,CAAA"}
+{"version":3,"file":"UserInfo.js","sourceRoot":"","sources":["../../../../scripts/domain/admin/UserInfo.ts"],"names":[],"mappings":";AAAC;IAAA;IAED,CAAC;IAAD,eAAC;AAAD,CAAC,AAFA,IAEA;AAFa,gBAAQ,WAErB,CAAA"}

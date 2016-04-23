@@ -1,1 +1,1 @@
-{"version":3,"file":"SortAndPage.js","sourceRoot":"","sources":["../../../../scripts/domain/common/SortAndPage.ts"],"names":["SortAndPage","SortAndPage.constructor"],"mappings":"AAAA;IAAAA;IAKAC,CAACA;IAADD,kBAACA;AAADA,CAACA,AALD,IAKC;AALY,mBAAW,cAKvB,CAAA"}
+{"version":3,"file":"SortAndPage.js","sourceRoot":"","sources":["../../../../scripts/domain/common/SortAndPage.ts"],"names":[],"mappings":";AAAC;IAAA;IAKD,CAAC;IAAD,kBAAC;AAAD,CAAC,AALA,IAKA;AALa,mBAAW,cAKxB,CAAA"}
