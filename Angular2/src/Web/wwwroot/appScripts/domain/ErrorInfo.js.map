@@ -1,1 +1,1 @@
-{"version":3,"file":"ErrorInfo.js","sourceRoot":"","sources":["../../../scripts/domain/ErrorInfo.ts"],"names":["ErrorInfo","ErrorInfo.constructor"],"mappings":"AAAA;IAGIA,mBAAYA,OAAeA;QACvBC,IAAIA,CAACA,OAAOA,GAAGA,OAAOA,CAACA;IAC3BA,CAACA;IACLD,gBAACA;AAADA,CAACA,AAND,IAMC;AANY,iBAAS,YAMrB,CAAA"}
+{"version":3,"file":"ErrorInfo.js","sourceRoot":"","sources":["../../../scripts/domain/ErrorInfo.ts"],"names":[],"mappings":";AAAC;IAGG,mBAAY,OAAe;QACvB,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;IAC3B,CAAC;IACL,gBAAC;AAAD,CAAC,AANA,IAMA;AANa,iBAAS,YAMtB,CAAA"}

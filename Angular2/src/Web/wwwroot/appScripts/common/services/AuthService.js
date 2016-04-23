@@ -1,3 +1,4 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -62,11 +63,14 @@ var AuthService = (function () {
             _this.errorService.logError(new ErrorInfo_1.ErrorInfo(JSON.stringify(err)));
         });
     };
-    AuthService.prototype.logout = function () {
+    AuthService.prototype.clearAuthData = function () {
         this.currentAuth = new AuthenticationDetails_1.AuthenticationDetails();
         this.currentAuth.userName = '';
         this.currentAuth.isAuth = false;
         this.storageService.setLocalStorage('authorizationData', this.currentAuth);
+    };
+    AuthService.prototype.logout = function () {
+        this.clearAuthData();
         this.authChanged$.emit(this.currentAuth);
     };
     AuthService = __decorate([
@@ -74,6 +78,6 @@ var AuthService = (function () {
         __metadata('design:paramtypes', [http_1.Http, Constants_1.Constants, LogService_1.LogService, ErrorService_1.ErrorService, StorageService_1.StorageService])
     ], AuthService);
     return AuthService;
-})();
+}());
 exports.AuthService = AuthService;
 //# sourceMappingURL=AuthService.js.map

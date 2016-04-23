@@ -1,5 +1,7 @@
+"use strict";
 ///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
 var browser_1 = require('angular2/platform/browser');
+var core_1 = require('angular2/core');
 var http_1 = require('angular2/http');
 var router_1 = require('angular2/router');
 var Constants_1 = require('./common/services/Constants');
@@ -18,6 +20,7 @@ browser_1.bootstrap(app_1.AppComponent, [
     ErrorService_1.ErrorService,
     StorageService_1.StorageService,
     AuthService_1.AuthService,
-    HttpClient_1.HttpClient
+    HttpClient_1.HttpClient,
+    core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy })
 ]);
 //# sourceMappingURL=boot.js.map

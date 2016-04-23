@@ -69,11 +69,15 @@ export class AuthService {
             });
     }
 
-    public logout(): void {
+    public clearAuthData(): void {
         this.currentAuth = new AuthenticationDetails();
         this.currentAuth.userName = '';
         this.currentAuth.isAuth = false;
         this.storageService.setLocalStorage('authorizationData', this.currentAuth);
+    }
+
+    public logout(): void {
+        this.clearAuthData();
         this.authChanged$.emit(this.currentAuth);
     }
 }
