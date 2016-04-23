@@ -2,7 +2,7 @@
 import {bootstrap} from 'angular2/platform/browser'
 import {provide} from 'angular2/core';
 import {Http, HTTP_BINDINGS, HTTP_PROVIDERS, RequestOptions, XHRBackend} from 'angular2/http';
-import {ROUTER_PROVIDERS } from 'angular2/router';
+import {ROUTER_PROVIDERS,LocationStrategy, HashLocationStrategy } from 'angular2/router';
 
 import {Constants} from './common/services/Constants';
 import {LogService} from './common/services/LogService';
@@ -22,5 +22,6 @@ bootstrap(AppComponent, [
     ErrorService,
     StorageService,
     AuthService,
-    HttpClient
+    HttpClient,
+    provide(LocationStrategy, { useClass: HashLocationStrategy })
 ]);
