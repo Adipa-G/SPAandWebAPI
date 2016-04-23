@@ -7,8 +7,10 @@ using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Infrastructure.Modules;
 using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.FileProviders;
 using Microsoft.AspNet.Mvc.Filters;
 using Microsoft.AspNet.Mvc.Formatters;
+using Microsoft.AspNet.StaticFiles;
 using Newtonsoft.Json.Serialization;
 using Web.Middleware;
 using Web.Modules;
@@ -58,7 +60,12 @@ namespace Web
 
             app.UseDeveloperExceptionPage();
             app.UseIISPlatformHandler();
-            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions()
+                               {
+                                   ContentTypeProvider = new ContentTypeProvider(),
+                                   FileProvider = new FileProvider($"{_environment.ApplicationBasePath}\\wwwroot"),
+                               });
 
             app.UseMiddleware<ValidateAntiForgeryToken>();
             app.UseMiddleware<CreateTransaction>();
