@@ -19,9 +19,9 @@ var UserService = (function () {
         this.httpClient = httpClient;
         this.constants = constants;
     }
-    UserService.prototype.getUsers = function (sortAndPage) {
+    UserService.prototype.getUsers = function (orderAndPage) {
         return this.httpClient
-            .post(this.constants.getServiceBaseUrl() + 'api/Account/list', JSON.stringify(sortAndPage))
+            .post(this.constants.getServiceBaseUrl() + 'api/Account/list', JSON.stringify(orderAndPage))
             .map(function (res) { return res.json(); });
     };
     UserService.prototype.deleteUser = function (userName) {

@@ -2,9 +2,9 @@
 import {EventEmitter} from 'angular2/core';
 import {Http, Headers, Response} from 'angular2/http';
 
-import {ErrorInfo} from "../../domain/ErrorInfo";
-import {LoginInfo} from "../../domain/auth/LoginInfo";
-import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
+import {ErrorInfo} from '../../domain/ErrorInfo';
+import {LoginInfo} from '../../domain/auth/LoginInfo';
+import {AuthenticationDetails} from '../../domain/auth/AuthenticationDetails';
 
 import {Constants} from './Constants';
 import {LogService} from './LogService';

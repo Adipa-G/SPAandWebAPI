@@ -9,25 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
-var LoginInfo_1 = require('../../domain/auth/LoginInfo');
-var AuthService_1 = require('../services/AuthService');
-var LoginComponent = (function () {
-    function LoginComponent(authService) {
-        this.authService = authService;
-        this.authService = authService;
-        this.loginInfo = new LoginInfo_1.LoginInfo();
+var SortHeader = (function () {
+    function SortHeader() {
     }
-    LoginComponent.prototype.login = function () {
-        this.authService.authenticate(this.loginInfo);
-    };
-    LoginComponent = __decorate([
+    SortHeader = __decorate([
         core_1.Component({
-            selector: 'common-login',
-            templateUrl: './templates/common/components/LoginComponent.html'
+            selector: '[sort-header]',
+            template: 'test...'
         }), 
-        __metadata('design:paramtypes', [AuthService_1.AuthService])
-    ], LoginComponent);
-    return LoginComponent;
+        __metadata('design:paramtypes', [])
+    ], SortHeader);
+    return SortHeader;
 }());
-exports.LoginComponent = LoginComponent;
-//# sourceMappingURL=LoginComponent.js.map
+exports.SortHeader = SortHeader;
+//# sourceMappingURL=SortHeader.js.map

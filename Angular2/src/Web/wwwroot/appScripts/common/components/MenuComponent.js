@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
-var AuthenticationDetails_1 = require("../../domain/auth/AuthenticationDetails");
-var AuthService_1 = require("../services/AuthService");
-var ErrorService_1 = require("../services/ErrorService");
+var AuthenticationDetails_1 = require('../../domain/auth/AuthenticationDetails');
+var AuthService_1 = require('../services/AuthService');
+var ErrorService_1 = require('../services/ErrorService');
 var MenuComponent = (function () {
     function MenuComponent(router, authService, errorService) {
         var _this = this;

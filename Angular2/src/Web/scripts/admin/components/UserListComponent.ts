@@ -1,18 +1,22 @@
 ﻿import {Component} from 'angular2/core';
-import {SortAndPage} from '../../domain/common/SortAndPage';
+
+import {OrderAndPage} from '../../domain/common/OrderAndPage';
 import {UserInfo} from '../../domain/admin/UserInfo';
 
 import {ErrorService} from '../../common/services/ErrorService';
-import {UserService} from "../services/UserService";
+import {UserService} from '../services/UserService';
+
+import {SortHeader} from '../../common/directives/SortHeader';
 
 @Component({
     selector: 'admin-users',
     viewProviders: [UserService],
+    directives: [SortHeader],
     templateUrl: './templates/admin/components/UserListComponent.html'
 })
 
 export class UserListComponent {
-    private sortAndPage: SortAndPage;
+    private orderAndPage: OrderAndPage;
     private errorMessage: string;
     private users : UserInfo[];
 
@@ -21,9 +25,13 @@ export class UserListComponent {
         this.userService = userService;
         this.users = [];
 
-        this.sortAndPage = this.initSortDetails();
+        this.orderAndPage = this.initOrderAndPagingDetails();
+        this.updateView(this.orderAndPage);
+    }
 
-        this.userService.getUsers(this.sortAndPage).subscribe(
+    private updateView(orderAndPage: OrderAndPage) {
+        this.orderAndPage = orderAndPage;
+        this.userService.getUsers(this.orderAndPage).subscribe(
             data => {
                 this.users = data.results;
             },
@@ -33,13 +41,13 @@ export class UserListComponent {
             });
     }
 
-    private initSortDetails(): SortAndPage {
-        var sortAndPage: SortAndPage = new SortAndPage();
-        sortAndPage.orderField = 'UserName';
-        sortAndPage.orderDirection = 'Asc';
-        sortAndPage.pageNumber = 1;
-        sortAndPage.pageSize = 10;
-        return sortAndPage;
+    private initOrderAndPagingDetails(): OrderAndPage {
+        var orderAndPage: OrderAndPage = new OrderAndPage();
+        orderAndPage.orderField = 'UserName';
+        orderAndPage.orderDirection = 'Asc';
+        orderAndPage.pageNumber = 1;
+        orderAndPage.pageSize = 10;
+        return orderAndPage;
     }
 
     public deleteUser(userName: string): void {
