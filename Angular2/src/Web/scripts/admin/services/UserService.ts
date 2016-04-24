@@ -1,7 +1,7 @@
 ﻿import {Injectable, Inject} from 'angular2/core';
 import {Http, Response} from 'angular2/http';
 
-import {SortAndPage} from '../../domain/common/SortAndPage';
+import {OrderAndPage} from '../../domain/common/OrderAndPage';
 import {UserInfo} from '../../domain/admin/UserInfo';
 
 import {HttpClient} from '../../common/services/HttpClient';
@@ -18,9 +18,9 @@ export class UserService {
         this.constants = constants;
     }
 
-    public getUsers(sortAndPage : SortAndPage) {
+    public getUsers(orderAndPage: OrderAndPage) {
         return this.httpClient
-            .post(this.constants.getServiceBaseUrl() + 'api/Account/list', JSON.stringify(sortAndPage))
+            .post(this.constants.getServiceBaseUrl() + 'api/Account/list', JSON.stringify(orderAndPage))
             .map((res: Response) => res.json());
     }
 

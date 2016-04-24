@@ -1,4 +1,4 @@
-﻿export class SortAndPage {
+﻿export class OrderAndPage {
     orderField : string;
     orderDirection : string;
     pageNumber : number;

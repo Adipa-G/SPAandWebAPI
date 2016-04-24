@@ -1,8 +1,8 @@
 ﻿import {Component} from 'angular2/core';
 
-import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
+import {AuthenticationDetails} from '../../domain/auth/AuthenticationDetails';
 
-import {AuthService} from "../services/AuthService";
+import {AuthService} from '../services/AuthService';
 
 @Component({
     selector: 'common-home',
