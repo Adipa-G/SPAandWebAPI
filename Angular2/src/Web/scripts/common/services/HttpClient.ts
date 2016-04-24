@@ -2,8 +2,8 @@
 import {Injectable, Inject} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 
-import {ErrorInfo} from "../../domain/ErrorInfo";
-import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
+import {ErrorInfo} from '../../domain/ErrorInfo';
+import {AuthenticationDetails} from '../../domain/auth/AuthenticationDetails';
 
 import {LogService} from './LogService';
 import {ErrorService} from './ErrorService';

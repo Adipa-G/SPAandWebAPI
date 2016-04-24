@@ -1,11 +1,11 @@
 ﻿import {Component} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES } from 'angular2/router'
 
-import {AuthenticationDetails} from "../../domain/auth/AuthenticationDetails";
-import {ErrorInfo} from "../../domain/ErrorInfo";
+import {AuthenticationDetails} from '../../domain/auth/AuthenticationDetails';
+import {ErrorInfo} from '../../domain/ErrorInfo';
 
-import {AuthService} from "../services/AuthService";
-import {ErrorService} from "../services/ErrorService";
+import {AuthService} from '../services/AuthService';
+import {ErrorService} from '../services/ErrorService';
 
 @Component({
     selector: 'common-menu',

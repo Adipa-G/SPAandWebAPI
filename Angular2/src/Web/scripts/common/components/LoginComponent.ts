@@ -1,6 +1,6 @@
 ﻿import {Component} from 'angular2/core';
 
-import {LoginInfo} from "../../domain/auth/LoginInfo";
+import {LoginInfo} from '../../domain/auth/LoginInfo';
 
 import {AuthService} from '../services/AuthService';
 
