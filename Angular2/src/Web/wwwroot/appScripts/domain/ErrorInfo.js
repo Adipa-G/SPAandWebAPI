@@ -6,4 +6,3 @@ var ErrorInfo = (function () {
     return ErrorInfo;
 }());
 exports.ErrorInfo = ErrorInfo;
-//# sourceMappingURL=ErrorInfo.js.map

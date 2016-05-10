@@ -5,4 +5,3 @@ var AuthenticationDetails = (function () {
     return AuthenticationDetails;
 }());
 exports.AuthenticationDetails = AuthenticationDetails;
-//# sourceMappingURL=AuthenticationDetails.js.map
