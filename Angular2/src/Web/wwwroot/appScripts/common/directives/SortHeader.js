@@ -35,10 +35,10 @@ var SortHeader = (function () {
         this.setIcon();
     };
     SortHeader.prototype.setIcon = function () {
-        if (this.orderOptions.orderDirection === 'None') {
+        if (this.orderOptions.orderDirection === 'Asc') {
             this.sortIcon = 'fa-sort-alpha-asc';
         }
-        else if (this.orderOptions.orderDirection === 'Asc') {
+        else if (this.orderOptions.orderDirection === 'Desc') {
             this.sortIcon = 'fa-sort-alpha-desc';
         }
         else {
@@ -64,11 +64,10 @@ var SortHeader = (function () {
     SortHeader = __decorate([
         core_1.Component({
             selector: '[sort-header]',
-            template: '<span (click)=\'headerClick()\'>{{text}}<i class=\'pull-right fa {{sortIcon}}\'></i></span>'
+            template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}<i class=\'fa {{sortIcon}}\'></i></span>'
         }), 
         __metadata('design:paramtypes', [])
     ], SortHeader);
     return SortHeader;
 }());
 exports.SortHeader = SortHeader;
-//# sourceMappingURL=SortHeader.js.map

@@ -4,7 +4,7 @@ import {OrderAndPage} from '../../domain/common/OrderAndPage';
 
 @Component({
     selector: '[sort-header]',
-    template: '<span (click)=\'headerClick()\'>{{text}}<i class=\'pull-right fa {{sortIcon}}\'></i></span>'
+    template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}<i class=\'fa {{sortIcon}}\'></i></span>'
 })
 
 export class SortHeader implements OnChanges {
