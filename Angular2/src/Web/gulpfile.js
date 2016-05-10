@@ -1,6 +1,7 @@
-﻿/// <binding AfterBuild='moveToLibs' />
+﻿/// <binding AfterBuild='moveToLibs,sass' />
 var gulp = require('gulp');
 var rename = require('gulp-rename');
+var sass = require('gulp-sass');
 
 gulp.task('moveToLibs', function (done) {
     gulp.src([
@@ -30,4 +31,10 @@ gulp.task('moveToLibs', function (done) {
 
     gulp.src('scripts/**/*.html')
     .pipe(gulp.dest('./wwwroot/templates'));
+});
+
+gulp.task('sass', function () {
+    return gulp.src('./sass/**/*.scss')
+      .pipe(sass().on('error', sass.logError))
+      .pipe(gulp.dest('./wwwroot/libs/css'));
 });

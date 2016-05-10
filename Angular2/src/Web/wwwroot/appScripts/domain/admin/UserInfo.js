@@ -5,4 +5,3 @@ var UserInfo = (function () {
     return UserInfo;
 }());
 exports.UserInfo = UserInfo;
-//# sourceMappingURL=UserInfo.js.map

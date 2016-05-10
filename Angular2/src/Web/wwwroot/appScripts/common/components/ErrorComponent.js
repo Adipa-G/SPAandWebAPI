@@ -34,4 +34,3 @@ var ErrorComponent = (function () {
     return ErrorComponent;
 }());
 exports.ErrorComponent = ErrorComponent;
-//# sourceMappingURL=ErrorComponent.js.map

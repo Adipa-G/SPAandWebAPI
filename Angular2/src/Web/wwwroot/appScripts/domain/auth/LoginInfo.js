@@ -5,4 +5,3 @@ var LoginInfo = (function () {
     return LoginInfo;
 }());
 exports.LoginInfo = LoginInfo;
-//# sourceMappingURL=LoginInfo.js.map

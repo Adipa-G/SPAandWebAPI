@@ -38,4 +38,3 @@ var UserService = (function () {
     return UserService;
 }());
 exports.UserService = UserService;
-//# sourceMappingURL=UserService.js.map

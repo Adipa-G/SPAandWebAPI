@@ -22,4 +22,3 @@ var LogService = (function () {
     return LogService;
 }());
 exports.LogService = LogService;
-//# sourceMappingURL=LogService.js.map
