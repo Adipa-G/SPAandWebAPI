@@ -23,4 +23,3 @@ browser_1.bootstrap(app_1.AppComponent, [
     HttpClient_1.HttpClient,
     core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy })
 ]);
-//# sourceMappingURL=boot.js.map

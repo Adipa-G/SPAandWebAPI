@@ -59,4 +59,3 @@ var HttpClient = (function () {
     return HttpClient;
 }());
 exports.HttpClient = HttpClient;
-//# sourceMappingURL=HttpClient.js.map
