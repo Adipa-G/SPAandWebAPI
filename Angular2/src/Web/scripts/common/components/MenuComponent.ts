@@ -43,6 +43,7 @@ export class MenuComponent {
 
     private onAuthError(errorInfo: ErrorInfo): void {
         this.authService.clearAuthData();
+        this.currentAuth = new AuthenticationDetails();
         this.router.navigate(['Login']);
     }
 

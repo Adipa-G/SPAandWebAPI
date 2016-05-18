@@ -9,17 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
-var ErrorInfo_1 = require('../../domain/ErrorInfo');
+var Rx_1 = require('rxjs/Rx');
 var ErrorService_1 = require('../services/ErrorService');
 var ErrorComponent = (function () {
     function ErrorComponent(errorService) {
         var _this = this;
         this.errorService = errorService;
+        this.currentErrors = new Array();
         this.subscription = errorService.errorOccured$.subscribe(function (error) { return _this.onError(error); });
-        this.currentError = new ErrorInfo_1.ErrorInfo('');
+        var timer = Rx_1.Observable.timer(10000, 10000);
+        timer.subscribe(function (t) { return _this.currentErrors.splice(_this.currentErrors.length - 1, 1); });
     }
     ErrorComponent.prototype.onError = function (error) {
-        this.currentError = error;
+        this.currentErrors.push(error);
     };
     ErrorComponent.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();

@@ -37,6 +37,7 @@ var MenuComponent = (function () {
     };
     MenuComponent.prototype.onAuthError = function (errorInfo) {
         this.authService.clearAuthData();
+        this.currentAuth = new AuthenticationDetails_1.AuthenticationDetails();
         this.router.navigate(['Login']);
     };
     MenuComponent.prototype.logOut = function () {
