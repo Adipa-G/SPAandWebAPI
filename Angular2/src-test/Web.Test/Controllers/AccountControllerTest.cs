@@ -63,7 +63,7 @@ namespace Web.Test.Controllers
         {
             _userRepository.Delete(Arg.Any<string>());
 
-            var result = _controller.Delete("abc") as HttpOkResult;
+            var result = _controller.Delete("abc") as HttpOkObjectResult;
 
             Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
             _userRepository.Received(1).Delete("abc");

@@ -29,7 +29,7 @@ var HttpClient = (function () {
     }
     HttpClient.prototype.createHeaders = function () {
         var authData = this.authService.getCurrentAuth();
-        var accessToken = authData != null ? authData.access_token : null;
+        var accessToken = authData != null && authData.access_token != null ? authData.access_token : "";
         var xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
         return new http_1.Headers({
             'Content-Type': 'application/json',
