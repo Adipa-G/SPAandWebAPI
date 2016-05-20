@@ -34,24 +34,28 @@ namespace Web.Middleware
                 try
                 {
                     var token = context.Request.Headers["Authorization"][0];
-                    token = token.Replace("Bearer ", "");
+                    token = token.Replace("Bearer", "").Trim();
 
-                    var cert =
-                        new X509Certificate2(
-                            Path.Combine(_environment.ApplicationBasePath, "Configuration", "idsrv4test.pfx"),
-                            "idsrv3test");
-
-                    var handler = new JwtSecurityTokenHandler();
-                    var validationParameters = new TokenValidationParameters()
+                    if (token.Length > 0)
                     {
-                        ValidAudience = $"{_authority}/resources",
-                        ValidIssuer = _authority,
-                        IssuerSigningTokens = new List<X509SecurityToken>() { new X509SecurityToken(cert) }
-                    };
+                        var cert =
+                            new X509Certificate2(
+                                Path.Combine(_environment.ApplicationBasePath, "Configuration", "idsrv4test.pfx"),
+                                "idsrv3test");
 
-                    SecurityToken validatedToken;
-                    var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
-                    context.User = principal;
+                        var handler = new JwtSecurityTokenHandler();
+                        var validationParameters = new TokenValidationParameters()
+                                                   {
+                                                       ValidAudience = $"{_authority}/resources",
+                                                       ValidIssuer = _authority,
+                                                       IssuerSigningTokens =
+                                                           new List<X509SecurityToken>() {new X509SecurityToken(cert)}
+                                                   };
+
+                        SecurityToken validatedToken;
+                        var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
+                        context.User = principal;
+                    }
                 }
                 catch (Exception ex)
                 {

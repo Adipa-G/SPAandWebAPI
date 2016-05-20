@@ -20,6 +20,9 @@ namespace Infrastructure.Repositories
 
         public  UserModel RegisterUser(UserModel userModel)
         {
+            if (FindUser(userModel.UserName) != null)
+                return null;
+
             var user = new User()
                        {
                            UserName = userModel.UserName,
