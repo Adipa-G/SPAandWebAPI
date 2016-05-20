@@ -18,10 +18,13 @@
                            class="form-control" placeholder="Password"
                            ngControl="loginPassword" #loginPassword="ngForm" [(ngModel)]="loginInfo.password">
                     <div [hidden]="loginPassword.valid || loginPassword.pristine" class="alert alert-danger">
-                        User name is required
+                        Password is required
                     </div>
                 </div>
             </fieldset>
+        </div>
+        <div class="row alert alert-success" [hidden]="!success">
+            <div class="col-md-10 col-md-offset-1">Registration successful! You will be redirected to login shortly.</div>
         </div>
     </div>
     <div class="row">

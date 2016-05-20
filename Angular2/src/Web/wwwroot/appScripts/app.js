@@ -15,6 +15,7 @@ var MenuComponent_1 = require('./common/components/MenuComponent');
 var HomeComponent_1 = require('./common/components/HomeComponent');
 var ErrorComponent_1 = require('./common/components/ErrorComponent');
 var LoginComponent_1 = require('./common/components/LoginComponent');
+var RegisterComponent_1 = require('./common/components/RegisterComponent');
 var UserListComponent_1 = require('./admin/components/UserListComponent');
 var AppComponent = (function () {
     function AppComponent() {
@@ -36,12 +37,17 @@ var AppComponent = (function () {
             {
                 path: '/login',
                 name: 'Login',
-                component: LoginComponent_1.LoginComponent,
+                component: LoginComponent_1.LoginComponent
+            },
+            {
+                path: '/register',
+                name: 'Register',
+                component: RegisterComponent_1.RegisterComponent
             },
             {
                 path: '/userList',
                 name: 'UserList',
-                component: UserListComponent_1.UserListComponent,
+                component: UserListComponent_1.UserListComponent
             }
         ]), 
         __metadata('design:paramtypes', [])
