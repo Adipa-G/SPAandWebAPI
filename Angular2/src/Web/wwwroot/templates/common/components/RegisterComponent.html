@@ -1,0 +1,44 @@
+<form #loginForm="ngForm">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <fieldset>
+                <legend class="h2">Sign up</legend>
+                <div class="form-group">
+                    <label for="regUserName">User Name</label>
+                    <input type="text" id="regUserName" required
+                           class="form-control" placeholder="Username"
+                           ngControl="regUserName" #regUserName="ngForm" [(ngModel)]="regInfo.userName" autofocus>
+                    <div [hidden]="regUserName.valid || regUserName.pristine" class="alert alert-danger">
+                        User name is required
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" required
+                           class="form-control" placeholder="Password"
+                           ngControl="regPassword" #regPassword="ngForm" [(ngModel)]="regInfo.password">
+                    <div [hidden]="regPassword.valid || regPassword.pristine" class="alert alert-danger">
+                        Password is required
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" required
+                           class="form-control" placeholder="Password"
+                           ngControl="regConfirmPassword" #regConfirmPassword="ngForm" [(ngModel)]="regInfo.confirmPassword">
+                    <div [hidden]="regConfirmPassword.value == regPassword.value" class="alert alert-danger">
+                        Passwords should match
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="form-group">
+                <button type="button" class="btn btn-md btn-info btn-block" 
+                        [disabled]="!loginForm.form.valid" (click)="register()">Sign up</button>
+            </div>
+        </div>
+    </div>
+</form>

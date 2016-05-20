@@ -19,7 +19,7 @@
                 <li [hidden]="!currentAuth.isAuth"><a href="/logHttp">Http Log</a></li>
                 <li [hidden]="!currentAuth.isAuth"><a href="" (click)="logOut()">Logout</a></li>
                 <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['Login']">Login</a></li>
-                <li [hidden]="currentAuth.isAuth"> <a href="/signup">Sign Up</a></li>
+                <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['Register']">Sign Up</a></li>
             </ul>
         </div>
     </div>

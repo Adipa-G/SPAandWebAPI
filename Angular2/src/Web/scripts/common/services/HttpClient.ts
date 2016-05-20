@@ -27,7 +27,7 @@ export class HttpClient {
 
     private createHeaders(): Headers {
         var authData = this.authService.getCurrentAuth();
-        var accessToken = authData != null ? authData.access_token : null;
+        var accessToken = authData != null && authData.access_token != null ? authData.access_token : "";
         var xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
 
         return new Headers({

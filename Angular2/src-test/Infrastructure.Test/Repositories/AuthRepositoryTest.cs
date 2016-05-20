@@ -44,7 +44,19 @@ namespace Infrastructure.Test.Repositories
 
             Assert.IsNotNull(user);
         }
-        
+
+        [Test]
+        public void GivenUser_WhenRegisterSameUser_ThenReturnNull()
+        {
+            var sut = new UserRepository(Session);
+            sut.RegisterUser(new UserModel() { UserName = "a", Password = "abcdef", ConfirmPassword = "abcdef" });
+            FlushAndClear();
+
+            var result = sut.RegisterUser(new UserModel() { UserName = "a", Password = "abcdef", ConfirmPassword = "abcdef" });
+
+            Assert.IsNull(result);
+        }
+
         [Test]
         public void GivenUser_WhenList_ThenList()
         {
