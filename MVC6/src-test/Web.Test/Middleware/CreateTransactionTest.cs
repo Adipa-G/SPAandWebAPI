@@ -46,7 +46,7 @@ namespace Web.Test.Middleware
         {
             _context.Request.Method = "GET";
 
-            var result = _createTransaction.Invoke(_context);
+            var result = _createTransaction.Invoke(_context,_session);
             result.Wait();
 
             _session.Received(0).BeginTransaction();
@@ -59,7 +59,7 @@ namespace Web.Test.Middleware
         {
             _context.Request.Method = "POST";
 
-            var result = _createTransaction.Invoke(_context);
+            var result = _createTransaction.Invoke(_context,_session);
             result.Wait();
 
             _session.Received(1).BeginTransaction();
@@ -74,7 +74,7 @@ namespace Web.Test.Middleware
 
             _context.Request.Method = "POST";
 
-            Assert.That(() => _createTransaction.Invoke(_context), Throws.TypeOf<Exception>());
+            Assert.That(() => _createTransaction.Invoke(_context,_session), Throws.TypeOf<Exception>());
             
             _session.Received(1).BeginTransaction();
             _transaction.Received(0).Commit();
