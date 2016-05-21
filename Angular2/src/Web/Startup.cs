@@ -13,7 +13,6 @@ using Microsoft.AspNet.Mvc.Formatters;
 using Microsoft.AspNet.StaticFiles;
 using Newtonsoft.Json.Serialization;
 using Web.Middleware;
-using Web.Modules;
 
 namespace Web
 {
@@ -30,7 +29,6 @@ namespace Web
         {
             PlumbingModule.Load(services);
             RepositoryModule.Load(services);
-            WebModule.Load(services);
 
             var cert = GetCertificate();
 
