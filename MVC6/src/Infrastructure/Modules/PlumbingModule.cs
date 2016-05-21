@@ -25,9 +25,9 @@ namespace Infrastructure.Modules
             serviceCollection.AddTransient<IConfig, Config.Config>();
 
             serviceCollection.AddSingleton<INHibernateSessionFactory, NHibernateSessionFactory>();
-            serviceCollection.AddTransient(p => p.GetService<INHibernateSessionFactory>().GetSessionFactory());
+            serviceCollection.AddScoped(p => p.GetService<INHibernateSessionFactory>().GetSessionFactory().OpenSession());
+
             serviceCollection.AddTransient<ISQLStatementInterceptor, SQLStatementInterceptor>();
-            //TODO Bind<IExceptionLogger>().To<ExceptionLogger>();
         }
     }
 }
