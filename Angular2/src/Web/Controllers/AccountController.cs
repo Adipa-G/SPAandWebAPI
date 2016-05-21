@@ -34,7 +34,7 @@ namespace Web.Controllers
                  return HttpBadRequest();
              }
 
-             return Ok();
+             return Ok(result);
         }
 
         [HttpPost]
