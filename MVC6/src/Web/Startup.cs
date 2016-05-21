@@ -11,7 +11,6 @@ using Microsoft.AspNet.Mvc.Filters;
 using Microsoft.AspNet.Mvc.Formatters;
 using Newtonsoft.Json.Serialization;
 using Web.Middleware;
-using Web.Modules;
 
 namespace Web
 {
@@ -28,7 +27,6 @@ namespace Web
         {
             PlumbingModule.Load(services);
             RepositoryModule.Load(services);
-            WebModule.Load(services);
 
             var cert = GetCertificate();
 
