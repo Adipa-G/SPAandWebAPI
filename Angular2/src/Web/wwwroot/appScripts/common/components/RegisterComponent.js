@@ -29,8 +29,8 @@ var RegisterComponent = (function () {
         var _this = this;
         this.registerService.register(this.regInfo).subscribe(function (data) {
             _this.success = true;
-            var timer = Rx_1.Observable.timer(2000);
-            timer.subscribe(function () { return _this.router.navigate(['Register']); });
+            var timer = Rx_1.Observable.timer(5000);
+            timer.subscribe(function () { return _this.router.navigate(['Login']); });
         }, function (err) {
             _this.errorService.handleHttpError(err);
         });

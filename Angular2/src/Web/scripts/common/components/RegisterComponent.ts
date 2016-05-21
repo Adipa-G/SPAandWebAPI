@@ -32,8 +32,8 @@ export class RegisterComponent {
         this.registerService.register(this.regInfo).subscribe(
             data => {
                 this.success = true;
-                let timer = Observable.timer(2000);
-                timer.subscribe(() => this.router.navigate(['Register']));
+                let timer = Observable.timer(5000);
+                timer.subscribe(() => this.router.navigate(['Login']));
             },
             err => {
                 this.errorService.handleHttpError(err);
