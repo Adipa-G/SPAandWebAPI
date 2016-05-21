@@ -3,6 +3,7 @@ using System.Linq;
 using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
+using Domain.Interfaces.Plumbing;
 using Domain.Models.Log;
 using Infrastructure.Repositories;
 using NSubstitute;
@@ -14,12 +15,14 @@ namespace Infrastructure.Test.Repositories
     public class LogWriterRepositoryTest : RepositoryTestBase
     {
         private IConfig _config;
+        private INHibernateSessionFactory _sessionFactory;
 
         [OneTimeSetUp]
         protected override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
             _config = Substitute.For<IConfig>();
+            _sessionFactory = Substitute.For<INHibernateSessionFactory>();
         }
 
         [OneTimeTearDown]
@@ -32,6 +35,7 @@ namespace Infrastructure.Test.Repositories
         protected override void SetUp()
         {
             base.SetUp();
+            _sessionFactory.GetSessionFactory().Returns(Session.SessionFactory);
         }
 
         [TearDown]
@@ -45,7 +49,7 @@ namespace Infrastructure.Test.Repositories
         {
             _config.LogLevelGeneral.Returns(LogLevel.Debug);
 
-            var sut = new LogWriterRepository(Session.SessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory);
             sut.Log(LogLevel.Error,LoggerName.General, "Test Message", new Exception());
             sut.LogThreadExec(_config, Session);
             FlushAndClear();
@@ -61,7 +65,7 @@ namespace Infrastructure.Test.Repositories
         {
             _config.LogLevelGeneral.Returns(LogLevel.Error);
 
-            var sut = new LogWriterRepository(Session.SessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory);
             sut.Log(LogLevel.Debug, LoggerName.General, "Test Message", new Exception());
             sut.LogThreadExec(_config, Session);
             FlushAndClear();
@@ -76,7 +80,7 @@ namespace Infrastructure.Test.Repositories
         {
             _config.LogLevelGeneral.Returns(LogLevel.Error);
 
-            var sut = new LogWriterRepository(Session.SessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory);
 
             sut.LogRequest(LogLevel.Debug,
                 new HttpLogModel()
@@ -110,7 +114,7 @@ namespace Infrastructure.Test.Repositories
         {
             _config.LogSqlStatements.Returns(true);
 
-            var sut = new LogWriterRepository(Session.SessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory);
             sut.LogSQL("test sql");
             sut.LogThreadExec(_config, Session);
             FlushAndClear();
