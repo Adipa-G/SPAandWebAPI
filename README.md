@@ -1,14 +1,32 @@
 #Introduction
-This is a set of seed applications to build upon, with following stack
+Set of seed applications using different combinations of Angular and Web Api
 
-###In folder MVC6 
+###Angular 2 - In Progress
+* MVC 6
+* IdentityServer4
+* NHibernate
+* Angular 2 - Typescript
+* Bootstrap
+* Sass
+
+#####Key Features
+* All the features of MVC6 project
+* Angular 2 with Typescript
+* Gulp tasks for frontend building (Typescript/ Sass) configured to run with Gulp Watch 
+
+###MVC6 
 * MVC 6
 * IdentityServer4
 * NHibernate
 * AngularJs
-* Bootstrap
+* Bootstrap 
 
-###In folder OwinIdentityServer3 
+#####Key Features
+* Dnx project structure
+* MVC6 built in DI container is used for dependecy injection
+* Identity server 4 used as OAuth provider (self hosted with the application)
+
+###OwinIdentityServer3 
 * Owin
 * IdentityServer3
 * NHibernate
@@ -17,7 +35,7 @@ This is a set of seed applications to build upon, with following stack
 * AngularJs
 * Bootstrap
 
-###In folder OwinOAuth
+###OwinOAuth
 * Owin
 * Owin Security with ASP .NET Identity
 * NHibernate
@@ -26,14 +44,19 @@ This is a set of seed applications to build upon, with following stack
 * AngularJs
 * Bootstrap
 
-###Features
+###UI Features
 * User registration / authentication
 * Error logs
 * Http logs
+
+###Solution Features
+* DI
+* Session per request implemented for NHibernate using middleware
+* Request/Response logging
 * Unit tests for Owin middleware
 * Unit tests for controllers
 * Integration tests for repositories, using SQLLite databases
-* Jasmine unit tests for angular services, controllers and directives 
+* Jasmine unit tests for angular services, controllers and directives (Angular 2 version does not have tests)* 
 
 ###How to use
 * Update the web.config connection string.
