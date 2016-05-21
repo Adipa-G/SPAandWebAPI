@@ -17,10 +17,8 @@ namespace Web.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context,ISession session)
         {
-            var session = context.ApplicationServices.GetService<ISession>();
-
             var needTransaction = new[] { "POST", "PUT", "DELETE" }.Contains(context.Request.Method);
             if (needTransaction)
             {
@@ -29,10 +27,12 @@ namespace Web.Middleware
                     try
                     {
                         await _next.Invoke(context);
+                        session.Flush();
                         transaction.Commit();
                     }
                     catch (Exception)
                     {
+                        session.Clear();
                         transaction.Rollback();
                         throw;
                     }

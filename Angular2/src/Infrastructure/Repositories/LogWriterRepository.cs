@@ -5,6 +5,7 @@ using System.Threading;
 using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
+using Domain.Interfaces.Plumbing;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
 using NHibernate;
@@ -16,10 +17,10 @@ namespace Infrastructure.Repositories
         private readonly IList<LogMessageRecord> _messageRecords = new List<LogMessageRecord>();
         private readonly IList<LogHttpRecord> _httpRecords = new List<LogHttpRecord>();
 
-        private readonly ISessionFactory _sessionFactory;
+        private readonly INHibernateSessionFactory _sessionFactory;
 
 
-        public LogWriterRepository(ISessionFactory sessionFactory)
+        public LogWriterRepository(INHibernateSessionFactory sessionFactory)
         {
             _sessionFactory = sessionFactory;
 
@@ -90,7 +91,7 @@ namespace Infrastructure.Repositories
         {
             while (true)
             {
-                using (var session = _sessionFactory.OpenSession())
+                using (var session = _sessionFactory.GetSessionFactory().OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
                     try
