@@ -1,5 +1,5 @@
-﻿import {Component} from 'angular2/core';
-import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+﻿import {Component, OnInit} from '@angular/core';
+import { Router,Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 import {MenuComponent} from './common/components/MenuComponent';
@@ -17,28 +17,29 @@ import {UserListComponent} from './admin/components/UserListComponent';
     providers: [ROUTER_PROVIDERS]
 })
 
-@RouteConfig([
+@Routes([
     {
         path: '/home',
-        name: 'Home',
-        component: HomeComponent,
-        useAsDefault: true
+        component: HomeComponent
     },
     {
         path: '/login',
-        name: 'Login',
         component: LoginComponent
     },
     {
         path: '/register',
-        name: 'Register',
         component: RegisterComponent
     },
     {
         path: '/userList',
-        name: 'UserList',
         component: UserListComponent
     }
 ])
 
-export class AppComponent { }
+export class AppComponent implements OnInit {
+    constructor(private router: Router) { }
+
+    ngOnInit() {
+        this.router.navigate(['/home']);
+    }   
+}

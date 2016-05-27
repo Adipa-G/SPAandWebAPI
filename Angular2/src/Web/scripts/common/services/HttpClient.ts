@@ -1,5 +1,5 @@
-﻿import {Http, Headers, Response} from 'angular2/http';
-import {Injectable, Inject} from 'angular2/core';
+﻿import {Http, Headers, Response} from '@angular/http';
+import {Injectable, Inject} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
 import {ErrorInfo} from '../../domain/ErrorInfo';

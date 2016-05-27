@@ -14,12 +14,12 @@
         </div>
         <div class="collapse navbar-collapse" id="navCollapseMenu">
             <ul class="nav navbar-nav navbar-right">
-                <li [hidden]="!currentAuth.isAuth"><a [routerLink]="['UserList']">Users</a></li>
+                <li [hidden]="!currentAuth.isAuth"><a [routerLink]="['/userList']">Users</a></li>
                 <li [hidden]="!currentAuth.isAuth"><a href="/logMessage">System Log</a></li>
                 <li [hidden]="!currentAuth.isAuth"><a href="/logHttp">Http Log</a></li>
                 <li [hidden]="!currentAuth.isAuth"><a href="" (click)="logOut()">Logout</a></li>
-                <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['Login']">Login</a></li>
-                <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['Register']">Sign Up</a></li>
+                <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['/login']">Login</a></li>
+                <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['/register']">Sign Up</a></li>
             </ul>
         </div>
     </div>
