@@ -1,5 +1,5 @@
 <div class="container" [hidden]="currentErrors.length === 0">
-    <div class="row alert alert-danger" *ngFor="#currentError of currentErrors">
+    <div class="row alert alert-danger" *ngFor="let currentError of currentErrors">
         <div class="col-md-10 col-md-offset-1">{{currentError.message}}</div>
     </div>
 </div>

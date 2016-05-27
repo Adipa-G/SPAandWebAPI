@@ -2,33 +2,24 @@
 <head>
     <base href="/Index.html">
     <meta charset="utf-8"/>
-    <title>Angular2/MVC6 Seed</title>
+    <title>@angular/MVC6 Seed</title>
 
     <!-- 1. Load Css -->
     <link href="libs/css/app.css" rel="stylesheet" />
     <link href="libs/css/bootstrap.css" rel="stylesheet"/>
-    <link href="libs/css/loading-bar.css" rel="stylesheet" />
     <link href="libs/css/font-awesome.css" rel="stylesheet" />
-    <link href="libs/css/idea.css" rel="stylesheet" />
 
     <!-- 2. Load libraries -->
     <script src="libs/jquery.js"></script>
     <script src="libs/bootstrap.js"></script>
     <script src="libs/moment.js"></script>
-    <script src="libs/vkbeautify.js"></script>
-    <script src="libs/highlight.pack.js"></script>
-
     <script src="libs/es6-shim.min.js"></script>
-    <script src="libs/system-polyfills.js"></script>
-    <script src="libs/shims_for_IE.js"></script>
-    <script src="libs/system.js"></script>
-    <script src="libs/rx.js"></script>
-    <script src="libs/angular2/angular2-polyfills.js"></script>
-    <script src="libs/angular2/angular2.dev.js"></script>
-    <script src="libs/angular2/router.dev.js"></script>
-    <script src="libs/angular2/http.dev.js"></script>
+    <script src="libs/Reflect.js"></script>
+    <script src="libs/zone.js"></script>
 
-    <!--<script src="libs/angular2/upgrade.dev.js"></script>
+    <script src="libs/System.js"></script>
+
+    <!--<script src="libs/@angular/upgrade.dev.js"></script>
     <script src="libs/angular.min.js"></script>
     <script src="libs/angular-route.min.js"></script>
     <script src="libs/angular-local-storage.min.js"></script>
@@ -66,7 +57,19 @@
     <!-- 5. Configure SystemJS -->
     <script>
         System.config({
+            map: {
+                '@angular': 'libs/angular',
+                'rxjs':'libs/rxjs'
+            },
             packages: {
+                'rxjs': { main: 'Rx.js' },
+                '@angular/core': { main: 'index.js' },
+                '@angular/http': { main: 'index.js' },
+                '@angular/common': { main: 'index.js' },
+                '@angular/compiler': { main: 'index.js' },
+                '@angular/router': { main: 'index.js' },
+                '@angular/platform-browser': { main: 'index.js' },
+                '@angular/platform-browser-dynamic': { main: 'index.js' },
                 appScripts: {
                     defaultExtension: 'js'
                 }
