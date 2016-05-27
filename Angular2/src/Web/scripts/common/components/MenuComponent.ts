@@ -1,5 +1,5 @@
-﻿import {Component} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES } from 'angular2/router'
+﻿import {Component} from '@angular/core';
+import {Router, ROUTER_DIRECTIVES } from '@angular/router'
 
 import {AuthenticationDetails} from '../../domain/auth/AuthenticationDetails';
 import {ErrorInfo} from '../../domain/ErrorInfo';
@@ -32,9 +32,9 @@ export class MenuComponent {
     private onAuthChanged(auth: AuthenticationDetails): void {
         if (this.currentAuth.isAuth !== auth.isAuth) {
             if (auth.isAuth) {
-                this.router.navigate(['UserList']);
+                this.router.navigate(['/userList']);
             } else {
-                this.router.navigate(['Home']);
+                this.router.navigate(['/home']);
             }    
         }
 
@@ -44,7 +44,7 @@ export class MenuComponent {
     private onAuthError(errorInfo: ErrorInfo): void {
         this.authService.clearAuthData();
         this.currentAuth = new AuthenticationDetails();
-        this.router.navigate(['Login']);
+        this.router.navigate(['/login']);
     }
 
     public logOut(): void {

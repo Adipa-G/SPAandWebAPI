@@ -1,6 +1,6 @@
-﻿import {Component} from 'angular2/core';
-import { NgForm }    from 'angular2/common';
-import {Router, ROUTER_DIRECTIVES } from 'angular2/router'
+﻿import {Component} from '@angular/core';
+import { NgForm }    from '@angular/common';
+import {Router, ROUTER_DIRECTIVES } from '@angular/router'
 
 import {Observable} from 'rxjs/Rx';
 
@@ -33,7 +33,7 @@ export class RegisterComponent {
             data => {
                 this.success = true;
                 let timer = Observable.timer(5000);
-                timer.subscribe(() => this.router.navigate(['Login']));
+                timer.subscribe(() => this.router.navigate(['/login']));
             },
             err => {
                 this.errorService.handleHttpError(err);

@@ -1,5 +1,5 @@
-﻿import {Injectable} from 'angular2/core';
-import {EventEmitter} from 'angular2/core';
+﻿import {Injectable} from '@angular/core';
+import {EventEmitter} from '@angular/core';
 
 import {ErrorInfo} from '../../domain/ErrorInfo';
 

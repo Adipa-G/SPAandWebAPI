@@ -1,5 +1,5 @@
-﻿import {Injectable, Inject} from 'angular2/core';
-import {Http, Response} from 'angular2/http';
+﻿import {Injectable, Inject} from '@angular/core';
+import {Http, Response} from '@angular/http';
 
 import {RegistrationInfo} from '../../domain/common/RegistrationInfo';
 
