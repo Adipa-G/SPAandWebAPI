@@ -1,10 +1,10 @@
-﻿import {Component, OnChanges, Input, Output, EventEmitter } from 'angular2/core';
+﻿import {Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
 import {OrderAndPage} from '../../domain/common/OrderAndPage';
 
 @Component({
     selector: '[sort-header]',
-    template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}<i class=\'fa {{sortIcon}}\'></i></span>'
+    template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}&nbsp;<i class=\'fa {{sortIcon}}\'></i></span>'
 })
 
 export class SortHeader implements OnChanges {

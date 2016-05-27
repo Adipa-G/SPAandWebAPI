@@ -1,4 +1,4 @@
-﻿import {Component} from 'angular2/core';
+﻿import {Component} from '@angular/core';
 
 import {OrderAndPage} from '../../domain/common/OrderAndPage';
 import {UserInfo} from '../../domain/admin/UserInfo';
@@ -7,23 +7,26 @@ import {ErrorService} from '../../common/services/ErrorService';
 import {UserService} from '../services/UserService';
 
 import {SortHeader} from '../../common/directives/SortHeader';
+import {Pagination} from '../../common/directives/Pagination';
 
 @Component({
     selector: 'admin-users',
     viewProviders: [UserService],
-    directives: [SortHeader],
+    directives: [SortHeader, Pagination],
     templateUrl: './templates/admin/components/UserListComponent.html'
 })
 
 export class UserListComponent {
     private orderAndPage: OrderAndPage;
     private errorMessage: string;
-    private users : UserInfo[];
+    private users: UserInfo[];
+    private totalCount: number;
 
     constructor(private errorService: ErrorService, private userService: UserService) {
         this.errorService = errorService;
         this.userService = userService;
         this.users = [];
+        this.totalCount = 0;
 
         this.orderAndPage = this.initOrderAndPagingDetails();
         this.updateView(this.orderAndPage);
@@ -34,6 +37,7 @@ export class UserListComponent {
         this.userService.getUsers(this.orderAndPage).subscribe(
             data => {
                 this.users = data.results;
+                this.totalCount = data.totalCount;
             },
             err => {
                 this.errorMessage = JSON.stringify(err);
@@ -46,7 +50,7 @@ export class UserListComponent {
         orderAndPage.orderField = 'UserName';
         orderAndPage.orderDirection = 'Asc';
         orderAndPage.pageNumber = 1;
-        orderAndPage.pageSize = 10;
+        orderAndPage.pageSize = 1;
         return orderAndPage;
     }
 

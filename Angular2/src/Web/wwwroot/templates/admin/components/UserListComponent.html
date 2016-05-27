@@ -9,7 +9,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor='#user of users'>
+                <tr *ngFor='let user of users'>
                     <td>
                         {{ user.userName }}
                     </td>
@@ -21,6 +21,6 @@
                 </tr>
             </tbody>
         </table>
-        <!--<div table-pager="orderAndPage"></div>-->
+        <div [pagination]="orderAndPage" [total-count]="totalCount" (page-changed)="updateView(orderAndPage)"></div>
     </div>
 </div>
