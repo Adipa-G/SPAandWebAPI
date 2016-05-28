@@ -2,13 +2,15 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "module": "commonjs",
+    "module": "system",
+    "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": false,
     "outDir": "../wwwroot/appScripts/",
     "removeComments": false,
     "sourceMap": false,
-    "target": "es6"
+    "target": "es6",
+    "outFile" : "../wwwroot/appScripts/app.js"
   },
   "exclude": [
     "node_modules"
