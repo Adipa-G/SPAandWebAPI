@@ -1,9 +1,11 @@
-﻿/// <binding AfterBuild='copy-libs,copy-templates,sass' />
+﻿/// <binding AfterBuild='copy-libs,copy-templates,sass,copyAppJS,typescript' />
+var path = require("path");
 var gulp = require('gulp');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var watch = require('gulp-watch');
 var ts = require('gulp-typescript');
+var uglify = require('gulp-uglify');
 
 gulp.task('copy-libs', function (done) {
     gulp.src([
@@ -13,25 +15,31 @@ gulp.task('copy-libs', function (done) {
       './node_modules/systemjs/dist/System.js',
       './node_modules/jquery/dist/jquery.*js',
       './node_modules/bootstrap/dist/js/bootstrap*.js',
-      './node_modules/moment/moment.js',
-      './scripts/common-scripts.js'
-    ]).pipe(gulp.dest('./wwwroot/libs/'));
+      './node_modules/moment/moment.js'
+    ])
+    .pipe(uglify())
+    .pipe(gulp.dest('./wwwroot/libs/'));
 
     gulp.src([
-      './node_modules/@angular/**/*.js'
-    ]).pipe(gulp.dest('./wwwroot/libs/angular/'));
+      './node_modules/@angular/**/*umd.js'
+    ])
+    .pipe(uglify())
+    .pipe(gulp.dest('./wwwroot/libs/angular/'));
 
     gulp.src([
-      './node_modules/rxjs/**/*.js'
-    ]).pipe(gulp.dest('./wwwroot/libs/rxjs/'));
+      './node_modules/rxjs/bundles/Rx.js'
+    ])
+    .pipe(uglify())
+    .pipe(gulp.dest('./wwwroot/libs/rxjs/'));
 
     gulp.src([
       './node_modules/bootstrap/dist/css/bootstrap.css',
       './node_modules/font-awesome/css/font-awesome.css'
-    ]).pipe(gulp.dest('./wwwroot/libs/css'));
+    ])
+    .pipe(gulp.dest('./wwwroot/libs/css'));
 
     return gulp.src('./node_modules/font-awesome/fonts/*.*')
-      .pipe(gulp.dest('./wwwroot/libs/fonts'));
+     .pipe(gulp.dest('./wwwroot/libs/fonts'));
 });
 
 gulp.task('copy-templates', function () {
@@ -45,16 +53,28 @@ gulp.task('sass', function () {
       .pipe(gulp.dest('./wwwroot/libs/css'));
 });
 
+gulp.task('copyAppJS', function () {
+    gulp.src([
+        './scripts/common-scripts.js',
+        './scripts/system-config.js'
+    ])
+    .pipe(uglify())
+    .pipe(gulp.dest('./wwwroot/appScripts/'));
+});
+
 gulp.task('typescript', function () {
     var tsProject = ts.createProject('./scripts/tsconfig.json');
     var tsResult = tsProject.src()
 		.pipe(ts(tsProject));
-    return tsResult.js.pipe(gulp.dest('./wwwroot/appScripts'));
+    return tsResult.js
+        //.pipe(uglify())
+        .pipe(gulp.dest('./wwwroot/appScripts'));
 });
 
 gulp.task('watch', function () {
     gulp.watch('scripts/**/*.html', ['copy-templates']);
     gulp.watch('scripts/**/*.ts', ['typescript']);
+    gulp.watch('scripts/**/*.js', ['copyAppJS']);
     gulp.watch('./sass/**/*.scss', ['sass']);
 });
 
