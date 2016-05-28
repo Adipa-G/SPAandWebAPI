@@ -18,6 +18,11 @@
     <script src="libs/zone.js"></script>
 
     <script src="libs/System.js"></script>
+    <script src="libs/rxjs/Rx.js"></script>
+
+    <script src="appScripts/common-scripts.js"></script>
+    <script src="appScripts/system-config.js"></script>
+    
 
     <!--<script src="libs/@angular/upgrade.dev.js"></script>
     <script src="libs/angular.min.js"></script>
@@ -56,29 +61,13 @@
 
     <!-- 5. Configure SystemJS -->
     <script>
-        System.config({
-            map: {
-                '@angular': 'libs/angular',
-                'rxjs':'libs/rxjs'
-            },
-            packages: {
-                'rxjs': { main: 'Rx.js' },
-                '@angular/core': { main: 'index.js' },
-                '@angular/http': { main: 'index.js' },
-                '@angular/common': { main: 'index.js' },
-                '@angular/compiler': { main: 'index.js' },
-                '@angular/router': { main: 'index.js' },
-                '@angular/platform-browser': { main: 'index.js' },
-                '@angular/platform-browser-dynamic': { main: 'index.js' },
-                appScripts: {
-                    defaultExtension: 'js'
-                }
-            }
+        System.import('rxjs')
+        .then(function(){
+            return System.import('appScripts');
+        })
+        .then(function(){
+            System.import('boot').then(null, console.error.bind(console));
         });
-    </script>
-    <script>
-        System.import('appScripts/boot')
-            .then(null, console.error.bind(console));
     </script>
 </head>
 <body>
