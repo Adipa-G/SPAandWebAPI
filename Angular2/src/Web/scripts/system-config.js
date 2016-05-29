@@ -1,20 +1,16 @@
 ﻿System.config({
     map: {
         '@angular': 'libs/angular',
-        'rxjs':'libs/rxjs/Rx.js'
+        'rxjs':'libs/rxjs/Rx.js.gz'
     },
     packages: {
-        '@angular/core': { main: 'core.umd.js' },
-        '@angular/http': { main: 'http.umd.js' },
-        '@angular/common': { main: 'common.umd.js' },
-        '@angular/compiler': { main: 'compiler.umd.js' },
-        '@angular/router': { main: 'router.umd.js' },
-        '@angular/platform-browser': { main: 'platform-browser.umd.js' },
-        '@angular/platform-browser-dynamic': { main: 'platform-browser-dynamic.umd.js' },
-        appScripts: {
-            main: 'app',
-            format: 'register',
-            defaultExtension: 'js'
-        }
+        '@angular/core': { main: 'core.umd.js.gz', defaultExtension: 'gz' },
+        '@angular/http': { main: 'http.umd.js.gz', defaultExtension: 'gz' },
+        '@angular/common': { main: 'common.umd.js.gz', defaultExtension: 'gz' },
+        '@angular/compiler': { main: 'compiler.umd.js.gz', defaultExtension: 'gz' },
+        '@angular/router': { main: 'router.umd.js', defaultExtension: 'gz' },
+        '@angular/platform-browser': { main: 'platform-browser.umd.js.gz', defaultExtension: 'gz' },
+        '@angular/platform-browser-dynamic': { main: 'platform-browser-dynamic.umd.js.gz', defaultExtension: 'gz' },
+        appScripts: {main: 'app',format: 'register',defaultExtension: 'js'}
     }
 });
