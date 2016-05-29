@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Net.Http.Headers;
 using Infrastructure.Modules;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.FileProviders;
@@ -63,6 +64,15 @@ namespace Web
                                {
                                    ContentTypeProvider = new ContentTypeProvider(),
                                    FileProvider = new FileProvider($"{_environment.ApplicationBasePath}\\wwwroot"),
+                                   OnPrepareResponse = context =>
+                                                       {
+                                                           if (context.File.Name.EndsWith("js.gz") ||
+                                                               context.File.Name.EndsWith("css.gz"))
+                                                           {
+                                                               context.Context.Response.Headers.Add("Content-Encoding",
+                                                                   "gzip");
+                                                           }
+                                                       }
                                });
 
             app.UseMiddleware<ValidateAntiForgeryToken>();
