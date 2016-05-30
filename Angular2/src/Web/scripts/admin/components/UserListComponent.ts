@@ -50,7 +50,7 @@ export class UserListComponent {
         orderAndPage.orderField = 'UserName';
         orderAndPage.orderDirection = 'Asc';
         orderAndPage.pageNumber = 1;
-        orderAndPage.pageSize = 1;
+        orderAndPage.pageSize = 5;
         return orderAndPage;
     }
 

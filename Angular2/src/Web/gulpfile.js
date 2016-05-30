@@ -14,7 +14,7 @@ gulp.task('copy-libs', function () {
       './node_modules/zone.js/dist/zone.js',
       './node_modules/reflect-metadata/Reflect.js',
       './node_modules/systemjs/dist/System.js',
-      './node_modules/jquery/dist/jquery.*js',
+      './node_modules/jquery/dist/jquery.js',
       './node_modules/bootstrap/dist/js/bootstrap*.js',
       './node_modules/moment/moment.js'
     ])
