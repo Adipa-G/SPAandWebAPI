@@ -16,7 +16,7 @@
     <script src="libs/es6-shim.min.js.gz"></script>
     <script src="libs/Reflect.js.gz"></script>
     <script src="libs/zone.js.gz"></script>
-
+    
     <script src="libs/System.js.gz"></script>
     <script src="libs/rxjs/Rx.js.gz"></script>
 
@@ -72,7 +72,14 @@
 </head>
 <body>
 
-<angular-auth-app></angular-auth-app>
+<angular-auth-app>
+    <div class="loading">
+        <div class="screen-overlay"></div>
+        <div class="center-screen">
+            <span><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>Loading....</span>
+        </div>
+    </div>   
+</angular-auth-app>
 
 <div id="footer">
     <div class="container">
