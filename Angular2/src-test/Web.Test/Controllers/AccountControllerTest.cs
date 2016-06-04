@@ -30,7 +30,7 @@ namespace Web.Test.Controllers
         {
             _userRepository.RegisterUser(Arg.Any<UserModel>()).Returns(new UserModel() {UserName = "A"});
 
-            var result = _controller.Register(new UserModel()) as HttpOkResult;
+            var result = _controller.Register(new UserModel()) as HttpOkObjectResult;
 
             Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
             _userRepository.Received(1).RegisterUser(Arg.Any<UserModel>());
