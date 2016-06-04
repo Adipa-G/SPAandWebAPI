@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using Domain;
 using Domain.Entities;
@@ -44,11 +45,19 @@ namespace Infrastructure.Repositories
             }
             if (!string.IsNullOrWhiteSpace(request.FromDate))
             {
-                query = query.Where(lm => lm.LogTimestamp > request.FromDate.Timestamp());
+                var fromDate = request.FromDate.Timestamp();
+                if (fromDate > SqlDateTime.MinValue.Value)
+                {
+                    query = query.Where(lm => lm.LogTimestamp > request.FromDate.Timestamp());
+                }
             }
             if (!string.IsNullOrWhiteSpace(request.ToDate))
             {
-                query = query.Where(lm => lm.LogTimestamp < request.ToDate.Timestamp());
+                var toDate = request.ToDate.Timestamp();
+                if (toDate > SqlDateTime.MinValue.Value)
+                {
+                    query = query.Where(lm => lm.LogTimestamp < request.ToDate.Timestamp());
+                }
             }
             if (request.OrderDirection == SortDirection.Asc)
             {
@@ -105,11 +114,19 @@ namespace Infrastructure.Repositories
                 }
                 if (!string.IsNullOrWhiteSpace(request.FromDate))
                 {
-                    query = query.Where(lm => lm.CalledOn > request.FromDate.Timestamp());
+                    var fromDate = request.FromDate.Timestamp();
+                    if (fromDate > SqlDateTime.MinValue.Value)
+                    {
+                        query = query.Where(lm => lm.CalledOn > fromDate);
+                    }
                 }
                 if (!string.IsNullOrWhiteSpace(request.ToDate))
                 {
-                    query = query.Where(lm => lm.CalledOn < request.ToDate.Timestamp());
+                    var toDate = request.ToDate.Timestamp();
+                    if (toDate > SqlDateTime.MinValue.Value)
+                    {
+                        query = query.Where(lm => lm.CalledOn < toDate);
+                    }
                 }
                 if (request.OrderDirection == SortDirection.Asc)
                 {
@@ -122,11 +139,12 @@ namespace Infrastructure.Repositories
             }
 
             var totalCount = query.RowCount();
-            var results =
-                query.Skip((request.PageNumber - 1) * request.PageSize)
-                    .Take(request.PageSize)
-                    .List()
-                    .Select(
+
+            var sqlResults = query.Skip((request.PageNumber - 1)*request.PageSize)
+                .Take(request.PageSize)
+                .List();
+
+            var results = sqlResults.Select(
                         r =>
                             new LogHttpListItemModel()
                             {
