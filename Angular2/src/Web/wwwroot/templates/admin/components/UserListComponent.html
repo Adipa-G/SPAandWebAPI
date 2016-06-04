@@ -3,7 +3,6 @@
         <table class="table table-striped table-bordered table-hover table-responsive">
             <thead>
                 <tr>
-                    <!--<th sort-header="orderAndPage" sort-field="UserName" class="sort-table-header">Username</th>-->
                     <th [sort-header]="orderAndPage" order-field="UserName" text="User Name" (order-changed)="updateView(orderAndPage)"></th>
                     <th class="icon-col-1">&nbsp;</th>
                 </tr>

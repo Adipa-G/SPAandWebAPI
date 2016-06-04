@@ -1,4 +1,4 @@
-﻿import {Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+﻿import {Component, DoCheck, Input, Output, EventEmitter } from '@angular/core';
 
 import {OrderAndPage} from '../../domain/common/OrderAndPage';
 
@@ -7,7 +7,7 @@ import {OrderAndPage} from '../../domain/common/OrderAndPage';
     template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}&nbsp;<i class=\'fa {{sortIcon}}\'></i></span>'
 })
 
-export class SortHeader implements OnChanges {
+export class SortHeader implements DoCheck {
     @Input() text: string;
     @Input('order-field') orderField: string;
     @Input('sort-header') orderOptions: OrderAndPage;
@@ -34,14 +34,16 @@ export class SortHeader implements OnChanges {
         this.orderChanged.emit(this.orderOptions);
     }
 
-    ngOnChanges(changes) {
+    ngDoCheck() {
         this.setIcon();
     }
 
     private setIcon(): void {
-        if (this.orderOptions.orderDirection === 'Asc') {
+        if (this.orderOptions.orderField === this.orderField &&
+            this.orderOptions.orderDirection === 'Asc') {
             this.sortIcon = 'fa-sort-alpha-asc';
-        } else if (this.orderOptions.orderDirection === 'Desc') {
+        } else if (this.orderOptions.orderField === this.orderField &&
+            this.orderOptions.orderDirection === 'Desc') {
             this.sortIcon = 'fa-sort-alpha-desc';
         }
         else {
