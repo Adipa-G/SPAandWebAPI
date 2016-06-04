@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using Domain.Enum;
@@ -79,8 +80,11 @@ namespace Web.Test.Middleware
             _logRepository.LogRequest(Arg.Any<LogLevel>(),Arg.Do<HttpLogModel>(x => logModel = x),Arg.Any<Exception>());
 
             _config.LogRequests.Returns(true);
+
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, "ABC"));
+            _context.User = new ClaimsPrincipal(new ClaimsIdentity(claims,"Done"));
             
-            _context.User = new GenericPrincipal(new GenericIdentity("ABC"), new[] {"a", "b"});
             _context.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes("request body"));
             _context.Request.Method = "GET";
             _context.Request.ContentType = "application/json";
@@ -137,3 +141,4 @@ namespace Web.Test.Middleware
         }
     }
 }
+
