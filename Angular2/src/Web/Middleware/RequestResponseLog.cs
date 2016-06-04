@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -76,7 +78,7 @@ namespace Web.Middleware
         private async Task UpdateForRequest(HttpLogModel model, HttpRequest request)
         {
             model.RequestIdentity = request.HttpContext.User != null && request.HttpContext.User.Identity.IsAuthenticated
-                ? request.HttpContext.User.Identity.Name
+                ? ((ClaimsIdentity) request.HttpContext.User.Identity).Claims.Single(c =>c.Type == ClaimTypes.NameIdentifier).Value
                 : "(anonymous)";
             model.CallerAddress = request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty;
             model.Verb = request.Method;

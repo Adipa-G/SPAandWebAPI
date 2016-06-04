@@ -1,7 +1,8 @@
 ﻿System.config({
     map: {
         '@angular': 'libs/angular',
-        'rxjs':'libs/rxjs/Rx.js.gz'
+        'rxjs':'libs/rxjs/Rx.js.gz',
+        'moment':'libs/moment.js.gz'
     },
     packages: {
         '@angular/core': { main: 'core.umd.js.gz', defaultExtension: 'gz' },

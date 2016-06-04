@@ -9,6 +9,8 @@ import {LoginComponent} from './common/components/LoginComponent';
 import {RegisterComponent} from './common/components/RegisterComponent';
 
 import {UserListComponent} from './admin/components/UserListComponent';
+import {HttpLogComponent} from './admin/components/HttpLogComponent';
+import {LogMessagesComponent} from './admin/components/LogMessagesComponent';
 
 @Component({
     selector: 'angular-auth-app',
@@ -33,6 +35,14 @@ import {UserListComponent} from './admin/components/UserListComponent';
     {
         path: '/userList',
         component: UserListComponent
+    },
+    {
+        path: '/httpLog',
+        component: HttpLogComponent
+    },
+    {
+        path: '/logMessages',
+        component: LogMessagesComponent
     }
 ])
 
