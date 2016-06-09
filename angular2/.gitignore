@@ -1,0 +1,6 @@
+MVC6/artifacts/**/*.*
+Angular2/src/Web/node_modules/*
+Angular2/src/Web/wwwroot/appScripts/**/*.*
+Angular2/src/Web/wwwroot/templates/**/*.*
+Angular2/src/Web/wwwroot/libs/*
+**/node_modules/**
