@@ -1,0 +1,37 @@
+﻿<form role="form" name="registrationForm">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <fieldset>
+                <legend class="h2">Register</legend>
+                <div class="form-group" validator="string[3,,'User name should at least 3 characters long.']">
+                    <label for="registrationUserName">User Name</label>
+                    <input type="text" id="registrationUserName" name="registrationUserName" class="form-control" placeholder="Username"
+                            data-ng-model="registration.userName" autofocus>
+                </div>
+                <div class="form-group" validator="string[6,,'Password should be minimum of 6 characters long.']">
+                    <label for="registrationPassword">Password</label>
+                    <input type="password" id="registrationPassword" name="registrationPassword" class="form-control" placeholder="Password"
+                            data-ng-model="registration.password">
+                </div>
+                <div class="form-group" validator="string[6,,'Password should be minimum of 6 characters long.'],equalto['registrationPassword','Password should be the same.']">
+                    <label for="registrationConfirmPassword">Confirm Password</label>
+                    <input type="password" id="registrationConfirmPassword" name="registrationConfirmPassword" class="form-control" placeholder="Confirm Password"
+                            data-ng-model="registration.confirmPassword">
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div data-ng-hide="message == ''" class="alert alert-danger">
+                {{message}}
+            </div>
+            <div data-ng-hide="successMessagge == ''" class="alert alert-success">
+                {{successMessagge}}
+            </div>
+            <div class="form-group">
+                <button type="button" ng-disabled="registrationForm.$invalid" class="btn btn-md btn-info btn-block" ng-click="signUp()">Register</button>
+            </div>
+        </div>
+    </div>
+</form>
