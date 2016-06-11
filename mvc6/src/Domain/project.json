@@ -1,0 +1,28 @@
+﻿{
+  "version": "1.0.0-*",
+  "compilationOptions": {
+    "emitEntryPoint": false
+  },
+
+  "dependencies": {
+    "FluentNHibernate": "2.0.3.0",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
+  },
+
+  "commands": {
+  },
+
+  "frameworks": {
+    "dnx46": { }
+  },
+
+  "exclude": [
+  ],
+  "publishExclude": [
+    "**.user",
+    "**.vspscc"
+  ],
+  "scripts": {
+    "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ]
+  }
+}

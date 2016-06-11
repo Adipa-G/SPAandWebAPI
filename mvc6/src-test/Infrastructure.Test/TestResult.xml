@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" name="Microsoft.Dnx.Loader.dll" fullname="C:/Users/adipa_000/.dnx/runtimes/dnx-clr-win-x86.1.0.0-rc1-update1/bin/Microsoft.Dnx.Loader.dll" testcasecount="28" result="Passed" start-time="2016-06-11 02:35:20Z" end-time="2016-06-11 02:35:22Z" duration="2.352054" total="28" passed="28" failed="0" inconclusive="0" skipped="0" asserts="56" random-seed="2100010656">
+  <command-line><![CDATA["C:\Users\adipa_000\.dnx\runtimes\dnx-clr-win-x86.1.0.0-rc1-update1\bin\dnx.exe"  --appbase "Y:\dev\community\github\angularandwebapi\Solution\src-test\Infrastructure.Test" "Microsoft.Dnx.ApplicationHost"  --configuration Debug "Infrastructure.Test" ]]></command-line>
+  <filter />
+  <test-suite type="Assembly" id="1032" name="Microsoft.Dnx.Loader.dll" fullname="C:/Users/adipa_000/.dnx/runtimes/dnx-clr-win-x86.1.0.0-rc1-update1/bin/Microsoft.Dnx.Loader.dll" runstate="Runnable" testcasecount="28" result="Passed" start-time="2016-06-11 02:35:20Z" end-time="2016-06-11 02:35:22Z" duration="2.352054" total="28" passed="28" failed="0" inconclusive="0" skipped="0" asserts="56">
+    <environment framework-version="3.2.1.0" clr-version="4.0.30319.42000" os-version="Microsoft Windows NT 10.0.10586.0" platform="Win32NT" cwd="Y:\dev\community\github\angularandwebapi\Solution\src-test\Infrastructure.Test" machine-name="ADIPA-PC" user="adipa_000" user-domain="ADIPA-PC" culture="en-US" uiculture="en-US" os-architecture="x86" />
+    <settings>
+      <setting name="WorkDirectory" value="Y:\dev\community\github\angularandwebapi\Solution\src-test\Infrastructure.Test" />
+      <setting name="NumberOfTestWorkers" value="4" />
+    </settings>
+    <properties>
+      <property name="_PID" value="15732" />
+      <property name="_APPDOMAIN" value="DefaultDomain" />
+    </properties>
+    <test-suite type="TestSuite" id="1033" name="Infrastructure" fullname="Infrastructure" runstate="Runnable" testcasecount="28" result="Passed" start-time="2016-06-11 02:35:20Z" end-time="2016-06-11 02:35:22Z" duration="2.343143" total="28" passed="28" failed="0" inconclusive="0" skipped="0" asserts="56">
+      <test-suite type="TestSuite" id="1034" name="Test" fullname="Infrastructure.Test" runstate="Runnable" testcasecount="28" result="Passed" start-time="2016-06-11 02:35:20Z" end-time="2016-06-11 02:35:22Z" duration="2.343015" total="28" passed="28" failed="0" inconclusive="0" skipped="0" asserts="56">
+        <test-suite type="TestSuite" id="1035" name="Repositories" fullname="Infrastructure.Test.Repositories" runstate="Runnable" testcasecount="28" result="Passed" start-time="2016-06-11 02:35:20Z" end-time="2016-06-11 02:35:22Z" duration="2.342989" total="28" passed="28" failed="0" inconclusive="0" skipped="0" asserts="56">
+          <test-suite type="TestFixture" id="1000" name="AuthRepositoryTest" fullname="Infrastructure.Test.Repositories.AuthRepositoryTest" classname="Infrastructure.Test.Repositories.AuthRepositoryTest" runstate="Runnable" testcasecount="5" result="Passed" start-time="2016-06-11 02:35:20Z" end-time="2016-06-11 02:35:22Z" duration="1.870104" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="10">
+            <output><![CDATA[
+    PRAGMA foreign_keys = OFF
+
+    drop table if exists "ConfigSetting"
+
+    drop table if exists "LogHttpRecord"
+
+    drop table if exists "LogMessageRecord"
+
+    drop table if exists "User"
+
+    PRAGMA foreign_keys = ON
+
+    create table "ConfigSetting" (
+        Id  integer primary key autoincrement,
+       ConfigKey TEXT not null,
+       ConfigValue TEXT
+    )
+
+    create table "LogHttpRecord" (
+        Id  integer primary key autoincrement,
+       Level TEXT not null,
+       TrackingId TEXT,
+       CalledOn DATETIME not null,
+       CallerAddress TEXT not null,
+       RequestIdentity TEXT not null,
+       Verb TEXT not null,
+       RequestUri TEXT not null,
+       RequestHeaders ntext not null,
+       Request ntext not null,
+       StatusCode INT,
+       ReasonPhrase TEXT,
+       ResponseHeaders ntext,
+       Response ntext,
+       CallDuration BIGINT
+    )
+
+    create table "LogMessageRecord" (
+        Id  integer primary key autoincrement,
+       LogTimestamp DATETIME not null,
+       Level TEXT not null,
+       Logger TEXT not null,
+       Message ntext not null,
+       StackTrace ntext
+    )
+
+    create table "User" (
+        UserId  integer primary key autoincrement,
+       UserName TEXT not null,
+       Password TEXT not null
+    )
+]]></output>
+            <test-case id="1001" name="GivenNoUser_WhenRegisterUser_ThenCreateUser" fullname="Infrastructure.Test.Repositories.AuthRepositoryTest.GivenNoUser_WhenRegisterUser_ThenCreateUser" methodname="GivenNoUser_WhenRegisterUser_ThenCreateUser" classname="Infrastructure.Test.Repositories.AuthRepositoryTest" runstate="Runnable" seed="798259755" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.206826" asserts="1">
+              <output><![CDATA[INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'a' [Type: String (0)], @p1 = '4y7xliPo7Z0mf2V6gZRLPQetu3aFGAaOiENXRVZOjUFQoKcDvip9iLYePTkMK7l+LUwxH9xp1rEmfwX1mqkg5w==' [Type: String (0)]
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ WHERE (this_.UserName = ? and this_.Password = ?)
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ WHERE (this_.UserName = @p0 and this_.Password = @p1);@p0 = 'a' [Type: String (0)], @p1 = '4y7xliPo7Z0mf2V6gZRLPQetu3aFGAaOiENXRVZOjUFQoKcDvip9iLYePTkMK7l+LUwxH9xp1rEmfwX1mqkg5w==' [Type: String (0)]
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ WHERE (this_.UserName = ? and this_.Password = ?)
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ WHERE (this_.UserName = @p0 and this_.Password = @p1);@p0 = 'a' [Type: String (0)], @p1 = '4y7xliPo7Z0mf2V6gZRLPQetu3aFGAaOiENXRVZOjUFQoKcDvip9iLYePTkMK7l+LUwxH9xp1rEmfwX1mqkg5w==' [Type: String (0)]
+]]></output>
+            </test-case>
+            <test-case id="1005" name="GivenUser_WhenDelete_ThenDelete" fullname="Infrastructure.Test.Repositories.AuthRepositoryTest.GivenUser_WhenDelete_ThenDelete" methodname="GivenUser_WhenDelete_ThenDelete" classname="Infrastructure.Test.Repositories.AuthRepositoryTest" runstate="Runnable" seed="813987263" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.038629" asserts="2">
+              <output><![CDATA[INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'A' [Type: String (0)], @p1 = '123' [Type: String (0)]
+SELECT count(*) as y0_ FROM "User" this_
+NHibernate: SELECT count(*) as y0_ FROM "User" this_
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit ?
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit @p0;@p0 = 3 [Type: Int32 (0)]
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ WHERE this_.UserName = ?
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ WHERE this_.UserName = @p0;@p0 = 'A' [Type: String (0)]
+DELETE FROM "User" WHERE UserId = ?
+NHibernate: DELETE FROM "User" WHERE UserId = @p0;@p0 = 1 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "User" this_
+NHibernate: SELECT count(*) as y0_ FROM "User" this_
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit ?
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit @p0;@p0 = 3 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1002" name="GivenUser_WhenList_ThenList" fullname="Infrastructure.Test.Repositories.AuthRepositoryTest.GivenUser_WhenList_ThenList" methodname="GivenUser_WhenList_ThenList" classname="Infrastructure.Test.Repositories.AuthRepositoryTest" runstate="Runnable" seed="1630670862" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.002606" asserts="2">
+              <output><![CDATA[INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'Test' [Type: String (0)], @p1 = '123' [Type: String (0)]
+SELECT count(*) as y0_ FROM "User" this_
+NHibernate: SELECT count(*) as y0_ FROM "User" this_
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit ?
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit @p0;@p0 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1004" name="GivenUsers_WhenListWithOrdering_ThenSort" fullname="Infrastructure.Test.Repositories.AuthRepositoryTest.GivenUsers_WhenListWithOrdering_ThenSort" methodname="GivenUsers_WhenListWithOrdering_ThenSort" classname="Infrastructure.Test.Repositories.AuthRepositoryTest" runstate="Runnable" seed="277322916" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.009896" asserts="3">
+              <output><![CDATA[INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'A' [Type: String (0)], @p1 = '123' [Type: String (0)]
+INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'B' [Type: String (0)], @p1 = '123' [Type: String (0)]
+INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'C' [Type: String (0)], @p1 = '123' [Type: String (0)]
+SELECT count(*) as y0_ FROM "User" this_
+NHibernate: SELECT count(*) as y0_ FROM "User" this_
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ ORDER BY this_.UserName desc limit ?
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ ORDER BY this_.UserName desc limit @p0;@p0 = 3 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1003" name="GivenUsers_WhenListWithPage_ThenPage" fullname="Infrastructure.Test.Repositories.AuthRepositoryTest.GivenUsers_WhenListWithPage_ThenPage" methodname="GivenUsers_WhenListWithPage_ThenPage" classname="Infrastructure.Test.Repositories.AuthRepositoryTest" runstate="Runnable" seed="993609143" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.004920" asserts="2">
+              <output><![CDATA[INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'Test1' [Type: String (0)], @p1 = '123' [Type: String (0)]
+INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'Test2' [Type: String (0)], @p1 = '123' [Type: String (0)]
+INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'Test3' [Type: String (0)], @p1 = '123' [Type: String (0)]
+INSERT INTO "User" (UserName, Password) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "User" (UserName, Password) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'Test4' [Type: String (0)], @p1 = '123' [Type: String (0)]
+SELECT count(*) as y0_ FROM "User" this_
+NHibernate: SELECT count(*) as y0_ FROM "User" this_
+SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit ? offset ?
+NHibernate: SELECT this_.UserId as UserId3_0_, this_.UserName as UserName3_0_, this_.Password as Password3_0_ FROM "User" this_ limit @p0 offset @p1;@p0 = 3 [Type: Int32 (0)], @p1 = 3 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1006" name="ConfigRepositoryTest" fullname="Infrastructure.Test.Repositories.ConfigRepositoryTest" classname="Infrastructure.Test.Repositories.ConfigRepositoryTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.044358" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="3">
+            <output><![CDATA[
+    PRAGMA foreign_keys = OFF
+
+    drop table if exists "ConfigSetting"
+
+    drop table if exists "LogHttpRecord"
+
+    drop table if exists "LogMessageRecord"
+
+    drop table if exists "User"
+
+    PRAGMA foreign_keys = ON
+
+    create table "ConfigSetting" (
+        Id  integer primary key autoincrement,
+       ConfigKey TEXT not null,
+       ConfigValue TEXT
+    )
+
+    create table "LogHttpRecord" (
+        Id  integer primary key autoincrement,
+       Level TEXT not null,
+       TrackingId TEXT,
+       CalledOn DATETIME not null,
+       CallerAddress TEXT not null,
+       RequestIdentity TEXT not null,
+       Verb TEXT not null,
+       RequestUri TEXT not null,
+       RequestHeaders ntext not null,
+       Request ntext not null,
+       StatusCode INT,
+       ReasonPhrase TEXT,
+       ResponseHeaders ntext,
+       Response ntext,
+       CallDuration BIGINT
+    )
+
+    create table "LogMessageRecord" (
+        Id  integer primary key autoincrement,
+       LogTimestamp DATETIME not null,
+       Level TEXT not null,
+       Logger TEXT not null,
+       Message ntext not null,
+       StackTrace ntext
+    )
+
+    create table "User" (
+        UserId  integer primary key autoincrement,
+       UserName TEXT not null,
+       Password TEXT not null
+    )
+]]></output>
+            <test-case id="1008" name="GivenNoSettingValue_WhenGetSettingValue_ThenWriteDefaultValue" fullname="Infrastructure.Test.Repositories.ConfigRepositoryTest.GivenNoSettingValue_WhenGetSettingValue_ThenWriteDefaultValue" methodname="GivenNoSettingValue_WhenGetSettingValue_ThenWriteDefaultValue" classname="Infrastructure.Test.Repositories.ConfigRepositoryTest" runstate="Runnable" seed="963478164" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.009026" asserts="1">
+              <output><![CDATA[SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = ?
+NHibernate: SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = @p0;@p0 = 'abc' [Type: String (0)]
+SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = ?
+NHibernate: SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = @p0;@p0 = 'abc' [Type: String (0)]
+INSERT INTO "ConfigSetting" (ConfigKey, ConfigValue) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "ConfigSetting" (ConfigKey, ConfigValue) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'abc' [Type: String (0)], @p1 = 'pqr' [Type: String (0)]
+SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = ?
+NHibernate: SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = @p0;@p0 = 'abc' [Type: String (0)]
+]]></output>
+            </test-case>
+            <test-case id="1009" name="GivenNoSettingValue_WhenSetSettingValue_ThenSetValue" fullname="Infrastructure.Test.Repositories.ConfigRepositoryTest.GivenNoSettingValue_WhenSetSettingValue_ThenSetValue" methodname="GivenNoSettingValue_WhenSetSettingValue_ThenSetValue" classname="Infrastructure.Test.Repositories.ConfigRepositoryTest" runstate="Runnable" seed="211985103" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.003265" asserts="1">
+              <output><![CDATA[SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = ?
+NHibernate: SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = @p0;@p0 = 'abc' [Type: String (0)]
+INSERT INTO "ConfigSetting" (ConfigKey, ConfigValue) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "ConfigSetting" (ConfigKey, ConfigValue) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'abc' [Type: String (0)], @p1 = 'pqr' [Type: String (0)]
+SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = ?
+NHibernate: SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = @p0;@p0 = 'abc' [Type: String (0)]
+]]></output>
+            </test-case>
+            <test-case id="1007" name="GivenSettingValue_WhenGetSettingValue_ThenReturnValue" fullname="Infrastructure.Test.Repositories.ConfigRepositoryTest.GivenSettingValue_WhenGetSettingValue_ThenReturnValue" methodname="GivenSettingValue_WhenGetSettingValue_ThenReturnValue" classname="Infrastructure.Test.Repositories.ConfigRepositoryTest" runstate="Runnable" seed="1355097167" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.002864" asserts="1">
+              <output><![CDATA[INSERT INTO "ConfigSetting" (ConfigKey, ConfigValue) VALUES (?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "ConfigSetting" (ConfigKey, ConfigValue) VALUES (@p0, @p1); select last_insert_rowid();@p0 = 'abc' [Type: String (0)], @p1 = 'def' [Type: String (0)]
+SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = ?
+NHibernate: SELECT this_.Id as Id8_0_, this_.ConfigKey as ConfigKey8_0_, this_.ConfigValue as ConfigVa3_8_0_ FROM "ConfigSetting" this_ WHERE this_.ConfigKey = @p0;@p0 = 'abc' [Type: String (0)]
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1010" name="LogViewRepositoryTest" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" testcasecount="16" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.126486" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="36">
+            <output><![CDATA[
+    PRAGMA foreign_keys = OFF
+
+    drop table if exists "ConfigSetting"
+
+    drop table if exists "LogHttpRecord"
+
+    drop table if exists "LogMessageRecord"
+
+    drop table if exists "User"
+
+    PRAGMA foreign_keys = ON
+
+    create table "ConfigSetting" (
+        Id  integer primary key autoincrement,
+       ConfigKey TEXT not null,
+       ConfigValue TEXT
+    )
+
+    create table "LogHttpRecord" (
+        Id  integer primary key autoincrement,
+       Level TEXT not null,
+       TrackingId TEXT,
+       CalledOn DATETIME not null,
+       CallerAddress TEXT not null,
+       RequestIdentity TEXT not null,
+       Verb TEXT not null,
+       RequestUri TEXT not null,
+       RequestHeaders ntext not null,
+       Request ntext not null,
+       StatusCode INT,
+       ReasonPhrase TEXT,
+       ResponseHeaders ntext,
+       Response ntext,
+       CallDuration BIGINT
+    )
+
+    create table "LogMessageRecord" (
+        Id  integer primary key autoincrement,
+       LogTimestamp DATETIME not null,
+       Level TEXT not null,
+       Logger TEXT not null,
+       Message ntext not null,
+       StackTrace ntext
+    )
+
+    create table "User" (
+        UserId  integer primary key autoincrement,
+       UserName TEXT not null,
+       Password TEXT not null
+    )
+]]></output>
+            <test-case id="1011" name="GetAllLevels_ThenReturnAllLevels" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GetAllLevels_ThenReturnAllLevels" methodname="GetAllLevels_ThenReturnAllLevels" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="118089422" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.001815" asserts="1" />
+            <test-case id="1012" name="GetAllLoggers_ThenReturnAllLevels" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GetAllLoggers_ThenReturnAllLevels" methodname="GetAllLoggers_ThenReturnAllLevels" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1620750620" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.001265" asserts="1" />
+            <test-case id="1022" name="GivenAfterFromDate_WhenGetLogHttp_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenAfterFromDate_WhenGetLogHttp_ThenReturn" methodname="GivenAfterFromDate_WhenGetLogHttp_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1835946489" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.023639" asserts="2">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn > ?
+NHibernate: SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn > @p0;@p0 = 6/10/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn > ? limit ?
+NHibernate: SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn > @p0 limit @p1;@p0 = 6/10/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1015" name="GivenAfterFromDate_WhenGetLogMessages_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenAfterFromDate_WhenGetLogMessages_ThenReturn" methodname="GivenAfterFromDate_WhenGetLogMessages_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1079396103" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.011714" asserts="2">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'Test message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp > ?
+NHibernate: SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp > @p0;@p0 = 6/10/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp > ? limit ?
+NHibernate: SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp > @p0 limit @p1;@p0 = 6/10/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1023" name="GivenBeforeToDate_WhenGetLogHttp_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenBeforeToDate_WhenGetLogHttp_ThenReturn" methodname="GivenBeforeToDate_WhenGetLogHttp_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="107278582" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.003356" asserts="2">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ? limit ?
+NHibernate: SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0 limit @p1;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1016" name="GivenBeforeToDate_WhenGetLogMessages_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenBeforeToDate_WhenGetLogMessages_ThenReturn" methodname="GivenBeforeToDate_WhenGetLogMessages_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1694934116" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.002993" asserts="2">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'Test message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ? limit ?
+NHibernate: SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0 limit @p1;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1020" name="GivenLevelMatching_WhenGetLogHttp_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLevelMatching_WhenGetLogHttp_ThenReturn" methodname="GivenLevelMatching_WhenGetLogHttp_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="866290569" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.005559" asserts="2">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.Level = ?
+NHibernate: SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.Level = @p0;@p0 = 'Error' [Type: String (0)]
+SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.Level = ? limit ?
+NHibernate: SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.Level = @p0 limit @p1;@p0 = 'Error' [Type: String (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1013" name="GivenLevelMatching_WhenGetLogMessages_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLevelMatching_WhenGetLogMessages_ThenReturn" methodname="GivenLevelMatching_WhenGetLogMessages_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1328488278" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.004302" asserts="2">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'Test message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.Level = ?
+NHibernate: SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.Level = @p0;@p0 = 'Error' [Type: String (0)]
+SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.Level = ? limit ?
+NHibernate: SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.Level = @p0 limit @p1;@p0 = 'Error' [Type: String (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1014" name="GivenLoggerMatching_WhenGetLogMessages_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLoggerMatching_WhenGetLogMessages_ThenReturn" methodname="GivenLoggerMatching_WhenGetLogMessages_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="2055237640" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.003910" asserts="2">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'Test message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.Logger = ?
+NHibernate: SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.Logger = @p0;@p0 = 'Test' [Type: String (0)]
+SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.Logger = ? limit ?
+NHibernate: SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.Logger = @p0 limit @p1;@p0 = 'Test' [Type: String (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1024" name="GivenLogMessages_WhenGetLogHttpWithOrderAsc_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLogMessages_WhenGetLogHttpWithOrderAsc_ThenReturn" methodname="GivenLogMessages_WhenGetLogHttpWithOrderAsc_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="129833087" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.004629" asserts="3">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'A Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'B Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ? ORDER BY this_.TrackingId asc limit ?
+NHibernate: SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0 ORDER BY this_.TrackingId asc limit @p1;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1025" name="GivenLogMessages_WhenGetLogHttpWithOrderDesc_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLogMessages_WhenGetLogHttpWithOrderDesc_ThenReturn" methodname="GivenLogMessages_WhenGetLogHttpWithOrderDesc_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="657009205" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.003887" asserts="3">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'A Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'B Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ? ORDER BY this_.TrackingId desc limit ?
+NHibernate: SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0 ORDER BY this_.TrackingId desc limit @p1;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1026" name="GivenLogMessages_WhenGetLogHttpWithPage_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLogMessages_WhenGetLogHttpWithPage_ThenReturn" methodname="GivenLogMessages_WhenGetLogHttpWithPage_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1072944492" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.004553" asserts="3">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'A Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'B Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < ? ORDER BY this_.TrackingId asc limit ? offset ?
+NHibernate: SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.CalledOn < @p0 ORDER BY this_.TrackingId asc limit @p1 offset @p2;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 1 [Type: Int32 (0)], @p2 = 1 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1017" name="GivenLogMessages_WhenGetLogMessagesWithOrderAsc_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLogMessages_WhenGetLogMessagesWithOrderAsc_ThenReturn" methodname="GivenLogMessages_WhenGetLogMessagesWithOrderAsc_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1340244713" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.003843" asserts="3">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'A message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'B message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ? ORDER BY this_.Message asc limit ?
+NHibernate: SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0 ORDER BY this_.Message asc limit @p1;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1018" name="GivenLogMessages_WhenGetLogMessagesWithOrderDesc_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLogMessages_WhenGetLogMessagesWithOrderDesc_ThenReturn" methodname="GivenLogMessages_WhenGetLogMessagesWithOrderDesc_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1565032323" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.004207" asserts="3">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'A message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'B message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ? ORDER BY this_.Message desc limit ?
+NHibernate: SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0 ORDER BY this_.Message desc limit @p1;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1019" name="GivenLogMessages_WhenGetLogMessagesWithPage_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenLogMessages_WhenGetLogMessagesWithPage_ThenReturn" methodname="GivenLogMessages_WhenGetLogMessagesWithPage_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="657609446" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.002731" asserts="3">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'A message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'Test' [Type: String (0)], @p3 = 'B message' [Type: String (0)], @p4 = 'Test stack trace' [Type: String (0)]
+SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ?
+NHibernate: SELECT count(*) as y0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)]
+SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < ? ORDER BY this_.Message asc limit ? offset ?
+NHibernate: SELECT this_.Id as Id18_0_, this_.LogTimestamp as LogTimes2_18_0_, this_.Level as Level18_0_, this_.Logger as Logger18_0_, this_.Message as Message18_0_, this_.StackTrace as StackTrace18_0_ FROM "LogMessageRecord" this_ WHERE this_.LogTimestamp < @p0 ORDER BY this_.Message asc limit @p1 offset @p2;@p0 = 6/12/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 1 [Type: Int32 (0)], @p2 = 1 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+            <test-case id="1021" name="GivenTrackIdMatching_WhenGetLogHttp_ThenReturn" fullname="Infrastructure.Test.Repositories.LogViewRepositoryTest.GivenTrackIdMatching_WhenGetLogHttp_ThenReturn" methodname="GivenTrackIdMatching_WhenGetLogHttp_ThenReturn" classname="Infrastructure.Test.Repositories.LogViewRepositoryTest" runstate="Runnable" seed="1960734727" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.003311" asserts="2">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Error' [Type: String (0)], @p1 = 'Track Id' [Type: String (0)], @p2 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'User' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://localhost/index.html' [Type: String (0)], @p7 = 'Req Headers' [Type: String (0)], @p8 = 'Test Req' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'Resp Headers' [Type: String (0)], @p12 = 'Test Resp' [Type: String (0)], @p13 = 600000000 [Type: Int64 (0)]
+SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.TrackingId = ?
+NHibernate: SELECT count(*) as y0_ FROM "LogHttpRecord" this_ WHERE this_.TrackingId = @p0;@p0 = 'Track Id' [Type: String (0)]
+SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.TrackingId = ? limit ?
+NHibernate: SELECT this_.Id as Id17_0_, this_.Level as Level17_0_, this_.TrackingId as TrackingId17_0_, this_.CalledOn as CalledOn17_0_, this_.CallerAddress as CallerAd5_17_0_, this_.RequestIdentity as RequestI6_17_0_, this_.Verb as Verb17_0_, this_.RequestUri as RequestUri17_0_, this_.RequestHeaders as RequestH9_17_0_, this_.Request as Request17_0_, this_.StatusCode as StatusCode17_0_, this_.ReasonPhrase as ReasonP12_17_0_, this_.ResponseHeaders as Respons13_17_0_, this_.Response as Response17_0_, this_.CallDuration as CallDur15_17_0_ FROM "LogHttpRecord" this_ WHERE this_.TrackingId = @p0 limit @p1;@p0 = 'Track Id' [Type: String (0)], @p1 = 10 [Type: Int32 (0)]
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1027" name="LogWriterRepositoryTest" fullname="Infrastructure.Test.Repositories.LogWriterRepositoryTest" classname="Infrastructure.Test.Repositories.LogWriterRepositoryTest" runstate="Runnable" testcasecount="4" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.300212" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="7">
+            <output><![CDATA[
+    PRAGMA foreign_keys = OFF
+
+    drop table if exists "ConfigSetting"
+
+    drop table if exists "LogHttpRecord"
+
+    drop table if exists "LogMessageRecord"
+
+    drop table if exists "User"
+
+    PRAGMA foreign_keys = ON
+
+    create table "ConfigSetting" (
+        Id  integer primary key autoincrement,
+       ConfigKey TEXT not null,
+       ConfigValue TEXT
+    )
+
+    create table "LogHttpRecord" (
+        Id  integer primary key autoincrement,
+       Level TEXT not null,
+       TrackingId TEXT,
+       CalledOn DATETIME not null,
+       CallerAddress TEXT not null,
+       RequestIdentity TEXT not null,
+       Verb TEXT not null,
+       RequestUri TEXT not null,
+       RequestHeaders ntext not null,
+       Request ntext not null,
+       StatusCode INT,
+       ReasonPhrase TEXT,
+       ResponseHeaders ntext,
+       Response ntext,
+       CallDuration BIGINT
+    )
+
+    create table "LogMessageRecord" (
+        Id  integer primary key autoincrement,
+       LogTimestamp DATETIME not null,
+       Level TEXT not null,
+       Logger TEXT not null,
+       Message ntext not null,
+       StackTrace ntext
+    )
+
+    create table "User" (
+        UserId  integer primary key autoincrement,
+       UserName TEXT not null,
+       Password TEXT not null
+    )
+]]></output>
+            <test-case id="1030" name="Given_WhenLogRequest_ThenLog" fullname="Infrastructure.Test.Repositories.LogWriterRepositoryTest.Given_WhenLogRequest_ThenLog" methodname="Given_WhenLogRequest_ThenLog" classname="Infrastructure.Test.Repositories.LogWriterRepositoryTest" runstate="Runnable" seed="1567116626" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.085279" asserts="2">
+              <output><![CDATA[INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogHttpRecord" (Level, TrackingId, CalledOn, CallerAddress, RequestIdentity, Verb, RequestUri, RequestHeaders, Request, StatusCode, ReasonPhrase, ResponseHeaders, Response, CallDuration) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13); select last_insert_rowid();@p0 = 'Debug' [Type: String (0)], @p1 = '123' [Type: String (0)], @p2 = 6/11/2016 12:35:22 PM [Type: DateTime (0)], @p3 = '127.0.0.1' [Type: String (0)], @p4 = 'user' [Type: String (0)], @p5 = 'GET' [Type: String (0)], @p6 = 'http://www.google.com' [Type: String (0)], @p7 = 'headers' [Type: String (0)], @p8 = 'request' [Type: String (0)], @p9 = 200 [Type: Int32 (0)], @p10 = 'OK' [Type: String (0)], @p11 = 'headers' [Type: String (0)], @p12 = 'response
+Exception of type 'System.Exception' was thrown.
+
+' [Type: String (0)], @p13 = 36000000000 [Type: Int64 (0)]
+SELECT this_.Id as Id25_0_, this_.Level as Level25_0_, this_.TrackingId as TrackingId25_0_, this_.CalledOn as CalledOn25_0_, this_.CallerAddress as CallerAd5_25_0_, this_.RequestIdentity as RequestI6_25_0_, this_.Verb as Verb25_0_, this_.RequestUri as RequestUri25_0_, this_.RequestHeaders as RequestH9_25_0_, this_.Request as Request25_0_, this_.StatusCode as StatusCode25_0_, this_.ReasonPhrase as ReasonP12_25_0_, this_.ResponseHeaders as Respons13_25_0_, this_.Response as Response25_0_, this_.CallDuration as CallDur15_25_0_ FROM "LogHttpRecord" this_
+NHibernate: SELECT this_.Id as Id25_0_, this_.Level as Level25_0_, this_.TrackingId as TrackingId25_0_, this_.CalledOn as CalledOn25_0_, this_.CallerAddress as CallerAd5_25_0_, this_.RequestIdentity as RequestI6_25_0_, this_.Verb as Verb25_0_, this_.RequestUri as RequestUri25_0_, this_.RequestHeaders as RequestH9_25_0_, this_.Request as Request25_0_, this_.StatusCode as StatusCode25_0_, this_.ReasonPhrase as ReasonP12_25_0_, this_.ResponseHeaders as Respons13_25_0_, this_.Response as Response25_0_, this_.CallDuration as CallDur15_25_0_ FROM "LogHttpRecord" this_
+]]></output>
+            </test-case>
+            <test-case id="1029" name="GivenConfigLevelNotPermits_WhenLog_ThenDoesNot" fullname="Infrastructure.Test.Repositories.LogWriterRepositoryTest.GivenConfigLevelNotPermits_WhenLog_ThenDoesNot" methodname="GivenConfigLevelNotPermits_WhenLog_ThenDoesNot" classname="Infrastructure.Test.Repositories.LogWriterRepositoryTest" runstate="Runnable" seed="980176457" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.002793" asserts="1">
+              <output><![CDATA[SELECT this_.Id as Id26_0_, this_.LogTimestamp as LogTimes2_26_0_, this_.Level as Level26_0_, this_.Logger as Logger26_0_, this_.Message as Message26_0_, this_.StackTrace as StackTrace26_0_ FROM "LogMessageRecord" this_
+NHibernate: SELECT this_.Id as Id26_0_, this_.LogTimestamp as LogTimes2_26_0_, this_.Level as Level26_0_, this_.Logger as Logger26_0_, this_.Message as Message26_0_, this_.StackTrace as StackTrace26_0_ FROM "LogMessageRecord" this_
+]]></output>
+            </test-case>
+            <test-case id="1028" name="GivenConfigLevelPermits_WhenLog_ThenLog" fullname="Infrastructure.Test.Repositories.LogWriterRepositoryTest.GivenConfigLevelPermits_WhenLog_ThenLog" methodname="GivenConfigLevelPermits_WhenLog_ThenLog" classname="Infrastructure.Test.Repositories.LogWriterRepositoryTest" runstate="Runnable" seed="105033491" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.005128" asserts="2">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Error' [Type: String (0)], @p2 = 'General' [Type: String (0)], @p3 = 'Test Message' [Type: String (0)], @p4 = 'Exception of type 'System.Exception' was thrown.
+
+' [Type: String (0)]
+SELECT this_.Id as Id26_0_, this_.LogTimestamp as LogTimes2_26_0_, this_.Level as Level26_0_, this_.Logger as Logger26_0_, this_.Message as Message26_0_, this_.StackTrace as StackTrace26_0_ FROM "LogMessageRecord" this_
+NHibernate: SELECT this_.Id as Id26_0_, this_.LogTimestamp as LogTimes2_26_0_, this_.Level as Level26_0_, this_.Logger as Logger26_0_, this_.Message as Message26_0_, this_.StackTrace as StackTrace26_0_ FROM "LogMessageRecord" this_
+]]></output>
+            </test-case>
+            <test-case id="1031" name="GivenConfigPermits_WhenLogSQL_TheLog" fullname="Infrastructure.Test.Repositories.LogWriterRepositoryTest.GivenConfigPermits_WhenLogSQL_TheLog" methodname="GivenConfigPermits_WhenLogSQL_TheLog" classname="Infrastructure.Test.Repositories.LogWriterRepositoryTest" runstate="Runnable" seed="1687081151" result="Passed" start-time="2016-06-11 02:35:22Z" end-time="2016-06-11 02:35:22Z" duration="0.005513" asserts="2">
+              <output><![CDATA[INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (?, ?, ?, ?, ?); select last_insert_rowid()
+NHibernate: INSERT INTO "LogMessageRecord" (LogTimestamp, Level, Logger, Message, StackTrace) VALUES (@p0, @p1, @p2, @p3, @p4); select last_insert_rowid();@p0 = 6/11/2016 2:35:22 AM [Type: DateTime (0)], @p1 = 'Debug' [Type: String (0)], @p2 = 'SQL' [Type: String (0)], @p3 = 'test sql' [Type: String (0)], @p4 = NULL [Type: String (0)]
+SELECT this_.Id as Id26_0_, this_.LogTimestamp as LogTimes2_26_0_, this_.Level as Level26_0_, this_.Logger as Logger26_0_, this_.Message as Message26_0_, this_.StackTrace as StackTrace26_0_ FROM "LogMessageRecord" this_
+NHibernate: SELECT this_.Id as Id26_0_, this_.LogTimestamp as LogTimes2_26_0_, this_.Level as Level26_0_, this_.Logger as Logger26_0_, this_.Message as Message26_0_, this_.StackTrace as StackTrace26_0_ FROM "LogMessageRecord" this_
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
