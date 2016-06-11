@@ -6,7 +6,6 @@
   },
 
   "dependencies": {
-    "Microsoft.ApplicationInsights.AspNet": "1.0.0-rc1",
     "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
     "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
     "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
@@ -21,7 +20,8 @@
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
-    "IdentityServer4": "1.0.0-beta1-update1"
+    "IdentityServer4": "1.0.0-beta1-update1",
+    "Microsoft.ApplicationInsights.AspNet": "1.0.0-rc1-update4"
   },
 
   "commands": {
@@ -29,7 +29,7 @@
   },
 
   "frameworks": {
-    "dnx451": {
+    "dnx46": {
       "dependencies": {
         "Domain": "1.0.0-*",
         "Infrastructure": "1.0.0-*"
