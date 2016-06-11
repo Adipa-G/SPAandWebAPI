@@ -2,10 +2,10 @@
   "locked": false,
   "version": 2,
   "targets": {
-    "DNX,Version=v4.5.1": {
+    "DNX,Version=v4.6": {
       "Domain/1.0.0": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": "DNX,Version=v4.6",
         "dependencies": {
           "FluentNHibernate": "2.0.3",
           "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
@@ -81,7 +81,7 @@
       },
       "Infrastructure/1.0.0": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": "DNX,Version=v4.6",
         "dependencies": {
           "Domain": "1.0.0",
           "FluentNHibernate": "2.0.3",
@@ -1268,7 +1268,7 @@
           "lib/net40/NHibernate.dll": {}
         }
       },
-      "NSubstitute/1.9.2": {
+      "NSubstitute/1.10.0": {
         "type": "package",
         "compile": {
           "lib/net45/NSubstitute.dll": {}
@@ -1277,7 +1277,7 @@
           "lib/net45/NSubstitute.dll": {}
         }
       },
-      "NUnit/3.2.0": {
+      "NUnit/3.2.1": {
         "type": "package",
         "compile": {
           "lib/net45/nunit.framework.dll": {}
@@ -1286,10 +1286,10 @@
           "lib/net45/nunit.framework.dll": {}
         }
       },
-      "NUnitLite/3.2.0": {
+      "NUnitLite/3.2.1": {
         "type": "package",
         "dependencies": {
-          "NUnit": "[3.2.0]"
+          "NUnit": "[3.2.1]"
         },
         "compile": {
           "lib/net45/nunitlite.dll": {}
@@ -1326,13 +1326,13 @@
           "lib/dotnet/System.Collections.Immutable.dll": {}
         }
       },
-      "System.Data.SQLite.Core/1.0.99": {
+      "System.Data.SQLite.Core/1.0.101": {
         "type": "package",
         "compile": {
-          "lib/net451/System.Data.SQLite.dll": {}
+          "lib/net46/System.Data.SQLite.dll": {}
         },
         "runtime": {
-          "lib/net451/System.Data.SQLite.dll": {}
+          "lib/net46/System.Data.SQLite.dll": {}
         }
       },
       "System.Diagnostics.Debug/4.0.0": {
@@ -1519,10 +1519,10 @@
         }
       }
     },
-    "DNX,Version=v4.5.1/win": {
+    "DNX,Version=v4.6/win": {
       "Domain/1.0.0": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": "DNX,Version=v4.6",
         "dependencies": {
           "FluentNHibernate": "2.0.3",
           "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
@@ -1598,7 +1598,7 @@
       },
       "Infrastructure/1.0.0": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": "DNX,Version=v4.6",
         "dependencies": {
           "Domain": "1.0.0",
           "FluentNHibernate": "2.0.3",
@@ -2785,7 +2785,7 @@
           "lib/net40/NHibernate.dll": {}
         }
       },
-      "NSubstitute/1.9.2": {
+      "NSubstitute/1.10.0": {
         "type": "package",
         "compile": {
           "lib/net45/NSubstitute.dll": {}
@@ -2794,7 +2794,7 @@
           "lib/net45/NSubstitute.dll": {}
         }
       },
-      "NUnit/3.2.0": {
+      "NUnit/3.2.1": {
         "type": "package",
         "compile": {
           "lib/net45/nunit.framework.dll": {}
@@ -2803,10 +2803,10 @@
           "lib/net45/nunit.framework.dll": {}
         }
       },
-      "NUnitLite/3.2.0": {
+      "NUnitLite/3.2.1": {
         "type": "package",
         "dependencies": {
-          "NUnit": "[3.2.0]"
+          "NUnit": "[3.2.1]"
         },
         "compile": {
           "lib/net45/nunitlite.dll": {}
@@ -2843,13 +2843,13 @@
           "lib/dotnet/System.Collections.Immutable.dll": {}
         }
       },
-      "System.Data.SQLite.Core/1.0.99": {
+      "System.Data.SQLite.Core/1.0.101": {
         "type": "package",
         "compile": {
-          "lib/net451/System.Data.SQLite.dll": {}
+          "lib/net46/System.Data.SQLite.dll": {}
         },
         "runtime": {
-          "lib/net451/System.Data.SQLite.dll": {}
+          "lib/net46/System.Data.SQLite.dll": {}
         }
       },
       "System.Diagnostics.Debug/4.0.0": {
@@ -3036,10 +3036,10 @@
         }
       }
     },
-    "DNX,Version=v4.5.1/win-anycpu": {
+    "DNX,Version=v4.6/win-anycpu": {
       "Domain/1.0.0": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": "DNX,Version=v4.6",
         "dependencies": {
           "FluentNHibernate": "2.0.3",
           "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
@@ -3115,7 +3115,7 @@
       },
       "Infrastructure/1.0.0": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": "DNX,Version=v4.6",
         "dependencies": {
           "Domain": "1.0.0",
           "FluentNHibernate": "2.0.3",
@@ -4302,7 +4302,7 @@
           "lib/net40/NHibernate.dll": {}
         }
       },
-      "NSubstitute/1.9.2": {
+      "NSubstitute/1.10.0": {
         "type": "package",
         "compile": {
           "lib/net45/NSubstitute.dll": {}
@@ -4311,7 +4311,7 @@
           "lib/net45/NSubstitute.dll": {}
         }
       },
-      "NUnit/3.2.0": {
+      "NUnit/3.2.1": {
         "type": "package",
         "compile": {
           "lib/net45/nunit.framework.dll": {}
@@ -4320,10 +4320,10 @@
           "lib/net45/nunit.framework.dll": {}
         }
       },
-      "NUnitLite/3.2.0": {
+      "NUnitLite/3.2.1": {
         "type": "package",
         "dependencies": {
-          "NUnit": "[3.2.0]"
+          "NUnit": "[3.2.1]"
         },
         "compile": {
           "lib/net45/nunitlite.dll": {}
@@ -4360,13 +4360,13 @@
           "lib/dotnet/System.Collections.Immutable.dll": {}
         }
       },
-      "System.Data.SQLite.Core/1.0.99": {
+      "System.Data.SQLite.Core/1.0.101": {
         "type": "package",
         "compile": {
-          "lib/net451/System.Data.SQLite.dll": {}
+          "lib/net46/System.Data.SQLite.dll": {}
         },
         "runtime": {
-          "lib/net451/System.Data.SQLite.dll": {}
+          "lib/net46/System.Data.SQLite.dll": {}
         }
       },
       "System.Diagnostics.Debug/4.0.0": {
@@ -5552,9 +5552,9 @@
         "nhibernate-mapping.xsd"
       ]
     },
-    "NSubstitute/1.9.2": {
+    "NSubstitute/1.10.0": {
       "type": "package",
-      "sha512": "p0HKZIZSY3uSK7TOqo7dn1R7puR1b8VWsaVVty55epljyO/obKH6qlon1Brub6n7m4DoP3AJ+Xit6Gbj92UJ6Q==",
+      "sha512": "EjtltQLY+h9Q5k+Qr/8rnR0/MUlTizF+LOHA8Y5uy4SzLAL1Yubuz1gW9qfisJEhsS2DPWoBym/1f3Huwr0E8w==",
       "files": [
         "acknowledgements.txt",
         "BreakingChanges.txt",
@@ -5566,21 +5566,23 @@
         "lib/net45/NSubstitute.dll",
         "lib/net45/NSubstitute.XML",
         "LICENSE.txt",
-        "NSubstitute.1.9.2.nupkg",
-        "NSubstitute.1.9.2.nupkg.sha512",
+        "NSubstitute.1.10.0.nupkg",
+        "NSubstitute.1.10.0.nupkg.sha512",
         "NSubstitute.nuspec",
         "README.txt"
       ]
     },
-    "NUnit/3.2.0": {
+    "NUnit/3.2.1": {
       "type": "package",
-      "sha512": "kJf/lxyi7AAW5B/2Vkn9lyAvqJlmAEVABAu3V/nvwmZFQxiaCq9mJt81VbhK13QJPc1jnyjh5D5mHeL1ivQJLA==",
+      "sha512": "tBlwEclR6C6+rNSOA+vbwR0SkfLJPgF5Fm0YYNtpgfzkXhZT/rpqAWmo2Y4wn4R6ueRrUE793fR0xCJlbyAKOQ==",
       "files": [
         "CHANGES.txt",
         "lib/dotnet/nunit.framework.dll",
         "lib/dotnet/nunit.framework.xml",
         "lib/net20/nunit.framework.dll",
         "lib/net20/nunit.framework.xml",
+        "lib/net35/nunit.framework.dll",
+        "lib/net35/nunit.framework.xml",
         "lib/net40/nunit.framework.dll",
         "lib/net40/nunit.framework.xml",
         "lib/net45/nunit.framework.dll",
@@ -5589,30 +5591,32 @@
         "lib/portable-net45+win8+wp8+wpa81+Xamarin.Mac+MonoAndroid10+MonoTouch10+Xamarin.iOS10/nunit.framework.xml",
         "LICENSE.txt",
         "NOTICES.txt",
-        "NUnit.3.2.0.nupkg",
-        "NUnit.3.2.0.nupkg.sha512",
+        "NUnit.3.2.1.nupkg",
+        "NUnit.3.2.1.nupkg.sha512",
         "NUnit.nuspec"
       ]
     },
-    "NUnitLite/3.2.0": {
+    "NUnitLite/3.2.1": {
       "type": "package",
-      "sha512": "d/ATj9IgUqMFGh0FBkWpWf0newv7FnUd6kLm3A0vANJwfkHcpECxEU+1APrCYlcUiCA+cVfqF4trwY04ycnRlw==",
+      "sha512": "Y/eVXlf6gpX6WuUQGrShVs9AxhItqU1IhXNu4Gs1+aEpQ+HaZwiJUWZDEuUcu/mvqD7W9FDB5ODdG8uwbPoohg==",
       "files": [
         "CHANGES.txt",
         "content/Program.cs",
         "content/Program.vb",
         "lib/dotnet/nunitlite.dll",
         "lib/net20/nunitlite.dll",
+        "lib/net35/nunitlite.dll",
         "lib/net40/nunitlite.dll",
         "lib/net45/nunitlite.dll",
         "lib/portable-net45+win8+wp8+wpa81+Xamarin.Mac/nunitlite.dll",
         "LICENSE.txt",
         "NOTICES.txt",
-        "NUnitLite.3.2.0.nupkg",
-        "NUnitLite.3.2.0.nupkg.sha512",
+        "NUnitLite.3.2.1.nupkg",
+        "NUnitLite.3.2.1.nupkg.sha512",
         "NUnitLite.nuspec",
         "tools/install.ps1",
         "tools/net20/nunitlite-runner.exe",
+        "tools/net35/nunitlite-runner.exe",
         "tools/net40/nunitlite-runner.exe",
         "tools/net45/nunitlite-runner.exe",
         "tools/portable/nunitlite-runner.exe"
@@ -5680,9 +5684,9 @@
         "System.Collections.Immutable.nuspec"
       ]
     },
-    "System.Data.SQLite.Core/1.0.99": {
+    "System.Data.SQLite.Core/1.0.101": {
       "type": "package",
-      "sha512": "5KMHqnyeUADZNq0Zq0CEG0JvxwbixtjQ0w0s6zyH2lgxEgeE7xmB8bCLI3HRFfIL1726hQsqjRATN2wXYjaoyQ==",
+      "sha512": "bf8ypdk893cULN88LNBgltntmFghY9Zu1xTJfwcaKVS5i1pUw8eLjjTdfmwX/SqYkZouzt8NJqLavEzIDpIG2w==",
       "files": [
         "build/net20/System.Data.SQLite.Core.targets",
         "build/net20/x64/SQLite.Interop.dll",
@@ -5709,8 +5713,8 @@
         "lib/net451/System.Data.SQLite.xml",
         "lib/net46/System.Data.SQLite.dll",
         "lib/net46/System.Data.SQLite.xml",
-        "System.Data.SQLite.Core.1.0.99.nupkg",
-        "System.Data.SQLite.Core.1.0.99.nupkg.sha512",
+        "System.Data.SQLite.Core.1.0.101.nupkg",
+        "System.Data.SQLite.Core.1.0.101.nupkg.sha512",
         "System.Data.SQLite.Core.nuspec"
       ]
     },
@@ -6417,12 +6421,12 @@
   "projectFileDependencyGroups": {
     "": [
       "FluentNHibernate >= 2.0.3",
-      "NUnit >= 3.2.0",
-      "NUnitLite >= 3.2.0",
-      "NSubstitute >= 1.9.2",
-      "System.Data.SQLite.Core >= 1.0.99"
+      "NSubstitute >= 1.10.0",
+      "NUnit >= 3.2.1",
+      "NUnitLite >= 3.2.1",
+      "System.Data.SQLite.Core >= 1.0.101"
     ],
-    "DNX,Version=v4.5.1": [
+    "DNX,Version=v4.6": [
       "Infrastructure >= 1.0.0-*"
     ]
   }
