@@ -5,11 +5,11 @@
   },
 
   "dependencies": {
-    "NUnit": "3.2.0",
-    "NUnitLite": "3.2.0",
-    "NSubstitute": "1.9.2",
     "Web": "1.0.0-*",
-    "Domain": "1.0.0-*"
+    "Domain": "1.0.0-*",
+    "NSubstitute": "1.10.0",
+    "NUnit": "3.2.1",
+    "NUnitLite": "3.2.1"
   },
 
   "runtimes": {
@@ -24,7 +24,7 @@
   },
 
   "frameworks": {
-    "dnx451": {
+    "dnx46": {
       "dependencies": {     }
     }
   },

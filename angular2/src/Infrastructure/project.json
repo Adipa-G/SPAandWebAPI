@@ -16,7 +16,7 @@
   },
 
   "frameworks": {
-    "dnx451": {
+    "dnx46": {
       "frameworkAssemblies": {
         "System.Data": "4.0.0.0"
       }
