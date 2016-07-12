@@ -4,7 +4,7 @@ Set of seed applications using different combinations of Angular and Web Api. Th
 ###Angular2
 * UI with Angular2 (Typescript) 
 * Grunt tasks for typescript and minify and compress css and javascripts
-* MVC 6 (RC-1) used to implement API with built in DI
+* AspNetCore 1.0 used to implement API with built in DI
 * DNX project structure
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
@@ -33,7 +33,7 @@ Set of seed applications using different combinations of Angular and Web Api. Th
 ###MVC6
 * UI with Angular 1.5 
 * Grunt tasks for run tests and minify and compress css and javascripts
-* MVC 6 (RC-1) used to implement API with built in DI
+* AspNetCore 1.0 used to implement API with built in DI
 * DNX project structure
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
