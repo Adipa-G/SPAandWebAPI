@@ -1,0 +1,60 @@
+﻿<html>
+<head>
+    <base href="/Index.html">
+    <meta charset="utf-8"/>
+    <title>@angular/MVC6 Seed</title>
+
+    <!-- 1. Load Css -->
+    <link href="libs/css/app.css" rel="stylesheet" />
+    <link href="libs/css/bootstrap.css.gz" rel="stylesheet"/>
+    <link href="libs/css/font-awesome.css.gz" rel="stylesheet" />
+
+    <!-- 2. Load libraries -->
+    <script src="libs/jquery.js.gz"></script>
+    <script src="libs/bootstrap.js.gz"></script>
+    <script src="libs/moment.js.gz"></script>
+    <script src="libs/es6-shim.min.js.gz"></script>
+    <script src="libs/Reflect.js.gz"></script>
+    <script src="libs/zone.js.gz"></script>
+    
+    <script src="libs/System.js.gz"></script>
+    <script src="libs/rxjs/Rx.js.gz"></script>
+
+    <script src="appScripts/common-scripts.js"></script>
+    <script src="appScripts/system-config.js"></script>
+    
+    <!-- 3. Configure SystemJS -->
+    <script>
+        System.import('rxjs')
+        .then(function(){
+            return System.import('appScripts');
+        })
+        .then(function(){
+            System.import('boot').then(null, console.error.bind(console));
+        });
+    </script>
+</head>
+<body>
+
+<angular-auth-app>
+    <div class="loading">
+        <div class="screen-overlay"></div>
+        <div class="center-screen">
+            <span><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>Loading....</span>
+        </div>
+    </div>   
+</angular-auth-app>
+
+<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted">&copy;Copyright Company 2015</p>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

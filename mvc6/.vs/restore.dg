@@ -1,0 +1,10 @@
+#:Y:\dev\community\github\angularandwebapi\src\Web\Web.xproj
+Y:\dev\community\github\angularandwebapi\src\Web\Web.xproj|Y:\dev\community\github\angularandwebapi\src\Domain\Domain.xproj
+Y:\dev\community\github\angularandwebapi\src\Web\Web.xproj|Y:\dev\community\github\angularandwebapi\src\Infrastructure\Infrastructure.xproj
+Y:\dev\community\github\angularandwebapi\src\Infrastructure\Infrastructure.xproj|Y:\dev\community\github\angularandwebapi\src\Domain\Domain.xproj
+#:Y:\dev\community\github\angularandwebapi\src-test\Web.Test\Web.Test.xproj
+Y:\dev\community\github\angularandwebapi\src-test\Web.Test\Web.Test.xproj|Y:\dev\community\github\angularandwebapi\src\Domain\Domain.xproj
+Y:\dev\community\github\angularandwebapi\src-test\Web.Test\Web.Test.xproj|Y:\dev\community\github\angularandwebapi\src\Web\Web.xproj
+Y:\dev\community\github\angularandwebapi\src\Web\Web.xproj|Y:\dev\community\github\angularandwebapi\src\Domain\Domain.xproj
+Y:\dev\community\github\angularandwebapi\src\Web\Web.xproj|Y:\dev\community\github\angularandwebapi\src\Infrastructure\Infrastructure.xproj
+Y:\dev\community\github\angularandwebapi\src\Infrastructure\Infrastructure.xproj|Y:\dev\community\github\angularandwebapi\src\Domain\Domain.xproj
