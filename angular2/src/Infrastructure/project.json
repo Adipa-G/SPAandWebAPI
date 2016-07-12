@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": false
+  },
+  "dependencies": {
+    "Domain": "1.0.0-*",
+    "FluentNHibernate": "2.0.3.0",
+    "Microsoft.AspNetCore.Mvc": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "IdentityServer4": "1.0.0-beta4-update2"
+  },
+
+  "commands": {
+  },
+
+  "frameworks": {
+    "net46": {
+      "frameworkAssemblies": {
+        "System.Data": "4.0.0.0",
+        "System.Xml" : "4.0.0.0" 
+      }
+    }
+  }
+}
