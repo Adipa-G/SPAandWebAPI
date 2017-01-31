@@ -1,0 +1,5 @@
+artifacts/**/*.*
+**/node_modules/**/*.*
+**/obj/Debug/**/*.*
+**/bin/Debug/**/*.*
+src/Web/node_modules/*
