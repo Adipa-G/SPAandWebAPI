@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "NSubstitute": "2.0.1-rc",
+    "NUnit": "3.6.0",
+    "NUnitLite": "3.6.0"
+  },
+
+  "runtimes": {
+    "win": { },
+    "win-anycpu": {
+      "#import": [ "win" ]
+    }
+  },
+
+  "commands": {
+    "Web.Test": "Web.Test"
+  },
+
+  "frameworks": {
+    "net46": {
+      "dependencies": {
+        "Domain": "1.0.0-*",
+        "Web": "1.0.0-*"
+      }
+    }
+  }
+}
