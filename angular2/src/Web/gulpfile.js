@@ -1,85 +1,80 @@
-﻿/// <binding AfterBuild='copy-templates,sass,copyAppJS,typescript' />
-var path = require("path");
-var gulp = require('gulp');
-var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var watch = require('gulp-watch');
-var ts = require('gulp-typescript');
-var uglify = require('gulp-uglify');
-var gzip = require('gulp-gzip');
+"use strict";
 
-gulp.task('copy-libs', function () {
-    gulp.src([
-      './node_modules/es6-shim/es6-shim.min.js*',
-      './node_modules/zone.js/dist/zone.js',
-      './node_modules/reflect-metadata/Reflect.js',
-      './node_modules/systemjs/dist/System.js',
-      './node_modules/jquery/dist/jquery.js',
-      './node_modules/bootstrap/dist/js/bootstrap*.js',
-      './node_modules/moment/moment.js'
-    ])
-    .pipe(uglify())
-    .pipe(gzip())
-    .pipe(gulp.dest('./wwwroot/libs/'));
+const gulp = require("gulp");
+const del = require("del");
+const tsc = require("gulp-typescript");
+const sourcemaps = require('gulp-sourcemaps');
+const tslint = require('gulp-tslint');
+const sass = require('gulp-sass');
 
-    gulp.src([
-      './node_modules/@angular/**/*umd.js'
-    ])
-    .pipe(uglify())
-    .pipe(gzip())
-    .pipe(gulp.dest('./wwwroot/libs/angular/'));
-
-    gulp.src([
-      './node_modules/rxjs/bundles/Rx.js'
-    ])
-    .pipe(uglify())
-    .pipe(gzip())
-    .pipe(gulp.dest('./wwwroot/libs/rxjs/'));
-
-    gulp.src([
-      './node_modules/bootstrap/dist/css/bootstrap.css',
-      './node_modules/font-awesome/css/font-awesome.css'
-    ])
-    .pipe(gzip())
-    .pipe(gulp.dest('./wwwroot/libs/css'));
-
-    return gulp.src('./node_modules/font-awesome/fonts/*.*')
-     .pipe(gulp.dest('./wwwroot/libs/fonts'));
-});
-
-gulp.task('copy-templates', function () {
-    return gulp.src('./scripts/**/*.html')
-      .pipe(gulp.dest('./wwwroot/templates'));
+gulp.task('clean', (cb) => {
+    return del(["wwwroot"], cb);
 });
 
 gulp.task('sass', function () {
     return gulp.src('./sass/**/*.scss')
       .pipe(sass().on('error', sass.logError))
-      .pipe(gulp.dest('./wwwroot/libs/css'));
+      .pipe(gulp.dest('./wwwroot/css'));
 });
 
-gulp.task('copyAppJS', function () {
-    gulp.src([
-        './scripts/common-scripts.js',
-        './scripts/system-config.js'
-    ])
-    .pipe(uglify())
-    .pipe(gulp.dest('./wwwroot/appScripts/'));
+gulp.task('tslint', () => {
+    return gulp.src("src/**/*.ts")
+        .pipe(tslint({
+            formatter: 'msbuild'
+        }))
+        .pipe(tslint.report());
 });
 
-gulp.task('typescript', function () {
-    var tsProject = ts.createProject('./scripts/tsconfig.json');
-    var tsResult = tsProject.src()
-		.pipe(ts(tsProject));
+gulp.task("compile", ["tslint"], () => {
+    var tsProject = tsc.createProject("tsconfig.json");
+    let tsResult = gulp.src(["./src/**/*.ts","!node_modules/**/*.ts"])
+        .pipe(sourcemaps.init())
+        .pipe(tsProject());
     return tsResult.js
-        //.pipe(uglify())
-        .pipe(gulp.dest('./wwwroot/appScripts'));
+        .pipe(sourcemaps.write(".", {sourceRoot: '/src'}))
+        .pipe(gulp.dest("wwwroot"));
+});
+
+gulp.task("resources", () => {
+    return gulp.src(["src/**/*", "!**/*.ts"])
+        .pipe(gulp.dest("wwwroot"));
+});
+
+gulp.task("libs", () => {
+   gulp.src([
+            'core-js/client/shim.min.js',
+            'systemjs/dist/system-polyfills.js',
+            'systemjs/dist/system.src.js',
+            'reflect-metadata/Reflect.js',
+            'rxjs/**/*.js',
+            'zone.js/dist/**',
+            '@angular/**/bundles/**',
+            'jquery/dist/jquery.js',
+            'bootstrap/dist/js/bootstrap*.js',
+            'moment/moment.js'
+        ], {cwd: "node_modules/**"}) 
+        .pipe(gulp.dest("wwwroot/lib"));
+
+   gulp.src('./node_modules/font-awesome/fonts/*.*')
+        .pipe(gulp.dest('./wwwroot/fonts'));
+
+    return gulp.src([
+            'node_modules/bootstrap/dist/css/bootstrap.css',
+            'node_modules/font-awesome/css/font-awesome.css'
+        ])
+        .pipe(gulp.dest("wwwroot/css"));
 });
 
 gulp.task('watch', function () {
-    gulp.watch('scripts/**/*.html', ['copy-templates']);
-    gulp.watch('scripts/**/*.ts', ['typescript']);
-    gulp.watch('scripts/**/*.js', ['copyAppJS']);
-    gulp.watch('./sass/**/*.scss', ['sass']);
+    gulp.watch(["src/**/*.ts"], ['compile']).on('change', function (e) {
+        console.log('TypeScript file ' + e.path + ' has been changed. Compiling.');
+    });
+    gulp.watch(["src/**/*.html", "src/**/*.css"], ['resources']).on('change', function (e) {
+        console.log('Resource file ' + e.path + ' has been changed. Updating.');
+    });
 });
 
+
+gulp.task("build", ['sass','compile', 'resources', 'libs'], () => {
+    console.log("Building the project ...");
+});
