@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/app/domain/common/orderAndPage.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAKA,CAAC;gBAAD,mBAAC;YAAD,CALA,AAKC,IAAA;;QAAA,CAAC","file":"orderAndPage.js","sourcesContent":["export class OrderAndPage {\r\n    orderField : string;\r\n    orderDirection : string;\r\n    pageNumber : number;\r\n    pageSize : number;\r\n}"],"sourceRoot":"/src"}
