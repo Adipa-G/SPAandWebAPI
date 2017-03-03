@@ -77,7 +77,7 @@ namespace Web
             loggerFactory.AddConsole(LogLevel.Information);
             loggerFactory.AddDebug(LogLevel.Information);
 
-            var authority = "http://localhost:22530";
+            var authority = "http://localhost:5000";
            
             app.UseDeveloperExceptionPage()
                .UseStaticFiles(new StaticFileOptions() {

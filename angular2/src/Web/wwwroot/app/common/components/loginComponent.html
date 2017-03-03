@@ -1,0 +1,35 @@
+<form #loginForm="ngForm">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <fieldset>
+                <legend class="h2">Login</legend>
+                <div class="form-group">
+                    <label for="loginUserName">User Name</label>
+                    <input type="text" id="loginUserName" required name="loginUserName"
+                           class="form-control" placeholder="Username"
+                           #loginUserName="ngModel" [(ngModel)]="loginInfo.userName" autofocus>
+                    <div [hidden]="loginUserName.valid || loginUserName.pristine" class="alert alert-danger">
+                        User name is required
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required name="loginPassword"
+                           class="form-control" placeholder="Password"
+                           #loginPassword="ngModel" [(ngModel)]="loginInfo.password">
+                    <div [hidden]="loginPassword.valid || loginPassword.pristine" class="alert alert-danger">
+                        Password is required
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="form-group">
+                <button type="button" class="btn btn-md btn-info btn-block" 
+                        [disabled]="!loginForm.form.valid" (click)="login()">Login</button>
+            </div>
+        </div>
+    </div>
+</form>

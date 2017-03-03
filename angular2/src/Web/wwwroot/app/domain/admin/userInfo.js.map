@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/app/domain/admin/userInfo.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAEA,CAAC;gBAAD,eAAC;YAAD,CAFA,AAEC,IAAA;;QAAA,CAAC","file":"userInfo.js","sourcesContent":["export class UserInfo {\r\n    userName : string;\r\n}"],"sourceRoot":"/src"}
