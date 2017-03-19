@@ -1,10 +1,10 @@
 ﻿import {Component} from '@angular/core';
 
-import {OrderAndPage} from '../../domain/common/OrderAndPage';
-import {UserInfo} from '../../domain/admin/UserInfo';
+import {OrderAndPage} from '../../domain/common/orderAndPage';
+import {UserInfo} from '../../domain/admin/userInfo';
 
-import { ErrorService } from '../../common/services/ErrorService';
-import {UserService} from '../services/UserService';
+import { ErrorService } from '../../common/services/errorService';
+import {UserService} from '../services/userService';
 
 @Component({
     selector: 'admin-users',

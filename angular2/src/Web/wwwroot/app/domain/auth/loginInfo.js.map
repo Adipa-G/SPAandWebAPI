@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/app/domain/auth/loginInfo.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAIA,CAAC;gBAAD,gBAAC;YAAD,CAJA,AAIC,IAAA;;QAAA,CAAC","file":"loginInfo.js","sourcesContent":["export class LoginInfo {\r\n    isAuth : boolean;\r\n    userName : string;\r\n    password : string;\r\n}"],"sourceRoot":"/src"}

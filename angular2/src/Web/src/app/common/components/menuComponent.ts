@@ -1,11 +1,11 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationDetails } from '../../domain/auth/AuthenticationDetails';
-import { ErrorInfo } from '../../domain/ErrorInfo';
+import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
+import { ErrorInfo } from '../../domain/errorInfo';
 
-import { ErrorService } from '../services/ErrorService';
-import { AuthService } from '../services/AuthService';
+import { ErrorService } from '../services/errorService';
+import { AuthService } from '../services/authService';
 
 @Component({
     selector: 'common-menu',

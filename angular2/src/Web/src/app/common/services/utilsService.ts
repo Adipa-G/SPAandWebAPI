@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 
 import moment from 'moment';
 
-import { Constants } from '../../common/services/Constants';
+import { Constants } from '../../common/services/constants';
 
 @Injectable()
 export class UtilsService {

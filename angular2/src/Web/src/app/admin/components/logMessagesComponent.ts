@@ -1,11 +1,11 @@
 ﻿import { Component } from '@angular/core';
 
-import { LogMessageFilter } from '../../domain/admin/LogMessageFilter';
-import { LogMessageInfo } from '../../domain/admin/LogMessageInfo';
+import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
+import { LogMessageInfo } from '../../domain/admin/logMessageInfo';
 
-import { ErrorService } from '../../common/services/ErrorService';
-import { UtilsService } from "../../common/services/UtilsService";
-import { ServerLogService } from "../services/ServerLogService";
+import { ErrorService } from '../../common/services/errorService';
+import { UtilsService } from "../../common/services/utilsService";
+import { ServerLogService } from "../services/serverLogService";
 
 @Component({
     selector: 'log-messages',
