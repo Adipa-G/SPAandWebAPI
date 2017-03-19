@@ -1,9 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
-import { ErrorInfo } from '../../domain/ErrorInfo';
+import { ErrorInfo } from '../../domain/errorInfo';
 
-import { LogService } from './LogService';
+import { LogService } from './logService';
 
 @Injectable()
 export class ErrorService {

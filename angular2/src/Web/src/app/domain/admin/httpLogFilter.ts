@@ -1,4 +1,4 @@
-﻿import {OrderAndPage} from '../common/OrderAndPage';
+﻿import {OrderAndPage} from '../common/orderAndPage';
 
 export class HttpLogFilter extends OrderAndPage {
     logLevel: string;

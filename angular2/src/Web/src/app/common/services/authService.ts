@@ -2,14 +2,14 @@
 import {EventEmitter} from '@angular/core';
 import {Http, Headers, Response} from '@angular/http';
 
-import {ErrorInfo} from '../../domain/ErrorInfo';
-import {LoginInfo} from '../../domain/auth/LoginInfo';
-import {AuthenticationDetails} from '../../domain/auth/AuthenticationDetails';
+import {ErrorInfo} from '../../domain/errorInfo';
+import {LoginInfo} from '../../domain/auth/loginInfo';
+import {AuthenticationDetails} from '../../domain/auth/authenticationDetails';
 
-import {Constants} from './Constants';
-import {LogService} from './LogService';
-import {ErrorService} from './ErrorService';
-import {StorageService} from './StorageService';
+import {Constants} from './constants';
+import {LogService} from './logService';
+import {ErrorService} from './errorService';
+import {StorageService} from './storageService';
 
 
 @Injectable()

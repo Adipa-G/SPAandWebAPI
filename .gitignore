@@ -7,3 +7,5 @@ Angular2/src/Web/wwwroot/libs/*
 **/bin/**/*.*
 **/obj/**/*.*
 **/node_modules/**/*.*
+**/node_modules/*
+**/wwwroot/*

@@ -1,11 +1,11 @@
 ﻿import {Component} from '@angular/core';
 
-import {HttpLogFilter} from '../../domain/admin/HttpLogFilter';
-import {HttpLogInfo} from '../../domain/admin/HttpLogInfo';
+import {HttpLogFilter} from '../../domain/admin/httpLogFilter';
+import {HttpLogInfo} from '../../domain/admin/httpLogInfo';
 
-import {ErrorService} from '../../common/services/ErrorService';
-import {UtilsService} from "../../common/services/UtilsService";
-import {ServerLogService} from "../services/ServerLogService";
+import {ErrorService} from '../../common/services/errorService';
+import {UtilsService} from "../../common/services/utilsService";
+import {ServerLogService} from "../services/serverLogService";
 
 @Component({
     selector: 'http-logs',
@@ -13,11 +13,11 @@ import {ServerLogService} from "../services/ServerLogService";
 })
 
 export class HttpLogComponent {
-    private filter: HttpLogFilter;
-    private errorMessage: string;
-    private logLevels: string[];
-    private httpLogs: HttpLogInfo[];
-    private totalCount: number;
+    filter: HttpLogFilter;
+    errorMessage: string;
+    logLevels: string[];
+    httpLogs: HttpLogInfo[];
+    totalCount: number;
 
     constructor(private errorService: ErrorService,
         private serverLogService: ServerLogService,
@@ -33,7 +33,7 @@ export class HttpLogComponent {
         this.initializeView();
     }
 
-    private initializeView() {
+    initializeView() {
         this.serverLogService.getLogLevels().subscribe(
             data => {
                 this.logLevels = data;
@@ -45,7 +45,7 @@ export class HttpLogComponent {
         this.updateView(this.filter);
     }
 
-    private updateView(httpLogFilter: HttpLogFilter) {
+    updateView(httpLogFilter: HttpLogFilter) {
         this.filter = httpLogFilter;
         this.filter.fromDate = this.utilsService.dateToUtcServerFormat(this.filter.fromDateLocal);
         this.filter.toDate = this.utilsService.dateToUtcServerFormat(this.filter.toDateLocal);
@@ -61,7 +61,7 @@ export class HttpLogComponent {
             });
     }
 
-    private initFilter(): HttpLogFilter {
+    initFilter(): HttpLogFilter {
         var httpLogFilter: HttpLogFilter = new HttpLogFilter();
         httpLogFilter.orderField = 'CalledOn';
         httpLogFilter.orderDirection = 'Desc';
@@ -72,7 +72,7 @@ export class HttpLogComponent {
         return httpLogFilter;
     }
 
-    private toggleHeaders(log: HttpLogInfo) {
+    toggleHeaders(log: HttpLogInfo) {
         log.showHeaders = !log.showHeaders;
     }
 }

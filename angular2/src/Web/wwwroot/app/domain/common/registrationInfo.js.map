@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/app/domain/common/registrationInfo.ts"],"names":[],"mappings":";;;;;;;YAAA;gBAAA;gBAIA,CAAC;gBAAD,uBAAC;YAAD,CAJA,AAIC,IAAA;;QAAA,CAAC","file":"registrationInfo.js","sourcesContent":["export class RegistrationInfo {\r\n    userName: string;\r\n    password: string;\r\n    confirmPassword: string;\r\n}"],"sourceRoot":"/src"}
