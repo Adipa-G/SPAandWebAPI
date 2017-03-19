@@ -4,11 +4,11 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import {OrderAndPage} from '../../domain/common/OrderAndPage';
-import {UserInfo} from '../../domain/admin/UserInfo';
+import {OrderAndPage} from '../../domain/common/orderAndPage';
+import {UserInfo} from '../../domain/admin/userInfo';
 
-import {HttpClient} from '../../common/services/HttpClient';
-import {Constants} from '../../common/services/Constants';
+import {HttpClient} from '../../common/services/httpClient';
+import {Constants} from '../../common/services/constants';
 
 @Injectable()
 export class UserService {

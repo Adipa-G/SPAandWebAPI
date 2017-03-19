@@ -1,7 +1,7 @@
 ﻿import {Component, OnChanges, Input, Inject} from '@angular/core';
 import moment from 'moment';
 
-import {Constants} from "../../common/services/Constants";
+import {Constants} from "../../common/services/constants";
 
 @Component({
     selector: '[utc-to-local]',

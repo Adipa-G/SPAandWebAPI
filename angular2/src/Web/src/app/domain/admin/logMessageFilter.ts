@@ -1,4 +1,4 @@
-﻿import {OrderAndPage} from '../common/OrderAndPage';
+﻿import {OrderAndPage} from '../common/orderAndPage';
 
 export class LogMessageFilter extends OrderAndPage {
     logLevel: string;

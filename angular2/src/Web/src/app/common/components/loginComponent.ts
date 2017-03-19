@@ -1,9 +1,9 @@
 ﻿import {Component} from '@angular/core';
 import { NgForm }    from '@angular/forms';
 
-import {LoginInfo} from '../../domain/auth/LoginInfo';
+import {LoginInfo} from '../../domain/auth/loginInfo';
 
-import {AuthService} from '../services/AuthService';
+import {AuthService} from '../services/authService';
 
 @Component({
     selector: 'common-login',

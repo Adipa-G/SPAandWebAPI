@@ -1,9 +1,9 @@
 ﻿import { Component } from '@angular/core';
-import { timer } from 'rxjs/Observable/timer';
+import { timer } from 'rxjs/observable/timer';
 
-import { ErrorInfo } from '../../domain/ErrorInfo';
+import { ErrorInfo } from '../../domain/errorInfo';
 
-import { ErrorService } from '../services/ErrorService';
+import { ErrorService } from '../services/errorService';
 
 @Component({
     selector: 'common-error',

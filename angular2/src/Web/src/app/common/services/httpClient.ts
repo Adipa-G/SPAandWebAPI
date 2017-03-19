@@ -2,13 +2,13 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { ErrorInfo } from '../../domain/ErrorInfo';
-import { AuthenticationDetails } from '../../domain/auth/AuthenticationDetails';
+import { ErrorInfo } from '../../domain/errorInfo';
+import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
 
-import { LogService } from './LogService';
-import { ErrorService } from './ErrorService';
-import { StorageService } from './StorageService';
-import { AuthService } from './AuthService';
+import { LogService } from './logService';
+import { ErrorService } from './errorService';
+import { StorageService } from './storageService';
+import { AuthService } from './authService';
 
 @Injectable()
 export class HttpClient {
