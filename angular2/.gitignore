@@ -7,3 +7,4 @@
 **/obj/Debug/**/*.*
 **/bin/Debug/**/*.*
 Web/bin/*.*
+src/Web/wwwroot/*

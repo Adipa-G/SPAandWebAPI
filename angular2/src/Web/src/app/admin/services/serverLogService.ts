@@ -4,12 +4,12 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import {HttpLogFilter} from '../../domain/admin/HttpLogFilter';
-import {LogMessageFilter} from '../../domain/admin/LogMessageFilter';
-import {HttpLogInfo} from '../../domain/admin/HttpLogInfo';
+import {HttpLogFilter} from '../../domain/admin/httpLogFilter';
+import {LogMessageFilter} from '../../domain/admin/logMessageFilter';
+import {HttpLogInfo} from '../../domain/admin/httpLogInfo';
 
-import {HttpClient} from '../../common/services/HttpClient';
-import {Constants} from '../../common/services/Constants';
+import {HttpClient} from '../../common/services/httpClient';
+import {Constants} from '../../common/services/constants';
 
 @Injectable()
 export class ServerLogService {

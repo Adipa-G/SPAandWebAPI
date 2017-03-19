@@ -1,10 +1,10 @@
 ﻿import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { RegistrationInfo } from '../../domain/common/RegistrationInfo';
+import { RegistrationInfo } from '../../domain/common/registrationInfo';
 
-import { HttpClient } from '../../common/services/HttpClient';
-import { Constants } from '../../common/services/Constants';
+import { HttpClient } from '../../common/services/httpClient';
+import { Constants } from '../../common/services/constants';
 
 
 @Injectable()

@@ -1,12 +1,12 @@
 ﻿import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { timer } from 'rxjs/Observable/timer';
+import { timer } from 'rxjs/observable/timer';
 
-import { RegistrationInfo } from '../../domain/common/RegistrationInfo';
+import { RegistrationInfo } from '../../domain/common/registrationInfo';
 
-import { ErrorService } from '../../common/services/ErrorService';
-import { RegisterService } from '../services/RegisterService';
+import { ErrorService } from '../../common/services/errorService';
+import { RegisterService } from '../services/registerService';
 
 
 @Component({

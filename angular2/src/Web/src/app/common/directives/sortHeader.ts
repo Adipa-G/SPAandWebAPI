@@ -1,6 +1,6 @@
 ﻿import { Component, DoCheck, Input, Output, EventEmitter } from '@angular/core';
 
-import { OrderAndPage } from '../../domain/common/OrderAndPage';
+import { OrderAndPage } from '../../domain/common/orderAndPage';
 
 @Component({
     selector: '[sort-header]',
