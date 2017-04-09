@@ -10,7 +10,7 @@ import {AuthService} from '../services/authService';
 })
 
 export class HomeComponent {
-    private currentAuth: AuthenticationDetails;
+    currentAuth: AuthenticationDetails;
     private subscription: any;
 
     constructor(private authService: AuthService) {
@@ -18,7 +18,7 @@ export class HomeComponent {
         this.currentAuth = authService.getCurrentAuth();
     }
 
-    private onAuthChanged(auth: AuthenticationDetails): void {
+    onAuthChanged(auth: AuthenticationDetails): void {
         this.currentAuth = auth;
     }
 

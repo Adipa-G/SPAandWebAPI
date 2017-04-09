@@ -12,10 +12,10 @@ import {UserService} from '../services/userService';
 })
 
 export class UserListComponent {
-    private orderAndPage: OrderAndPage;
-    private errorMessage: string;
-    private users: UserInfo[];
-    private totalCount: number;
+    orderAndPage: OrderAndPage;
+    errorMessage: string;
+    users: UserInfo[];
+    totalCount: number;
 
     constructor(private errorService: ErrorService, private userService: UserService) {
         this.errorService = errorService;
@@ -27,7 +27,7 @@ export class UserListComponent {
         this.updateView(this.orderAndPage);
     }
 
-    private updateView(orderAndPage: OrderAndPage) {
+    updateView(orderAndPage: OrderAndPage) {
         this.orderAndPage = orderAndPage;
         this.userService.getUsers(this.orderAndPage).subscribe(
             data => {
@@ -40,7 +40,7 @@ export class UserListComponent {
             });
     }
 
-    private initOrderAndPagingDetails(): OrderAndPage {
+    initOrderAndPagingDetails(): OrderAndPage {
         var orderAndPage: OrderAndPage = new OrderAndPage();
         orderAndPage.orderField = 'UserName';
         orderAndPage.orderDirection = 'Asc';
@@ -49,12 +49,13 @@ export class UserListComponent {
         return orderAndPage;
     }
 
-    public deleteUser(userName: string): void {
+    deleteUser(userName: string): void {
         this.userService.deleteUser(userName).subscribe(
             data => {
                 for (var i = 0; i < this.users.length; i++) {
                     if (this.users[i].userName === userName) {
                         this.users.splice(i, 1);
+                        this.totalCount--;
                         break;
                     }
                 }

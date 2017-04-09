@@ -14,7 +14,7 @@ import {StorageService} from './storageService';
 
 @Injectable()
 export class AuthService {
-    private currentAuth: AuthenticationDetails;
+    currentAuth: AuthenticationDetails;
 
     public authChanged$: EventEmitter<AuthenticationDetails>;
 

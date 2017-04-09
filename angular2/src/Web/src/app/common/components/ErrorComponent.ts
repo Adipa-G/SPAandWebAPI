@@ -11,8 +11,8 @@ import { ErrorService } from '../services/errorService';
 })
 
 export class ErrorComponent {
-    private currentErrors: ErrorInfo[] = new Array();
-    private subscription: any;
+    currentErrors: ErrorInfo[] = new Array();
+    subscription: any;
 
     constructor(private errorService: ErrorService) {
         this.subscription = errorService.errorOccured$.subscribe(error => this.onError(error));
@@ -20,7 +20,7 @@ export class ErrorComponent {
         t.subscribe(t => this.currentErrors.splice(this.currentErrors.length - 1, 1));
     }
 
-    private onError(error: ErrorInfo): void {
+    onError(error: ErrorInfo): void {
         this.currentErrors.push(error);
     }
 
