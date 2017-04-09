@@ -13,10 +13,10 @@ import { AuthService } from '../services/authService';
 })
 
 export class MenuComponent {
-    private currentAuth: AuthenticationDetails;
+    currentAuth: AuthenticationDetails;
 
-    private authChangedSubscription: any;
-    private authErrorSubscription: any;
+    authChangedSubscription: any;
+    authErrorSubscription: any;
 
     constructor(private router: Router,
         private authService: AuthService,
@@ -28,7 +28,7 @@ export class MenuComponent {
         this.currentAuth = new AuthenticationDetails();
     }
 
-    private onAuthChanged(auth: AuthenticationDetails): void {
+    onAuthChanged(auth: AuthenticationDetails): void {
         if (this.currentAuth.isAuth !== auth.isAuth) {
             if (auth.isAuth) {
                 this.router.navigate(['/userList']);
@@ -40,7 +40,7 @@ export class MenuComponent {
         this.currentAuth = auth;
     }
 
-    private onAuthError(errorInfo: ErrorInfo): void {
+    onAuthError(errorInfo: ErrorInfo): void {
         this.authService.clearAuthData();
         this.currentAuth = new AuthenticationDetails();
         this.router.navigate(['/login']);

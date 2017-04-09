@@ -31,6 +31,7 @@ System.config({
 
   map: {
     '@angular/core/testing': 'wwwroot/lib/@angular/core/bundles/core-testing.umd.js',
+    '@angular/http/testing': 'wwwroot/lib/@angular/http/bundles/http-testing.umd.js',
     '@angular/common/testing': 'wwwroot/lib/@angular/common/bundles/common-testing.umd.js',
     '@angular/compiler/testing': 'wwwroot/lib/@angular/compiler/bundles/compiler-testing.umd.js',
     '@angular/platform-browser/testing': 'wwwroot/lib/@angular/platform-browser/bundles/platform-browser-testing.umd.js',

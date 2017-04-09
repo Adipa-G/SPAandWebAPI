@@ -13,12 +13,12 @@ import { ServerLogService } from "../services/serverLogService";
 })
 
 export class LogMessagesComponent {
-    private filter: LogMessageFilter;
-    private errorMessage: string;
-    private logLevels: string[];
-    private loggers: string[];
-    private logMessages: LogMessageInfo[];
-    private totalCount: number;
+    filter: LogMessageFilter;
+    errorMessage: string;
+    logLevels: string[];
+    loggers: string[];
+    logMessages: LogMessageInfo[];
+    totalCount: number;
 
     constructor(private errorService: ErrorService,
         private serverLogService: ServerLogService,
@@ -35,7 +35,7 @@ export class LogMessagesComponent {
         this.initializeView();
     }
 
-    private initializeView() {
+    initializeView() {
         this.serverLogService.getLogLevels().subscribe(
             data => {
                 this.logLevels = data;
@@ -57,7 +57,7 @@ export class LogMessagesComponent {
         this.updateView(this.filter);
     }
 
-    private updateView(logMessageFilter: LogMessageFilter) {
+    updateView(logMessageFilter: LogMessageFilter) {
         this.filter = logMessageFilter;
         this.filter.fromDate = this.utilsService.dateToUtcServerFormat(this.filter.fromDateLocal);
         this.filter.toDate = this.utilsService.dateToUtcServerFormat(this.filter.toDateLocal);
@@ -73,7 +73,7 @@ export class LogMessagesComponent {
             });
     }
 
-    private initFilter(): LogMessageFilter {
+    initFilter(): LogMessageFilter {
         var logMessageFilter: LogMessageFilter = new LogMessageFilter();
         logMessageFilter.orderField = 'LogTimestamp';
         logMessageFilter.orderDirection = 'Desc';
