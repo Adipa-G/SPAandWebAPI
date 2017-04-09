@@ -16,7 +16,7 @@ import { RegisterService } from '../services/registerService';
 
 export class RegisterComponent {
     private regInfo: RegistrationInfo;
-    private success: boolean = false;
+    success: boolean = false;
 
     constructor(private router: Router,
         private errorService: ErrorService,
@@ -27,7 +27,7 @@ export class RegisterComponent {
         this.regInfo = new RegistrationInfo();
     }
 
-    private register() {
+    register() {
         this.registerService.register(this.regInfo).subscribe(
             data => {
                 this.success = true;
