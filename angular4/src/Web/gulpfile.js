@@ -85,8 +85,6 @@ gulp.task("watch", function () {
     });
 });
 
-gulp.task('build', ['clean'], function (cb1) {
-    gulp.run(['sass', 'compile', 'resources', 'libs'], function () {
-        cb1();
-    });
+gulp.task("build", ["sass","compile", "resources", "libs","test"], () => {
+    console.log("Building the project ...");
 });
