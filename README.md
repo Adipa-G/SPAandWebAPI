@@ -1,5 +1,25 @@
-#Introduction
-Set of seed applications using different combinations of Angular and Web Api. There are 4 different braches for different technology stacks, and those are merged to the master branch as subtrees for ease of browsing.  
+# Introduction
+Set of seed applications using different SPA frameworks and Web Api. There are 5 different braches for different technology stacks, and those are merged to the master branch as subtrees for ease of browsing.  
+
+### React
+* Using React 16.0
+* .Net Core Web API
+* Build script to build API, SPA and to execute tests
+* IdentityServer 4 used to provide OAuth tokens
+* NHibernate as ORM
+* Bootstrap for UI
+* Sass used to create stylesheets and Gulp task for building
+
+##### How to run
+* Checkout the project
+* Create the databases with the included script
+* Update the config.json connection string
+* Run build.bat file
+
+##### Development
+* Use VS 2017 to open the solution
+* Use npm run-script build to build typescript
+* Use npm test to run jest tests 
 
 ### Angular4
 * UI with Angular4 (Typescript) 
@@ -9,7 +29,7 @@ Set of seed applications using different combinations of Angular and Web Api. Th
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
 * Bootstrap for UI
-* Sass used to create stypesheets and Gulp task for building
+* Sass used to create stylesheets and Gulp task for building
 * Javascript and Css files stored as static GZip files
 
 ##### How to run
