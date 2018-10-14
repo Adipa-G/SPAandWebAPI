@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "outDir": "./web/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "target": "es2015",
+        "jsx": "react",
+		"moduleResolution" : "node"
+    },
+    "include": [
+        "./web-src/**/*"
+    ]
+}
