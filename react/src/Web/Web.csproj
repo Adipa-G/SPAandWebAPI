@@ -1,0 +1,102 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2</TargetFramework>
+    <AssemblyName>Web</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Web</PackageId>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <ApplicationIcon />
+    <StartupObject />
+	<PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+	<NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2' ">
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="web-src\app\components\errorMessage.tsx" />
+    <None Remove="web-src\app\components\httpLogs.tsx" />
+    <None Remove="web-src\app\components\jumbotron.tsx" />
+    <None Remove="web-src\app\components\layout.tsx" />
+    <None Remove="web-src\app\components\login.tsx" />
+    <None Remove="web-src\app\components\menu.tsx" />
+    <None Remove="web-src\app\components\shared\jsonFormatHeighlight.tsx" />
+    <None Remove="web-src\app\components\shared\tablePager.tsx" />
+    <None Remove="web-src\app\components\shared\utcView.tsx" />
+    <None Remove="web-src\app\components\signup.tsx" />
+    <None Remove="web-src\app\components\sortHeader.tsx" />
+    <None Remove="web-src\app\components\successMessage.tsx" />
+    <None Remove="web-src\app\components\systemLogs.tsx" />
+    <None Remove="web-src\app\components\users.tsx" />
+    <None Remove="web-src\app\components\welcome.tsx" />
+    <None Remove="web-src\app\index.tsx" />
+    <None Remove="web-src\app\services\ajaxInterceptor.ts" />
+    <None Remove="web-src\app\services\authService.ts" />
+    <None Remove="web-src\app\services\dateService.ts" />
+    <None Remove="web-src\app\services\httpService.ts" />
+    <None Remove="web-src\app\services\logService.ts" />
+    <None Remove="web-src\app\services\storageService.ts" />
+    <None Remove="web-src\app\services\userService.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
+    <PackageReference Include="IdentityServer4" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="web-src\app\components\shared\jsonFormatHeighlight.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\shared\utcView.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\shared\tablePager.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\shared\sortHeader.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\shared\successMessage.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\shared\errorMessage.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\httpLogs.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\systemLogs.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\users.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\welcome.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\jumbotron.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\menu.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\layout.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\signup.tsx" />
+    <TypeScriptCompile Include="web-src\app\components\login.tsx" />
+    <TypeScriptCompile Include="web-src\app\index.tsx" />
+    <TypeScriptCompile Include="web-src\app\services\logService.ts" />
+    <TypeScriptCompile Include="web-src\app\services\dateService.ts" />
+    <TypeScriptCompile Include="web-src\app\services\userService.ts" />
+    <TypeScriptCompile Include="web-src\app\services\storageService.ts" />
+    <TypeScriptCompile Include="web-src\app\services\httpService.ts" />
+    <TypeScriptCompile Include="web-src\app\services\ajaxInterceptor.ts" />
+    <TypeScriptCompile Include="web-src\app\services\authService.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="web-src\app-test\services\" />
+  </ItemGroup>
+
+</Project>
