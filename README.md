@@ -15,33 +15,26 @@ Set of seed applications using different SPA frameworks and Web Api. There are 5
 * Create the databases with the included script
 * Update the config.json connection string
 * Run build.bat file
+* Visit the url (http://localhost:5000/Index.html)
 
 ##### Development
 * Use VS 2017 to open the solution
 * Use npm run-script build to build typescript
 * Use npm test to run jest tests 
 
-### Angular4
-* UI with Angular4 (Typescript) 
-* Grunt tasks for typescript and minify and compress css and javascripts
-* AspNetCore 1.0 used to implement API with built in DI
-* DNX project structure
+### Angular
+* UI with Angular 7.0 
+* Angular cli
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
 * Bootstrap for UI
-* Sass used to create stylesheets and Gulp task for building
-* Javascript and Css files stored as static GZip files
 
 ##### How to run
 * Checkout the project
-* Open with VS2015
-* Restore nuget packages and npm packages
-* Build
-* Update the web.config connection string
-* Update IssuerName and Authority in Startup.cs (update URL http://localhost:xxxxx to your Url)
-* Execute the Web project in the src folder as self hosted exe
+* Create the databases with the included script
+* Update the config.json connection string
+* Run build.bat file
 * Visit the url (http://localhost:5000/Index.html)
-* In order to run unit tests, set the test project as startup projects and run the solution
 
 ##### Development
 * Run the gulp watch task from the task runner of the visual studio
