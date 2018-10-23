@@ -37,8 +37,9 @@ Set of seed applications using different SPA frameworks and Web Api. There are 5
 * Visit the url (http://localhost:5000/Index.html)
 
 ##### Development
-* Run the gulp watch task from the task runner of the visual studio
-* Any changes made to file will update the Js,Css and template files
+* Use VS 2017 to open the solution
+* Use ng build command to build UI
+* Use ng test command to run unit tests
 
 ### MVC6
 * UI with Angular 1.5 
