@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.AspNet.FileProviders;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
 namespace Web.Middleware

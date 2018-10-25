@@ -30,7 +30,7 @@ namespace Web.Middleware
                 && context.Request.Cookies[XsrfTokenCookie] != StringValues.Empty)
             {
                 var cookieValue = context.Request.Cookies[XsrfTokenCookie];
-                var header = WebUtility.UrlDecode(context.Request.Headers[XsrfTokenHeader]);
+                var header = context.Request.Headers[XsrfTokenHeader];
 
                 if (cookieValue != header)
                 {
