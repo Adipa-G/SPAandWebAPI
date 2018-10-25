@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Domain.Interfaces.Config;
@@ -11,9 +10,12 @@ using IdentityServer4.Configuration;
 using Infrastructure.Config;
 using Infrastructure.Modules;
 using Infrastructure.Plumbing;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.DotNet.PlatformAbstractions;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -23,19 +25,15 @@ namespace Web
 {
     public class Startup
     {
-        private readonly ApplicationEnvironment _environment;
         private readonly PathProvider _pathProvider;
 
         public Startup()
         {
-            _environment = PlatformServices.Default.Application;
             _pathProvider = new PathProvider(Directory.GetCurrentDirectory());
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(_environment);
-
             services.AddSingleton<IPathProvider>(_pathProvider);
 
             services.AddSingleton<IDatabaseConfig>(
@@ -47,13 +45,13 @@ namespace Web
             var cert = GetCertificate();
 
             services.AddIdentityServer(o => new IdentityServerOptions()
-                                       {
-                                           Endpoints = new EndpointsOptions()
-                                                       {
-                                                           EnableDiscoveryEndpoint = true,
-                                                           EnableTokenEndpoint = true
-                                                       }
-                                       })
+            {
+                Endpoints = new EndpointsOptions()
+                {
+                    EnableDiscoveryEndpoint = true,
+                    EnableTokenEndpoint = true
+                }
+            })
                 .AddSigningCredential(cert);
 
             var defaultPolicy = new AuthorizationPolicyBuilder()
@@ -62,14 +60,17 @@ namespace Web
 
             var jsonOutputFormatter =
                 new JsonOutputFormatter(
-                    new JsonSerializerSettings() {ContractResolver = new CamelCasePropertyNamesContractResolver()},
+                    new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() },
                     ArrayPool<char>.Shared);
 
             services.AddMvc(options =>
-                            {
-                                options.OutputFormatters.Insert(0, jsonOutputFormatter);
-                                options.Filters.Add(new AuthorizeFilter(defaultPolicy));
-                            });
+            {
+                options.OutputFormatters.Insert(0, jsonOutputFormatter);
+                options.Filters.Add(new AuthorizeFilter(defaultPolicy));
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -78,29 +79,24 @@ namespace Web
             loggerFactory.AddDebug(LogLevel.Information);
 
             var authority = "http://localhost:5000";
-           
+
+            var fileProvider = new PhysicalFileProvider(_pathProvider.HostingDirectory + "\\app\\dist\\angular-auth-app");
+            var defoptions = new DefaultFilesOptions();
+            defoptions.DefaultFileNames.Clear();
+            defoptions.FileProvider = fileProvider;
+            defoptions.DefaultFileNames.Add("index.html");
+            app.UseDefaultFiles(defoptions);
+
             app.UseDeveloperExceptionPage()
-               .UseStaticFiles(new StaticFileOptions() {
-                   ContentTypeProvider = new ContentTypeProvider(),
-                   FileProvider = new PhysicalFileProvider($"{_pathProvider.HostingDirectory}\\app\\dist\\angular-auth-app"),
-                   OnPrepareResponse = context =>
-                   {
-                       if (context.File.Name.EndsWith("js.gz") ||
-                           context.File.Name.EndsWith("css.gz"))
-                       {
-                           context.Context.Response.Headers.Add("Content-Encoding",
-                               "gzip");
-                       }
-                   }
-                 })
+                .UseDefaultFiles()
+                .UseStaticFiles(new StaticFileOptions()
+                {
+                    FileProvider = fileProvider,
+                    RequestPath = new PathString("")
+                })
                 .UseMiddleware<ValidateAntiForgeryToken>()
                 .UseMiddleware<RequestResponseLog>()
                 .UseIdentityServer()
-                .UseCookieAuthentication(new CookieAuthenticationOptions()
-                                         {
-                                             AuthenticationScheme = "cookies",
-                                             AutomaticAuthenticate = true
-                                         })
                 //TODO the tokenDecoder should be removed, and one of above should be used once identity server/mvc6 is fixed
                 .UseMiddleware<TokenDecoder>(authority)
                 .UseMiddleware<CreateTransaction>()
