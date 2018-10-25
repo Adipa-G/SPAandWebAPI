@@ -21,7 +21,7 @@ namespace Web.Middleware
         private readonly ILogWriterRepository _logRepository;
         private readonly IConfig _config;
 
-        
+
         public RequestResponseLog(RequestDelegate next, ILogWriterRepository logRepository, IConfig config)
         {
             _next = next;
@@ -42,7 +42,7 @@ namespace Web.Middleware
                 {
                     var originalRequestStream = context.Request.Body;
                     var orginalResponseStream = context.Response.Body;
-                    
+
                     try
                     {
                         if (IsTextContentType(context.Request.ContentType))
@@ -93,7 +93,7 @@ namespace Web.Middleware
             request.HttpContext.Response.Headers.Add("Http-Tracking-Id", new[] { model.TrackingId });
 
             model.RequestIdentity = request.HttpContext.User != null && request.HttpContext.User.Identity.IsAuthenticated
-                ? ((ClaimsIdentity) request.HttpContext.User.Identity).Claims.Single(c =>c.Type == ClaimTypes.NameIdentifier).Value
+                ? ((ClaimsIdentity)request.HttpContext.User.Identity).Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value
                 : "(anonymous)";
             model.CallerAddress = request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty;
             model.Verb = request.Method;
@@ -118,7 +118,7 @@ namespace Web.Middleware
             model.StatusCode = response.StatusCode;
             model.ReasonPhrase = string.Empty;
             model.ResponseHeaders = GetHeaderList(response.Headers);
-            
+
             if (IsTextContentType(response.ContentType))
             {
                 responseStream.Seek(0, SeekOrigin.Begin);
@@ -128,7 +128,7 @@ namespace Web.Middleware
             {
                 model.Response = $"Content type : {response.ContentType}, length : {response.Body.Length} bytes";
             }
-            
+
             model.CallDuration = DateTime.UtcNow - model.CalledOn;
         }
 
@@ -137,7 +137,7 @@ namespace Web.Middleware
             var sb = new StringBuilder();
             foreach (var keyValuePair in dictionary)
             {
-                sb.AppendFormat("[Key : {0}, Value : {1}],", keyValuePair.Key, String.Join(",",keyValuePair.Value));
+                sb.AppendFormat("[Key : {0}, Value : {1}],", keyValuePair.Key, String.Join(",", keyValuePair.Value));
             }
             return sb.ToString();
         }
@@ -154,7 +154,7 @@ namespace Web.Middleware
         {
             if (contentType == null)
                 return Encoding.UTF8;
-            
+
             try
             {
                 var charset = "utf-8";

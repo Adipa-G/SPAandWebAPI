@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
             return Task.FromResult(resources.ApiResources.First());
         }
 
-        public Task<Resources> GetAllResources()
+        public Task<Resources> GetAllResourcesAsync()
         {
             return Task.FromResult(resources);
         }
