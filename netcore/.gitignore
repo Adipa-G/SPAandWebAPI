@@ -1,0 +1,7 @@
+artifacts/**/*.*
+**/node_modules/**/*.*
+**/bin/Debug/**/*.*
+src/Web/node_modules/*
+**/obj/**
+/TestResult.xml
+/src/Web/web/*
