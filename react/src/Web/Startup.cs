@@ -12,6 +12,7 @@ using Infrastructure.Modules;
 using Infrastructure.Plumbing;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.DotNet.PlatformAbstractions;
@@ -63,10 +64,10 @@ namespace Web
                     ArrayPool<char>.Shared);
 
             services.AddMvc(options =>
-                            {
-                                options.OutputFormatters.Insert(0, jsonOutputFormatter);
-                                options.Filters.Add(new AuthorizeFilter(defaultPolicy));
-                            });
+            {
+                options.OutputFormatters.Insert(0, jsonOutputFormatter);
+                options.Filters.Add(new AuthorizeFilter(defaultPolicy));
+            });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
@@ -79,10 +80,19 @@ namespace Web
 
             var authority = "http://localhost:5000";
 
+            var fileProvider = new PhysicalFileProvider(_pathProvider.HostingDirectory + "\\web");
+            var defoptions = new DefaultFilesOptions();
+            defoptions.DefaultFileNames.Clear();
+            defoptions.FileProvider = fileProvider;
+            defoptions.DefaultFileNames.Add("index.html");
+            app.UseDefaultFiles(defoptions);
+
             app.UseDeveloperExceptionPage()
+                .UseDefaultFiles()
                 .UseStaticFiles(new StaticFileOptions()
                 {
-                    FileProvider = new PhysicalFileProvider(_pathProvider.HostingDirectory)
+                    FileProvider = fileProvider,
+                    RequestPath = new PathString("")
                 })
                 .UseMiddleware<ValidateAntiForgeryToken>()
                 .UseMiddleware<RequestResponseLog>()
