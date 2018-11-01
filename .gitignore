@@ -15,3 +15,4 @@ Angular2/src/Web/wwwroot/libs/*
 **/.vs/*
 *.csproj.user
 **/TestResult.xml
+/ui/react/web/*
