@@ -9,3 +9,6 @@ Angular2/src/Web/wwwroot/libs/*
 **/node_modules/**/*.*
 **/node_modules/*
 **/wwwroot/*
+/_old/*
+/backend/netcore/src/Web/app/*
+**/angularjs/dist/*
