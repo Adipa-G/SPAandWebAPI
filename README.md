@@ -2,6 +2,21 @@
 Set of seed applications using different SPA frameworks and Web Api. Each spa is designed to work with backend. 
 Batch scripts are provided to build/unit test and start each combination.
 
+SPA applications consists UI for,
+* Signup
+* Login
+* User management (listing / deleting)
+* Log viewer
+* Request/Response viewer
+
+Technical details,
+* Authentication
+* CSRF
+* Logging
+* UI unit tests
+* Backend unit tests
+* Integration tests for repositories, using SQLLite databases 
+
 ### ui/React
 * React 16.0
 * Bootstrap
@@ -35,13 +50,6 @@ Batch scripts are provided to build/unit test and start each combination.
 * Update the databases config in the config file (file format may vary depending on the project)
 * Run backend-<backend>-ui-<ui>.bat file
 * Visit the url (http://localhost:5000/)
-
-### Common Features
-* DI
-* Request/Response logging
-* UI unit tests
-* Backend unit tests
-* Integration tests for repositories, using SQLLite databases
 
 ### Screenshots (there are some differences in Angular2 application)
 #### Home
