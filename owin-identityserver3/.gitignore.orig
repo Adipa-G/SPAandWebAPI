@@ -1,7 +1,0 @@
-**/bin/**/*.*
-**/obj/**/*.*
-<<<<<<< HEAD
-**/node_modules/**
-=======
-**/node_modules/*
->>>>>>> 513cd05... some js fixes
