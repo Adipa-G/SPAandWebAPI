@@ -12,3 +12,6 @@ Angular2/src/Web/wwwroot/libs/*
 /_old/*
 /backend/netcore/src/Web/app/*
 **/angularjs/dist/*
+**/.vs/*
+*.csproj.user
+**/TestResult.xml
