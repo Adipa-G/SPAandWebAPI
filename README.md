@@ -1,121 +1,47 @@
 # Introduction
-Set of seed applications using different SPA frameworks and Web Api. There are 5 different braches for different technology stacks, and those are merged to the master branch as subtrees for ease of browsing.  
+Set of seed applications using different SPA frameworks and Web Api. Each spa is designed to work with backend. 
+Batch scripts are provided to build/unit test and start each combination.
 
-### React
-* Using React 16.0
-* .Net Core Web API
-* Build script to build API, SPA and to execute tests
-* IdentityServer 4 used to provide OAuth tokens
-* NHibernate as ORM
-* Bootstrap for UI
-* Sass used to create stylesheets and Gulp task for building
+### ui/React
+* React 16.0
+* Bootstrap
+* Sass
+* Jest
 
-##### How to run
-* Checkout the project
-* Create the databases with the included script
-* Update the config.json connection string
-* Run build.bat file
-* Visit the url (http://localhost:5000/)
+### ui/Angular
 
-##### Development
-* Use VS 2017 to open the solution
-* Use npm run-script build to build typescript
-* Use npm test to run jest tests 
-
-### Angular
-* UI with Angular 7.0 
+* Angular 7.0 
 * Angular cli
-* IdentityServer 4 used to provide OAuth tokens
-* NHibernate as ORM
 * Bootstrap for UI
+* Sass
+* Karma
 
-##### How to run
-* Checkout the project
-* Create the databases with the included script
-* Update the config.json connection string
-* Run build.bat file
-* Visit the url (http://localhost:5000/)
+### ui/AngularJs
 
-##### Development
-* Use VS 2017 to open the solution
-* Use ng build command to build UI
-* Use ng test command to run unit tests
+* AngularJs 1.5 
+* Angular cli
+* Bootstrap for UI
+* Sass
+* Karma
 
-### netcore
-* UI with Angular 1.5 
-* Grunt tasks for run tests and minify and compress css and javascripts
+### backend/netcore
 * dotnetcore 2.1 used to implement API with built in DI
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
-* Bootstrap for UI
-* Sass used to create stypesheets and Gulp task for building
 
-##### How to run
+### How to run
 * Checkout the project
-* Create the databases with the included script
-* Update the config.json connection string
-* Run build.bat file
+* Create the databases with the included script (backend/<project>/SQL)
+* Update the databases config in the config file (file format may vary depending on the project)
+* Run backend-<backend>-ui-<ui>.bat file
 * Visit the url (http://localhost:5000/)
-
-##### Development
-* Use VS 2017 to open the solution
-* Run the gulp watch task from the task runner of the visual studio
-* Any changes made to file will update the Js,Css and template files
-
-### Owin-IdentityServer3 
-* UI with Angular 1.5 
-* Grunt tasks for run tests and minify and compress css and javascripts
-* WebApi 2.0 used to implement API with Ninject as DI 
-* IdentityServer 3 used to provide OAuth tokens
-* NHibernate as ORM
-* Bootstrap for UI
-* Sass used to create stypesheets and Gulp task for building
-
-##### How to run
-* Checkout the project
-* Open with VS2015
-* Restore nuget packages and npm packages
-* Build
-* Update the web.config connection string
-* Update IssuerName and Authority in Startup.cs (update URL http://localhost:xxxxx to your Url)
-* Execute the Web project in the src folder as self hosted exe
-* Visit the url (http://localhost:5000/Index.html)
-* Unit tests can be run with a competible VS plugin 
-
-##### Development
-* Run the gulp watch task from the task runner of the visual studio
-* Any changes made to file will update the Js,Css and template files
-
-### Owin
-* UI with Angular 1.5 
-* Grunt tasks for run tests and minify and compress css and javascripts
-* WebApi 2.0 used to implement API with Ninject as DI 
-* NHibernate as ORM
-* Bootstrap for UI
-* Sass used to create stypesheets and Gulp task for building
-
-##### How to run
-* Checkout the project
-* Open with VS2015
-* Restore nuget packages and npm packages
-* Build
-* Update the web.config connection string
-* Execute the Web project in the src folder as self hosted exe
-* Visit the url (http://localhost:5000/Index.html)
-* Unit tests can be run with a competible VS plugin 
-
-##### Development
-* Run the gulp watch task from the task runner of the visual studio
-* Any changes made to file will update the Js,Css and template files
 
 ### Common Features
 * DI
-* Session per request implemented for NHibernate using middleware
 * Request/Response logging
-* Unit tests for Owin middleware
-* Unit tests for controllers
+* UI unit tests
+* Backend unit tests
 * Integration tests for repositories, using SQLLite databases
-* Jasmine unit tests for angular 1.x services, controllers and directives (Angular 2 version does not have tests)* 
 
 ### Screenshots (there are some differences in Angular2 application)
 #### Home
