@@ -1,7 +1,0 @@
-﻿{
-  "Server": "",
-  "Database": "",
-  "Username": "",
-  "Password": "",
-  "ConnectionString": "Data Source=localhost;Integrated Security=SSPI;Initial Catalog=WebApiAndSPA"
-}
