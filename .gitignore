@@ -16,3 +16,6 @@ Angular2/src/Web/wwwroot/libs/*
 *.csproj.user
 **/TestResult.xml
 /ui/react/web/*
+**/owin/packages/*
+**/App_Data/Logs/*
+**/owin/Web/www/*
