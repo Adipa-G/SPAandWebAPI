@@ -44,10 +44,21 @@ Technical details,
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
 
+### backend/owin
+* .Net 4.5.1 
+* Ninject as DI
+* NHibernate as ORM
+* OWin OAuth
+
+### backend/owin-identityserver3
+* .Net 4.5.1 
+* Ninject as DI
+* NHibernate as ORM
+* IdentityServer3 Auth
+
 ### How to run
 * Checkout the project
-* Create the databases with the included script (backend/<project>/SQL)
-* Update the databases config in the config file (file format may vary depending on the project)
+* Update config (create database with scripts (backend/<project>/SQL) / Set Paths in .bat files where absolute paths are used)
 * Run backend-<backend>-ui-<ui>.bat file
 * Visit the url (http://localhost:5000/)
 
