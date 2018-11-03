@@ -19,3 +19,5 @@ Angular2/src/Web/wwwroot/libs/*
 **/owin/packages/*
 **/App_Data/Logs/*
 **/owin/Web/www/*
+/backend/owin-identityserver3/packages/*
+/backend/owin-identityserver3/Web/www/*
