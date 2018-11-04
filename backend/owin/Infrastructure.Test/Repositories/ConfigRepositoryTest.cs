@@ -7,13 +7,13 @@ namespace Infrastructure.Test.Repositories
     [TestFixture]
     public class ConfigRepositoryTest : RepositoryTestBase
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         protected override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         protected override void OneTimeTearDown()
         {
             base.OneTimeTearDown();
