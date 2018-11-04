@@ -15,14 +15,14 @@ namespace Infrastructure.Test.Repositories
     {
         private IConfig _config;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         protected override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
             _config = Substitute.For<IConfig>();
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         protected override void OneTimeTearDown()
         {
             base.OneTimeTearDown();
