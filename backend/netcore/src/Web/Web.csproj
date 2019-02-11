@@ -5,6 +5,8 @@
     <AssemblyName>Web</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Web</PackageId>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
@@ -13,13 +15,6 @@
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-
-  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
-    <Exec Command="npm install" />
-    <Exec Command="bower install" />
-    <Exec Command="gulp clean" />
-    <Exec Command="gulp min" />
-  </Target>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.FileProviderExtensions" Version="1.0.0-rc1-final" />

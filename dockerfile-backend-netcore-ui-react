@@ -1,0 +1,34 @@
+FROM microsoft/dotnet:2.1-sdk as backend
+COPY ./backend/netcore /app/backendbuild
+WORKDIR /app/backendbuild
+RUN dotnet restore
+RUN dotnet build
+RUN dotnet ./src-test/Infrastructure.Test/bin/Debug/netcoreapp2.1/Infrastructure.Test.dll
+RUN dotnet ./src-test/Web.Test/bin/Debug/netcoreapp2.1/Web.Test.dll
+RUN dotnet publish -c Release -o /out
+RUN cp -r src/Web/Configuration /out
+
+FROM node:8.12.0-jessie as spa
+ENV TZ=Australia/Melbourne
+COPY ./ui/react app/uibuild
+WORKDIR app/uibuild
+RUN apt-get update ;\
+    apt-get install -y tzdata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN npm install -g webpack webpack-cli jest
+RUN npm link webpack
+RUN npm install gulp
+RUN npm link gulp
+RUN npm install
+RUN gulp copy-libs
+RUN gulp copy-templates
+RUN gulp sass
+RUN npm run-script build
+RUN npm test
+
+FROM microsoft/dotnet:aspnetcore-runtime
+EXPOSE 80
+WORKDIR /app
+COPY --from=backend /out .
+COPY --from=spa /app/uibuild/web ./app
+ENTRYPOINT ["dotnet", "Web.dll"]

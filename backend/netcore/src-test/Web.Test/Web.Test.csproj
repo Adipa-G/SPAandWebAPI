@@ -6,6 +6,8 @@
     <OutputType>Exe</OutputType>
     <PackageId>Web.Test</PackageId>
     <RuntimeIdentifiers>win;win-anycpu</RuntimeIdentifiers>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">

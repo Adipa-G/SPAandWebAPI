@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.DotNet.PlatformAbstractions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -26,18 +27,26 @@ namespace Web
     public class Startup
     {
         private readonly PathProvider _pathProvider;
+        public readonly IConfigurationRoot _configuration;
 
-        public Startup()
+        public Startup(IHostingEnvironment env)
         {
             _pathProvider = new PathProvider(Directory.GetCurrentDirectory());
-        }
 
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            _configuration = builder.Build();
+        }
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IPathProvider>(_pathProvider);
 
             services.AddSingleton<IDatabaseConfig>(
-                new DatabaseConfig(Path.Combine(Directory.GetCurrentDirectory(), "config.json")));
+                new DatabaseConfig(_configuration));
 
             PlumbingModule.Load(services);
             RepositoryModule.Load(services);
@@ -80,7 +89,7 @@ namespace Web
 
             var authority = "http://localhost:5000";
 
-            var fileProvider = new PhysicalFileProvider(_pathProvider.HostingDirectory + "\\app");
+            var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory,"app"));
             var defoptions = new DefaultFilesOptions();
             defoptions.DefaultFileNames.Clear();
             defoptions.FileProvider = fileProvider;

@@ -8,15 +8,15 @@ namespace Infrastructure.Config
     {
         private IConfiguration _configuration;
 
-        public DatabaseConfig(string file)
+        public DatabaseConfig(IConfigurationRoot configuration)
         {
-            _configuration = new ConfigurationBuilder().AddJsonFile(file).Build();
+            _configuration = configuration;
         }
 
-        public string Server => _configuration["Server"];
-        public string Database => _configuration["Database"];
-        public string Username => _configuration["Username"];
-        public string Password => _configuration["Password"];
-        public string ConnectionString => _configuration["ConnectionString"];
+        public string Server => _configuration["Database:Server"];
+        public string Database => _configuration["Database:Database"];
+        public string Username => _configuration["Database:Username"];
+        public string Password => _configuration["Database:Password"];
+        public string ConnectionString => _configuration["Database:ConnectionString"];
     }
 }

@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  reactapp:
+    build:
+      context: .
+      dockerfile: dockerfile-backend-netcore-ui-react
+    depends_on:
+      - reactappsqldb  
+    environment:
+      Database__ConnectionString: Server=reactappsqldbInstance;Database=master;User Id=sa;Password=Your_password123;
+      XYZ: 1
+    ports:
+      - 5000:80
+      
+  reactappsqldb:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: reactappsqldbInstance
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
