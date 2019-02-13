@@ -70,11 +70,11 @@ Technical details,
     * React - `docker build -f dockerfile-backend-netcore-ui-react . --tag react-app`
 * Deploy the desired Kubernetes config
 	* Create database with scripts (backend/<project>/SQL)
+	* In following commands `<app type>` to be replaced with `react`,`angular` or `angularjs`
 	* Set the `Database__ConnectionString` value of the file (make sure to use the correct ip address)
 	* Deploy the file with `kubectl apply -f .\kubernetes-backend-netcore-ui-<app type>.yaml`
 	* If you want to do a rolling update, use command ` kubectl --namespace=<app type> rolling-update <app type>-app-replication-set --image=<app type>-app:latest --i
-mage-pull-policy=Never`
-	* In above commands `<app type>` to be replaced with `react`,`angular` or `angularjs`	
+mage-pull-policy=Never`		
 	* Open the url in the browser (http://localhost:30001 for react, http://localhost:30002 for angularjs, http://localhost:30003 for angular)
 	* If you can't open the url, please verify if the pods are running by `kubectl --namespace=<app type> get pods`. The pods should be running if not possibly the database connection string is incorrect)
 
