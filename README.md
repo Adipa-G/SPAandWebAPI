@@ -61,8 +61,19 @@ Technical details,
 * Update config (create database with scripts (backend/<project>/SQL) / Set Paths in .bat files where absolute paths are used)
 * Run backend-<backend>-ui-<ui>.bat file
 * Visit the url (http://localhost:5000/)
-#### Running locally in Docker
-* TODO
+### Running locally in Docker (only with .netcore backend)
+* Install docker and enable Kubernetes
+* Checkout the project
+* Build desired docker container
+    * Angularjs - `docker build -f dockerfile-backend-netcore-ui-angularjs . --tag angularjs-app`
+    * Angular - `docker build -f dockerfile-backend-netcore-ui-angular . --tag angular-app`
+    * React - `docker build -f dockerfile-backend-netcore-ui-react . --tag react-app`
+* Deploy the desired Kubernetes config
+	* Set the `Database__ConnectionString` value of the file (make sure to use the correct ip address)
+	* Deploy the file with `kubectl apply -f .\kubernetes-backend-netcore-ui-<app type>.yaml`
+	* If you want to do a rolling update, use command ` kubectl --namespace=<app type> rolling-update <app type>-app-replication-set --image=<app type>-app:latest --i
+mage-pull-policy=Never`
+	* In above commands `<app type>` to be replaced with `react`,`angular` or `angularjs`	
 
 ### Screenshots (there are some differences in Angular2 application)
 #### Home

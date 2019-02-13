@@ -30,4 +30,4 @@ EXPOSE 80
 WORKDIR /app
 COPY --from=backend /out .
 COPY --from=spa /app/uibuild/dist ./app
-#ENTRYPOINT ["dotnet", "Web.dll"]
+ENTRYPOINT ["dotnet", "Web.dll"]

@@ -1,28 +1,28 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: react
+  name: angular
 ---
 apiVersion: v1
 kind: ReplicationController
 metadata: 
-  name: react-app-replication-set
-  namespace: react
+  name: angular-app-replication-set
+  namespace: angular
   labels: 
-    app:  react-app-pod  
+    app:  angular-app-pod  
 spec:
   replicas: 2
   selector:
-    app:  react-app-pod
+    app:  angular-app-pod
   template:
     metadata:
-      name: react-app-pod
+      name: angular-app-pod
       labels:
-        app: react-app-pod
+        app: angular-app-pod
     spec:
       containers:
-      - name: react-app-container
-        image: react-app:latest
+      - name: angular-app-container
+        image: angular-app:latest
         imagePullPolicy: Never #To make sure to get the image from local docker
         env:
         - name: Database__ConnectionString
@@ -30,23 +30,23 @@ spec:
         - name: Hosting__HostName
           value: "localhost"
         - name: Hosting__Port
-          value: "30001"
+          value: "30003"
         ports:
         - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-app-service
-  namespace: react
+  name: angular-app-service
+  namespace: angular
   labels:
-    app: react-app-pod
+    app: angular-app-pod
 spec:
   type: NodePort
   ports:
-  - port: 8081
+  - port: 8083
     protocol: TCP
     targetPort: 80
-    nodePort: 30001
+    nodePort: 30003
   selector:
-    app: react-app-pod
+    app: angular-app-pod
