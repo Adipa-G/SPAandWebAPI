@@ -87,7 +87,7 @@ namespace Web
             loggerFactory.AddConsole(LogLevel.Information);
             loggerFactory.AddDebug(LogLevel.Information);
 
-            var authority = "http://localhost:5000";
+            var authority = $"http://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
 
             var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory,"app"));
             var defoptions = new DefaultFilesOptions();
