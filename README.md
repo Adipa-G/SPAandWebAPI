@@ -1,6 +1,6 @@
 # Introduction
 Set of seed applications using different SPA frameworks and Web Api. Each spa is designed to work with backend. 
-Batch scripts are provided to build/unit test and start each combination.
+Batch scripts and dockerfiles are provided to build/unit test and start each combination. Furhter Kubernetes deployment files are provided to deploy these applications.
 
 SPA applications consists UI for,
 * Signup
