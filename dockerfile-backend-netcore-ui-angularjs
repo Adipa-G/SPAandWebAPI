@@ -8,29 +8,26 @@ RUN dotnet ./src-test/Web.Test/bin/Debug/netcoreapp2.1/Web.Test.dll
 RUN dotnet publish -c Release -o /out
 RUN cp -r src/Web/Configuration /out
 
-FROM node:8.12.0-jessie as reactbase
+FROM node:8.12.0-jessie as angularjsbase
 ENV TZ=Australia/Melbourne
-COPY ./ui/react app/uibuild
+COPY ./ui/angularjs app/uibuild
 WORKDIR app/uibuild
 RUN apt-get update ;\
     apt-get install -y tzdata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN npm install -g webpack webpack-cli jest
-RUN npm link webpack
-RUN npm install gulp
-RUN npm link gulp
+RUN npm install -g gulp
 
-FROM reactbase as spa
+FROM angularjsbase as spa 
 RUN npm install
 RUN gulp copy-libs
 RUN gulp copy-templates
 RUN gulp sass
-RUN npm run-script build
-RUN npm test
+RUN gulp copyAppJS
+RUN gulp test
 
 FROM microsoft/dotnet:aspnetcore-runtime
 EXPOSE 80
 WORKDIR /app
 COPY --from=backend /out .
-COPY --from=spa /app/uibuild/web ./app
-ENTRYPOINT ["dotnet", "Web.dll"]
+COPY --from=spa /app/uibuild/dist ./app
+#ENTRYPOINT ["dotnet", "Web.dll"]

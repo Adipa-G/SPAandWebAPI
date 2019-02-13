@@ -56,11 +56,13 @@ Technical details,
 * NHibernate as ORM
 * IdentityServer3 Auth
 
-### How to run
+### Running locally with batch file
 * Checkout the project
 * Update config (create database with scripts (backend/<project>/SQL) / Set Paths in .bat files where absolute paths are used)
 * Run backend-<backend>-ui-<ui>.bat file
 * Visit the url (http://localhost:5000/)
+#### Running locally in Docker
+* TODO
 
 ### Screenshots (there are some differences in Angular2 application)
 #### Home
