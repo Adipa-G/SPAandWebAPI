@@ -21,3 +21,4 @@ Angular2/src/Web/wwwroot/libs/*
 **/owin/Web/www/*
 /backend/owin-identityserver3/packages/*
 /backend/owin-identityserver3/Web/www/*
+/backend/owin-identityserver3/Web/OwinAndIdServer.db
