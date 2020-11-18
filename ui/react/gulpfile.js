@@ -12,7 +12,7 @@ gulp.task('copy-libs', function () {
     .pipe(uglify())
     .pipe(gulp.dest('./web/lib'));
 
-    gulp.src(['./web-src/lib/highlight.min.js'])
+    gulp.src(['./web-src/lib/highlight.js'])
     .pipe(gulp.dest('./web/lib'));
 
     gulp.src(['./web-src/content/css/*.css'])

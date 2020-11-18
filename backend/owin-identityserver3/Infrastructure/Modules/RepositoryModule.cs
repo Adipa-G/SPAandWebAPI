@@ -10,9 +10,9 @@ namespace Infrastructure.Modules
         {
             Bind<ILogWriterRepository>().To<LogWriterRepository>().InSingletonScope();
 
-            Bind<IUserRepository>().To<UserRepository>();
-            Bind<IConfigRepository>().To<ConfigRepository>();
-            Bind<ILogViewRepository>().To<LogViewRepository>();
+            Bind<IUserRepository>().To<UserRepository>().InTransientScope();
+            Bind<IConfigRepository>().To<ConfigRepository>().InTransientScope();
+            Bind<ILogViewRepository>().To<LogViewRepository>().InTransientScope();
         }
     }
 }

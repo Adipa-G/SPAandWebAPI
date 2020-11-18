@@ -26,11 +26,10 @@ export class HttpService {
             url: `${this.serviceBase}${url}`,
             type: type,
             data: data ? JSON.stringify(data) : null,
-            dataType: "json",
             contentType: "application/json; charset=utf-8"
         }).done((result: any) => {
             if (success) {
-                success(result);
+                success(result);   
             }
         }).fail((xhr: any, err: any) => {
             if (error) {

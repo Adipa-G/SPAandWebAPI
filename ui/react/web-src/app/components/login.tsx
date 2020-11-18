@@ -49,6 +49,12 @@ export class Login extends React.Component<LoginProps, LoginState> {
             return;
         }
 
+        this.setState((prevState: LoginState) => {
+            let newState: LoginState = jQuery.extend(true, {}, prevState) as LoginState;
+            newState.errorMessage = null;
+            return newState;
+        });
+
         this.authService.authenticate(this.state.userName, this.state.password, (result: any) => {
             if (result.success) {
                 this.props.loginComplete();

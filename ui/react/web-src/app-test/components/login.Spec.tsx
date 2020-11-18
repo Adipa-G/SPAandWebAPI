@@ -43,6 +43,7 @@ describe("<Login/>", () => {
         const callback = jest.fn();
         const wrapper = shallow(<Login loginComplete={callback} />);
         const instance = wrapper.instance() as any;
+        instance.state.errorMessage = 'x';
 
         instance.authService = {
             authenticate: (user: string, pwd: string, callback: Function) => {

@@ -9,14 +9,14 @@ namespace Web.Middleware
 {
     public class CreateTransaction : OwinMiddleware
     {
-        private IKernel _kernel; 
+        private readonly IKernel _kernel; 
 
         public CreateTransaction(OwinMiddleware next,IKernel kernel) : base(next)
         {
             _kernel = kernel;
         }
 
-        public async override Task Invoke(IOwinContext context)
+        public override async Task Invoke(IOwinContext context)
         {
             var session = (ISession)_kernel.GetService(typeof(ISession));
 

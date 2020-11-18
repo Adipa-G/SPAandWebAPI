@@ -1,7 +1,6 @@
 ﻿using System.Web.Http.ExceptionHandling;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
-using Domain.Interfaces.Repositories;
 using IdentityServer3.Core.Services;
 using Infrastructure.Config;
 using Infrastructure.Plumbing;
@@ -16,17 +15,17 @@ namespace Infrastructure.Modules
     {
         public override void Load()
         {
-            Bind<IClientStore>().To<ClientStore>();
-            Bind<IScopeStore>().To<ScopeStore>();       
-            Bind<IUserService>().To<UserService>();
+            Bind<IClientStore>().To<ClientStore>().InTransientScope();
+            Bind<IScopeStore>().To<ScopeStore>().InTransientScope();       
+            Bind<IUserService>().To<UserService>().InTransientScope();
 
-            Bind<IDatabaseConfig>().To<DatabaseConfig>();
-            Bind<IConfig>().To<Config.Config>();
+            Bind<IDatabaseConfig>().To<DatabaseConfig>().InSingletonScope();
+            Bind<IConfig>().To<Config.Config>().InTransientScope();
 
-            Bind<INHibernateSessionFactory>().To<NHibernateSessionFactory>();
+            Bind<INHibernateSessionFactory>().To<NHibernateSessionFactory>().InTransientScope();
             Bind<ISessionFactory>().ToProvider<NhibernateSessionFactoryProvider>().InSingletonScope();
-            Bind<ISQLStatementInterceptor>().To<SQLStatementInterceptor>();
-            Bind<IExceptionLogger>().To<ExceptionLogger>();
+            Bind<ISQLStatementInterceptor>().To<SQLStatementInterceptor>().InTransientScope();
+            Bind<IExceptionLogger>().To<ExceptionLogger>().InTransientScope();
         }
     }
 }
