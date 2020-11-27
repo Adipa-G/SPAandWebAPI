@@ -22,7 +22,7 @@ namespace Infrastructure.Modules
             Bind<IDatabaseConfig>().To<DatabaseConfig>().InSingletonScope();
             Bind<IConfig>().To<Config.Config>().InTransientScope();
 
-            Bind<INHibernateSessionFactory>().To<NHibernateSessionFactory>().InTransientScope();
+            Bind<INHibernateSessionFactory>().To<NHibernateSessionFactory>().InSingletonScope();
             Bind<ISessionFactory>().ToProvider<NhibernateSessionFactoryProvider>().InSingletonScope();
             Bind<ISQLStatementInterceptor>().To<SQLStatementInterceptor>().InTransientScope();
             Bind<IExceptionLogger>().To<ExceptionLogger>().InTransientScope();

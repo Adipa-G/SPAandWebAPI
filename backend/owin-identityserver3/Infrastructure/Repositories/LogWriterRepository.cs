@@ -95,11 +95,11 @@ namespace Infrastructure.Repositories
                 {
                     try
                     {
-                        var config = new Config.Config(new ConfigRepository(session));
+                        var config = new Config.Config();
                         LogThreadExec(config, session);
                         transaction.Commit();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         transaction.Rollback();
                     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ using Domain.Enum;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
+using IdentityServer3.Core.Extensions;
 using Microsoft.Owin;
 using Ninject;
 using Serilog;
@@ -62,6 +65,7 @@ namespace Web.Middleware
                 Log.Error(ex, ex.Message);
                 UpdateForResponse(httpLogModel, context.Response, responseStream);
                 LogRepository.LogRequest(LogLevel.Info, httpLogModel, ex);
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             finally
             {
@@ -72,8 +76,10 @@ namespace Web.Middleware
 
         private async Task UpdateForRequest(HttpLogModel model, IOwinRequest request)
         {
-            model.RequestIdentity = request.User != null && request.User.Identity.IsAuthenticated
-                ? request.User.Identity.Name
+            var identity = (request.User?.Identity as ClaimsIdentity);
+            var nameId = identity?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            model.RequestIdentity = nameId != null && request.User.Identity.IsAuthenticated
+                ? nameId
                 : "(anonymous)";
             model.CallerAddress = request.RemoteIpAddress;
             model.Verb = request.Method;

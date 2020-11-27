@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Owin;
 using NHibernate;
 using Ninject;
+using Ninject.Web.Common;
 
 namespace Web.Middleware
 {
@@ -18,32 +19,32 @@ namespace Web.Middleware
 
         public override async Task Invoke(IOwinContext context)
         {
-            var session = (ISession)_kernel.GetService(typeof(ISession));
-
-            if (session == null)
-                throw new Exception("Failed to resolve Session");
-
-            var needTransaction = new[] {"POST", "PUT", "DELETE"}.Contains(context.Request.Method);
-
-            if (needTransaction)
+            var sessionFactory = (ISessionFactory)_kernel.GetService(typeof(ISessionFactory));
+            using (var session = sessionFactory.OpenSession())
             {
-                using (var transaction = session.BeginTransaction())
+                _kernel.Rebind<ISession>().ToConstant(session).InThreadScope();
+                var needTransaction = new[] {"POST", "PUT", "DELETE"}.Contains(context.Request.Method);
+
+                if (needTransaction)
                 {
-                    try
+                    using (var transaction = session.BeginTransaction())
                     {
-                        await Next.Invoke(context);
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                        throw;
+                        try
+                        {
+                            await Next.Invoke(context);
+                            transaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
                     }
                 }
-            }
-            else
-            {
-                await Next.Invoke(context);
+                else
+                {
+                    await Next.Invoke(context);
+                }
             }
         }
     }

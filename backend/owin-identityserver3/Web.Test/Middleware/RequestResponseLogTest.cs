@@ -3,8 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
+using System.Threading.Tasks;
 using Domain.Enum;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Repositories;
@@ -57,21 +59,20 @@ namespace Web.Test.Middleware
         }
 
         [Test]
-        public void GivenMiddlewareAndLogNotEnabled_WhenInvoke_NoLogging()
+        public async Task GivenMiddlewareAndLogNotEnabled_WhenInvoke_NoLogging()
         {
             _config.LogRequests.Returns(false);
             _request.Body.Returns(new MemoryStream(Encoding.UTF8.GetBytes("test")));
             _response.Body.Returns(new MemoryStream(new byte[20]));
             _response.StatusCode.Returns((int)HttpStatusCode.OK);
 
-            var result = _requestResponseLog.Invoke(_context);
-            result.Wait();
+            await _requestResponseLog.Invoke(_context);
 
             _logRepository.Received(0).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
         }
 
         [Test]
-        public void GivenMiddlewareAndLogNotEnabled_WhenInvokeWithException_Log()
+        public async Task GivenMiddlewareAndLogNotEnabled_WhenInvokeWithException_Log()
         {
             _next.ThrowException = true;
 
@@ -79,21 +80,20 @@ namespace Web.Test.Middleware
             _request.Body.Returns(new MemoryStream(Encoding.UTF8.GetBytes("test")));
             _response.Body.Returns(new MemoryStream(new byte[20]));
 
-            var result = _requestResponseLog.Invoke(_context);
-            result.Wait();
+            await _requestResponseLog.Invoke(_context);
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), Arg.Any<Exception>());
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvoke_LogRequest()
+        public async Task GivenMiddleware_WhenInvoke_LogRequest()
         {
             HttpLogModel logModel = null;
             _logRepository.LogRequest(Arg.Any<LogLevel>(),Arg.Do<HttpLogModel>(x => logModel = x),Arg.Any<Exception>());
 
             _config.LogRequests.Returns(true);
             
-            _request.User.Returns(new GenericPrincipal(new GenericIdentity("ABC"), new[] {"a", "b"}));
+            _request.User.Returns(new GenericPrincipal(new ClaimsIdentity(new List<Claim>(){new Claim(ClaimTypes.NameIdentifier, "ABC")}, "Basic"), new []{"a"}));
             _request.Body.Returns(new MemoryStream(Encoding.UTF8.GetBytes("request body")));
             _request.Method.Returns("GET");
             _request.RemoteIpAddress.Returns("127.0.0.1");
@@ -106,8 +106,7 @@ namespace Web.Test.Middleware
 
             _response.Body.Returns(new MemoryStream(new byte[20]));
 
-            var result = _requestResponseLog.Invoke(_context);
-            result.Wait();
+            await _requestResponseLog.Invoke(_context);
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
             Assert.AreEqual("ABC", logModel.RequestIdentity);
@@ -120,7 +119,7 @@ namespace Web.Test.Middleware
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvoke_LogResponse()
+        public async Task GivenMiddleware_WhenInvoke_LogResponse()
         {
             HttpLogModel logModel = null;
             _logRepository.LogRequest(Arg.Any<LogLevel>(), Arg.Do<HttpLogModel>(x => logModel = x), Arg.Any<Exception>());
@@ -132,14 +131,14 @@ namespace Web.Test.Middleware
             _response.Body.Returns(new MemoryStream(Encoding.UTF8.GetBytes("response body")));
             _response.StatusCode.Returns(400);
 
-            var result = _requestResponseLog.Invoke(_context);
-            result.Wait();
+            await _requestResponseLog.Invoke(_context);
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
             Assert.AreEqual(400, logModel.StatusCode);
         }
 
-        public void GivenMiddlewareAndLogNotEnabled_WhenInvokeWithErrorStatusCode_Log()
+        [Test]
+        public async Task GivenMiddlewareAndLogNotEnabled_WhenInvokeWithErrorStatusCode_Log()
         {
             _next.ThrowException = false;
 
@@ -148,8 +147,7 @@ namespace Web.Test.Middleware
             _response.Body.Returns(new MemoryStream(new byte[20]));
             _response.StatusCode.Returns(400);
 
-            var result = _requestResponseLog.Invoke(_context);
-            result.Wait();
+            await _requestResponseLog.Invoke(_context);
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
         }

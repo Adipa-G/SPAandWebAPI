@@ -1,58 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel;
+using System.Configuration;
 using Domain.Enum;
 using Domain.Interfaces.Config;
-using Domain.Interfaces.Repositories;
 
 namespace Infrastructure.Config
 {
     public class Config : IConfig
     {
-        private readonly IConfigRepository _repository;
-        private readonly Dictionary<string, object> _cache; 
+        public LogLevel LogLevelGeneral => Get("LogLevelGeneral", LogLevel.Info);
 
-        public Config(IConfigRepository repository)
-        {
-            _repository = repository;
-            _cache = new Dictionary<string, object>();
-        }
+        public bool LogRequests => Get("LogRequests", true);
 
-        public LogLevel LogLevelGeneral
-        {
-            get { return Get("LogLevelGeneral", LogLevel.Info); }
-            set { Set("LogLevelGeneral", value); }
-        }
+        public bool LogSqlStatements => Get("LogSqlStatements", true);
 
-        public bool LogRequests
+        private T Get<T>(string key, T defaultValue)
         {
-            get { return Get("LogRequests", true); }
-            set { Set("LogRequests", value); }
-        }
-
-        public bool LogSqlStatements
-        {
-            get { return _repository.GetSettingValue("LogSqlStatements", true); }
-            set { _repository.SetSettingValue("LogSqlStatements", value); }
-        }
-
-        private T Get<T>(string key,T defaultValue)
-        {
-            if (_cache.ContainsKey(key))
+            var values = ConfigurationManager.AppSettings.GetValues(key);
+            if (values?.Length > 0 && values[0] != null)
             {
-                return (T)_cache[key];
+                TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(T));
+                return (T)typeConverter.ConvertFromString(values[0]);
             }
-            T value = _repository.GetSettingValue(key,defaultValue);
-            _cache.Add(key,value);
-            return value;
-        }
-
-        private void Set<T>(string key, T value)
-        {
-            _repository.SetSettingValue(key, value);
-            if (_cache.ContainsKey(key))
-            {
-                _cache.Remove(key);
-                _cache.Add(key,value);
-            }
+            return defaultValue;
         }
     }
 }

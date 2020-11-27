@@ -1,7 +1,4 @@
-﻿using NHibernate;
-using Ninject;
-using Ninject.Modules;
-using Ninject.Web.Common;
+﻿using Ninject.Modules;
 using Web.OAuth;
 
 namespace Web.Modules
@@ -10,7 +7,6 @@ namespace Web.Modules
     {
         public override void Load()
         {
-            Bind<ISession>().ToMethod(context => context.Kernel.Get<ISessionFactory>().OpenSession()).InRequestScope();
             Bind<IIdentiyServiceFactoryProvider>().To<IdentiyServiceFactoryProvider>();
         }
     }
