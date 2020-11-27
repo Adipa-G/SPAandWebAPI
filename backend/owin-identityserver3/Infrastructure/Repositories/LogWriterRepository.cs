@@ -99,7 +99,7 @@ namespace Infrastructure.Repositories
                         LogThreadExec(config, session);
                         transaction.Commit();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         transaction.Rollback();
                     }
