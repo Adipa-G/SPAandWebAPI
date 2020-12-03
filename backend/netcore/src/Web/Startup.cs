@@ -1,4 +1,5 @@
-﻿using System.Buffers;
+﻿using System;
+using System.Buffers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Domain.Interfaces.Config;
+using Domain.Interfaces.Plumbing;
 using IdentityServer4.Configuration;
 using Infrastructure.Config;
 using Infrastructure.Modules;
@@ -60,8 +62,7 @@ namespace Web
                     EnableDiscoveryEndpoint = true,
                     EnableTokenEndpoint = true
                 }
-            })
-                .AddSigningCredential(cert);
+            }).AddSigningCredential(cert);
 
             var defaultPolicy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
@@ -141,12 +142,20 @@ namespace Web
                                                         IssuerSigningKey = new X509SecurityKey(cert)
                                                     };
             });*/
+
+            InitDatabaseDefaults(app.ApplicationServices);
         }
 
         private X509Certificate2 GetCertificate()
         {
             var cert = new X509Certificate2(Path.Combine("Configuration", "idsrv4test.pfx"), "idsrv3test");
             return cert;
+        }
+
+        private void InitDatabaseDefaults(IServiceProvider services)
+        {
+            var nHibernateSessionFactory = services.GetService<INHibernateSessionFactory>();
+            nHibernateSessionFactory.Update(true, true);
         }
 
         public static void Main(string[] args)

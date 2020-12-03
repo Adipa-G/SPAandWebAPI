@@ -13,10 +13,6 @@ namespace Infrastructure.Config
             _configuration = configuration;
         }
 
-        public string Server => _configuration["Database:Server"];
-        public string Database => _configuration["Database:Database"];
-        public string Username => _configuration["Database:Username"];
-        public string Password => _configuration["Database:Password"];
-        public string ConnectionString => _configuration["Database:ConnectionString"];
+        public string DatabaseFileName => _configuration["Database:DatabaseFileName"];
     }
 }

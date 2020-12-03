@@ -2,10 +2,6 @@
 {
     public interface IDatabaseConfig
     {
-        string Server { get; }
-        string Database { get; }
-        string Username { get; }
-        string Password { get; }
-        string ConnectionString { get; }
+        string DatabaseFileName { get; }
     }
 }

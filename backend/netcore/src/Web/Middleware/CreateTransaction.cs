@@ -25,13 +25,13 @@ namespace Web.Middleware
                     try
                     {
                         await _next.Invoke(context);
-                        session.Flush();
-                        transaction.Commit();
+                        await session.FlushAsync();
+                        await transaction.CommitAsync();
                     }
                     catch (Exception)
                     {
                         session.Clear();
-                        transaction.Rollback();
+                        await transaction.RollbackAsync();
                         throw;
                     }
                 }
