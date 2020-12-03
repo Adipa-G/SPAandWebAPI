@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Domain.Entities;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
@@ -77,22 +78,10 @@ namespace Infrastructure.Plumbing
 
         private  IPersistenceConfigurer CreateDatabaseConfiguration()
         {
-            if (!string.IsNullOrWhiteSpace(_databaseConfig.ConnectionString))
-            {
-                return MsSqlConfiguration
-                .MsSql2012
-                .ShowSql()
-                .ConnectionString(_databaseConfig.ConnectionString);
-            }
-
-            return MsSqlConfiguration
-                .MsSql2012
-                .ShowSql()
-                .ConnectionString(c => c
-                    .Server(_databaseConfig.Server)
-                    .Database(_databaseConfig.Database)
-                    .Username(_databaseConfig.Username)
-                    .Password(_databaseConfig.Password));
+            return SQLiteConfiguration
+                .Standard
+                .UsingFile($"{AppContext.BaseDirectory}//{_databaseConfig.DatabaseFileName}")
+                .ShowSql();
         }
 
         private IPersistenceConfigurer CreateTestDatabaseConfiguration()

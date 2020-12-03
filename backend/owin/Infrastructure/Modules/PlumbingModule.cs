@@ -15,16 +15,16 @@ namespace Infrastructure.Modules
     {
         public override void Load()
         {
-            Bind<IUserStore<IdentityUser>>().To<UserStore<IdentityUser>>();
-            Bind<UserManager<IdentityUser>>().To<UserManager<IdentityUser>>();
+            Bind<IUserStore<IdentityUser>>().To<UserStore<IdentityUser>>().InTransientScope();
+            Bind<UserManager<IdentityUser>>().To<UserManager<IdentityUser>>().InTransientScope();
 
-            Bind<IDatabaseConfig>().To<DatabaseConfig>();
-            Bind<IConfig>().To<Config.Config>();
+            Bind<IDatabaseConfig>().To<DatabaseConfig>().InSingletonScope();
+            Bind<IConfig>().To<Config.Config>().InSingletonScope();
 
-            Bind<INHibernateSessionFactory>().To<NHibernateSessionFactory>();
+            Bind<INHibernateSessionFactory>().To<NHibernateSessionFactory>().InTransientScope();
             Bind<ISessionFactory>().ToProvider<NhibernateSessionFactoryProvider>().InSingletonScope();
-            Bind<ISQLStatementInterceptor>().To<SQLStatementInterceptor>();
-            Bind<IExceptionLogger>().To<ExceptionLogger>();
+            Bind<ISQLStatementInterceptor>().To<SQLStatementInterceptor>().InTransientScope();
+            Bind<IExceptionLogger>().To<ExceptionLogger>().InTransientScope();
         }
     }
 }
