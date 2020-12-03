@@ -15,7 +15,7 @@ namespace Web.Middleware
         {
         }
 
-        public async override Task Invoke(IOwinContext context)
+        public override async Task Invoke(IOwinContext context)
         {
             var needValidation = new[] { "POST", "PUT", "DELETE" }.Contains(context.Request.Method);
 

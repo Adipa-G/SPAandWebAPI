@@ -11,10 +11,9 @@ namespace Web.Modules
     {
         public override void Load()
         {
-            Bind<ISession>().ToMethod(context => context.Kernel.Get<ISessionFactory>().OpenSession()).InRequestScope();
-            Bind<IAuthorizationServerOptionsProvider>().To<AuthorizationServerOptionsProvider>();
-            Bind<IAuthorizationServerProvider>().To<AuthorizationServerProvider>();
-            Bind<ILogger>().ToConstant(Log.Logger);
+            Bind<IAuthorizationServerOptionsProvider>().To<AuthorizationServerOptionsProvider>().InTransientScope();
+            Bind<IAuthorizationServerProvider>().To<AuthorizationServerProvider>().InTransientScope(); 
+            Bind<ILogger>().ToConstant(Log.Logger).InSingletonScope();
         }
     }
 }

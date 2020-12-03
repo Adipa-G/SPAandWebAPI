@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Owin;
 using NHibernate;
 using Ninject;
@@ -11,6 +12,7 @@ namespace Web.Test.Middleware
     [TestFixture]
     public class CreateTransactionTest
     {
+        private ISessionFactory _sessionFactory;
         private ISession _session; 
         private ITransaction _transaction; 
         private IKernel _kernel;
@@ -24,8 +26,10 @@ namespace Web.Test.Middleware
         [SetUp]
         public void SetUp()
         {
+            _sessionFactory = Substitute.For<ISessionFactory>();
             _session = Substitute.For<ISession>();
             _transaction = Substitute.For<ITransaction>();
+            _sessionFactory.OpenSession().Returns(_session);
             _session.BeginTransaction().Returns(_transaction);
 
             _context = Substitute.For<IOwinContext>();
@@ -33,19 +37,18 @@ namespace Web.Test.Middleware
             _context.Request.Returns(_request);
 
             _kernel = Substitute.For<IKernel>();
-            _kernel.GetService(typeof(ISession)).Returns(_session);
+            _kernel.GetService(typeof(ISessionFactory)).Returns(_sessionFactory);
             _next = new MockMiddleware();
 
             _createTransaction = new CreateTransaction(_next, _kernel);
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokeGet_NoTransaction()
+        public async Task GivenMiddleware_WhenInvokeGet_NoTransaction()
         {
             _request.Method.Returns("GET");
 
-            var result = _createTransaction.Invoke(_context);
-            result.Wait();
+            await _createTransaction.Invoke(_context);
 
             _session.Received(0).BeginTransaction();
             _transaction.Received(0).Commit();
@@ -53,12 +56,11 @@ namespace Web.Test.Middleware
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokePost_Transaction()
+        public async Task GivenMiddleware_WhenInvokePost_Transaction()
         {
             _request.Method.Returns("POST");
 
-            var result = _createTransaction.Invoke(_context);
-            result.Wait();
+            await _createTransaction.Invoke(_context);
 
             _session.Received(1).BeginTransaction();
             _transaction.Received(1).Commit();
@@ -72,8 +74,7 @@ namespace Web.Test.Middleware
 
             _request.Method.Returns("POST");
 
-            var result = _createTransaction.Invoke(_context);
-            Assert.That(() => result.Wait(),Throws.TypeOf<AggregateException>());
+            Assert.ThrowsAsync<Exception>(() => _createTransaction.Invoke(_context));
             
             _session.Received(1).BeginTransaction();
             _transaction.Received(0).Commit();

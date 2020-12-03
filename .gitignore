@@ -23,3 +23,4 @@ Angular2/src/Web/wwwroot/libs/*
 /backend/owin-identityserver3/Web/www/*
 /backend/owin-identityserver3/Web/OwinAndIdServer.db
 /backend/owin/Web/Owin.db
+/backend/owin/Owin.sln.DotSettings.user

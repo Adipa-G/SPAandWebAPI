@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http.Headers;
-using System.Security.Principal;
-using System.Text;
-using Domain.Enum;
-using Domain.Interfaces.Config;
-using Domain.Interfaces.Repositories;
-using Domain.Models.Log;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Owin;
-using NHibernate;
-using Ninject;
 using NSubstitute;
 using NUnit.Framework;
 using Web.Middleware;
@@ -44,7 +33,7 @@ namespace Web.Test.Middleware
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokeGet_NoValidation()
+        public async Task GivenMiddleware_WhenInvokeGet_NoValidation()
         {
             _request.Method.Returns("GET");
 
@@ -54,14 +43,13 @@ namespace Web.Test.Middleware
             var responseCookies = new ResponseCookieCollection(new HeaderDictionary(new Dictionary<string, string[]>()));
             _response.Cookies.Returns(responseCookies);
             
-            var result = _validateAntiForgeryToken.Invoke(_context);
-            result.Wait();
+            await _validateAntiForgeryToken.Invoke(_context);
 
             Assert.AreEqual(1,_next.InvokeCount);
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokePostWithValidXSRF_Validation()
+        public async Task GivenMiddleware_WhenInvokePostWithValidXSRF_Validation()
         {
             _request.Method.Returns("POST");
 
@@ -78,14 +66,13 @@ namespace Web.Test.Middleware
             var responseCookies = new ResponseCookieCollection(new HeaderDictionary(new Dictionary<string, string[]>()));
             _response.Cookies.Returns(responseCookies);
 
-            var result = _validateAntiForgeryToken.Invoke(_context);
-            result.Wait();
+            await _validateAntiForgeryToken.Invoke(_context);
 
             Assert.AreEqual(1, _next.InvokeCount);
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokePostWithInValidXSRF_Validation()
+        public async Task GivenMiddleware_WhenInvokePostWithInValidXSRF_Validation()
         {
             _request.Method.Returns("POST");
 
@@ -102,8 +89,7 @@ namespace Web.Test.Middleware
             var responseCookies = new ResponseCookieCollection(new HeaderDictionary(new Dictionary<string, string[]>()));
             _response.Cookies.Returns(responseCookies);
 
-            var result = _validateAntiForgeryToken.Invoke(_context);
-            result.Wait();
+            await _validateAntiForgeryToken.Invoke(_context);
 
             Assert.AreEqual(0, _next.InvokeCount);
         }

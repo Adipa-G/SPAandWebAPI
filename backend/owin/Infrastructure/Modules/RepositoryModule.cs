@@ -11,7 +11,6 @@ namespace Infrastructure.Modules
             Bind<ILogWriterRepository>().To<LogWriterRepository>().InSingletonScope();
 
             Bind<IAuthRepository>().To<AuthRepository>().InTransientScope();
-            Bind<IConfigRepository>().To<ConfigRepository>().InTransientScope();
             Bind<ILogViewRepository>().To<LogViewRepository>().InTransientScope();
         }
     }

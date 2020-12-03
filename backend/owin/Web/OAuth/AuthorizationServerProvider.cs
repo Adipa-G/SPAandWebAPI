@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Interfaces.Repositories;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using NHibernate;
 using NHibernate.AspNet.Identity;
 using Ninject;
 
@@ -35,19 +36,26 @@ namespace Web.OAuth
 
         private void GrantResourceOwnerCredentialsWrapped(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var authRepository = _kernel.Get<IAuthRepository>();
             var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
 
             if (allowedOrigin == null) allowedOrigin = "*";
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {allowedOrigin});
 
-            IdentityUser user = authRepository.FindUser(context.UserName, context.Password);
-
-            if (user == null)
+            IdentityUser user;
+            var sessionFactory = _kernel.Get<ISessionFactory>();
+            using (var session = sessionFactory.OpenSession())
             {
-                context.SetError("invalid_grant", "The user name or password is incorrect.");
-                return;
+                _kernel.Rebind<ISession>().ToConstant(session).InThreadScope();
+                var authRepository = _kernel.Get<IAuthRepository>();
+
+                user = authRepository.FindUser(context.UserName, context.Password);
+
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);

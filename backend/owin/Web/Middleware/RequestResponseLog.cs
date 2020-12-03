@@ -33,7 +33,7 @@ namespace Web.Middleware
                 throw new Exception("Failed to resolve Config");
         }
 
-        public async override Task Invoke(IOwinContext context)
+        public override async Task Invoke(IOwinContext context)
         {
             var orginalResponseStream = context.Response.Body;
             var responseStream = new MemoryStream();
