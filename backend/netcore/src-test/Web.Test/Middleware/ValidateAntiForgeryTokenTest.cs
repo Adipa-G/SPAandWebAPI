@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Net.Http.Headers;
 using NUnit.Framework;
 using Web.Middleware;
@@ -34,8 +33,6 @@ namespace Web.Test.Middleware
         {
             _request.Method = "GET";
 
-            _request.Cookies = new RequestCookieCollection();
-            
             var result = _validateAntiForgeryToken.Invoke(_context);
             result.Wait();
 

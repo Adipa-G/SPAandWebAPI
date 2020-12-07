@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Text.Json;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
 using IdentityServer4.Configuration;
@@ -20,6 +21,8 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.DotNet.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Web.Middleware;
@@ -31,7 +34,7 @@ namespace Web
         private readonly PathProvider _pathProvider;
         public readonly IConfigurationRoot _configuration;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             _pathProvider = new PathProvider(Directory.GetCurrentDirectory());
 
@@ -54,7 +57,6 @@ namespace Web
             RepositoryModule.Load(services);
 
             var cert = GetCertificate();
-
             services.AddIdentityServer(o => new IdentityServerOptions()
             {
                 Endpoints = new EndpointsOptions()
@@ -68,27 +70,24 @@ namespace Web
                 .RequireAuthenticatedUser()
                 .Build();
 
-            var jsonOutputFormatter =
-                new JsonOutputFormatter(
-                    new JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver() },
-                    ArrayPool<char>.Shared);
-
             services.AddMvc(options =>
             {
-                options.OutputFormatters.Insert(0, jsonOutputFormatter);
+                options.EnableEndpointRouting = false;
                 options.Filters.Add(new AuthorizeFilter(defaultPolicy));
-            });
+            }).AddNewtonsoftJson(); 
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConsole(c => c.LogToStandardErrorThreshold = LogLevel.Information);
+            });
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
-            loggerFactory.AddConsole(LogLevel.Information);
-            loggerFactory.AddDebug(LogLevel.Information);
-
-            var authority = $"http://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
+            var authority = $"https://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
 
             var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory,"app"));
             var defoptions = new DefaultFilesOptions();
@@ -107,41 +106,9 @@ namespace Web
                 .UseMiddleware<ValidateAntiForgeryToken>()
                 .UseMiddleware<RequestResponseLog>()
                 .UseIdentityServer()
-                //TODO the tokenDecoder should be removed, and one of above should be used once identity server/mvc6 is fixed
                 .UseMiddleware<TokenDecoder>(authority)
                 .UseMiddleware<CreateTransaction>()
                 .UseMvcWithDefaultRoute();
-
-            /*
-            TODO: can't use identity server right now as "IdentityServer4" and "IdentityServer4.AccessTokenValidation" 
-            packages are using two different identityModels and results in conflicts. Once this is fixed, remove openID
-            and use following lines
-            app.UseIdentityServerAuthentication(options =>
-                                                {
-                                                    options.Authority = authority";
-                                                    options.ScopeName = "all";
-                                                    options.ScopeSecret = "no-secret";
-
-                                                    options.AutomaticAuthenticate = true;
-                                                    options.AutomaticChallenge = true;
-                                                });
-            */
-
-            /*
-            var cert = GetCertificate();
-            TODO:  can't use this either.. damn...
-            app.UseJwtBearerAuthentication(options =>
-            {
-                options.AutomaticAuthenticate = true;
-                options.AutomaticChallenge = true;
-                options.RequireHttpsMetadata = false;
-                options.Audience = authority;
-                options.Authority = authority;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                                                    {
-                                                        IssuerSigningKey = new X509SecurityKey(cert)
-                                                    };
-            });*/
 
             InitDatabaseDefaults(app.ApplicationServices);
         }
