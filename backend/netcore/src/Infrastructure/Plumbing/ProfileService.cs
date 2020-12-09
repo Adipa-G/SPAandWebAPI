@@ -11,39 +11,36 @@ namespace Infrastructure.Plumbing
 {
     public class ProfileService : IProfileService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public ProfileService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public Task IsActiveAsync(IsActiveContext context)
+        public async Task IsActiveAsync(IsActiveContext context)
         {
-            var user = FindByClaims(context.Subject);
+            var user = await FindByClaims(context.Subject);
             context.IsActive = user != null;
-
-            return Task.FromResult(0);
         }
 
-        public Task GetProfileDataAsync(ProfileDataRequestContext context)
+        public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var user = FindByClaims(context.Subject);
+            var user = await FindByClaims(context.Subject);
 
             var claims = new List<Claim>{
                 new Claim(JwtClaimTypes.Subject, user.UserName),
             };
 
             context.IssuedClaims = claims;
-            return Task.FromResult(0);
         }
 
-        private UserModel FindByClaims(ClaimsPrincipal principal)
+        private async Task<UserModel> FindByClaims(ClaimsPrincipal principal)
         {
             var claim = principal.FindFirst(JwtClaimTypes.Subject);
             if (claim != null)
             {
-                var user = _userRepository.FindUser(claim.Value);
+                var user = await _userRepository.FindUserAsync(claim.Value);
                 return user;
             }
             return null;

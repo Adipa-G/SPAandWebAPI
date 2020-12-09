@@ -1,4 +1,5 @@
-﻿using Infrastructure.Plumbing;
+﻿using System.Threading.Tasks;
+using Infrastructure.Plumbing;
 using NHibernate;
 
 namespace Infrastructure.Test.Repositories
@@ -24,15 +25,15 @@ namespace Infrastructure.Test.Repositories
             Transaction = Session.BeginTransaction();
         }
 
-        public virtual void TearDown()
+        public virtual async Task TearDownAsync()
         {
-            Transaction.Rollback();
-            FlushAndClear();
+            await Transaction.RollbackAsync();
+            await FlushAndClearAsync();
         }
 
-        protected void FlushAndClear()
+        protected async Task FlushAndClearAsync()
         {
-            Session.Flush();
+            await Session.FlushAsync();
             Session.Clear();
         }
     }

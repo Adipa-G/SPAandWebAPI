@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
@@ -41,12 +42,11 @@ namespace Web.Test.Middleware
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokeGet_NoTransaction()
+        public async Task GivenMiddleware_WhenInvokeGet_NoTransaction()
         {
             _context.Request.Method = "GET";
 
-            var result = _createTransaction.Invoke(_context,_session);
-            result.Wait();
+            await _createTransaction.Invoke(_context,_session);
 
             _session.Received(0).BeginTransaction();
             _transaction.Received(0).Commit();
@@ -54,30 +54,29 @@ namespace Web.Test.Middleware
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokePost_Transaction()
+        public async Task GivenMiddleware_WhenInvokePost_Transaction()
         {
             _context.Request.Method = "POST";
 
-            var result = _createTransaction.Invoke(_context,_session);
-            result.Wait();
+            await _createTransaction.Invoke(_context,_session);
 
             _session.Received(1).BeginTransaction();
-            _transaction.Received(1).Commit();
-            _transaction.Received(0).Rollback();
+            await _transaction.Received(1).CommitAsync();
+            await _transaction.Received(0).RollbackAsync();
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokePostWithException_TransactionRollback()
+        public async Task GivenMiddleware_WhenInvokePostWithException_TransactionRollback()
         {
             _next.ThrowException = true;
 
             _context.Request.Method = "POST";
 
-            Assert.That(() => _createTransaction.Invoke(_context,_session), Throws.TypeOf<Exception>());
+            Assert.ThrowsAsync<Exception>(() => _createTransaction.Invoke(_context, _session));
             
             _session.Received(1).BeginTransaction();
-            _transaction.Received(0).Commit();
-            _transaction.Received(1).Rollback();
+            await _transaction.Received(0).CommitAsync();
+            await _transaction.Received(1).RollbackAsync();
         }
     }
 }

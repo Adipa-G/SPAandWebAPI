@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using System.Threading.Tasks;
+using Domain.Entities;
 using Infrastructure.Repositories;
 using NUnit.Framework;
 
@@ -26,16 +27,16 @@ namespace Infrastructure.Test.Repositories
         }
 
         [TearDown]
-        public override void TearDown()
+        public override async Task TearDownAsync()
         {
-            base.TearDown();
+            await base.TearDownAsync();
         }
 
         [Test]
-        public void GivenSettingValue_WhenGetSettingValue_ThenReturnValue()
+        public async Task GivenSettingValue_WhenGetSettingValue_ThenReturnValue()
         {
-            Session.Save(new ConfigSetting() {ConfigKey = "abc", ConfigValue = "def"});
-            FlushAndClear();
+            await Session.SaveAsync(new ConfigSetting() {ConfigKey = "abc", ConfigValue = "def"});
+            await FlushAndClearAsync();
 
             var sut = new ConfigRepository(Session);
             var value = sut.GetSettingValue("abc", "pqr");
@@ -44,22 +45,22 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenNoSettingValue_WhenGetSettingValue_ThenWriteDefaultValue()
+        public async Task GivenNoSettingValue_WhenGetSettingValue_ThenWriteDefaultValue()
         {
             var sut = new ConfigRepository(Session);
             sut.GetSettingValue("abc", "pqr");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var value = sut.GetSettingValue("abc", "lmn");
             Assert.AreEqual("pqr", value);
         }
 
         [Test]
-        public void GivenNoSettingValue_WhenSetSettingValue_ThenSetValue()
+        public async Task GivenNoSettingValue_WhenSetSettingValue_ThenSetValue()
         {
             var sut = new ConfigRepository(Session);
             sut.SetSettingValue("abc", "pqr");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var value = sut.GetSettingValue("abc", "lmn");
             Assert.AreEqual("pqr", value);

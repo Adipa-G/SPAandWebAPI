@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Log;
@@ -47,25 +48,25 @@ namespace Web.Test.Controllers
         }
 
         [Test]
-        public void GivenLogMessages_WhenLogMessages_ThenReturn()
+        public async Task GivenLogMessages_WhenLogMessagesAsync_ThenReturn()
         {
-            _logViewRepository.GetLogMessages(Arg.Any<LogMessageListRequest>()).Returns(new ListResult<LogMessageListItemModel>());
+            _logViewRepository.GetLogMessagesAsync(Arg.Any<LogMessageListRequest>()).Returns(new ListResult<LogMessageListItemModel>());
 
-            var result = _controller.LogMessages(new LogMessageListRequest()) as OkObjectResult; 
+            var result = await _controller.LogMessagesAsync(new LogMessageListRequest()) as OkObjectResult; 
 
             Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
-            _logViewRepository.Received(1).GetLogMessages(Arg.Any<LogMessageListRequest>());
+            await _logViewRepository.Received(1).GetLogMessagesAsync(Arg.Any<LogMessageListRequest>());
         }
 
         [Test]
-        public void GivenLogHttp_WhenLogHttp_ThenReturn()
+        public async Task GivenLogHttp_WhenLogHttpAsync_ThenReturn()
         {
-            _logViewRepository.GetLogHttp(Arg.Any<LogHttpListRequest>()).Returns(new ListResult<LogHttpListItemModel>());
+            _logViewRepository.GetLogHttpAsync(Arg.Any<LogHttpListRequest>()).Returns(new ListResult<LogHttpListItemModel>());
 
-            var result = _controller.LogHttp(new LogHttpListRequest()) as OkObjectResult; 
+            var result = await _controller.LogHttpAsync(new LogHttpListRequest()) as OkObjectResult; 
 
             Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
-            _logViewRepository.Received(1).GetLogHttp(Arg.Any<LogHttpListRequest>());
+            await _logViewRepository.Received(1).GetLogHttpAsync(Arg.Any<LogHttpListRequest>());
         }
     }
 }

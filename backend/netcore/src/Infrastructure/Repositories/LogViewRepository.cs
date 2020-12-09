@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain;
 using Domain.Entities;
 using Domain.Enum;
@@ -15,7 +16,7 @@ namespace Infrastructure.Repositories
 {
     public class LogViewRepository : ILogViewRepository
     {
-        private ISession _session;
+        private readonly ISession _session;
 
         public LogViewRepository(ISession session)
         {
@@ -32,7 +33,7 @@ namespace Infrastructure.Repositories
             return new List<string>(Enum.GetNames(typeof(LoggerName)));
         }
 
-        public ListResult<LogMessageListItemModel> GetLogMessages(LogMessageListRequest request)
+        public async Task<ListResult<LogMessageListItemModel>> GetLogMessagesAsync(LogMessageListRequest request)
         {
             var query = _session.QueryOver<LogMessageRecord>();
             if (request.LogLevel.HasValue)
@@ -68,12 +69,12 @@ namespace Infrastructure.Repositories
                 query = query.OrderBy(Projections.Property(request.OrderField)).Desc;
             }
 
-            var totalCount = query.RowCount();
-            var results =
-                query.Skip((request.PageNumber - 1) * request.PageSize)
+            var totalCount = await query.RowCountAsync();
+            var queryResults = await query.Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
-                    .List()
-                    .Select(
+                    .ListAsync();
+
+            var results = queryResults.Select(
                         r =>
                             new LogMessageListItemModel()
                             {
@@ -95,7 +96,7 @@ namespace Infrastructure.Repositories
             };
         }
 
-        public ListResult<LogHttpListItemModel> GetLogHttp(LogHttpListRequest request)
+        public async Task<ListResult<LogHttpListItemModel>> GetLogHttpAsync(LogHttpListRequest request)
         {
             var query = _session.QueryOver<LogHttpRecord>();
             if (!string.IsNullOrEmpty(request.TrackingId))
@@ -138,29 +139,29 @@ namespace Infrastructure.Repositories
                 }
             }
 
-            var totalCount = query.RowCount();
-            var results =
-                query.Skip((request.PageNumber - 1) * request.PageSize)
-                    .Take(request.PageSize)
-                    .List()
-                    .Select(
-                        r =>
-                            new LogHttpListItemModel()
-                            {
-                                Id = r.Id,
-                                LogTimestamp = r.CalledOn.Timestamp(),
-                                TrackingId = r.TrackingId,
-                                Caller = r.RequestIdentity,
-                                Verb = r.Verb,
-                                RequestUri = r.RequestUri,
-                                RequestHeaders = r.RequestHeaders,
-                                Request = r.Request.Length > 1000 ? r.Request.Substring(0, 1000) : r.Request,
-                                Status = string.Format("{0}\n{1}", r.StatusCode, r.ReasonPhrase),
-                                ResponseHeaders = r.ResponseHeaders,
-                                Response = r.Response.Length > 1000 ? r.Response.Substring(0,1000) : r.Response,
-                                Duration = r.CallDuration.TotalSeconds.ToString()
-                            })
-                    .ToList();
+            var totalCount = await query.RowCountAsync();
+            var queryResults = await query.Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ListAsync();
+
+            var results = queryResults.Select(
+                    r =>
+                        new LogHttpListItemModel()
+                        {
+                            Id = r.Id,
+                            LogTimestamp = r.CalledOn.Timestamp(),
+                            TrackingId = r.TrackingId,
+                            Caller = r.RequestIdentity,
+                            Verb = r.Verb,
+                            RequestUri = r.RequestUri,
+                            RequestHeaders = r.RequestHeaders,
+                            Request = r.Request.Length > 1000 ? r.Request.Substring(0, 1000) : r.Request,
+                            Status = string.Format("{0}\n{1}", r.StatusCode, r.ReasonPhrase),
+                            ResponseHeaders = r.ResponseHeaders,
+                            Response = r.Response.Length > 1000 ? r.Response.Substring(0, 1000) : r.Response,
+                            Duration = r.CallDuration.TotalSeconds.ToString()
+                        })
+                .ToList();
 
             return new ListResult<LogHttpListItemModel>()
             {

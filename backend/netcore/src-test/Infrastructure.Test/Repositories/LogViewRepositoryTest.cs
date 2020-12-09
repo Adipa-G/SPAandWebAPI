@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Domain;
 using Domain.Enum;
 using Domain.Models;
@@ -31,9 +32,9 @@ namespace Infrastructure.Test.Repositories
         }
 
         [TearDown]
-        public override void TearDown()
+        public override async Task TearDownAsync()
         {
-            base.TearDown();
+            await base.TearDownAsync();
         }
 
         [Test]
@@ -55,43 +56,43 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenLevelMatching_WhenGetLogMessages_ThenReturn()
+        public async Task GivenLevelMatching_WhenGetLogMessagesAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogMessage(LogLevel.Error, "Test", "Test message");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
-            var result = sut.GetLogMessages(new LogMessageListRequest() {LogLevel = LogLevel.Error, PageSize = 10});
+            var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() {LogLevel = LogLevel.Error, PageSize = 10});
 
             Assert.AreEqual(1, result.TotalCount);
             Assert.AreEqual("Test message", result.Results[0].Message);
         }
 
         [Test]
-        public void GivenLoggerMatching_WhenGetLogMessages_ThenReturn()
+        public async Task GivenLoggerMatching_WhenGetLogMessagesAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogMessage(LogLevel.Error, "Test", "Test message");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
-            var result = sut.GetLogMessages(new LogMessageListRequest() {Logger = "Test", PageSize = 10});
+            var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() {Logger = "Test", PageSize = 10});
 
             Assert.AreEqual(1, result.TotalCount);
             Assert.AreEqual("Test message", result.Results[0].Message);
         }
 
         [Test]
-        public void GivenAfterFromDate_WhenGetLogMessages_ThenReturn()
+        public async Task GivenAfterFromDate_WhenGetLogMessagesAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogMessage(LogLevel.Error, "Test", "Test message");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogMessages(new LogMessageListRequest()
+                await sut.GetLogMessagesAsync(new LogMessageListRequest()
                                    {
                                        FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
                                        PageNumber = 1,
@@ -103,15 +104,15 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenBeforeToDate_WhenGetLogMessages_ThenReturn()
+        public async Task GivenBeforeToDate_WhenGetLogMessagesAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogMessage(LogLevel.Error, "Test", "Test message");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogMessages(new LogMessageListRequest()
+                await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageNumber = 1,
@@ -123,16 +124,16 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenLogMessages_WhenGetLogMessagesWithOrderAsc_ThenReturn()
+        public async Task GivenLogMessages_WhenGetLogMessagesAsyncWithOrderAsc_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogMessage(LogLevel.Error, "Test","A message");
             context.LogMessage(LogLevel.Error, "Test","B message");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogMessages(new LogMessageListRequest()
+                await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageNumber = 1,
@@ -147,16 +148,16 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenLogMessages_WhenGetLogMessagesWithOrderDesc_ThenReturn()
+        public async Task GivenLogMessages_WhenGetLogMessagesAsyncWithOrderDesc_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogMessage(LogLevel.Error, "Test", "A message");
             context.LogMessage(LogLevel.Error, "Test", "B message");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogMessages(new LogMessageListRequest()
+                await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageNumber = 1,
@@ -171,16 +172,16 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenLogMessages_WhenGetLogMessagesWithPage_ThenReturn()
+        public async Task GivenLogMessages_WhenGetLogMessagesAsyncWithPage_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogMessage(LogLevel.Error, "Test", "A message");
             context.LogMessage(LogLevel.Error, "Test", "B message");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogMessages(new LogMessageListRequest()
+                await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageNumber = 2,
@@ -196,43 +197,43 @@ namespace Infrastructure.Test.Repositories
 
 
         [Test]
-        public void GivenLevelMatching_WhenGetLogHttp_ThenReturn()
+        public async Task GivenLevelMatching_WhenGetLogHttpAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogHttp(LogLevel.Error,"Track Id");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
-            var result = sut.GetLogHttp(new LogHttpListRequest() { LogLevel = LogLevel.Error, PageSize = 10 });
+            var result = await sut.GetLogHttpAsync(new LogHttpListRequest() { LogLevel = LogLevel.Error, PageSize = 10 });
 
             Assert.AreEqual(1, result.TotalCount);
             Assert.AreEqual("Track Id", result.Results[0].TrackingId);
         }
 
         [Test]
-        public void GivenTrackIdMatching_WhenGetLogHttp_ThenReturn()
+        public async Task GivenTrackIdMatching_WhenGetLogHttpAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogHttp(LogLevel.Error, "Track Id");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
-            var result = sut.GetLogHttp(new LogHttpListRequest() { TrackingId = "Track Id", PageSize = 10 });
+            var result = await sut.GetLogHttpAsync(new LogHttpListRequest() { TrackingId = "Track Id", PageSize = 10 });
 
             Assert.AreEqual(1, result.TotalCount);
             Assert.AreEqual("Track Id", result.Results[0].TrackingId);
         }
 
         [Test]
-        public void GivenAfterFromDate_WhenGetLogHttp_ThenReturn()
+        public async Task GivenAfterFromDate_WhenGetLogHttpAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogHttp(LogLevel.Error, "Track Id");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogHttp(new LogHttpListRequest()
+                await sut.GetLogHttpAsync(new LogHttpListRequest()
                                {
                                    FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
                                    PageSize = 10
@@ -243,15 +244,15 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenBeforeToDate_WhenGetLogHttp_ThenReturn()
+        public async Task GivenBeforeToDate_WhenGetLogHttpAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogHttp(LogLevel.Error, "Track Id");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogHttp(new LogHttpListRequest()
+                await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageSize = 10
@@ -262,16 +263,16 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenLogMessages_WhenGetLogHttpWithOrderAsc_ThenReturn()
+        public async Task GivenLogMessages_WhenGetLogHttpAsyncWithOrderAsc_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogHttp(LogLevel.Error, "A Track Id");
             context.LogHttp(LogLevel.Error, "B Track Id");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogHttp(new LogHttpListRequest()
+                await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageNumber = 1,
@@ -286,16 +287,16 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenLogMessages_WhenGetLogHttpWithOrderDesc_ThenReturn()
+        public async Task GivenLogMessages_WhenGetLogHttpAsyncWithOrderDesc_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogHttp(LogLevel.Error, "A Track Id");
             context.LogHttp(LogLevel.Error, "B Track Id");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogHttp(new LogHttpListRequest()
+                await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageNumber = 1,
@@ -310,16 +311,16 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenLogMessages_WhenGetLogHttpWithPage_ThenReturn()
+        public async Task GivenLogMessages_WhenGetLogHttpAsyncWithPage_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
             context.LogHttp(LogLevel.Error, "A Track Id");
             context.LogHttp(LogLevel.Error, "B Track Id");
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
             var result =
-                sut.GetLogHttp(new LogHttpListRequest()
+                await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
                     ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
                     PageNumber = 2,

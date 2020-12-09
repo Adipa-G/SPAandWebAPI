@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
@@ -11,14 +12,14 @@ namespace Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private ISession _session;
+        private readonly ISession _session;
 
         public UserRepository(ISession session)
         {
             _session = session;
         }
 
-        public  UserModel RegisterUser(UserModel userModel)
+        public async Task<UserModel> RegisterUserAsync(UserModel userModel)
         {
             var user = new User()
                        {
@@ -26,15 +27,15 @@ namespace Infrastructure.Repositories
                            Password = userModel.Password.Sha512()
                        };
 
-            _session.Save(user);
+            await _session.SaveAsync(user);
 
-            return FindUser(userModel.UserName, userModel.Password);
+            return await FindUserAsync(userModel.UserName, userModel.Password);
         }
 
-        public UserModel FindUser(string userName)
+        public async Task<UserModel> FindUserAsync(string userName)
         {
             var query = _session.QueryOver<User>();
-            var user = query.Where(u => u.UserName == userName).SingleOrDefault();
+            var user = await query.Where(u => u.UserName == userName).SingleOrDefaultAsync();
 
             if (user == null)
             {
@@ -43,10 +44,10 @@ namespace Infrastructure.Repositories
             return new UserModel() { UserName = user.UserName };
         }
 
-        public UserModel FindUser(string userName, string password)
+        public async Task<UserModel> FindUserAsync(string userName, string password)
         {
             var query = _session.QueryOver<User>();
-            var user = query.Where(u => u.UserName == userName && u.Password == password.Sha512()).SingleOrDefault();
+            var user = await query.Where(u => u.UserName == userName && u.Password == password.Sha512()).SingleOrDefaultAsync();
 
             if (user == null)
             {
@@ -55,7 +56,7 @@ namespace Infrastructure.Repositories
             return new UserModel() {UserName = user.UserName };
         }
         
-        public ListResult<UserListItemModel> List(ListRequest request)
+        public async Task<ListResult<UserListItemModel>> ListAsync(ListRequest request)
         {
             var query = _session.QueryOver<User>();
 
@@ -68,13 +69,15 @@ namespace Infrastructure.Repositories
                 query = query.OrderBy(Projections.Property(request.OrderField)).Desc;
             }
 
-            var totalCount = query.RowCount();
-            var results =
-                query.Skip((request.PageNumber - 1) * request.PageSize)
-                    .Take(request.PageSize)
-                    .List()
-                    .Select(r => new UserListItemModel() { UserName = r.UserName })
-                    .ToList();
+            var totalCount = await query.RowCountAsync();
+            
+            var queryResults = await query.Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ListAsync();
+
+            var results = queryResults
+                .Select(r => new UserListItemModel() {UserName = r.UserName})
+                .ToList();
 
             return new ListResult<UserListItemModel>()
             {
@@ -85,14 +88,14 @@ namespace Infrastructure.Repositories
             };
         }
 
-        public void Delete(string userName)
+        public async Task DeleteAsync(string userName)
         {
             var query = _session.QueryOver<User>();
-            var user = query.Where(u => u.UserName == userName).SingleOrDefault();
+            var user = await query.Where(u => u.UserName == userName).SingleOrDefaultAsync();
 
             if (user != null)
             {
-                _session.Delete(user);
+                await _session.DeleteAsync(user);
             }
         }
     }

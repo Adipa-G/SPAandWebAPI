@@ -10,11 +10,11 @@ namespace Infrastructure.Repositories
 {
     public class ResourceStore : IResourceStore
     {
-        private Resources resources;
+        private readonly Resources _resources;
 
         public ResourceStore()
         {
-            resources = new Resources()
+            _resources = new Resources()
                         {
                             IdentityResources =
                                 new List<IdentityResource>()
@@ -33,24 +33,24 @@ namespace Infrastructure.Repositories
                         };
         }
 
-        public Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            return Task.FromResult(resources.IdentityResources.AsEnumerable());
+            return await Task.FromResult(_resources.IdentityResources.AsEnumerable());
         }
 
-        public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<ApiResource>> FindApiResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            return Task.FromResult(resources.ApiResources.AsEnumerable());
+            return await Task.FromResult(_resources.ApiResources.AsEnumerable());
         }
 
-        public Task<ApiResource> FindApiResourceAsync(string name)
+        public async Task<ApiResource> FindApiResourceAsync(string name)
         {
-            return Task.FromResult(resources.ApiResources.First());
+            return await Task.FromResult(_resources.ApiResources.First());
         }
 
-        public Task<Resources> GetAllResourcesAsync()
+        public async Task<Resources> GetAllResourcesAsync()
         {
-            return Task.FromResult(resources);
+            return await Task.FromResult(_resources);
         }
     }
 }

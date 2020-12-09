@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
@@ -40,20 +41,20 @@ namespace Infrastructure.Test.Repositories
         }
 
         [TearDown]
-        public override void TearDown()
+        public override async Task TearDownAsync()
         {
-            base.TearDown();
+            await base.TearDownAsync();
         }
 
         [Test]
-        public void GivenConfigLevelPermits_WhenLog_ThenLog()
+        public async Task GivenConfigLevelPermits_WhenLog_ThenLog()
         {
             _config.LogLevelGeneral.Returns(LogLevel.Debug);
 
             var sut = new LogWriterRepository(_sessionFactory);
             sut.Log(LogLevel.Error,LoggerName.General, "Test Message", new Exception());
             sut.LogThreadExec(_config, Session);
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
             
@@ -62,14 +63,14 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenConfigLevelNotPermits_WhenLog_ThenDoesNot()
+        public async Task GivenConfigLevelNotPermits_WhenLog_ThenDoesNot()
         {
             _config.LogLevelGeneral.Returns(LogLevel.Error);
 
             var sut = new LogWriterRepository(_sessionFactory);
             sut.Log(LogLevel.Debug, LoggerName.General, "Test Message", new Exception());
             sut.LogThreadExec(_config, Session);
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
 
@@ -77,7 +78,7 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void Given_WhenLogRequest_ThenLog()
+        public async Task Given_WhenLogRequest_ThenLog()
         {
             _config.LogLevelGeneral.Returns(LogLevel.Error);
 
@@ -102,7 +103,7 @@ namespace Infrastructure.Test.Repositories
                 }, new Exception());
 
             sut.LogThreadExec(_config, Session);
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogHttpRecord>().List<LogHttpRecord>();
 
@@ -111,14 +112,14 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenConfigPermits_WhenLogSQL_TheLog()
+        public async Task GivenConfigPermits_WhenLogSQL_TheLog()
         {
             _config.LogSqlStatements.Returns(true);
 
             var sut = new LogWriterRepository(_sessionFactory);
             sut.LogSQL("test sql");
             sut.LogThreadExec(_config, Session);
-            FlushAndClear();
+            await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
 

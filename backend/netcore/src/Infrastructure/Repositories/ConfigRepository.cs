@@ -36,7 +36,7 @@ namespace Infrastructure.Repositories
                     .Where(u => u.ConfigKey == key)
                     .SingleOrDefault();
 
-            setting = setting ?? new ConfigSetting() { ConfigKey = key };
+            setting ??= new ConfigSetting() { ConfigKey = key };
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(T));
 
             setting.ConfigValue = typeConverter.ConvertToString(value);

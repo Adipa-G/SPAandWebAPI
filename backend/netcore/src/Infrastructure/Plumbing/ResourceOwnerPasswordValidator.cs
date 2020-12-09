@@ -7,29 +7,29 @@ namespace Infrastructure.Plumbing
 {
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public ResourceOwnerPasswordValidator(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+        public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
-            var user = _userRepository.FindUser(context.UserName, context.Password);
+            var user = await _userRepository.FindUserAsync(context.UserName, context.Password);
 
             if (user != null)
             {
                 context.Result = new GrantValidationResult(user.UserName, "password");
-                return Task.Delay(0);
             }
-
-            context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant)
-                             {
-                                 Error = "Invalid username or password",
-                                 IsError = true
-                             };
-            return Task.Delay(0);
+            else
+            {
+                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant)
+                {
+                    Error = "Invalid username or password",
+                    IsError = true
+                };
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using System.Threading.Tasks;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Auth;
@@ -21,14 +22,14 @@ namespace Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
-        public ActionResult Register([FromBody]UserModel userModel)
+        public async Task<ActionResult> RegisterAsync([FromBody]UserModel userModel)
         {
              if (!ModelState.IsValid)
              {
                 return BadRequest(ModelState);
              }
 
-             var result = _userRepository.RegisterUser(userModel);
+             var result = await _userRepository.RegisterUserAsync(userModel);
              if (result == null)
              {
                  return BadRequest();
@@ -39,16 +40,16 @@ namespace Web.Controllers
 
         [HttpPost]
         [Route("list")]
-        public ActionResult List([FromBody]ListRequest request)
+        public async Task<ActionResult> ListAsync([FromBody]ListRequest request)
         {
-            return Ok(_userRepository.List(request));
+            return Ok(await _userRepository.ListAsync(request));
         }
 
         [HttpDelete]
         [Route("{userName}")]
-        public ActionResult Delete(string userName)
+        public async Task<ActionResult> DeleteAsync(string userName)
         {
-            _userRepository.Delete(userName);
+            await _userRepository.DeleteAsync(userName);
             return Ok();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Auth;
@@ -26,47 +27,45 @@ namespace Web.Test.Controllers
         }
 
         [Test]
-        public void GivenSuccessRegistration_WhenRegister_ThenReturnOK()
+        public async Task GivenSuccessRegistration_WhenRegisterAsync_ThenReturnOK()
         {
-            _userRepository.RegisterUser(Arg.Any<UserModel>()).Returns(new UserModel() {UserName = "A"});
+            _userRepository.RegisterUserAsync(Arg.Any<UserModel>()).Returns(new UserModel() {UserName = "A"});
 
-            var result = _controller.Register(new UserModel()) as OkResult;
+            var result = await _controller.RegisterAsync(new UserModel()) as OkResult;
 
             Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
-            _userRepository.Received(1).RegisterUser(Arg.Any<UserModel>());
+            await _userRepository.Received(1).RegisterUserAsync(Arg.Any<UserModel>());
         }
 
         [Test]
-        public void GivenFailedRegistration_WhenRegister_ThenReturnBadRequest()
+        public async Task GivenFailedRegistration_WhenRegisterAsync_ThenReturnBadRequest()
         {
-            _userRepository.RegisterUser(Arg.Any<UserModel>()).Returns((UserModel)null);
+            _userRepository.RegisterUserAsync(Arg.Any<UserModel>()).Returns((UserModel)null);
 
-            var result = _controller.Register(new UserModel()) as BadRequestResult;
+            var result = await _controller.RegisterAsync(new UserModel()) as BadRequestResult;
 
             Assert.AreEqual(HttpStatusCode.BadRequest, (HttpStatusCode)result.StatusCode);
-            _userRepository.Received(1).RegisterUser(Arg.Any<UserModel>());
+            await _userRepository.Received(1).RegisterUserAsync(Arg.Any<UserModel>());
         }
 
         [Test]
-        public void GivenUsers_WhenList_ThenReturnList()
+        public async Task GivenUsers_WhenListAsync_ThenReturnList()
         {
-            _userRepository.List(Arg.Any<ListRequest>()).Returns(new ListResult<UserListItemModel>());
+            _userRepository.ListAsync(Arg.Any<ListRequest>()).Returns(new ListResult<UserListItemModel>());
 
-            var result = _controller.List(new ListRequest()) as OkObjectResult;
+            var result = await _controller.ListAsync(new ListRequest()) as OkObjectResult;
 
             Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
-            _userRepository.Received(1).List(Arg.Any<ListRequest>());
+            await _userRepository.Received(1).ListAsync(Arg.Any<ListRequest>());
         }
 
         [Test]
-        public void GivenUsers_WhenDelete_ThenDelete()
+        public async Task GivenUsers_WhenDeleteAsync_ThenDelete()
         {
-            _userRepository.Delete(Arg.Any<string>());
-
-            var result = _controller.Delete("abc") as OkResult;
+            var result = await _controller.DeleteAsync("abc") as OkResult;
 
             Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
-            _userRepository.Received(1).Delete("abc");
+            await _userRepository.Received(1).DeleteAsync("abc");
         }
     }
 }

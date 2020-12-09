@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces.Repositories;
+﻿using System.Threading.Tasks;
+using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,17 +31,16 @@ namespace Web.Controllers
 
         [HttpPost]
         [Route("logMessages")]
-        public ActionResult LogMessages([FromBody]LogMessageListRequest request)
+        public async Task<ActionResult> LogMessagesAsync([FromBody]LogMessageListRequest request)
         {
-            //throw new Exception("sfuffed");
-            return Ok(_logViewRepository.GetLogMessages(request));
+            return Ok(await _logViewRepository.GetLogMessagesAsync(request));
         }
 
         [HttpPost]
         [Route("logHttp")]
-        public ActionResult LogHttp([FromBody]LogHttpListRequest request)
+        public async Task<ActionResult> LogHttpAsync([FromBody]LogHttpListRequest request)
         {
-            return Ok(_logViewRepository.GetLogHttp(request));
+            return Ok(await _logViewRepository.GetLogHttpAsync(request));
         }
     }
 }
