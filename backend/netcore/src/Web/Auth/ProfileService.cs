@@ -7,7 +7,7 @@ using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 
-namespace Infrastructure.Plumbing
+namespace Web.Auth
 {
     public class ProfileService : IProfileService
     {

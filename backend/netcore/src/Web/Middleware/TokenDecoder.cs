@@ -13,13 +13,13 @@ namespace Web.Middleware
 {
     public class TokenDecoder
     {
-        private string _authority;
+        private string _issuer;
         private readonly IPathProvider _pathProvider;
         private readonly RequestDelegate _next;
 
-        public TokenDecoder(RequestDelegate next,IPathProvider pathProvider,string authority)
+        public TokenDecoder(RequestDelegate next,IPathProvider pathProvider,string issuer)
         {
-            _authority = authority;
+            _issuer = issuer;
             _next = next;
             _pathProvider = pathProvider;
         }
@@ -39,8 +39,8 @@ namespace Web.Middleware
                 var handler = new JwtSecurityTokenHandler();
                 var validationParameters = new TokenValidationParameters()
                 {
-                    ValidAudience = $"{_authority}/resources",
-                    ValidIssuer = _authority,
+                    ValidateAudience = false,
+                    ValidIssuer = _issuer,
                     IssuerSigningKeys = new List<SecurityKey>() { new X509SecurityKey(cert)}
                 };
 

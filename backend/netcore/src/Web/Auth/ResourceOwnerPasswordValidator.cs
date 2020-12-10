@@ -3,7 +3,7 @@ using Domain.Interfaces.Repositories;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 
-namespace Infrastructure.Plumbing
+namespace Web.Auth
 {
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {

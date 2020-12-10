@@ -21,8 +21,10 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging.Console;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Web.Middleware;
+using Web.Modules;
 
 namespace Web
 {
@@ -52,6 +54,7 @@ namespace Web
 
             PlumbingModule.Load(services);
             RepositoryModule.Load(services);
+            AuthModule.Load(services);
 
             var cert = GetCertificate();
             services.AddIdentityServer(o => new IdentityServerOptions()
@@ -84,7 +87,7 @@ namespace Web
 
         public void Configure(IApplicationBuilder app)
         {
-            var authority = $"https://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
+            var issuer = $"https://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
 
             var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory,"app"));
             var defoptions = new DefaultFilesOptions();
@@ -103,7 +106,7 @@ namespace Web
                 .UseMiddleware<ValidateAntiForgeryToken>()
                 .UseMiddleware<RequestResponseLog>()
                 .UseIdentityServer()
-                .UseMiddleware<TokenDecoder>(authority)
+                .UseMiddleware<TokenDecoder>(issuer)
                 .UseMiddleware<CreateTransaction>()
                 .UseMvcWithDefaultRoute();
 

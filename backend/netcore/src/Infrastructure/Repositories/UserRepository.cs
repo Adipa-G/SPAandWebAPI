@@ -1,10 +1,11 @@
 ﻿using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Domain;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Auth;
-using IdentityServer4.Models;
 using NHibernate;
 using NHibernate.Criterion;
 
@@ -24,7 +25,7 @@ namespace Infrastructure.Repositories
             var user = new User()
                        {
                            UserName = userModel.UserName,
-                           Password = userModel.Password.Sha512()
+                           Password = userModel.Password.CalcSha512()
                        };
 
             await _session.SaveAsync(user);
@@ -47,7 +48,7 @@ namespace Infrastructure.Repositories
         public async Task<UserModel> FindUserAsync(string userName, string password)
         {
             var query = _session.QueryOver<User>();
-            var user = await query.Where(u => u.UserName == userName && u.Password == password.Sha512()).SingleOrDefaultAsync();
+            var user = await query.Where(u => u.UserName == userName && u.Password == password.CalcSha512()).SingleOrDefaultAsync();
 
             if (user == null)
             {
