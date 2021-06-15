@@ -1,9 +1,9 @@
-﻿import {Component} from '@angular/core';
-import { NgForm }    from '@angular/forms';
+﻿import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
-import {LoginInfo} from '../../domain/auth/loginInfo';
+import { LoginInfo } from '../../domain/auth/loginInfo';
 
-import {AuthService} from '../services/authService';
+import { AuthService } from '../services/authService';
 
 @Component({
     selector: 'common-login',
@@ -11,7 +11,7 @@ import {AuthService} from '../services/authService';
 })
 
 export class LoginComponent {
-    private loginInfo: LoginInfo;
+    loginInfo: LoginInfo;
 
     constructor(private authService: AuthService) {
         this.authService = authService;

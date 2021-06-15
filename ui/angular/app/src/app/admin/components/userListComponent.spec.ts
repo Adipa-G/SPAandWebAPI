@@ -1,6 +1,6 @@
 ﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
 import { of, throwError } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { UserService } from '../services/userService';
 import { UserListComponent } from './userListComponent';
 
 class MockUserService {
-    throwError : boolean;
+    throwError: boolean;
 
     getUsers() {
         var result = {
@@ -31,7 +31,7 @@ class MockUserService {
 
     deleteUser(userName) {
         if (this.throwError) {
-            return throwError('error!');
+            return throwError(() => new Error('error!'));
         } else {
             var result = {};
             return of(result);
@@ -47,7 +47,7 @@ class MockErrorService {
     }
 
     handleHttpError(error) {
-        this.errorCount ++;
+        this.errorCount++;
     }
 }
 
@@ -59,7 +59,7 @@ describe('UserListComponent', () => {
     var errorService = new MockErrorService();
     var userService = new MockUserService();
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [UserListComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -97,23 +97,24 @@ describe('UserListComponent', () => {
         done();
     });
 
-    it('when deleteUser then remove user', (done) => {
+    it('when deleteUser then remove user', fakeAsync(() => {
+        userService.throwError = false;
+
         comp.deleteUser('rikerwt');
+        tick(1000);
 
         expect(comp.totalCount).toBe(1);
         expect(comp.users.length).toBe(1);
-        done();
-    });
+    }));
 
-    it('when deleteUser error then not remove user', (done) => {
+    it('when deleteUser error then not remove user', fakeAsync(() => {
         userService.throwError = true;
 
         comp.deleteUser('rikerwt');
+        tick(1000);
 
         expect(comp.totalCount).toBe(2);
         expect(comp.users.length).toBe(2);
         expect(errorService.errorCount).toBe(1);
-
-        done();
-    });
+    }));
 });

@@ -1,6 +1,5 @@
-﻿import { async, inject, TestBed } from '@angular/core/testing';
-import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
+﻿import { fakeAsync, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
 import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
@@ -8,130 +7,115 @@ import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
 import { AuthService } from '../../common/services/authService';
 import { Constants } from '../../common/services/constants';
 import { ErrorService } from '../../common/services/errorService';
-import { HttpClient } from '../../common/services/httpClient';
+import { HttpClientWrapper } from '../../common/services/httpClientWrapper';
 import { LogService } from '../../common/services/logService';
 import { StorageService } from '../../common/services/storageService';
 
 import { ServerLogService } from './serverLogService';
 
 describe('ServerLogService', () => {
+    let constants: Constants;
+    let httpTestingController: HttpTestingController;
+    let serverLogService: ServerLogService;
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
                 AuthService,
-                BaseRequestOptions,
                 Constants,
                 ErrorService,
-                HttpClient,
+                HttpClientWrapper,
                 LogService,
-                MockBackend,
+                HttpClientTestingModule,
                 ServerLogService,
                 StorageService,
-                {
-                    provide: Http,
-                    useFactory: (backend, options) => new Http(backend, options),
-                    deps: [MockBackend, BaseRequestOptions]
-                }
             ],
             imports: [
-                HttpModule
+                HttpClientTestingModule
             ]
         });
+
+        constants = TestBed.inject(Constants);
+        httpTestingController = TestBed.inject(HttpTestingController);
+        serverLogService = TestBed.inject(ServerLogService);
     });
 
-    it('should construct', async(inject(
-        [MockBackend, Constants, ServerLogService], (mockBackend, constants, serverLogService) => {
-            expect(mockBackend).toBeDefined();
-            expect(constants).toBeDefined();
-            expect(serverLogService).toBeDefined();
-        })));
+    it('should construct', fakeAsync(() => {
+        expect(constants).toBeDefined();
+        expect(httpTestingController).toBeDefined();
+        expect(serverLogService).toBeDefined();
+    }));
 
-    it('when getLogLevels then return log levels', async(inject(
-        [MockBackend, Constants, ServerLogService], (mockBackend, constants, serverLogService) => {
-            const mockResponse = {
-                data: [
-                    { level: 'Info 0' }
-                ]
-            };
+    it('when getLogLevels then return log levels', fakeAsync(() => {
+        const mockResponse = {
+            data: [
+                { level: 'Info 0' }
+            ]
+        };
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify(mockResponse)
-                })));
+        serverLogService.getLogLevels()
+            .subscribe((response: any) => {
+                var levels = response.data;
+
+                expect(levels.length).toBe(1);
+                expect(levels[0].level).toEqual('Info 0');
             });
 
-            serverLogService.getLogLevels()
-                .subscribe((response) => {
-                    var levels = response.data;
+        const req = httpTestingController.expectOne('api/log/levels');
+        req.flush(mockResponse);
+    }));
 
-                    expect(levels.length).toBe(1);
-                    expect(levels[0].level).toEqual('Info 0');
-                });
-        })));
+    it('when getLogLevels then return loggers', fakeAsync(() => {
+        const mockResponse = {
+            data: [
+                { name: 'Http' }
+            ]
+        };
 
-    it('when getLogLevels then return loggers', async(inject(
-        [MockBackend, Constants, ServerLogService], (mockBackend, constants, serverLogService) => {
-            const mockResponse = {
-                data: [
-                    { name: 'Http' }
-                ]
-            };
+        serverLogService.getLoggers().subscribe((response: any) => {
+            var loggers = response.data;
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify(mockResponse)
-                })));
-            });
+            expect(loggers.length).toBe(1);
+            expect(loggers[0].name).toEqual('Http');
+        });
 
-            serverLogService.getLoggers().subscribe((response) => {
-                var loggers = response.data;
+        const req = httpTestingController.expectOne('api/log/loggers');
+        req.flush(mockResponse);
+    }));
 
-                expect(loggers.length).toBe(1);
-                expect(loggers[0].name).toEqual('Http');
-            });
-        })));
+    it('when getLogMessages then return messages', fakeAsync(() => {
+        const mockResponse = {
+            data: [
+                { message: 'Test message' }
+            ]
+        };
 
-    it('when getLogMessages then return messages', async(inject(
-        [MockBackend, Constants, ServerLogService], (mockBackend, constants, serverLogService) => {
-            const mockResponse = {
-                data: [
-                    { message: 'Test message' }
-                ]
-            };
+        serverLogService.getLogMessages(new LogMessageFilter()).subscribe((response: any) => {
+            var messages = response.data;
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify(mockResponse)
-                })));
-            });
+            expect(messages.length).toBe(1);
+            expect(messages[0].message).toEqual('Test message');
+        });
 
-            serverLogService.getLogMessages(new LogMessageFilter()).subscribe((response) => {
-                var messages = response.data;
+        const req = httpTestingController.expectOne('api/log/logMessages');
+        req.flush(mockResponse);
+    }));
 
-                expect(messages.length).toBe(1);
-                expect(messages[0].message).toEqual('Test message');
-            });
-        })));
+    it('when getLogMessages then return logs', fakeAsync(() => {
+        const mockResponse = {
+            data: [
+                { logMessage: 'Test log' }
+            ]
+        };
 
-    it('when getLogMessages then return logs', async(inject(
-        [MockBackend, Constants, ServerLogService], (mockBackend, constants, serverLogService) => {
-            const mockResponse = {
-                data: [
-                    { logMessage: 'Test log' }
-                ]
-            };
+        serverLogService.getLogHttp(new HttpLogFilter()).subscribe((response: any) => {
+            var logs = response.data;
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify(mockResponse)
-                })));
-            });
+            expect(logs.length).toBe(1);
+            expect(logs[0].logMessage).toEqual('Test log');
+        });
 
-            serverLogService.getLogHttp(new HttpLogFilter()).subscribe((response) => {
-                var logs = response.data;
-
-                expect(logs.length).toBe(1);
-                expect(logs[0].logMessage).toEqual('Test log');
-            });
-        })));
+        const req = httpTestingController.expectOne('api/log/logHttp');
+        req.flush(mockResponse);
+    }));
 });

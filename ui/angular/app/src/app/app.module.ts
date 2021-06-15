@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
-import { Routes, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
@@ -13,7 +12,7 @@ import { AppComponent } from './app.component';
 import { AuthService } from './common/services/authService';
 import { Constants } from './common/services/constants';
 import { ErrorService } from './common/services/errorService';
-import { HttpClient } from './common/services/httpClient';
+import { HttpClientWrapper } from './common/services/httpClientWrapper';
 import { LogService } from './common/services/logService';
 import { RegisterService } from './common/services/registerService';
 import { StorageService } from './common/services/storageService';
@@ -31,12 +30,12 @@ import { LoginComponent } from './common/components/loginComponent';
 import { RegisterComponent } from './common/components/registerComponent';
 
 //admin
-import {ServerLogService} from './admin/services/serverLogService';
-import {UserService} from './admin/services/userService';
+import { ServerLogService } from './admin/services/serverLogService';
+import { UserService } from './admin/services/userService';
 
-import {UserListComponent} from './admin/components/userListComponent';
-import {HttpLogComponent} from './admin/components/httpLogComponent';
-import {LogMessagesComponent} from './admin/components/logMessagesComponent';
+import { UserListComponent } from './admin/components/userListComponent';
+import { HttpLogComponent } from './admin/components/httpLogComponent';
+import { LogMessagesComponent } from './admin/components/logMessagesComponent';
 
 import { routing, appRoutingProviders } from './app.routing';
 
@@ -45,7 +44,7 @@ import { routing, appRoutingProviders } from './app.routing';
         BrowserModule,
         CommonModule,
         FormsModule,
-        HttpModule,
+        HttpClientModule,
         RouterModule,
         routing
     ],
@@ -71,11 +70,13 @@ import { routing, appRoutingProviders } from './app.routing';
         AuthService,
         Constants,
         ErrorService,
-        HttpClient,
+        HttpClientWrapper,
         LogService,
         RegisterService,
         StorageService,
-        UtilsService
+        UtilsService,
+        ServerLogService,
+        UserService
     ],
     bootstrap: [AppComponent]
 })

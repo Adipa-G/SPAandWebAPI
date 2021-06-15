@@ -15,7 +15,7 @@ import { RegisterService } from '../services/registerService';
 })
 
 export class RegisterComponent {
-    private regInfo: RegistrationInfo;
+    regInfo: RegistrationInfo;
     success: boolean = false;
 
     constructor(private router: Router,

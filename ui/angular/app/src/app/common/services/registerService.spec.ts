@@ -1,67 +1,62 @@
-﻿import { async, inject, TestBed } from '@angular/core/testing';
-import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
+﻿import { fakeAsync, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { RegistrationInfo } from '../../domain/common/registrationInfo';
 
 import { AuthService } from '../services/authService';
 import { Constants } from '../services/constants';
 import { ErrorService } from '../services/errorService';
-import { HttpClient } from '../services/httpClient';
+import { HttpClientWrapper } from './httpClientWrapper';
 import { LogService } from '../services/logService';
 import { StorageService } from '../services/storageService';
 
 import { RegisterService } from './registerService';
 
 describe('RegisterService', () => {
+    let constants: Constants;
+    let httpTestingController: HttpTestingController;
+    let registerService: RegisterService;
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
                 AuthService,
-                BaseRequestOptions,
                 Constants,
                 ErrorService,
-                HttpClient,
+                HttpClientWrapper,
                 LogService,
-                MockBackend,
                 RegisterService,
-                StorageService,
-                {
-                    provide: Http,
-                    useFactory: (backend, options) => new Http(backend, options),
-                    deps: [MockBackend, BaseRequestOptions]
-                }
+                StorageService
             ],
             imports: [
-                HttpModule
+                HttpClientTestingModule
             ]
         });
+
+        constants = TestBed.inject(Constants);
+        httpTestingController = TestBed.inject(HttpTestingController);
+        registerService = TestBed.inject(RegisterService);
     });
 
-    it('should construct', async(inject(
-        [MockBackend, Constants, RegisterService], (mockBackend, constants, registerService) => {
-            expect(mockBackend).toBeDefined();
-            expect(constants).toBeDefined();
-            expect(registerService).toBeDefined();
-        })));
+    it('should construct', fakeAsync(() => {
+        expect(constants).toBeDefined();
+        expect(httpTestingController).toBeDefined();
+        expect(registerService).toBeDefined();
+    }));
 
-    it('when register then should call service', async(inject(
-        [MockBackend, Constants, RegisterService], (mockBackend, constants, registerService) => {
-            const mockResponse = {
-                data: { userName: 'Picard' }
-            };
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify(mockResponse)
-                })));
+    it('when register then should call service', fakeAsync(() => {
+        const mockResponse = {
+            data: { userName: 'Picard' }
+        };
+
+        registerService.register(new RegistrationInfo())
+            .subscribe((response: any) => {
+                var info = response.data;
+                expect(info.userName).toEqual('Picard');
             });
 
-            registerService.register(new RegistrationInfo())
-                .subscribe((response) => {
-                    var info = response.data;
-
-                    expect(info.userName).toEqual('Picard');
-                });
-        })));
+        const req = httpTestingController.expectOne({ method: 'POST', url: 'api/account/register' });
+        req.flush(mockResponse);
+    }));
 });

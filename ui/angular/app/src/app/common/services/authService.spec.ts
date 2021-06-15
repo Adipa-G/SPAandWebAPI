@@ -1,71 +1,63 @@
-﻿import { async, inject, TestBed } from '@angular/core/testing';
-import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
-
-import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
+﻿import { fakeAsync, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { Constants } from '../services/constants';
 import { ErrorService } from '../services/errorService';
-import { HttpClient } from '../services/httpClient';
+import { HttpClientWrapper } from './httpClientWrapper';
 import { LogService } from '../services/logService';
 import { StorageService } from '../services/storageService';
 
 import { AuthService } from './authService';
 
+
 describe('AuthService', () => {
+    let constants: Constants;
+    let httpTestingController: HttpTestingController;
+    let authService: AuthService;
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
                 AuthService,
-                BaseRequestOptions,
                 Constants,
                 ErrorService,
-                HttpClient,
+                HttpClientWrapper,
                 LogService,
-                MockBackend,
-                StorageService,
-                {
-                    provide: Http,
-                    useFactory: (backend, options) => new Http(backend, options),
-                    deps: [MockBackend, BaseRequestOptions]
-                }
+                StorageService
             ],
             imports: [
-                HttpModule
+                HttpClientTestingModule
             ]
         });
+
+        constants = TestBed.inject(Constants);
+        httpTestingController = TestBed.inject(HttpTestingController);
+        authService = TestBed.inject(AuthService);
     });
 
-    it('should construct', async(inject(
-        [MockBackend, Constants, AuthService], (mockBackend, constants, authService) => {
-            expect(mockBackend).toBeDefined();
-            expect(constants).toBeDefined();
-            expect(authService).toBeDefined();
-        })));
+    it('should construct', fakeAsync(() => {
+        expect(constants).toBeDefined();
+        expect(httpTestingController).toBeDefined();
+        expect(authService).toBeDefined();
+    }));
 
-    it('when authenticate then should call service', async(inject(
-        [MockBackend, Constants, AuthService], (mockBackend, constants, authService) => {
-            const mockResponse = {
-                data: [
-                    { userName : 'Picard' }
-                ]
-            };
+    it('when authenticate then should call service', fakeAsync(() => {
+        const mockResponse = {
+            data: [
+                { userName: 'Picard' }
+            ]
+        };
 
-            mockBackend.connections.subscribe((connection) => {
-                connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify(mockResponse)
-                })));
-            });
+        authService.authenticate(<any>{});
 
-            authService.authenticate(new AuthenticationDetails());
-            expect(authService.currentAuth).toBeDefined();
-        })));
+        const req = httpTestingController.expectOne({ method: 'POST', url: 'connect/token' });
+        req.flush(mockResponse);
+    }));
 
-    it('when clearAuthData then reset auth', async(inject(
-        [MockBackend, Constants, AuthService], (mockBackend, constants, authService) => {
-            authService.clearAuthData();
+    it('when clearAuthData then reset auth', fakeAsync(() => {
+        authService.clearAuthData();
 
-            expect(authService.currentAuth).toBeDefined();
-            expect(authService.currentAuth.isAuth).toBe(false);
-        })));
+        expect(authService.currentAuth).toBeDefined();
+        expect(authService.currentAuth.isAuth).toBe(false);
+    }));
 });

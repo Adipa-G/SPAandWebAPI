@@ -1,7 +1,7 @@
 ﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
 import { AuthService } from '../services/authService';
@@ -27,7 +27,7 @@ describe('HomeComponent', () => {
 
     var authService = new MockAuthService();
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [HomeComponent],
             schemas: [NO_ERRORS_SCHEMA],

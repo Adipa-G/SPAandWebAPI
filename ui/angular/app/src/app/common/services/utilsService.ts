@@ -1,5 +1,4 @@
 ﻿import { Injectable, Inject } from '@angular/core';
-import { Http, Response } from '@angular/http';
 
 import * as moment from 'moment';
 
@@ -9,7 +8,7 @@ import { Constants } from '../../common/services/constants';
 export class UtilsService {
     private constants: Constants;
 
-    constructor( @Inject(Constants) constants: Constants) {
+    constructor(@Inject(Constants) constants: Constants) {
         this.constants = constants;
     }
 

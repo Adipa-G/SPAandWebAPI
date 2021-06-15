@@ -1,7 +1,7 @@
 ﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginInfo } from '../../domain/auth/loginInfo';
 import { AuthService } from '../services/authService';
@@ -23,7 +23,7 @@ describe('LoginComponent', () => {
 
     var authService = new MockAuthService();
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule],
             declarations: [LoginComponent],

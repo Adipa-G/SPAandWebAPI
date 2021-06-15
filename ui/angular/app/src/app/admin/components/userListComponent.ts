@@ -1,10 +1,10 @@
-﻿import {Component} from '@angular/core';
+﻿import { Component } from '@angular/core';
 
-import {OrderAndPage} from '../../domain/common/orderAndPage';
-import {UserInfo} from '../../domain/admin/userInfo';
+import { OrderAndPage } from '../../domain/common/orderAndPage';
+import { UserInfo } from '../../domain/admin/userInfo';
 
 import { ErrorService } from '../../common/services/errorService';
-import {UserService} from '../services/userService';
+import { UserService } from '../services/userService';
 
 @Component({
     selector: 'admin-users',
@@ -29,15 +29,16 @@ export class UserListComponent {
 
     updateView(orderAndPage: OrderAndPage) {
         this.orderAndPage = orderAndPage;
-        this.userService.getUsers(this.orderAndPage).subscribe(
-            data => {
+        this.userService.getUsers(this.orderAndPage).subscribe({
+            next: (data: any) => {
                 this.users = data.results;
                 this.totalCount = data.totalCount;
             },
-            err => {
+            error: (err) => {
                 this.errorMessage = JSON.stringify(err);
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
     }
 
     initOrderAndPagingDetails(): OrderAndPage {
@@ -50,8 +51,8 @@ export class UserListComponent {
     }
 
     deleteUser(userName: string): void {
-        this.userService.deleteUser(userName).subscribe(
-            data => {
+        this.userService.deleteUser(userName).subscribe({
+            complete: () => {
                 for (var i = 0; i < this.users.length; i++) {
                     if (this.users[i].userName === userName) {
                         this.users.splice(i, 1);
@@ -60,9 +61,10 @@ export class UserListComponent {
                     }
                 }
             },
-            err => {
+            error: (err) => {
                 this.errorMessage = JSON.stringify(err);
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
     }
 }

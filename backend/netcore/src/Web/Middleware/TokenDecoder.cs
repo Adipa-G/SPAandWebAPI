@@ -55,7 +55,6 @@ namespace Web.Middleware
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     throw;
                 }
-                
             }
 
             await _next.Invoke(context);

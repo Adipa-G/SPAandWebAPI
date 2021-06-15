@@ -3,7 +3,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 
@@ -17,7 +17,7 @@ import { RegisterComponent } from './registerComponent';
 class MockRegisterService {
     registrationInfo: RegistrationInfo;
 
-    register(reg:RegistrationInfo) {
+    register(reg: RegistrationInfo) {
         this.registrationInfo = reg;
 
         return of({
@@ -45,7 +45,7 @@ describe('RegisterComponent', () => {
     var errorService = new MockErrorService();
     var router = new MockRouter();
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule],
             declarations: [RegisterComponent],

@@ -1,6 +1,6 @@
 ﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { of } from 'rxjs';
 
@@ -60,7 +60,7 @@ describe('HttpLogComponent', () => {
     var utilsService = new MockUtilsService();
     var serverLogService = new MockServerLogService();
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [HttpLogComponent],
             schemas: [NO_ERRORS_SCHEMA],

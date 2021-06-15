@@ -36,23 +36,25 @@ export class LogMessagesComponent {
     }
 
     initializeView() {
-        this.serverLogService.getLogLevels().subscribe(
-            data => {
+        this.serverLogService.getLogLevels().subscribe({
+            next: (data: any) => {
                 this.logLevels = data;
             },
-            err => {
+            error: (err) => {
                 this.errorMessage = JSON.stringify(err);
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
 
-        this.serverLogService.getLoggers().subscribe(
-            data => {
+        this.serverLogService.getLoggers().subscribe({
+            next: (data: any) => {
                 this.loggers = data;
             },
-            err => {
+            error: (err) => {
                 this.errorMessage = JSON.stringify(err);
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
 
         this.updateView(this.filter);
     }
@@ -62,15 +64,16 @@ export class LogMessagesComponent {
         this.filter.fromDate = this.utilsService.dateToUtcServerFormat(this.filter.fromDateLocal);
         this.filter.toDate = this.utilsService.dateToUtcServerFormat(this.filter.toDateLocal);
 
-        this.serverLogService.getLogMessages(this.filter).subscribe(
-            data => {
+        this.serverLogService.getLogMessages(this.filter).subscribe({
+            next: (data: any) => {
                 this.logMessages = data.results;
                 this.totalCount = data.totalCount;
             },
-            err => {
+            error: (err) => {
                 this.errorMessage = JSON.stringify(err);
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
     }
 
     initFilter(): LogMessageFilter {

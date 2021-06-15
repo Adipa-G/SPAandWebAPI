@@ -1,7 +1,7 @@
 ﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorInfo } from '../../domain/errorInfo';
 import { ErrorService } from '../services/errorService';
@@ -23,7 +23,7 @@ describe('ErrorComponent', () => {
 
     var errorService = new MockErrorService();
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [ErrorComponent],
             schemas: [NO_ERRORS_SCHEMA],

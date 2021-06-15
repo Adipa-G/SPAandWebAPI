@@ -1,4 +1,4 @@
-import {Routes, RouterModule} from "@angular/router";
+import { Routes, RouterModule } from "@angular/router";
 
 import { HomeComponent } from './common/components/homeComponent';
 import { ErrorComponent } from './common/components/errorComponent';
@@ -12,14 +12,14 @@ import { LogMessagesComponent } from './admin/components/logMessagesComponent';
 import { ModuleWithProviders } from "@angular/core";
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full'},
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
-    { path: 'login', component: LoginComponent},
-    { path: 'register', component: RegisterComponent},
-    { path: 'userList', component: UserListComponent},
-    { path: 'httpLog', component: HttpLogComponent},
-    { path: 'logMessages', component: LogMessagesComponent}
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'userList', component: UserListComponent },
+    { path: 'httpLog', component: HttpLogComponent },
+    { path: 'logMessages', component: LogMessagesComponent }
 ];
 
 export const appRoutingProviders: any[] = [];
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { useHash: true });
+export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes, { useHash: true });

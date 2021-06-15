@@ -9,7 +9,7 @@ export class PrettyPrint implements OnChanges {
     @Input('pretty-print') sourceStr: string;
     @Input('format') format: string;
 
-    private prettyPrintOutput: string;
+    prettyPrintOutput: string;
 
     ngOnChanges(changes) {
         if (!this.sourceStr) {

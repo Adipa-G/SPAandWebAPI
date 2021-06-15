@@ -2,7 +2,7 @@
 import { EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorInfo } from '../../domain/errorInfo';
 import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
@@ -14,8 +14,8 @@ import { MenuComponent } from './menuComponent';
 
 class MockAuthService {
     public authChanged$: EventEmitter<AuthenticationDetails>;
-    public authCleard : boolean;
-    public loggedOut : boolean;
+    public authCleard: boolean;
+    public loggedOut: boolean;
 
     constructor() {
         this.authChanged$ = new EventEmitter<AuthenticationDetails>();
@@ -23,7 +23,7 @@ class MockAuthService {
         this.loggedOut = false;
     }
 
-    clearAuthData():void {
+    clearAuthData(): void {
         this.authCleard = true;
     }
 
@@ -57,7 +57,7 @@ describe('MenuComponent', () => {
     var errorService = new MockErrorService();
     var router = new MockRouter();
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [MenuComponent],
             schemas: [NO_ERRORS_SCHEMA],

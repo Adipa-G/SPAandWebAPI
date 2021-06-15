@@ -13,7 +13,7 @@ export class SortHeader implements DoCheck {
     @Input('sort-header') orderOptions: OrderAndPage;
     @Output('order-changed') orderChanged = new EventEmitter<OrderAndPage>();
 
-    private sortIcon: string;
+    sortIcon: string;
 
     public headerClick(): void {
         if (this.orderField !== this.orderOptions.orderField) {

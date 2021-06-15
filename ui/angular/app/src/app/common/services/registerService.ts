@@ -1,20 +1,19 @@
 ﻿import { Injectable, Inject } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { map } from 'rxjs/operators';
 
 import { RegistrationInfo } from '../../domain/common/registrationInfo';
 
-import { HttpClient } from '../../common/services/httpClient';
+import { HttpClientWrapper } from './httpClientWrapper';
 import { Constants } from '../../common/services/constants';
 
 
 @Injectable()
 export class RegisterService {
 
-    private httpClient: HttpClient;
+    private httpClient: HttpClientWrapper;
     private constants: Constants;
 
-    constructor( @Inject(HttpClient) httpClient: HttpClient,
+    constructor(@Inject(HttpClientWrapper) httpClient: HttpClientWrapper,
         @Inject(Constants) constants: Constants) {
         this.httpClient = httpClient;
         this.constants = constants;
@@ -22,8 +21,7 @@ export class RegisterService {
 
     public register(regInfo: RegistrationInfo) {
         return this.httpClient
-            .post(this.constants.getServiceBaseUrl() + 'api/account/register', JSON.stringify(regInfo))
-            .pipe(map((res: Response) => res.json()));
+            .post(this.constants.getServiceBaseUrl() + 'api/account/register', JSON.stringify(regInfo));
     }
 }
 

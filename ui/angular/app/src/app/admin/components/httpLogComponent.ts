@@ -1,11 +1,11 @@
-﻿import {Component} from '@angular/core';
+﻿import { Component } from '@angular/core';
 
-import {HttpLogFilter} from '../../domain/admin/httpLogFilter';
-import {HttpLogInfo} from '../../domain/admin/httpLogInfo';
+import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
+import { HttpLogInfo } from '../../domain/admin/httpLogInfo';
 
-import {ErrorService} from '../../common/services/errorService';
-import {UtilsService} from "../../common/services/utilsService";
-import {ServerLogService} from "../services/serverLogService";
+import { ErrorService } from '../../common/services/errorService';
+import { UtilsService } from "../../common/services/utilsService";
+import { ServerLogService } from "../services/serverLogService";
 
 @Component({
     selector: 'http-logs',
@@ -34,14 +34,15 @@ export class HttpLogComponent {
     }
 
     initializeView() {
-        this.serverLogService.getLogLevels().subscribe(
-            data => {
+        this.serverLogService.getLogLevels().subscribe({
+            next: (data: any) => {
                 this.logLevels = data;
             },
-            err => {
+            error: (err) => {
                 this.errorMessage = JSON.stringify(err);
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
         this.updateView(this.filter);
     }
 
@@ -50,15 +51,16 @@ export class HttpLogComponent {
         this.filter.fromDate = this.utilsService.dateToUtcServerFormat(this.filter.fromDateLocal);
         this.filter.toDate = this.utilsService.dateToUtcServerFormat(this.filter.toDateLocal);
 
-        this.serverLogService.getLogHttp(this.filter).subscribe(
-            data => {
+        this.serverLogService.getLogHttp(this.filter).subscribe({
+            next: (data: any) => {
                 this.httpLogs = data.results;
                 this.totalCount = data.totalCount;
             },
-            err => {
+            error: (err) => {
                 this.errorMessage = JSON.stringify(err);
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
     }
 
     initFilter(): HttpLogFilter {
@@ -68,7 +70,7 @@ export class HttpLogComponent {
         httpLogFilter.pageNumber = 1;
         httpLogFilter.pageSize = 100;
         httpLogFilter.logLevel = '';
-        httpLogFilter.trackId = '';
+        httpLogFilter.trackingId = '';
         return httpLogFilter;
     }
 
