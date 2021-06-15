@@ -169,8 +169,8 @@ export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
                         <div className="form-group">
                             <label>Level</label>
                             <select className="form-control"
-                                    id="logLevel"
-                                    onChange={() => { this.loadSystemLogs(); }}>
+                                id="logLevel"
+                                onChange={() => { this.loadSystemLogs(); }}>
                                 <option value="">Select</option>
                                 {levelsOptions}
                             </select>
@@ -180,8 +180,8 @@ export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
                         <div className="form-group">
                             <label>Logger Name</label>
                             <select className="form-control"
-                                    id="loggerName"
-                                    onChange={() => { this.loadSystemLogs(); }}>>
+                                id="loggerName"
+                                onChange={() => { this.loadSystemLogs(); }}>
                                 <option value="">Select</option>
                                 {loggerOptions}
                             </select>
@@ -193,10 +193,10 @@ export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
                         <label>Date Range</label>
                         <div className="input-group" id="fromDateGroup">
                             <input type="text"
-                                   id="fromDate"
-                                   className="form-control"
-                                   placeholder="yyyy-MM-dd"
-                                   onBlur={() => { this.loadSystemLogs(); }}/>
+                                id="fromDate"
+                                className="form-control"
+                                placeholder="yyyy-MM-dd"
+                                onBlur={() => { this.loadSystemLogs(); }} />
                             <div className="input-group-addon">
                                 <i className="fa fa-calendar"></i>
                             </div>
@@ -206,10 +206,10 @@ export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
                         <label>&nbsp;</label>
                         <div className="input-group" id="toDateGroup">
                             <input type="text"
-                                   id="toDate"
-                                   className="form-control"
-                                   placeholder="yyyy-MM-dd"
-                                   onBlur={() => { this.loadSystemLogs(); }}/>
+                                id="toDate"
+                                className="form-control"
+                                placeholder="yyyy-MM-dd"
+                                onBlur={() => { this.loadSystemLogs(); }} />
                             <div className="input-group-addon">
                                 <i className="fa fa-calendar"></i>
                             </div>
@@ -220,29 +220,29 @@ export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
                     <div className="col-md-8 col-md-offset-2">
                         <table className="table table-striped table-bordered table-hover table-responsive">
                             <thead>
-                            <tr>
-                                <SortHeader
-                                    headerText="Time"
-                                    orderData={this.state.filter}
-                                    orderField="LogTimestamp"
-                                    orderChanged={() => this.orderOrPageChanged()}/>
-                                <SortHeader
-                                    headerText="Logger"
-                                    orderData={this.state.filter}
-                                    orderField="Logger"
-                                    orderChanged={() => this.orderOrPageChanged()}/>
-                                <SortHeader
-                                    headerText="Level"
-                                    orderData={this.state.filter}
-                                    orderField="Level"
-                                    orderChanged={() => this.orderOrPageChanged()}/>
-                                <th>Details</th>
-                            </tr>
+                                <tr>
+                                    <SortHeader
+                                        headerText="Time"
+                                        orderData={this.state.filter}
+                                        orderField="LogTimestamp"
+                                        orderChanged={() => this.orderOrPageChanged()} />
+                                    <SortHeader
+                                        headerText="Logger"
+                                        orderData={this.state.filter}
+                                        orderField="Logger"
+                                        orderChanged={() => this.orderOrPageChanged()} />
+                                    <SortHeader
+                                        headerText="Level"
+                                        orderData={this.state.filter}
+                                        orderField="Level"
+                                        orderChanged={() => this.orderOrPageChanged()} />
+                                    <th>Details</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {this.state.logs.map((log, i) => {
+                                {this.state.logs.map((log, i) => {
 
-                                    let details:Array<any> = [];
+                                    let details: Array<any> = [];
                                     if (log.message) {
                                         details.push(<dl key="MsgLabel{i}">Message</dl>);
                                         details.push(<dt key="Msg{i}">{log.message}</dt>);
@@ -270,8 +270,8 @@ export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
                         <TablePager
                             totalCount={this.state.totalCount}
                             pageData={this.state.filter}
-                            pageChanged={() => this.orderOrPageChanged()}/>
-                        <ErrorMessage errorMessage={this.state.errorMessage}/>
+                            pageChanged={() => this.orderOrPageChanged()} />
+                        <ErrorMessage errorMessage={this.state.errorMessage} />
                     </div>
                 </div>
             </div>
