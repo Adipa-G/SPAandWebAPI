@@ -10,7 +10,7 @@
     "gulp-clean-css": "^2.0.9",
     "gulp-concat": "^2.6.0",
     "gulp-karma": "^0.0.5",
-    "karma": "^0.13.22",
+    "karma": "^6.4.1",
     "jasmine": "^2.4.1",
     "karma-jasmine": "^1.0.2",
     "phantomjs": "^2.1.7",
