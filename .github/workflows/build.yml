@@ -9,6 +9,8 @@ jobs:
     outputs:
       changed: ${{ steps.filter.outputs.path }}
     steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
     - name: Detect if any files changed related to this build task
       uses: dorny/paths-filter@v2
       id: filter
