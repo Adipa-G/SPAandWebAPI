@@ -22,7 +22,7 @@ jobs:
             
   build-and-test-solution:
     needs: changes
-    # if: ${{ needs.changes.outputs.changed == 'true' }}
+    if: ${{ needs.changes.outputs.changed == 'true' }}
     runs-on: windows-latest
     steps:
       - name: Checkout the code
@@ -43,6 +43,14 @@ jobs:
         run: msbuild.exe ./backend/owin-identityserver3/OwinIdServer3.sln
       - name: Test Solution
         run: | 
-          vstest.console.exe "./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/Infrastructure.Test.dll" /TestAdapterPath:"./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/"
-          vstest.console.exe "./backend/owin-identityserver3/Web.Test/bin/Debug/Web.Test.dll" /TestAdapterPath:"./backend/owin-identityserver3/Web.Test/bin/Debug/"
+          vstest.console.exe "./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/Infrastructure.Test.dll" /Logger:trx;LogFileName="Infrastructure.Test.trx" /TestAdapterPath:"./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/"
+          vstest.console.exe "./backend/owin-identityserver3/Web.Test/bin/Debug/Web.Test.dll" /Logger:trx;LogFileName="Web.Test.trx" /TestAdapterPath:"./backend/owin-identityserver3/Web.Test/bin/Debug/"
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: test-results
+          path: "**/*.trx"                            
+          reporter: dotnet-trx
+          fail-on-error: true
       - run: echo "🍏 This job's status is ${{ job.status }}."
