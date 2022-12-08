@@ -27,6 +27,12 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
-      - name: Build
-        run: backend/owin-identityserver3/build.bat
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.2
+      - name: Navigate to Workspace
+        run: cd $GITHUB_WORKSPACE/backend/owin-identityserver3
+      - name: Restore Packages
+        run: nuget restore OwinIdServer3.sln 
       - run: echo "🍏 This job's status is ${{ job.status }}."
