@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Routing;
@@ -31,51 +32,51 @@ namespace Web.Test.Controllers
         }
 
         [Test]
-        public void GivenSuccessRegistration_WhenRegister_ThenReturnOK()
+        public async Task GivenSuccessRegistration_WhenRegisterAsync_ThenReturnOK()
         {
-            _userRepository.RegisterUser(Arg.Any<UserModel>()).Returns(new UserModel());
+            _userRepository.RegisterUserAsync(Arg.Any<UserModel>()).Returns(new UserModel());
 
-            var actionResult = _controller.Register(new UserModel());
+            var actionResult = await _controller.RegisterAsync(new UserModel());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
             Assert.AreEqual(HttpStatusCode.OK,result.StatusCode);
-            _userRepository.Received(1).RegisterUser(Arg.Any<UserModel>());
+            await _userRepository.Received(1).RegisterUserAsync(Arg.Any<UserModel>());
         }
 
         [Test]
-        public void GivenFailedRegistration_WhenRegister_ThenReturnBadRequest()
+        public async Task GivenFailedRegistration_WhenRegisterAsync_ThenReturnBadRequest()
         {
-            _userRepository.RegisterUser(Arg.Any<UserModel>()).Returns((UserModel)null);
+            _userRepository.RegisterUserAsync(Arg.Any<UserModel>()).Returns((UserModel)null);
 
-            var actionResult = _controller.Register(new UserModel());
+            var actionResult = await _controller.RegisterAsync(new UserModel());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
             Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
-            _userRepository.Received(1).RegisterUser(Arg.Any<UserModel>());
+            await _userRepository.Received(1).RegisterUserAsync(Arg.Any<UserModel>());
         }
 
         [Test]
-        public void GivenUsers_WhenList_ThenReturnList()
+        public async Task GivenUsers_WhenListAsync_ThenReturnList()
         {
-            _userRepository.List(Arg.Any<ListRequest>()).Returns(new ListResult<UserListItemModel>());
+            _userRepository.ListAsync(Arg.Any<ListRequest>()).Returns(new ListResult<UserListItemModel>());
 
-            var actionResult = _controller.List(new ListRequest());
+            var actionResult = await _controller.ListAsync(new ListRequest());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
-            _userRepository.Received(1).List(Arg.Any<ListRequest>());
+            await _userRepository.Received(1).ListAsync(Arg.Any<ListRequest>());
         }
 
         [Test]
-        public void GivenUsers_WhenDelete_ThenDelete()
+        public async Task GivenUsers_WhenDeleteAsync_ThenDelete()
         {
-            _userRepository.Delete(Arg.Any<string>());
+            await _userRepository.DeleteAsync(Arg.Any<string>());
 
-            var actionResult = _controller.Delete("abc");
+            var actionResult = await _controller.DeleteAsync("abc");
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
-            _userRepository.Received(1).Delete("abc");
+            await _userRepository.Received(1).DeleteAsync("abc");
         }
     }
 }

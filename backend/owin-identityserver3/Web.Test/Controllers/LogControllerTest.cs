@@ -11,6 +11,7 @@ using Domain.Models.Log;
 using NSubstitute;
 using NUnit.Framework;
 using Web.Controllers;
+using System.Threading.Tasks;
 
 namespace Web.Test.Controllers
 {
@@ -56,27 +57,27 @@ namespace Web.Test.Controllers
         }
 
         [Test]
-        public void GivenLogMessages_WhenLogMessages_ThenReturn()
+        public async Task GivenLogMessages_WhenLogMessages_ThenReturn()
         {
-            _logViewRepository.GetLogMessages(Arg.Any<LogMessageListRequest>()).Returns(new ListResult<LogMessageListItemModel>());
+            _logViewRepository.GetLogMessagesAsync(Arg.Any<LogMessageListRequest>()).Returns(new ListResult<LogMessageListItemModel>());
 
-            var actionResult = _controller.LogMessages(new LogMessageListRequest());
+            var actionResult = await _controller.GetLogMessagesAsync(new LogMessageListRequest());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
-            _logViewRepository.Received(1).GetLogMessages(Arg.Any<LogMessageListRequest>());
+            await _logViewRepository.Received(1).GetLogMessagesAsync(Arg.Any<LogMessageListRequest>());
         }
 
         [Test]
-        public void GivenLogHttp_WhenLogHttp_ThenReturn()
+        public async Task GivenLogHttp_WhenLogHttp_ThenReturn()
         {
-            _logViewRepository.GetLogHttp(Arg.Any<LogHttpListRequest>()).Returns(new ListResult<LogHttpListItemModel>());
+            _logViewRepository.GetLogHttpAsync(Arg.Any<LogHttpListRequest>()).Returns(new ListResult<LogHttpListItemModel>());
 
-            var actionResult = _controller.LogHttp(new LogHttpListRequest());
+            var actionResult = await _controller.GetLogHttpAsync(new LogHttpListRequest());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
-            _logViewRepository.Received(1).GetLogHttp(Arg.Any<LogHttpListRequest>());
+            await _logViewRepository.Received(1).GetLogHttpAsync(Arg.Any<LogHttpListRequest>());
         }
     }
 }

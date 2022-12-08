@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain;
 using Domain.Entities;
 using Domain.Enum;
@@ -31,7 +32,7 @@ namespace Infrastructure.Repositories
             return new List<string>(Enum.GetNames(typeof(LoggerName)));
         }
 
-        public ListResult<LogMessageListItemModel> GetLogMessages(LogMessageListRequest request)
+        public async Task<ListResult<LogMessageListItemModel>> GetLogMessagesAsync(LogMessageListRequest request)
         {
             var query = _session.QueryOver<LogMessageRecord>();
             if (request.LogLevel.HasValue)
@@ -59,12 +60,12 @@ namespace Infrastructure.Repositories
                 query = query.OrderBy(Projections.Property(request.OrderField)).Desc;
             }
 
-            var totalCount = query.RowCount();
-            var results =
-                query.Skip((request.PageNumber - 1) * request.PageSize)
+            var totalCount = await query.RowCountAsync();
+            var queryResults = await query.Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
-                    .List()
-                    .Select(
+                    .ListAsync();
+
+            var results= queryResults.Select(
                         r =>
                             new LogMessageListItemModel()
                             {
@@ -86,7 +87,7 @@ namespace Infrastructure.Repositories
             };
         }
 
-        public ListResult<LogHttpListItemModel> GetLogHttp(LogHttpListRequest request)
+        public async Task<ListResult<LogHttpListItemModel>> GetLogHttpAsync(LogHttpListRequest request)
         {
             var query = _session.QueryOver<LogHttpRecord>();
             if (!string.IsNullOrEmpty(request.TrackingId))
@@ -122,11 +123,12 @@ namespace Infrastructure.Repositories
             }
 
             var totalCount = query.RowCount();
-            var results =
-                query.Skip((request.PageNumber - 1) * request.PageSize)
+            var queryResults =
+                await query.Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
-                    .List()
-                    .Select(
+                    .ListAsync();
+
+                var results = queryResults.Select(
                         r =>
                             new LogHttpListItemModel()
                             {

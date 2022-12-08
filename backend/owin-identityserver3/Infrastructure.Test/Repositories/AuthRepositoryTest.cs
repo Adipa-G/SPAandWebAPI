@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using System.Threading.Tasks;
+using Domain.Models;
 using Domain.Models.Auth;
 using Infrastructure.Repositories;
 using Infrastructure.Test.TestContext;
@@ -34,19 +35,19 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenNoUser_WhenRegisterUser_ThenCreateUser()
+        public async Task GivenNoUser_WhenRegisterUserAsync_ThenCreateUser()
         {
             var sut = new UserRepository(Session);
-            sut.RegisterUser(new UserModel() {UserName = "a", Password = "abcdef",ConfirmPassword = "abcdef" });
+            await sut.RegisterUserAsync(new UserModel() {UserName = "a", Password = "abcdef",ConfirmPassword = "abcdef" });
             FlushAndClear();
 
-            var user = sut.FindUser("a", "abcdef");
+            var user = await sut.FindUserAsync("a", "abcdef");
 
             Assert.IsNotNull(user);
         }
         
         [Test]
-        public void GivenUser_WhenList_ThenList()
+        public async Task GivenUser_WhenListAsync_ThenList()
         {
             var context = new InfrastructureTestContext(Session);
             context.User("Test");
@@ -54,14 +55,14 @@ namespace Infrastructure.Test.Repositories
 
             var sut = new UserRepository(Session);
 
-            var results = sut.List(new ListRequest() { PageSize = 10, PageNumber = 1 });
+            var results = await sut.ListAsync(new ListRequest() { PageSize = 10, PageNumber = 1 });
 
             Assert.AreEqual(1, results.TotalCount);
             Assert.AreEqual("Test", results.Results[0].UserName);
         }
 
         [Test]
-        public void GivenUsers_WhenListWithPage_ThenPage()
+        public async Task GivenUsers_WhenListAsyncWithPage_ThenPage()
         {
             var context = new InfrastructureTestContext(Session);
             context.User("Test1");
@@ -72,14 +73,14 @@ namespace Infrastructure.Test.Repositories
 
             var sut = new UserRepository(Session);
 
-            var results = sut.List(new ListRequest() { PageSize = 3, PageNumber = 2 });
+            var results = await sut.ListAsync(new ListRequest() { PageSize = 3, PageNumber = 2 });
 
             Assert.AreEqual(4, results.TotalCount);
             Assert.AreEqual("Test4", results.Results[0].UserName);
         }
 
         [Test]
-        public void GivenUsers_WhenListWithOrdering_ThenSort()
+        public async Task GivenUsers_WhenListAsyncWithOrdering_ThenSort()
         {
             var context = new InfrastructureTestContext(Session);
             context.User("A");
@@ -90,7 +91,7 @@ namespace Infrastructure.Test.Repositories
             var sut = new UserRepository(Session);
 
             var results =
-                sut.List(new ListRequest()
+                await sut.ListAsync(new ListRequest()
                 {
                     PageSize = 3,
                     PageNumber = 1,
@@ -104,7 +105,7 @@ namespace Infrastructure.Test.Repositories
         }
 
         [Test]
-        public void GivenUser_WhenDelete_ThenDelete()
+        public async Task GivenUser_WhenDeleteAsync_ThenDelete()
         {
             var context = new InfrastructureTestContext(Session);
             context.User("A");
@@ -112,13 +113,13 @@ namespace Infrastructure.Test.Repositories
 
             var sut = new UserRepository(Session);
             
-            var results = sut.List(new ListRequest() { PageSize = 3, PageNumber = 1 });
+            var results = await sut.ListAsync(new ListRequest() { PageSize = 3, PageNumber = 1 });
             Assert.AreEqual(1, results.TotalCount);
 
-            sut.Delete("A");
+            sut.DeleteAsync("A");
             Session.Flush();
 
-            results = sut.List(new ListRequest() {PageSize = 3, PageNumber = 1});
+            results = await sut.ListAsync(new ListRequest() {PageSize = 3, PageNumber = 1});
             Assert.AreEqual(0, results.TotalCount);
         }
     }

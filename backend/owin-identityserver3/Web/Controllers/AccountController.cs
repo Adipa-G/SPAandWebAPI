@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Auth;
@@ -18,14 +19,14 @@ namespace Web.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public IHttpActionResult Register(UserModel userModel)
+        public async Task<IHttpActionResult> RegisterAsync(UserModel userModel)
         {
              if (!ModelState.IsValid)
              {
                 return BadRequest(ModelState);
              }
 
-             var result = _userRepository.RegisterUser(userModel);
+             var result = await _userRepository.RegisterUserAsync(userModel);
              if (result == null)
              {
                  return InternalServerError();
@@ -36,16 +37,16 @@ namespace Web.Controllers
 
         [HttpPost]
         [Route("list")]
-        public IHttpActionResult List(ListRequest request)
+        public async Task<IHttpActionResult> ListAsync(ListRequest request)
         {
-            return Ok(_userRepository.List(request));
+            return Ok(await _userRepository.ListAsync(request));
         }
 
         [HttpDelete]
         [Route("{userName}")]
-        public IHttpActionResult Delete(string userName)
+        public async Task<IHttpActionResult> DeleteAsync(string userName)
         {
-            _userRepository.Delete(userName);
+            await _userRepository.DeleteAsync(userName);
             return Ok();
         }
     }
