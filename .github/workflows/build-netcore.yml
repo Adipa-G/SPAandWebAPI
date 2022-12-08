@@ -41,7 +41,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: test-results
+          name: test-results-build-netcore
           path: "**/*.trx"                            
           reporter: dotnet-trx
           fail-on-error: true
