@@ -28,6 +28,5 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
       - name: Build
-        working-directory: backend/owin-identityserver3
-        run: build.bat
+        run: backend/owin-identityserver3/build.bat
       - run: echo "🍏 This job's status is ${{ job.status }}."
