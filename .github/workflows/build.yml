@@ -45,9 +45,4 @@ jobs:
         run: | 
           vstest.console.exe "./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/Infrastructure.Test.dll" /TestAdapterPath:"./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/"
           vstest.console.exe "./backend/owin-identityserver3/Web.Test/bin/Debug/Web.Test.dll" /TestAdapterPath:"./backend/owin-identityserver3/Web.Test/bin/Debug/"
-        with:
-          testAssembly: "*.Test.dll"
-          searchFolder: ./backend/owin-identityserver3/
-          runInParallel: true
-          otherConsoleOptions: '/Logger:"trx;LogFileName=testResults.trx"'
       - run: echo "🍏 This job's status is ${{ job.status }}."
