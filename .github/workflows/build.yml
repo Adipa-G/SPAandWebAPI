@@ -35,4 +35,13 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - name: Restore Packages
         run: nuget restore ./backend/owin-identityserver3/OwinIdServer3.sln 
+      - name: Build Solution
+        run: msbuild.exe ./backend/owin-identityserver3/OwinIdServer3.sln
+      - name: Test Solution
+        uses: microsoft-approved-actions/vstest@master
+        with:
+          testAssembly: *.Test.dll
+          searchFolder: ./backend/owin-identityserver3/
+          runInParallel: true
+          otherConsoleOptions: '/Logger:"trx;LogFileName=testResults.trx"'
       - run: echo "🍏 This job's status is ${{ job.status }}."
