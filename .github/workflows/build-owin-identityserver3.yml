@@ -1,4 +1,4 @@
-name: SPAandWebAPI
+name: BackendOwinIdentityserver3
 run-name: Build and Test Backend Owin-identityserver3
 on: [push]
 jobs:

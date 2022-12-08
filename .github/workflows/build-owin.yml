@@ -1,4 +1,4 @@
-name: SPAandWebAPI
+name: BackendOwin
 run-name: Build and Test Backend Owin
 on: [push]
 jobs:
