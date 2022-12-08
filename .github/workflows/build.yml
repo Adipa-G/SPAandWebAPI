@@ -40,7 +40,7 @@ jobs:
       - name: Test Solution
         uses: microsoft-approved-actions/vstest@master
         with:
-          testAssembly: *.Test.dll
+          testAssembly: "*.Test.dll"
           searchFolder: ./backend/owin-identityserver3/
           runInParallel: true
           otherConsoleOptions: '/Logger:"trx;LogFileName=testResults.trx"'
