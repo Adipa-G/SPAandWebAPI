@@ -20,10 +20,6 @@ jobs:
             - 'backend/netcore/**'
     - run: echo "🍏 This job's status is ${{ job.status }}."
 
-name: ndbgate
-run-name: Build and Test
-on: [push]
-jobs:
   build-and-test-solution:
     needs: changes
     #if: ${{ needs.changes.outputs.changed == 'true' }}
