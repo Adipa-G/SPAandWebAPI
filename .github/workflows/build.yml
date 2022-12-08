@@ -34,7 +34,7 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - name: Navigate to Workspace
-        run: cd $GITHUB_WORKSPACE/backend/owin-identityserver3
+        run: cd backend/owin-identityserver3
       - name: Restore Packages
         run: nuget restore OwinIdServer3.sln 
       - run: echo "🍏 This job's status is ${{ job.status }}."
