@@ -33,8 +33,6 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-      - name: Navigate to Workspace
-        run: cd backend/owin-identityserver3
       - name: Restore Packages
-        run: nuget restore OwinIdServer3.sln 
+        run: nuget restore ./backend/owin-identityserver3/OwinIdServer3.sln 
       - run: echo "🍏 This job's status is ${{ job.status }}."
