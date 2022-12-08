@@ -20,32 +20,39 @@ namespace Web.Middleware
         public override async Task Invoke(IOwinContext context)
         {
             var sessionFactory = (ISessionFactory)_kernel.GetService(typeof(ISessionFactory));
-            using (var session = sessionFactory.OpenSession())
-            {
-                _kernel.Rebind<ISession>().ToConstant(session).InThreadScope();
-                var needTransaction = new[] {"POST", "PUT", "DELETE"}.Contains(context.Request.Method);
+            var session = sessionFactory.OpenSession();
+            _kernel.Rebind<ISession>().ToConstant(session);
+            var needTransaction = new[] {"POST", "PUT", "DELETE"}.Contains(context.Request.Method);
 
-                if (needTransaction)
+            if (needTransaction)
+            {
+                using (var transaction = session.BeginTransaction())
                 {
-                    using (var transaction = session.BeginTransaction())
+                    try
                     {
-                        try
-                        {
-                            await Next.Invoke(context);
-                            transaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            transaction.Rollback();
-                            throw;
-                        }
+                        await Next.Invoke(context);
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
                     }
                 }
-                else
-                {
-                    await Next.Invoke(context);
-                }
             }
+            else
+            {
+                await Next.Invoke(context);
+            }
+
+            await Task.Factory.StartNew(async () =>
+            {
+                await Task.Delay(10000);
+                if (session.IsConnected)
+                {
+                    session.Dispose();
+                }
+            });
         }
     }
 }

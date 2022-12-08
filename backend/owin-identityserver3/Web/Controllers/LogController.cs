@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
@@ -31,17 +32,16 @@ namespace Web.Controllers
 
         [HttpPost]
         [Route("logMessages")]
-        public IHttpActionResult LogMessages(LogMessageListRequest request)
+        public async Task<IHttpActionResult> GetLogMessagesAsync(LogMessageListRequest request)
         {
-            //throw new Exception("sfuffed");
-            return Ok(_logViewRepository.GetLogMessages(request));
+            return Ok(await _logViewRepository.GetLogMessagesAsync(request));
         }
 
         [HttpPost]
         [Route("logHttp")]
-        public IHttpActionResult LogHttp(LogHttpListRequest request)
+        public async Task<IHttpActionResult> GetLogHttpAsync(LogHttpListRequest request)
         {
-            return Ok(_logViewRepository.GetLogHttp(request));
+            return Ok(await _logViewRepository.GetLogHttpAsync(request));
         }
     }
 }

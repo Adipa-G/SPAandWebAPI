@@ -20,20 +20,19 @@ namespace Infrastructure.Plumbing
             _kernel = kernel;
         }
 
-        public override Task AuthenticateLocalAsync(LocalAuthenticationContext context)
+        public override async Task AuthenticateLocalAsync(LocalAuthenticationContext context)
         {
             var sessionFactory = _kernel.Get<ISessionFactory>();
             using (var session = sessionFactory.OpenSession())
             {
                 _kernel.Rebind<ISession>().ToConstant(session).InThreadScope();
                 var userRepository = _kernel.Get<IUserRepository>();
-                var user = userRepository.FindUser(context.UserName, context.Password);
+                var user = await userRepository.FindUserAsync(context.UserName, context.Password);
                 if (user != null)
                 {
                     context.AuthenticateResult = new AuthenticateResult(user.UserName, user.UserName);
                 }
             }
-            return Task.FromResult(0);
         }
 
         public override Task GetProfileDataAsync(ProfileDataRequestContext context)

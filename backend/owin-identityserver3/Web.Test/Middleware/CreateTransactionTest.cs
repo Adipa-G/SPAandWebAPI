@@ -51,8 +51,8 @@ namespace Web.Test.Middleware
             await _createTransaction.Invoke(_context);
 
             _session.Received(0).BeginTransaction();
-            _transaction.Received(0).Commit();
-            _transaction.Received(0).Rollback();
+            await _transaction.Received(0).CommitAsync();
+            await _transaction.Received(0).RollbackAsync();
         }
 
         [Test]
@@ -63,12 +63,12 @@ namespace Web.Test.Middleware
             await _createTransaction.Invoke(_context);
 
             _session.Received(1).BeginTransaction();
-            _transaction.Received(1).Commit();
-            _transaction.Received(0).Rollback();
+            await _transaction.Received(1).CommitAsync();
+            await _transaction.Received(0).RollbackAsync();
         }
 
         [Test]
-        public void GivenMiddleware_WhenInvokePostWithException_TransactionRollback()
+        public async Task GivenMiddleware_WhenInvokePostWithException_TransactionRollback()
         {
             _next.ThrowException = true;
 
@@ -77,8 +77,8 @@ namespace Web.Test.Middleware
             Assert.ThrowsAsync<Exception>(() => _createTransaction.Invoke(_context));
             
             _session.Received(1).BeginTransaction();
-            _transaction.Received(0).Commit();
-            _transaction.Received(1).Rollback();
+            await _transaction.Received(0).CommitAsync();
+            await _transaction.Received(1).RollbackAsync();
         }
     }
 }
