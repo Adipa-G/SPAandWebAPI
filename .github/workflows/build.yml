@@ -43,8 +43,8 @@ jobs:
         run: msbuild.exe ./backend/owin-identityserver3/OwinIdServer3.sln
       - name: Test Solution
         run: | 
-          vstest.console.exe "./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/Infrastructure.Test.dll" /Logger:trx;LogFileName="Infrastructure.Test.trx" /TestAdapterPath:"./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/"
-          vstest.console.exe "./backend/owin-identityserver3/Web.Test/bin/Debug/Web.Test.dll" /Logger:trx;LogFileName="Web.Test.trx" /TestAdapterPath:"./backend/owin-identityserver3/Web.Test/bin/Debug/"
+          vstest.console.exe "./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/Infrastructure.Test.dll" /Logger:trx /TestAdapterPath:"./backend/owin-identityserver3/Infrastructure.Test/bin/Debug/"
+          vstest.console.exe "./backend/owin-identityserver3/Web.Test/bin/Debug/Web.Test.dll" /Logger:trx /TestAdapterPath:"./backend/owin-identityserver3/Web.Test/bin/Debug/"
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: always()
