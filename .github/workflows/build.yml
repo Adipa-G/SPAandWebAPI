@@ -27,8 +27,6 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
-      - name: Setup MSBuild
-        uses: warrenbuckley/Setup-MSBuild@v1
       - name: Build
         working-directory: backend/owin-identityserver3
         run: build.bat
