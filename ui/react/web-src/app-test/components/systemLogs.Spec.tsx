@@ -221,7 +221,6 @@ describe("<HttpLogs/>", () => {
         ];
         instance.forceUpdate();
 
-        expect(wrapper.html()).toContain('2010-05-06');
         expect(wrapper.html()).toContain('__logger__');
         expect(wrapper.html()).toContain('__level__');
         expect(wrapper.html()).toContain('__message__');
