@@ -16,8 +16,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.0",
     "phantomjs": "^2.1.7",
-    "phantomjs-prebuilt": "^2.1.7",
-    "shx": "^0.3.4"
+    "phantomjs-prebuilt": "^2.1.7"
   },
   "scripts": {
     "preinstall": "node preinstall.js"
