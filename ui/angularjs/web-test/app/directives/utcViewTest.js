@@ -12,13 +12,25 @@ describe('utc view test', function () {
     }));
 
     it('Set utc to local', function () {
+        function pad(val){
+            if (('' + val).length == 1){
+                return '0' + val;
+            }
+            return val;
+        }
+
+        var date = new Date();
+        var utc = date.toISOString();
+        var local = pad(date.getFullYear()) + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) 
+            + " " + pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds());
+
         var element = $compile("<div utc-view=\"{{dateValue}}\"></div>")($rootScope);
         $rootScope.$digest();
 
         var scope = element.scope();
-        scope.dateValue = '2015-12-22T10:58:02'; 
+        scope.dateValue = utc; 
         scope.$digest();
 
-        expect(element.html()).toContain("2015-12-22 21:58:02");
+        expect(element.html()).toContain(local);
     });
 });

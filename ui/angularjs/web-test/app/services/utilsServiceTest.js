@@ -2,6 +2,20 @@
 
 describe('utils service test', function () {
     var utilsService;
+    var date = new Date();
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+
+    var utc = date.toISOString().substring(0,19);
+    var local = pad(date.getFullYear()) + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate());
+
+    function pad(val){
+        if (('' + val).length == 1){
+            return '0' + val;
+        }
+        return val;
+    }
 
     beforeEach(function () {
         module('AngularAuthApp');
@@ -12,13 +26,13 @@ describe('utils service test', function () {
     }));
 
     it('convert string date', function () {
-        var result = utilsService.dateToUtcFormat('2012-09-11','YYYY-MM-DD');
-        expect(result).toBe('2012-09-10T14:00:00');
+        var result = utilsService.dateToUtcFormat(local,'YYYY-MM-DD');
+        expect(result).toBe(utc);
     });
 
     it('convert string date', function () {
-        var result = utilsService.dateToUtcFormat(moment('2012-09-11', 'YYYY-MM-DD'));
-        expect(result).toBe('2012-09-10T14:00:00');
+        var result = utilsService.dateToUtcFormat(moment(local, 'YYYY-MM-DD'));
+        expect(result).toBe(utc);
     });
 
     it('convert date format error', function () {

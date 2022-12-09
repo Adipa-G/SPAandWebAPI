@@ -20,6 +20,6 @@
     "shx": "^0.3.4"
   },
   "scripts": {
-    "preinstall": "npm i -D shx\nshx cp npm-shrinkwrap.gulp.json npm-shrinkwrap.json"
+    "preinstall": "@node preinstall.js"
   }
 }
