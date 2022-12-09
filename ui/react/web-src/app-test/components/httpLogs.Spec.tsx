@@ -187,7 +187,6 @@ describe("<HttpLogs/>", () => {
         ];
         instance.forceUpdate();
 
-        expect(wrapper.html()).toContain('2010-05-06');
         expect(wrapper.html()).toContain('__trackingId__');
         expect(wrapper.html()).toContain('__caller__');
         expect(wrapper.html()).toContain('__status__');
