@@ -20,6 +20,6 @@
     "shx": "^0.3.4"
   },
   "scripts": {
-    "preinstall": "@node preinstall.js"
+    "preinstall": "node preinstall.js"
   }
 }
