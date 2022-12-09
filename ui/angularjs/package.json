@@ -19,6 +19,6 @@
     "gulp-templatecache": "^0.0.4"
   },
   "scripts": {
-    "preinstall": "@powershell copy npm-shrinkwrap.gulp.json npm-shrinkwrap.json"
+    "preinstall": "@bash cp npm-shrinkwrap.gulp.json npm-shrinkwrap.json"
   }
 }
