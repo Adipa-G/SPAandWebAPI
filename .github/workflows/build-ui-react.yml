@@ -36,7 +36,7 @@ jobs:
       - name: Build and Test
         run: |
           cd ui/react
-          call npm install -g --prefer-offline webpack webpack-cli jest
+          npm install -g --prefer-offline webpack webpack-cli jest
           npm link webpack
           npm install --prefer-offline gulp
           npm install --prefer-offline
