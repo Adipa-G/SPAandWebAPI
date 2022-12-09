@@ -1,5 +1,5 @@
-name: UIAngular
-run-name: Build and Test UI Angular
+name: UIReact
+run-name: Build and Test UI React
 on: 
   [push]
   
@@ -19,12 +19,12 @@ jobs:
       with:
         filters: |
           path:
-            - 'ui/angular/**'
+            - 'ui/react/**'
     - run: echo "🍏 This job's status is ${{ job.status }}."
             
   build-and-test-solution:
     needs: changes
-    if: ${{ needs.changes.outputs.changed == 'true' }}
+    #if: ${{ needs.changes.outputs.changed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -35,9 +35,18 @@ jobs:
           node-version: 14
       - name: Build and Test
         run: |
-          cd ui/angular/app
-          npm install -g --prefer-offline @angular/cli
+          cd ui/react
+          call npm install -g --prefer-offline webpack webpack-cli jest
+          npm link webpack
+          npm install --prefer-offline gulp
           npm install --prefer-offline
-          ng build
-          ng test --watch=false
+          gulp copy-libs
+          gulp copy-templates
+          gulp sass
+          npm run-script build
+          npm test
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      
+      
+      
+      
