@@ -235,12 +235,12 @@ angular.module("templates").run(['$templateCache', function(a) { a.put('app/view
     '    <div class="col-md-4 col-md-offset-2">\n' +
     '        <h2>Login</h2>\n' +
     '        <p class="text-primary">If you have Username and Password, you can use the button below to access the secured content using a token.</p>\n' +
-    '        <p><a class="btn btn-info" href="#/login" role="button">Login &raquo;</a></p>\n' +
+    '        <p><a class="btn btn-info" href="/#!/login" role="button">Login &raquo;</a></p>\n' +
     '    </div>\n' +
     '    <div class="col-md-4">\n' +
     '        <h2>Sign Up</h2>\n' +
     '        <p class="text-primary">Use the button below to create Username and Password to access the secured content using a token.</p>\n' +
-    '        <p><a class="btn btn-info" href="#/signup" role="button">Sign Up &raquo;</a></p>\n' +
+    '        <p><a class="btn btn-info" href="/#!/signup" role="button">Sign Up &raquo;</a></p>\n' +
     '    </div>\n' +
     '</div>');
 	 }]);

@@ -3,7 +3,7 @@
         basePath: '',
         frameworks: ['jasmine'],
         files: [
-          './dist/lib/jquery-2.2.4.js',
+          './dist/lib/jquery-3.6.1.js',
           './dist/lib/bootstrap.js',
           './dist/lib/vkbeautify.js',
           './dist/lib/highlight.min.js',

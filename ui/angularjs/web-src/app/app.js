@@ -1,9 +1,9 @@
 ﻿//use strict
 var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ngFormValidator', 'ui.bootstrap']);
 
-app.config(function ($routeProvider) {
-
+app.config(function ($locationProvider, $routeProvider) {
     var viewRoot = 'app/views/';
+    $locationProvider.html5Mode(true).hashPrefix('!');
 
     $routeProvider.when("/home", {
         controller: "homeController",
