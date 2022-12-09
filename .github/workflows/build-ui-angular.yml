@@ -1,5 +1,5 @@
-name: UIAngularJs
-run-name: Build and Test UI AngularJS
+name: UIAngular
+run-name: Build and Test UI Angular
 on: 
   [push]
   
@@ -36,7 +36,7 @@ jobs:
       - name: Build and Test
         run: |
           cd ui/angular/app
-          npm npm install -g --prefer-offline @angular/cli
+          npm install -g --prefer-offline @angular/cli
           npm install -g --prefer-offline @angular/cli
           ng build
           ng test --watch=false
