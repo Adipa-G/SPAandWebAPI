@@ -22,7 +22,7 @@ jobs:
             
   build-and-test-solution:
     needs: changes
-    #if: ${{ needs.changes.outputs.changed == 'true' }}
+    if: ${{ needs.changes.outputs.changed == 'true' }}
     runs-on: windows-latest
     steps:
       - name: Checkout the code

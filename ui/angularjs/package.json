@@ -4,7 +4,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "4.0.2",
+    "gulp-sass": "^4.1.1",
     "gulp-watch": "^4.3.5",
     "gulp-uglify": "^1.5.3",
     "gulp-clean-css": "^2.0.9",
@@ -17,5 +17,8 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "phantomjs-prebuilt": "^2.1.7",
     "gulp-templatecache": "^0.0.4"
+  },
+  "scripts": {
+    "preinstall": "@powershell copy npm-shrinkwrap.gulp.json npm-shrinkwrap.json"
   }
 }
