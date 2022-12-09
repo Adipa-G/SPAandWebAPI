@@ -1,0 +1,42 @@
+name: UIAngularJs
+run-name: Build and Test UI AngularJS
+on: 
+  [push]
+  
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changed: ${{ steps.filter.outputs.path }}
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    - name: Detect if any files changed related to this build task
+      uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          path:
+            - 'ui/angularjs/**'
+    - run: echo "🍏 This job's status is ${{ job.status }}."
+            
+  build-and-test-solution:
+    needs: changes
+    if: ${{ needs.changes.outputs.changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - name: Build and Test
+        run: |
+          cd ui/angularjs
+          build.bat
+      - run: echo "🍏 This job's status is ${{ job.status }}."
