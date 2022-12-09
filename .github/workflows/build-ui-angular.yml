@@ -37,7 +37,7 @@ jobs:
         run: |
           cd ui/angular/app
           npm install -g --prefer-offline @angular/cli
-          npm install -g --prefer-offline @angular/cli
+          npm install --prefer-offline
           ng build
           ng test --watch=false
       - run: echo "🍏 This job's status is ${{ job.status }}."
