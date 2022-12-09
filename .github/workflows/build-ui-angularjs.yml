@@ -36,5 +36,10 @@ jobs:
       - name: Build and Test
         run: |
           cd ui/angularjs
-          build.bat
+          npm install --prefer-offline
+          gulp copy-libs
+          gulp copy-templates
+          gulp sass
+          gulp copyAppJS
+          gulp test
       - run: echo "🍏 This job's status is ${{ job.status }}."
