@@ -98,6 +98,7 @@ namespace Web
 
             app.UseDeveloperExceptionPage()
                 .UseDefaultFiles()
+                .UseCors(c => c.AllowAnyOrigin())
                 .UseStaticFiles(new StaticFileOptions()
                 {
                     FileProvider = fileProvider,

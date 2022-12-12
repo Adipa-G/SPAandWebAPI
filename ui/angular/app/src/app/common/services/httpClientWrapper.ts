@@ -21,7 +21,7 @@ export class HttpClientWrapper {
 
         const headers = {
             'Content-Type': 'application/json',
-            'X-XSRF-TOKEN': xsrfToken,
+            'X-XSRF-TOKEN': xsrfToken || '',
         }
         if (accessToken) {
             headers['Authorization'] = 'Bearer ' + accessToken;

@@ -28,14 +28,15 @@ export class RegisterComponent {
     }
 
     register() {
-        this.registerService.register(this.regInfo).subscribe(
-            data => {
+        this.registerService.register(this.regInfo).subscribe({
+            next: () => {
                 this.success = true;
                 let t = timer(5000);
                 t.subscribe(() => this.router.navigate(['/login']));
             },
-            err => {
+            error: err => {
                 this.errorService.handleHttpError(err);
-            });
+            }
+        });
     }
 }
