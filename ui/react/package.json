@@ -40,7 +40,7 @@
     "typescript": "^3.9.9",
     "webpack": "4.16.5",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.3"
   },
   "jest": {
     "testEnvironment": "jsdom",
