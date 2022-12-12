@@ -24,7 +24,7 @@ jobs:
             
   build-and-test-solution:
     needs: changes
-    if: ${{ needs.changes.outputs.changed == 'true' }}
+    #if: ${{ needs.changes.outputs.changed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -32,7 +32,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
       - name: Build and Test
         run: |
           cd ui/angular/app
