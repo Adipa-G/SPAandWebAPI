@@ -40,7 +40,7 @@ Technical details,
 * Karma
 
 ### backend/netcore
-* dotnetcore 2.1 used to implement API with built in DI
+* .Net 7 used to implement API with built in DI
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
 
