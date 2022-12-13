@@ -18,14 +18,14 @@ Technical details,
 * Integration tests for repositories, using SQLLite databases 
 
 ### ui/React
-* React 16.0
+* React 17.0
 * Bootstrap
 * Sass
 * Jest
 
 ### ui/Angular
 
-* Angular 7.0 
+* Angular 15.0 
 * Angular cli
 * Bootstrap for UI
 * Sass
@@ -33,7 +33,7 @@ Technical details,
 
 ### ui/AngularJs
 
-* AngularJs 1.5 
+* AngularJs 1.8 
 * Angular cli
 * Bootstrap for UI
 * Sass
@@ -45,13 +45,13 @@ Technical details,
 * NHibernate as ORM
 
 ### backend/owin
-* .Net 4.5.1 
+* .Net 4.8 
 * Ninject as DI
 * NHibernate as ORM
 * OWin OAuth
 
 ### backend/owin-identityserver3
-* .Net 4.5.1 
+* .Net 4.8
 * Ninject as DI
 * NHibernate as ORM
 * IdentityServer3 Auth
