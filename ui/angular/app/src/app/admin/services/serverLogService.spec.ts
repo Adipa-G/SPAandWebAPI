@@ -1,5 +1,5 @@
 ﻿import { fakeAsync, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
 import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
@@ -12,6 +12,7 @@ import { LogService } from '../../common/services/logService';
 import { StorageService } from '../../common/services/storageService';
 
 import { ServerLogService } from './serverLogService';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ServerLogService', () => {
     let constants: Constants;
@@ -20,18 +21,17 @@ describe('ServerLogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [],
             providers: [
                 AuthService,
                 Constants,
                 ErrorService,
                 HttpClientWrapper,
                 LogService,
-                HttpClientTestingModule,
                 ServerLogService,
                 StorageService,
-            ],
-            imports: [
-                HttpClientTestingModule
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting(),
             ]
         });
 

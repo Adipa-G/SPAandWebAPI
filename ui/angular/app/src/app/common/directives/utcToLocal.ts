@@ -1,5 +1,5 @@
 ﻿import { Component, OnChanges, Input, Inject } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 
 import { Constants } from "../../common/services/constants";
 

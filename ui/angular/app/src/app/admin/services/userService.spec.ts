@@ -1,5 +1,5 @@
 ﻿import { fakeAsync, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 
@@ -11,6 +11,7 @@ import { LogService } from '../../common/services/logService';
 import { StorageService } from '../../common/services/storageService';
 
 import { UserService } from './userService';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserService', () => {
     let constants: Constants;
@@ -19,6 +20,7 @@ describe('UserService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [],
             providers: [
                 AuthService,
                 Constants,
@@ -26,10 +28,9 @@ describe('UserService', () => {
                 HttpClientWrapper,
                 LogService,
                 UserService,
-                StorageService
-            ],
-            imports: [
-                HttpClientTestingModule
+                StorageService,
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
 

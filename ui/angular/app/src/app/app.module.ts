@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -40,44 +40,37 @@ import { LogMessagesComponent } from './admin/components/logMessagesComponent';
 import { routing, appRoutingProviders } from './app.routing';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        CommonModule,
-        FormsModule,
-        HttpClientModule,
-        RouterModule,
-        routing
-    ],
     declarations: [
         SortHeader,
         Pagination,
         UtcToLocal,
         PrettyPrint,
-
         MenuComponent,
         HomeComponent,
         ErrorComponent,
         LoginComponent,
         RegisterComponent,
-
         UserListComponent,
         HttpLogComponent,
         LogMessagesComponent,
-
         AppComponent
     ],
-    providers: [
-        AuthService,
-        Constants,
-        ErrorService,
-        HttpClientWrapper,
-        LogService,
-        RegisterService,
-        StorageService,
-        UtilsService,
-        ServerLogService,
-        UserService
-    ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        routing], providers: [
+            AuthService,
+            Constants,
+            ErrorService,
+            HttpClientWrapper,
+            LogService,
+            RegisterService,
+            StorageService,
+            UtilsService,
+            ServerLogService,
+            UserService,
+            provideHttpClient(withInterceptorsFromDi())
+        ]
 })
 export class AppModule { }

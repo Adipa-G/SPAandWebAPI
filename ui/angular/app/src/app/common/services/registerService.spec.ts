@@ -1,5 +1,5 @@
 ﻿import { fakeAsync, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { RegistrationInfo } from '../../domain/common/registrationInfo';
 
@@ -11,6 +11,7 @@ import { LogService } from '../services/logService';
 import { StorageService } from '../services/storageService';
 
 import { RegisterService } from './registerService';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('RegisterService', () => {
     let constants: Constants;
@@ -19,6 +20,7 @@ describe('RegisterService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [],
             providers: [
                 AuthService,
                 Constants,
@@ -26,10 +28,9 @@ describe('RegisterService', () => {
                 HttpClientWrapper,
                 LogService,
                 RegisterService,
-                StorageService
-            ],
-            imports: [
-                HttpClientTestingModule
+                StorageService,
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
 
