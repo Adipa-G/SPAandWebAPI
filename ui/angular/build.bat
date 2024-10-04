@@ -1,5 +1,5 @@
 pushd app
-call npm install -g --prefer-offline @angular/cli@15.2.11
+call npm install -g --prefer-offline @angular/cli@16.2.16
 if %errorlevel% neq 0 exit /b %errorlevel%
 call npm install --prefer-offline
 if %errorlevel% neq 0 exit /b %errorlevel%

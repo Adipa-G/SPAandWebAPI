@@ -87,7 +87,7 @@ namespace Web
 
         public void Configure(IApplicationBuilder app)
         {
-            var issuer = $"https://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
+            var issuer = $"http://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
 
             var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory,"app"));
             var defoptions = new DefaultFilesOptions();
