@@ -2,11 +2,13 @@
   "name": "webapi-react",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.25.7",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
+    "@types/axios": "^0.14.0",
     "@types/highlightjs": "^9.12.6",
     "@types/jest": "^27.5.2",
     "@types/jquery": "^3.5.31",
@@ -17,6 +19,7 @@
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "@types/vkbeautify": "^0.99.4",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-datetime-picker": "^2.4.4",
     "highlightjs": "^9.16.2",
@@ -36,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

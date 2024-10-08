@@ -107,7 +107,7 @@ namespace Web.Middleware
             }
             else
             {
-                model.Request = $"Content type : {request.ContentType}, length : {request.Body.Length} bytes";
+                model.Request = $"Content type : {request.ContentType}, length : {requestStream.Length} bytes";
             }
 
             return model;

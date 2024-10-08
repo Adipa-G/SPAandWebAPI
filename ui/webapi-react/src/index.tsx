@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './scss/bootstrap.scss';
 import './scss/app.scss';
+import './css/bootstrap-datetimepicker.css';
+import './css/font-awesome.min.css';
+import './css/idea.css';
+import './css/loading-bar.css';
 
-import { AjaxInterceptorService } from "./services/ajaxInterceptor";
 import { Layout } from "./components/layout";
 
 import reportWebVitals from './reportWebVitals';

@@ -1,40 +1,67 @@
-﻿import * as jQuery from "jquery";
+﻿import axios from "axios";
+import Cookies from "js-cookie";
 
-declare var JSON: any;
+import { AuthService } from "./authService";
 
 export class HttpService {
+    authService: AuthService;
     serviceBase: string;
 
     constructor() {
         this.serviceBase = '../';
+        this.authService = new AuthService();
     }
 
     public get = (url: string, success?: Function, error?: Function): void => {
-        this.request(url, "GET", null, success, error);
+        axios.get(this.serviceBase + url, {
+            headers: this.getHeaders()
+        }).then(function (result: any) {
+            if (success) {
+                success(result.data);
+            }
+        }).catch(function (error: any) {
+            if (error) {
+                error(`Error while calling API [status : ${error?.request?.status}, error : ${error}]`);
+            }
+        });
     }
 
     public post = (url: string, data: any, success?: Function, error?: Function): void => {
-        this.request(url, "POST", data, success, error);
+        axios.post(this.serviceBase + url, data, {
+            headers: this.getHeaders()
+        }).then(function (result: any) {
+            if (success) {
+                success(result.data);
+            }
+        }).catch(function (error: any) {
+            if (error) {
+                error(`Error while calling API [status : ${error?.request?.status}, error : ${error}]`);
+            }
+        });
     }
 
     public delete = (url: string, data: any, success?: Function, error?: Function): void => {
-        this.request(url, "DELETE", data, success, error);
-    }
-
-    private request = (url: string, type: string, data: any, success?: Function, error?: Function): void => {
-        jQuery.ajax({
-            url: `${this.serviceBase}${url}`,
-            type: type,
-            data: data ? JSON.stringify(data) : 'null',
-            contentType: "application/json; charset=utf-8"
-        }).done((result: any) => {
+        axios.delete(this.serviceBase + url, {
+            headers: this.getHeaders()
+        }).then(function (result: any) {
             if (success) {
-                success(result);
+                success(result.data);
             }
-        }).fail((xhr: any, err: any) => {
+        }).catch(function (error: any) {
             if (error) {
-                error(`Error while calling API [status : ${xhr.status}, error : ${err}]`);
+                error(`Error while calling API [status : ${error?.request?.status}, error : ${error}]`);
             }
         });
+    }
+
+    private getHeaders = () => {
+        const xsrfToken = Cookies.get("XSRF-TOKEN");
+        const auth: any = this.authService.getAuth();
+
+        return {
+            "Content-Type": "application/json",
+            "XSRF-TOKEN": xsrfToken,
+            "Authorization": `Bearer ${auth.token}`
+        };
     }
 }
