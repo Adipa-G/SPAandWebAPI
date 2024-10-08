@@ -26,7 +26,6 @@ export class AuthService {
                 "XSRF-TOKEN": xsrfToken
             }
         }).then(function (result: any) {
-            debugger;
             let auth = { isAuth: true, userName: userName, token: result.data.access_token };
             self.storageService.set(self.authStorageKey, auth);
             callback({ success: true });
