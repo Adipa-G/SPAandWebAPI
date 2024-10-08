@@ -1,0 +1,29 @@
+﻿#http-log {
+    .dl-horizontal dl {
+        font-weight: 700;
+        margin-bottom: 0px;
+    }
+
+    .dl-horizontal dt {
+        width: unset !important;
+        text-align: left !important;
+        overflow: unset !important;
+        font-weight: unset !important;
+        white-space: unset !important;
+        margin-bottom: 10px;
+        float: unset !important;
+        clear: unset !important;
+
+        a {
+            cursor : pointer;
+        }
+    }
+
+    .input-group-addon {
+        cursor: pointer;
+    }
+
+    .hidden-header-data {
+        display : none;
+    }
+}
