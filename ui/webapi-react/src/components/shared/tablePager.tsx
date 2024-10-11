@@ -1,101 +1,97 @@
-﻿import * as React from "react";
+﻿import { useState, useEffect } from "react";
 
 declare var Math: any;
 
+export interface PageData {
+    pageNumber: number,
+    pageSize: number
+}
+
 export interface TablePagerProps {
     totalCount: number,
-    pageData: any,
+    pageData: PageData,
     pageChanged: Function
 }
 
-export interface TablePagerState { page: number }
+const TablePager = (props: TablePagerProps) => {
+    const [pageNumber, setPageNumber] = useState(props.pageData.pageNumber);
 
-export class TablePager extends React.Component<TablePagerProps, TablePagerState> {
+    const pageCount = (): number => {
+        return Math.ceil(props.totalCount / props.pageData.pageSize);
+    };
 
-    constructor(props: TablePagerProps) {
-        super(props);
-
-        this.state = { page: this.props.pageData.PageNumber };
-    }
-
-    pageCount = (): number => {
-        return Math.ceil(this.props.totalCount / this.props.pageData.PageSize);
-    }
-
-    startPage = (): number => {
-        var pageCount = this.pageCount();
-        let startPage: number = this.state.page - 2;
-        startPage = startPage + 4 > pageCount ? pageCount - 4 : startPage;
+    const startPage = (): number => {
+        let pages = pageCount();
+        let startPage: number = pageNumber - 2;
+        startPage = startPage + 4 > pages ? pages - 4 : startPage;
         startPage = startPage < 1 ? 1 : startPage;
         return startPage;
+    };
+
+    const endPage = (): number => {
+        var pages = pageCount();
+        pages = pages > 5 ? 5 : pages;
+        return startPage() + pages - 1;
     }
 
-    endPage = (): number => {
-        var pageCount = this.pageCount();
-        pageCount = pageCount > 5 ? 5 : pageCount;
-        return this.startPage() + pageCount - 1;
+    const isPreviousEnabled = (): boolean => {
+        return pageNumber > 1;
     }
 
-    isPreviousEnabled = (): boolean => {
-        return this.state.page > 1;
+    const isNextEnabled = (): boolean => {
+        return pageNumber < pageCount();
     }
 
-    isNextEnabled = (): boolean => {
-        return this.state.page < this.pageCount();
-    }
-
-    changePage = (pageNumber: number) => {
-        if (!this.props.pageData) {
+    const changePage = (page: number) => {
+        if (!props.pageData) {
             return;
         }
+        setPageNumber(page);
+    };
 
-        this.props.pageData.PageNumber = pageNumber;
-
-        this.setState((prevState: TablePagerState) => {
-            let newState: TablePagerState = { ...prevState };
-            newState.page = pageNumber;
-            return newState;
-        });
-
-        this.props.pageChanged();
-    }
-
-    render() {
-        let startPage: number = this.startPage();
-        let endPage: number = this.endPage();
-        let isPreviousEnabled: boolean = this.isPreviousEnabled();
-        let isNextEnabled: boolean = this.isNextEnabled();
-
-        let pages: Array<any> = [];
-        for (var i = 0; i <= (endPage - startPage); i++) {
-            let iCopy = i;
-            var page = <li key={iCopy} className={startPage + iCopy === this.state.page ? "active" : ""}>
-                <a href={startPage + iCopy <= endPage ? "#" : ''}
-                    onClick={() => startPage + iCopy <= endPage ? this.changePage(startPage + iCopy) : () => false}>
-                    {startPage + iCopy}
-                </a>
-            </li>;
-            pages.push(page);
+    useEffect(() => {
+        if (props.pageData.pageNumber != pageNumber) {
+            props.pageData.pageNumber = pageNumber;
+            props.pageChanged();
         }
+    });
 
-        return <nav>
-            <ul className="pagination">
-                <li>
-                    <a aria-label="Previous"
-                        href={isPreviousEnabled ? "#" : ''}
-                        onClick={() => isPreviousEnabled ? this.changePage(this.state.page - 1) : () => false}>
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                {pages}
-                <li>
-                    <a aria-label="Next"
-                        href={isNextEnabled ? "#" : ''}
-                        onClick={() => isNextEnabled ? this.changePage(this.state.page + 1) : () => false}>
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>;
+    let start: number = startPage();
+    let end: number = endPage();
+    let previousEnabled: boolean = isPreviousEnabled();
+    let nextEnabled: boolean = isNextEnabled();
+
+    let pages: Array<any> = [];
+    for (var i = 0; i <= (end - start); i++) {
+        let iCopy = i;
+        var page = <li key={iCopy} className={start + iCopy === pageNumber ? "active" : ""}>
+            <a href={start + iCopy <= end ? "#" : ''}
+                onClick={() => start + iCopy <= end ? changePage(start + iCopy) : () => false}>
+                {start + iCopy}
+            </a>
+        </li>;
+        pages.push(page);
     }
-}
+
+    return <nav>
+        <ul className="pagination">
+            <li>
+                <a aria-label="Previous"
+                    href={previousEnabled ? "#" : ''}
+                    onClick={() => previousEnabled ? changePage(pageNumber - 1) : () => false}>
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {pages}
+            <li>
+                <a aria-label="Next"
+                    href={nextEnabled ? "#" : ''}
+                    onClick={() => nextEnabled ? changePage(pageNumber + 1) : () => false}>
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>;
+};
+
+export default TablePager;

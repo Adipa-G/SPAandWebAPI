@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { TablePager } from "./tablePager";
+import TablePager from "./tablePager";
 
 test('renders the pager', () => {
-    let pageData = { PageSize: 10, PageNumber: 5 };
+    let pageData = { pageSize: 10, pageNumber: 5 };
     render(<TablePager
         totalCount={100}
         pageData={pageData}
@@ -28,7 +28,7 @@ test('renders the pager', () => {
 
 test('go to previous page', () => {
     const callback = jest.fn();
-    let pageData = { PageSize: 10, PageNumber: 5 };
+    let pageData = { pageSize: 10, pageNumber: 5 };
 
     render(<TablePager
         totalCount={100}
@@ -44,13 +44,13 @@ test('go to previous page', () => {
         }),
     )
 
-    expect(pageData.PageNumber).toBe(4);
+    expect(pageData.pageNumber).toBe(4);
     expect(callback).toHaveBeenCalled();
 });
 
 test('go to page', () => {
     const callback = jest.fn();
-    let pageData = { PageSize: 10, PageNumber: 5 };
+    let pageData = { pageSize: 10, pageNumber: 5 };
 
     render(<TablePager
         totalCount={100}
@@ -66,13 +66,13 @@ test('go to page', () => {
         }),
     )
 
-    expect(pageData.PageNumber).toBe(7);
+    expect(pageData.pageNumber).toBe(7);
     expect(callback).toHaveBeenCalled();
 });
 
 test('go to next page', () => {
     const callback = jest.fn();
-    let pageData = { PageSize: 10, PageNumber: 5 };
+    let pageData = { pageSize: 10, pageNumber: 5 };
 
     render(<TablePager
         totalCount={100}
@@ -88,6 +88,6 @@ test('go to next page', () => {
         }),
     )
 
-    expect(pageData.PageNumber).toBe(6);
+    expect(pageData.pageNumber).toBe(6);
     expect(callback).toHaveBeenCalled();
 });

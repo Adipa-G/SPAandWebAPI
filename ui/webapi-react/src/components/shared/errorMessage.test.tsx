@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ErrorMessage } from './errorMessage';
+import ErrorMessage from './errorMessage';
 
 test('renders error message', () => {
     render(<ErrorMessage errorMessage='__msg__' />);

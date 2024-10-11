@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { render, screen } from '@testing-library/react';
 
-import { UtcView } from "./utcView";
+import UtcView from "./utcView";
 
 test('render local time', () => {
     var time = moment();

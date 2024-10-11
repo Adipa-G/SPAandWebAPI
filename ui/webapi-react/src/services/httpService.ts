@@ -19,9 +19,9 @@ export class HttpService {
             if (success) {
                 success(result.data);
             }
-        }).catch(function (error: any) {
+        }).catch(function (ex: any) {
             if (error) {
-                error(`Error while calling API [status : ${error?.request?.status}, error : ${error}]`);
+                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex}]`);
             }
         });
     }
@@ -33,9 +33,9 @@ export class HttpService {
             if (success) {
                 success(result.data);
             }
-        }).catch(function (error: any) {
+        }).catch(function (ex: any) {
             if (error) {
-                error(`Error while calling API [status : ${error?.request?.status}, error : ${error}]`);
+                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex}]`);
             }
         });
     }
@@ -47,9 +47,9 @@ export class HttpService {
             if (success) {
                 success(result.data);
             }
-        }).catch(function (error: any) {
+        }).catch(function (ex: any) {
             if (error) {
-                error(`Error while calling API [status : ${error?.request?.status}, error : ${error}]`);
+                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex}]`);
             }
         });
     }

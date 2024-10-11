@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { SuccessMessage } from "./successMessage";
+import SuccessMessage from "./successMessage";
 
 test('render success message', () => {
     render(<SuccessMessage successMessage='__msg__' />);

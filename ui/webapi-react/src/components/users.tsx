@@ -3,9 +3,9 @@ import * as React from "react";
 
 import { UserService } from "../services/userService"
 
-import { SortHeader } from "./shared/sortHeader";
-import { TablePager } from "./shared/tablePager";
-import { ErrorMessage } from "./shared/errorMessage";
+import SortHeader from "./shared/sortHeader";
+import TablePager from "./shared/tablePager";
+import ErrorMessage from "./shared/errorMessage";
 
 declare var window: any;
 

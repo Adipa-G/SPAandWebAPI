@@ -4,7 +4,7 @@ import { Navigate } from 'react-router';
 
 import { AuthService } from "../services/authService";
 
-import { ErrorMessage } from "./shared/errorMessage";
+import ErrorMessage from "./shared/errorMessage";
 
 export interface LoginProps { loginComplete: Function }
 export interface LoginState { errorMessage: string, userName: string, password: string }

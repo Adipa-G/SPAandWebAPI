@@ -4,10 +4,10 @@ import * as React from "react";
 import { LogService } from "../services/logService"
 import { DateService } from "../services/dateService"
 
-import { ErrorMessage } from "./shared/errorMessage";
-import { TablePager } from "./shared/tablePager";
-import { SortHeader } from "./shared/sortHeader";
-import { UtcView } from "./shared/utcView";
+import ErrorMessage from "./shared/errorMessage";
+import TablePager from "./shared/tablePager";
+import SortHeader from "./shared/sortHeader";
+import UtcView from "./shared/utcView";
 
 declare var window: any;
 declare var moment: any;

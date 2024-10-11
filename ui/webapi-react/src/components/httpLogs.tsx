@@ -1,14 +1,16 @@
 ﻿import * as jQuery from "jquery";
 import * as React from "react";
 
+import DatePicker from "react-datepicker";
+
 import { LogService } from "../services/logService"
 import { DateService } from "../services/dateService"
 
-import { ErrorMessage } from "./shared/errorMessage";
-import { TablePager } from "./shared/tablePager";
-import { SortHeader } from "./shared/sortHeader";
-import { UtcView } from "./shared/utcView";
-import { JsonFormatHeighlight } from "./shared/jsonFormatHeighlight";
+import ErrorMessage from "./shared/errorMessage";
+import TablePager from "./shared/tablePager";
+import SortHeader from "./shared/sortHeader";
+import UtcView from "./shared/utcView";
+import JsonFormatHeighlight from "./shared/jsonFormatHeighlight";
 
 export interface HttpLogProps { }
 
@@ -175,14 +177,11 @@ export class HttpLogs extends React.Component<HttpLogProps, HttpLogState> {
                     <div className="col-md-4 col-md-offset-2">
                         <label>Date Range</label>
                         <div className="input-group" id="fromDateGroup">
-                            <input type="text"
-                                id="fromDate"
+                            <DatePicker
+                                showTimeSelect
                                 className="form-control"
-                                placeholder="yyyy-MM-dd"
-                                onBlur={() => { this.loadHttpLogs(); }} />
-                            <div className="input-group-addon">
-                                <i className="fa fa-calendar"></i>
-                            </div>
+                                dateFormat="Pp"
+                            />
                         </div>
                     </div>
                     <div className="col-md-4">

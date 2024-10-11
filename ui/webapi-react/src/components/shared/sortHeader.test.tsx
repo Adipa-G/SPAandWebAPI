@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { SortHeader } from "./sortHeader";
+import SortHeader from "./sortHeader";
 
 test('sort by field ascending', () => {
     const callback = jest.fn();
-    let orderData = { OrderField: "OtherField", OrderDirection: "Desc" };
+    let orderData = { orderField: "OtherField", orderDirection: "Desc" };
 
     render(<table><thead><tr><SortHeader
         headerText="__header__"
@@ -23,14 +23,14 @@ test('sort by field ascending', () => {
     )
 
     expect(header).toContainHTML('fa-sort-alpha-asc')
-    expect(orderData.OrderField).toBe("ThisField");
-    expect(orderData.OrderDirection).toBe("Asc");
+    expect(orderData.orderField).toBe("ThisField");
+    expect(orderData.orderDirection).toBe("Asc");
     expect(callback).toHaveBeenCalled();
 });
 
 test('sort by field descending', () => {
     const callback = jest.fn();
-    let orderData = { OrderField: "ThisField", OrderDirection: "Asc" };
+    let orderData = { orderField: "ThisField", orderDirection: "Asc" };
 
     render(<table><thead><tr><SortHeader
         headerText="__header__"
@@ -49,14 +49,14 @@ test('sort by field descending', () => {
     )
 
     expect(header).toContainHTML('fa-sort-alpha-desc')
-    expect(orderData.OrderField).toBe("ThisField");
-    expect(orderData.OrderDirection).toBe("Desc");
+    expect(orderData.orderField).toBe("ThisField");
+    expect(orderData.orderDirection).toBe("Desc");
     expect(callback).toHaveBeenCalled();
 });
 
 test('sort by field cleard', () => {
     const callback = jest.fn();
-    let orderData = { OrderField: "ThisField", OrderDirection: "Desc" };
+    let orderData = { orderField: "ThisField", orderDirection: "Desc" };
 
     render(<table><thead><tr><SortHeader
         headerText="__header__"
@@ -76,7 +76,7 @@ test('sort by field cleard', () => {
 
     expect(header).not.toContainHTML('fa-sort-alpha-asc')
     expect(header).not.toContainHTML('fa-sort-alpha-desc')
-    expect(orderData.OrderField).toBe("ThisField");
-    expect(orderData.OrderDirection).toBe("None");
+    expect(orderData.orderField).toBe("ThisField");
+    expect(orderData.orderDirection).toBe("None");
     expect(callback).toHaveBeenCalled();
 });

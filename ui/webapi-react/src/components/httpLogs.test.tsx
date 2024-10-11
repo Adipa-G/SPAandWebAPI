@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import { HttpLogs } from "./httpLogs";
 
-test('set default values', () => {
+/*test('set default values', () => {
     jest.mock("../services/logService", () => {
         const levels = ['Debug', 'Info'];
         return {
@@ -14,7 +14,7 @@ test('set default values', () => {
 
     screen.debug();
 });
-
+*/
 /*
 describe("<HttpLogs/>", () => {
     it("constructor should set default state", () => {

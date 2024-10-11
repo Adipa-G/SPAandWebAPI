@@ -1,84 +1,85 @@
-﻿import * as React from "react";
+﻿import { useState, useEffect } from "react";
+
+export interface OrderData {
+    orderField: string,
+    orderDirection: string,
+}
 
 export interface SortHeaderProps {
     headerText: string,
-    orderData: any,
+    orderData: OrderData,
     orderField: string,
     orderChanged: Function
 }
 
-export interface SortHeaderState { direction: string }
+const SortHeader = (props: SortHeaderProps) => {
+    const [orderDirection, setOrderDirection] = useState(props.orderData.orderDirection);
+    const [orderField, setOrderField] = useState(props.orderData.orderField);
 
-export class SortHeader extends React.Component<SortHeaderProps, SortHeaderState> {
+    const isFieldMatch = (): boolean => {
+        return !!props.orderField &&
+            !!orderField &&
+            props.orderField.toLowerCase() === orderField.toLowerCase();
+    };
 
-    constructor(props: SortHeaderProps) {
-        super(props);
+    const isAsc = (): boolean => {
+        return orderDirection === 'Asc';
+    };
 
-        this.state = { direction: this.props.orderData.OrderDirection };
-    }
+    const isDesc = (): boolean => {
+        return orderDirection === 'Desc';
+    };
 
-    isFieldMatch = (): boolean => {
-        return this.props.orderField &&
-            this.props.orderData.OrderField &&
-            this.props.orderField.toLowerCase() === this.props.orderData.OrderField.toLowerCase();
-    }
+    useEffect(() => {
+        if (props.orderData.orderField != orderField ||
+            props.orderData.orderDirection != orderDirection) {
+            props.orderData.orderField = orderField;
+            props.orderData.orderDirection = orderDirection;
+            props.orderChanged();
+        }
+    });
 
-    isAsc = (): boolean => {
-        return this.props.orderData.OrderDirection === 'Asc';
-    }
-
-    isDesc = (): boolean => {
-        return this.props.orderData.OrderDirection === 'Desc';
-    }
-
-    toggleOrder = () => {
-        if (!this.props.orderData) {
+    const toggleOrder = () => {
+        if (!props.orderData) {
             return;
         }
 
-        let fieldMatch: boolean = this.isFieldMatch();
+        let fieldMatch: boolean = isFieldMatch();
 
         if (!fieldMatch) {
-            this.props.orderData.OrderField = this.props.orderField;
-            this.props.orderData.OrderDirection = 'Asc';
+            setOrderField(props.orderField);
+            setOrderDirection('Asc');
         } else {
-            let asc: boolean = this.isAsc();
-            let desc: boolean = this.isDesc();
+            let asc: boolean = isAsc();
+            let desc: boolean = isDesc();
             if (asc) {
-                this.props.orderData.OrderDirection = 'Desc';
-            }
-            else if (desc) {
-                this.props.orderData.OrderDirection = 'None';
+                setOrderDirection('Desc');
+            } else if (desc) {
+                setOrderDirection('None');
             } else {
-                this.props.orderData.OrderDirection = 'Asc';
+                setOrderDirection('Asc');
             }
         }
+    };
 
-        this.setState((prevState: SortHeaderState) => {
-            let newState: SortHeaderState = { ...prevState };
-            newState.direction = this.props.orderData.OrderDirection;
-            return newState;
-        });
+    let fieldMatch: boolean = isFieldMatch();
+    let asc: boolean = isAsc();
+    let desc: boolean = isDesc();
 
-        this.props.orderChanged();
+    var sortIndicator = <span></span>;
+    if (fieldMatch && asc) {
+        sortIndicator = <i className="pull-right fa fa-sort-alpha-asc"></i>;
+    }
+    if (fieldMatch && desc) {
+        sortIndicator = <i className="pull-right fa fa-sort-alpha-desc"></i>;
     }
 
-    render() {
-        let fieldMatch: boolean = this.isFieldMatch();
-        let asc: boolean = this.isAsc();
-        let desc: boolean = this.isDesc();
-
-        var sortIndicator = <span></span>;
-        if (fieldMatch && asc) {
-            sortIndicator = <i className="pull-right fa fa-sort-alpha-asc"></i>;
-        }
-        if (fieldMatch && desc) {
-            sortIndicator = <i className="pull-right fa fa-sort-alpha-desc"></i>;
-        }
-
-        return <th className="sort-table-header" onClick={() => this.toggleOrder()}>
-            {this.props.headerText}
+    return (
+        <th className="sort-table-header" onClick={() => toggleOrder()}>
+            {props.headerText}
             {sortIndicator}
-        </th>;
-    }
-}
+        </th>
+    );
+};
+
+export default SortHeader;

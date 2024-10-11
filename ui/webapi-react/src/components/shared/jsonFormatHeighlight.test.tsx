@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { JsonFormatHeighlight } from "./jsonFormatHeighlight";
+import JsonFormatHeighlight from "./jsonFormatHeighlight";
 
 declare var JSON: any;
 

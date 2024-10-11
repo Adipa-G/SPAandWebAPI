@@ -3,8 +3,8 @@ import * as jQuery from "jquery";
 
 import { AuthService } from "../services/authService";
 
-import { ErrorMessage } from "./shared/errorMessage";
-import { SuccessMessage } from "./shared/successMessage";
+import ErrorMessage from "./shared/errorMessage";
+import SuccessMessage from "./shared/successMessage";
 
 export interface SignupProps { signupComplete: Function }
 export interface SignupState {
