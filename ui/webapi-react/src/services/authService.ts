@@ -1,7 +1,24 @@
-﻿import axios from "axios";
+﻿import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 
 import { StorageService } from "./storageService";
+import { CallbackFunction } from "./serviceModels";
+
+interface AuthResultData {
+    access_token: string
+}
+
+interface SignupRequest {
+    userName: string,
+    password: string,
+    confirmPassword: string
+}
+
+export interface AuthInStorage {
+    isAuth: boolean,
+    userName: string,
+    token: string
+}
 
 export class AuthService {
     serviceBase: string;
@@ -14,7 +31,7 @@ export class AuthService {
         this.storageService = new StorageService();
     }
 
-    authenticate = (userName: string, password: string, callback: Function): void => {
+    authenticate = (userName: string, password: string, callback: CallbackFunction): void => {
         const url = this.serviceBase + 'connect/token';
         const data = `grant_type=password&username=${userName}&password=${password}&client_id=default&client_secret=no-secret&scope=all`;
         const xsrfToken = Cookies.get("XSRF-TOKEN");
@@ -25,19 +42,29 @@ export class AuthService {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "XSRF-TOKEN": xsrfToken
             }
-        }).then(function (result: any) {
-            let auth = { isAuth: true, userName: userName, token: result.data.access_token };
+        }).then(function (result: AxiosResponse<AuthResultData>) {
+            let auth: AuthInStorage = { isAuth: true, userName: userName, token: result.data.access_token };
             self.storageService.set(self.authStorageKey, auth);
-            callback({ success: true });
-        }).catch(function (error: any) {
+            callback({
+                success: true,
+                data: null,
+                totalCount: 0,
+                error: ""
+            });
+        }).catch(function (error: AxiosError) {
             self.storageService.set(self.authStorageKey, "");
-            callback({ success: false, error: `Error while auth [status : ${error?.response?.status}, error : ${error}]` });
+            callback({
+                success: false,
+                error: `Error while auth [status : ${error?.response?.status}, error : ${error}]`,
+                data: null,
+                totalCount: 0
+            });
         });
     }
 
-    signup = (userName: string, password: string, callback: Function): void => {
+    signup = (userName: string, password: string, callback: CallbackFunction): void => {
         const url = this.serviceBase + 'api/account/register';
-        const data: any = { UserName: userName, Password: password, ConfirmPassword: password };
+        const data: SignupRequest = { userName: userName, password: password, confirmPassword: password };
         const xsrfToken = Cookies.get("XSRF-TOKEN");
 
         axios.post(url, data, {
@@ -46,9 +73,19 @@ export class AuthService {
                 "XSRF-TOKEN": xsrfToken
             }
         }).then(function () {
-            callback({ success: true });
-        }).catch(function (error: any) {
-            callback({ success: false, error: error });
+            callback({
+                success: true,
+                data: null,
+                totalCount: 0,
+                error: ""
+            });
+        }).catch(function (error: AxiosError) {
+            callback({
+                success: false,
+                error: error.message,
+                data: null,
+                totalCount: 0
+            });
         });
     }
 
@@ -56,7 +93,7 @@ export class AuthService {
         this.storageService.set(this.authStorageKey, "");
     }
 
-    getAuth = () => {
+    getAuth = (): AuthInStorage => {
         let auth: any = this.storageService.get(this.authStorageKey);
         return auth || { isAuth: false, userName: "" };
     }

@@ -1,10 +1,12 @@
 ﻿import * as React from "react";
 import * as jQuery from "jquery";
 
+import { CallbackResult } from "../services/serviceModels";
 import { AuthService } from "../services/authService";
 
 import ErrorMessage from "./shared/errorMessage";
 import SuccessMessage from "./shared/successMessage";
+
 
 export interface SignupProps { signupComplete: Function }
 export interface SignupState {
@@ -91,12 +93,12 @@ export class SignUp extends React.Component<SignupProps, SignupState> {
             return;
         }
 
-        this.authService.signup(this.state.userName, this.state.password, (result: any) => {
+        this.authService.signup(this.state.userName, this.state.password, (result: CallbackResult) => {
             if (result.success) {
                 this.setState({ errorMessage: '', successMessage: "Registration successful!" });
                 this.props.signupComplete();
             } else {
-                this.setState({ errorMessage: "error while registering " + (result.data ? result.data : ''), successMessage: '' });
+                this.setState({ errorMessage: "error while registering " + (result.error ? result.error : ''), successMessage: '' });
             }
         });
     }

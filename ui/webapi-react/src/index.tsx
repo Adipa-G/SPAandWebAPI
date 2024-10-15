@@ -6,6 +6,7 @@ import './css/bootstrap-datetimepicker.css';
 import './css/font-awesome.min.css';
 import './css/idea.css';
 import './css/loading-bar.css';
+import '../node_modules/react-datepicker/dist/react-datepicker.css'
 
 import { Layout } from "./components/layout";
 

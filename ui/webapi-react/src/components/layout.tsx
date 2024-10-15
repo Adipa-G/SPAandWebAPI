@@ -15,7 +15,7 @@ import { SignUp } from "./signup";
 
 import { Users } from "./users";
 import { SystemLogs } from "./systemLogs";
-import { HttpLogs } from "./httpLogs";
+import HttpLogs from "./httpLogs";
 
 declare var window: any;
 

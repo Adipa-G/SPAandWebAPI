@@ -26,7 +26,7 @@ export class Users extends React.Component<UserListProps, UserListState> {
         this.userService = new UserService();
 
         this.state = {
-            sortAndPage: { OrderField: 'UserName', OrderDirection: 'Asc', PageNumber: 1, PageSize: 10 },
+            sortAndPage: { orderField: 'UserName', orderDirection: 'Asc', pageNumber: 1, pageSize: 10 },
             users: [],
             totalCount: 0,
             errorMessage: ''
@@ -102,7 +102,7 @@ export class Users extends React.Component<UserListProps, UserListState> {
                                 <SortHeader
                                     headerText="UserName"
                                     orderData={this.state.sortAndPage}
-                                    orderField="UserName"
+                                    orderField="userName"
                                     orderChanged={() => this.orderOrPageChanged()} />
                                 <th className="icon-col-1">&nbsp;</th>
                             </tr>

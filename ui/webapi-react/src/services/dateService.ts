@@ -1,8 +1,7 @@
 ﻿declare var moment: any;
 
 export class DateService {
-
-    dateToUtcFormat = (date: string, format?: string) => {
+    dateToUtcFormat = (date: string | Date, format?: string) => {
         if (date == null || date === '')
             return '';
 

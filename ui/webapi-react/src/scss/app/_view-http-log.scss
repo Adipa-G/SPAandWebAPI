@@ -15,15 +15,16 @@
         clear: unset !important;
 
         a {
-            cursor : pointer;
+            cursor: pointer;
         }
     }
 
-    .input-group-addon {
-        cursor: pointer;
-    }
+    #fromDateGroup,
+    #toDateGroup {
+        width: 100%;
 
-    .hidden-header-data {
-        display : none;
+        .react-datepicker-wrapper {
+            width: 100%;
+        }
     }
 }

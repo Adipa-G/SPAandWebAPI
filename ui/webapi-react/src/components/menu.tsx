@@ -18,10 +18,10 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                 <li><a href="#/systemLog">System Log</a></li>
                 <li><a href="#/httpLog">Http Log</a></li>
                 <li>
-                    <a href="javascript:void(0)"
+                    <a href=""
                         onClick={() => { this.logOff() }}>
                         Logout
-                           </a>
+                    </a>
                 </li>
             </ul>;
         } else {

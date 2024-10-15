@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { HttpLogs } from "./httpLogs";
+import HttpLogs from "./httpLogs";
 
 /*test('set default values', () => {
     jest.mock("../services/logService", () => {

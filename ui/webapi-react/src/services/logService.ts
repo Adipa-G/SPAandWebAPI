@@ -1,4 +1,40 @@
-﻿import { HttpService } from "./httpService";
+﻿import { CallbackFunction } from "./serviceModels";
+import { HttpService } from "./httpService";
+
+export interface HttpLogFilter {
+    orderField: string,
+    orderDirection: string,
+    pageNumber: number,
+    pageSize: number,
+    trackingId: string,
+    logLevel: string,
+    fromDate: string,
+    toDate: string
+}
+
+export interface SystemLogEntry {
+
+}
+
+export interface HttpLogEntry {
+    id: number,
+    trackingId: string,
+    logTimestamp: string,
+    caller: string,
+    request: string,
+    verb: string,
+    requestUri: string,
+    requestHeaders: string,
+    status: string,
+    response: string,
+    responseHeaders: string,
+    duration: string
+}
+
+interface HttpLogEntryResult {
+    results: HttpLogEntry[],
+    totalCount: number
+}
 
 export class LogService {
     httpService: HttpService;
@@ -7,45 +43,85 @@ export class LogService {
         this.httpService = new HttpService();
     }
 
-    getLevels = (callback: Function): void => {
+    getLevels = (callback: CallbackFunction<string[]>): void => {
         this.httpService.get('api/log/levels',
-            (data: any) => {
-                callback({ success: true, data: data });
+            (data: string[]) => {
+                callback({
+                    success: true,
+                    data: data,
+                    totalCount: data.length,
+                    error: ""
+                });
             },
-            (error: any) => {
-                callback({ success: false, error: error });
+            (error: string) => {
+                callback({
+                    success: false,
+                    error: error,
+                    data: [],
+                    totalCount: 0
+                });
             });
     }
 
-    getLoggers = (callback: Function): void => {
+    getLoggers = (callback: CallbackFunction<string[]>): void => {
         this.httpService.get('api/log/loggers',
-            (data: any) => {
-                callback({ success: true, data: data });
+            (data: string[]) => {
+                callback({
+                    success: true,
+                    data: data,
+                    totalCount: data.length,
+                    error: ""
+                });
             },
-            (error: any) => {
-                callback({ success: false, error: error });
+            (error: string) => {
+                callback({
+                    success: false,
+                    error: error,
+                    data: [],
+                    totalCount: 0
+                });
             });
     }
 
-    getSystemLogs = (sortAndPage : any, callback: Function): void => {
+    getSystemLogs = (sortAndPage: any, callback: CallbackFunction<SystemLogEntry[]>): void => {
         this.httpService.post('api/log/logMessages',
             sortAndPage,
             (data: any) => {
-                callback({ success: true, data: data.results, totalCount: data.totalCount  });
+                callback({
+                    success: true,
+                    data: data.results,
+                    totalCount: data.totalCount,
+                    error: ""
+                });
             },
-            (error: any) => {
-                callback({ success: false, error: error });
+            (error: string) => {
+                callback({
+                    success: false,
+                    error: error,
+                    data: [],
+                    totalCount: 0
+                });
             });
     }
 
-    getHttpLogs = (sortAndPage: any, callback: Function): void => {
+    getHttpLogs = (sortAndPage: HttpLogFilter, callback: CallbackFunction<HttpLogEntry[]>): void => {
         this.httpService.post('api/log/logHttp',
             sortAndPage,
-            (data: any) => {
-                callback({ success: true, data: data.results });
+            (data: HttpLogEntryResult) => {
+                callback({
+                    success: true,
+                    data: data.results,
+                    totalCount: data.totalCount,
+                    error: ""
+                });
             },
-            (error: any) => {
-                callback({ success: false, error: error });
+            (error: string) => {
+                callback({
+                    success: false,
+                    error: error,
+                    data: [],
+                    totalCount: 0
+                });
             });
     }
 }

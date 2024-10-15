@@ -1,7 +1,7 @@
 ﻿import * as jQuery from "jquery";
 import * as React from "react";
-import { Navigate } from 'react-router';
 
+import { CallbackResult } from "../services/serviceModels";
 import { AuthService } from "../services/authService";
 
 import ErrorMessage from "./shared/errorMessage";
@@ -55,7 +55,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
             return newState;
         });
 
-        this.authService.authenticate(this.state.userName, this.state.password, (result: any) => {
+        this.authService.authenticate(this.state.userName, this.state.password, (result: CallbackResult) => {
             if (result.success) {
                 this.props.loginComplete();
             } else {

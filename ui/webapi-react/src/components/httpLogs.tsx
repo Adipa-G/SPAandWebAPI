@@ -1,9 +1,8 @@
-﻿import * as jQuery from "jquery";
-import * as React from "react";
+﻿import { useState, useEffect } from "react";
 
 import DatePicker from "react-datepicker";
 
-import { LogService } from "../services/logService"
+import { HttpLogEntry, HttpLogFilter, LogService } from "../services/logService"
 import { DateService } from "../services/dateService"
 
 import ErrorMessage from "./shared/errorMessage";
@@ -12,17 +11,216 @@ import SortHeader from "./shared/sortHeader";
 import UtcView from "./shared/utcView";
 import JsonFormatHeighlight from "./shared/jsonFormatHeighlight";
 
-export interface HttpLogProps { }
+const HttpLogs = () => {
+    const dateFormat: string = "yyyy-MM-dd";
+    const dateService = new DateService();
+    const logService = new LogService();
+    const [errorMessage, setErrorMessage] = useState('');
+    const [levels, setLevels] = useState<string[]>([]);
+    const [logs, setLogs] = useState<HttpLogEntry[]>();
+    const [totalCount, setTotalCount] = useState(0);
+    const [orderDirection, setOrderDirection] = useState('Desc');
+    const [orderField, setOrderField] = useState('CalledOn');
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(100);
+    const [trackingId, setTrackingId] = useState<string>('');
+    const [logLevel, setLogLevel] = useState<string>('');
+    const [fromDate, setFromDate] = useState<Date | null>(null);
+    const [toDate, setToDate] = useState<Date | null>(null);
 
-export interface HttpLogState {
-    filter: any,
-    levels: Array<any>,
-    logs: Array<any>,
-    totalCount: number,
-    errorMessage: string;
+    if (levels.length == 0) {
+        logService.getLevels((levelResult) => {
+            if (levelResult.success) {
+                setLevels(levelResult.data);
+            }
+            else {
+                setErrorMessage(levelResult.error);
+            }
+        });
+    }
+
+    useEffect(() => {
+        const filter: HttpLogFilter = {
+            orderField: orderField,
+            orderDirection: orderDirection,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            trackingId: trackingId,
+            logLevel: logLevel,
+            fromDate: fromDate != null ? dateService.dateToUtcFormat(fromDate) : null,
+            toDate: toDate != null ? dateService.dateToUtcFormat(toDate) : null
+        };
+        logService.getHttpLogs(filter, (logResult) => {
+            if (logResult.success) {
+                setLogs(logResult.data);
+            }
+            else {
+                setErrorMessage(logResult.error);
+            }
+        });
+    }, [fromDate, toDate, logLevel, trackingId]);
+
+    return (
+        <div id="http-log">
+            <div className="row">
+                <div className="col-md-4 col-md-offset-2">
+                    <div className="form-group">
+                        <label>Level</label>
+                        <select className="form-control"
+                            id="logLevel"
+                            onChange={(e) => setLogLevel(e.currentTarget.value)}>
+                            <option value="">Select</option>
+                            {levels.map((level, index) => <option key={index} value={level}>{level}</option>)}
+                        </select>
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <div className="form-group">
+                        <label>Tracking Id</label>
+                        <input className="form-control"
+                            type="text"
+                            id="trackingId"
+                            onChange={(e) => setTrackingId(e.currentTarget.value)} />
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-4 col-md-offset-2">
+                    <label>Date Range</label>
+                    <div className="input-group" id="fromDateGroup">
+                        <DatePicker
+                            className="form-control"
+                            dateFormat="yyyy-MM-dd"
+                            selected={fromDate}
+                            showIcon
+                            onChange={(date) => setFromDate(date)}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <label>&nbsp;</label>
+                    <div className="input-group" id="toDateGroup">
+                        <DatePicker
+                            className="form-control"
+                            dateFormat="yyyy-MM-dd"
+                            selected={toDate}
+                            showIcon
+                            onChange={(date) => setToDate(date)}
+                        />
+                    </div>
+                </div>
+            </div>
+            /*<div className="row top-margin-lg">
+                <div className="col-md-8 col-md-offset-2">
+                    <table className="table table-striped table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <SortHeader
+                                    headerText="Time"
+                                    orderData={this.state.filter}
+                                    orderField="CalledOn"
+                                    orderChanged={() => this.orderOrPageChanged()} />
+                                <SortHeader
+                                    headerText="Tracking Id"
+                                    orderData={this.state.filter}
+                                    orderField="TrackingId"
+                                    orderChanged={() => this.orderOrPageChanged()} />
+                                <SortHeader
+                                    headerText="Caller"
+                                    orderData={this.state.filter}
+                                    orderField="RequestIdentity"
+                                    orderChanged={() => this.orderOrPageChanged()} />
+                                <SortHeader
+                                    headerText="Status"
+                                    orderData={this.state.filter}
+                                    orderField="StatusCode"
+                                    orderChanged={() => this.orderOrPageChanged()} />
+                                <SortHeader
+                                    headerText="Duration(S)"
+                                    orderData={this.state.filter}
+                                    orderField="CallDuration"
+                                    orderChanged={() => this.orderOrPageChanged()} />
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.logs.map((log, i) => {
+
+                                let details: Array<any> = [];
+                                let headerReqDataId: string = `header-req-data-${i}`;
+                                let headerReqDataBtnId: string = `header-req-btn-${i}`;
+                                let headerResDataId: string = `header-res-data-${i}`;
+                                let headerResDataBtnId: string = `header-res-btn-${i}`;
+
+                                details.push(<dl key="VerbLabel{i}">Verb</dl>);
+                                details.push(<dt key="Verb{i}">{log.verb}</dt>);
+
+                                details.push(<dl key="UrlLabel{i}">Url</dl>);
+                                details.push(<dt key="Url{i}">{log.requestUri}</dt>);
+
+                                details.push(<dl key="RequestLabel{i}">Request</dl>);
+                                details.push(<dt key="Request{i}"><JsonFormatHeighlight text={log.request} /></dt>);
+
+                                details.push(<dl key="ResponseLabel{i}">Response</dl>);
+                                details.push(<dt key="Response{i}"><JsonFormatHeighlight text={log.response} /></dt>);
+
+                                details.push(<dl key="RequestHeaderLabel{i}">Request Headers</dl>);
+                                details.push(<dt key="RequestHeader{i}">
+                                    <div id={headerReqDataId} className="hidden-header-data">
+                                        <JsonFormatHeighlight text={log.requestHeaders} />
+                                    </div>
+                                    <div id={headerReqDataBtnId}>
+                                        <a onClick={() => {
+                                            $('#' + headerReqDataId).removeClass('hidden-header-data');
+                                            $('#' + headerReqDataBtnId).addClass('hidden-header-data');
+                                        }}>Show</a>
+                                    </div>
+                                </dt>);
+
+                                details.push(<dl key="ResponseHeadersLabel{i}">Response Headers</dl>);
+                                details.push(<dt key="ResponseHeader{i}">
+                                    <div id={headerResDataId} className="hidden-header-data">
+                                        <JsonFormatHeighlight text={log.responseHeaders} />
+                                    </div>
+                                    <div id={headerResDataBtnId}>
+                                        <a onClick={() => {
+                                            $('#' + headerResDataId).removeClass('hidden-header-data');
+                                            $('#' + headerResDataBtnId).addClass('hidden-header-data');
+                                        }}>Show</a>
+                                    </div>
+                                </dt>);
+
+                                return (
+                                    <tr key={i}>
+                                        <td><UtcView dateTime={log.logTimestamp}></UtcView> </td>
+                                        <td>{log.trackingId}</td>
+                                        <td>{log.caller}</td>
+                                        <td>{log.status}</td>
+                                        <td>{log.duration}</td>
+                                        <td>
+                                            <dl className="dl-horizontal">
+                                                {details}
+                                            </dl>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                    <TablePager
+                        totalCount={totalCount}
+                        pageData={this.state.filter}
+                        pageChanged={() => this.orderOrPageChanged()} />*/
+                    <ErrorMessage errorMessage={errorMessage} />
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export class HttpLogs extends React.Component<HttpLogProps, HttpLogState> {
+export default HttpLogs;
+
+/*export class HttpLogs extends React.Component<HttpLogProps, HttpLogState> {
     dateFormat: string = "yyyy-MM-dd";
     dateService: DateService;
     logService: LogService;
@@ -305,4 +503,4 @@ export class HttpLogs extends React.Component<HttpLogProps, HttpLogState> {
             </div>
         );
     }
-}
+}*/

@@ -1,5 +1,8 @@
 @import "_variables";
 
+//third party component customisations
+@import "app/react_date_picker_overrides";
+
 //general
 @import "app/_general-margins.scss";
 @import "app/_general-loading.scss";

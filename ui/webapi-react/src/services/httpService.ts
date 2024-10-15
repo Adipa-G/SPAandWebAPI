@@ -1,4 +1,4 @@
-﻿import axios from "axios";
+﻿import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 
 import { AuthService } from "./authService";
@@ -15,13 +15,13 @@ export class HttpService {
     public get = (url: string, success?: Function, error?: Function): void => {
         axios.get(this.serviceBase + url, {
             headers: this.getHeaders()
-        }).then(function (result: any) {
+        }).then(function (result: AxiosResponse) {
             if (success) {
                 success(result.data);
             }
-        }).catch(function (ex: any) {
+        }).catch(function (ex: AxiosError) {
             if (error) {
-                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex}]`);
+                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex.message}]`);
             }
         });
     }
@@ -29,13 +29,13 @@ export class HttpService {
     public post = (url: string, data: any, success?: Function, error?: Function): void => {
         axios.post(this.serviceBase + url, data, {
             headers: this.getHeaders()
-        }).then(function (result: any) {
+        }).then(function (result: AxiosResponse) {
             if (success) {
                 success(result.data);
             }
-        }).catch(function (ex: any) {
+        }).catch(function (ex: AxiosError) {
             if (error) {
-                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex}]`);
+                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex.message}]`);
             }
         });
     }
@@ -43,13 +43,13 @@ export class HttpService {
     public delete = (url: string, data: any, success?: Function, error?: Function): void => {
         axios.delete(this.serviceBase + url, {
             headers: this.getHeaders()
-        }).then(function (result: any) {
+        }).then(function (result: AxiosResponse) {
             if (success) {
                 success(result.data);
             }
-        }).catch(function (ex: any) {
+        }).catch(function (ex: AxiosError) {
             if (error) {
-                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex}]`);
+                error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex.message}]`);
             }
         });
     }
@@ -60,6 +60,7 @@ export class HttpService {
 
         return {
             "Content-Type": "application/json",
+            "Accept": "application/json",
             "XSRF-TOKEN": xsrfToken,
             "Authorization": `Bearer ${auth.token}`
         };
