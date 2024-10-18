@@ -1,6 +1,30 @@
-import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom'
+import { http, HttpResponse } from 'msw'
+import { setupServer } from 'msw/node'
+import { render, fireEvent, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 
-import HttpLogs from "./httpLogs";
+import HttpLogs from './httpLogs'
+
+const server = setupServer(
+    http.get('../api/log/levels1', () => {
+        return HttpResponse.json(['Info', 'Error'])
+    }),
+)
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+
+test('set log levels', async () => {
+    render(<BrowserRouter><HttpLogs /></BrowserRouter>);
+
+    let levelsDropdown = await screen.getByTestId('logLevel');
+
+    screen.debug();
+
+    expect(levelsDropdown).toHaveProperty('u');
+})
 
 /*test('set default values', () => {
     jest.mock("../services/logService", () => {

@@ -1,7 +1,8 @@
-﻿import { CallbackFunction } from "./serviceModels";
-import { HttpService } from "./httpService";
+﻿import { HttpService } from "./httpService";
 
-export interface HttpLogFilter {
+import { CallbackFunction, OrderData, PageData } from "./serviceModels";
+
+export interface HttpLogFilter extends OrderData, PageData {
     orderField: string,
     orderDirection: string,
     pageNumber: number,

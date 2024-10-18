@@ -1,11 +1,9 @@
 ﻿import { useState, useEffect } from "react";
 
-declare var Math: any;
+import { PageData } from "../../services/serviceModels";
+import { Link } from "react-router-dom";
 
-export interface PageData {
-    pageNumber: number,
-    pageSize: number
-}
+declare var Math: any;
 
 export interface TablePagerProps {
     totalCount: number,
@@ -65,10 +63,10 @@ const TablePager = (props: TablePagerProps) => {
     for (var i = 0; i <= (end - start); i++) {
         let iCopy = i;
         var page = <li key={iCopy} className={start + iCopy === pageNumber ? "active" : ""}>
-            <a href={start + iCopy <= end ? "#" : ''}
+            <Link to=''
                 onClick={() => start + iCopy <= end ? changePage(start + iCopy) : () => false}>
                 {start + iCopy}
-            </a>
+            </Link>
         </li>;
         pages.push(page);
     }
@@ -76,19 +74,19 @@ const TablePager = (props: TablePagerProps) => {
     return <nav>
         <ul className="pagination">
             <li>
-                <a aria-label="Previous"
-                    href={previousEnabled ? "#" : ''}
+                <Link aria-label="Previous"
+                    to=''
                     onClick={() => previousEnabled ? changePage(pageNumber - 1) : () => false}>
                     <span aria-hidden="true">&laquo;</span>
-                </a>
+                </Link>
             </li>
             {pages}
             <li>
-                <a aria-label="Next"
-                    href={nextEnabled ? "#" : ''}
+                <Link aria-label="Next"
+                    to=''
                     onClick={() => nextEnabled ? changePage(pageNumber + 1) : () => false}>
                     <span aria-hidden="true">&raquo;</span>
-                </a>
+                </Link>
             </li>
         </ul>
     </nav>;

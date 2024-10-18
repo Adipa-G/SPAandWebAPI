@@ -1,4 +1,4 @@
-﻿declare var moment: any;
+﻿import moment from 'moment';
 
 export class DateService {
     dateToUtcFormat = (date: string | Date, format?: string) => {

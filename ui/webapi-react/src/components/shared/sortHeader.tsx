@@ -1,9 +1,6 @@
 ﻿import { useState, useEffect } from "react";
 
-export interface OrderData {
-    orderField: string,
-    orderDirection: string,
-}
+import { OrderData } from "../../services/serviceModels";
 
 export interface SortHeaderProps {
     headerText: string,
