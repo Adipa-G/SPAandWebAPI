@@ -1,5 +1,4 @@
-﻿import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from "react";
 import { Link } from 'react-router-dom';
 
 export interface MenuProps { isAuth: boolean, logOff: Function }
@@ -18,10 +17,9 @@ export class Menu extends React.Component<MenuProps, MenuState> {
                 <li><a href="#/systemLog">System Log</a></li>
                 <li><a href="#/httpLog">Http Log</a></li>
                 <li>
-                    <a href=""
-                        onClick={() => { this.logOff() }}>
+                    <button className="logout-button" onClick={() => { this.logOff() }}>
                         Logout
-                    </a>
+                    </button>
                 </li>
             </ul>;
         } else {

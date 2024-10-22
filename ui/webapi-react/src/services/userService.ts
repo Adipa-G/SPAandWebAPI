@@ -1,4 +1,4 @@
-﻿import { HttpService } from "./httpService";
+import { HttpService } from "./httpService";
 
 export class UserService {
     httpService: HttpService;
@@ -11,7 +11,7 @@ export class UserService {
         this.httpService.post('api/Account/list',
             sortAndPage,
             (data: any) => {
-                callback({ success: true, totalCount : data.totalCount, users: data.results });
+                callback({ success: true, totalCount: data.totalCount, users: data.results });
             },
             (error: any) => {
                 callback({ success: false, error: error });

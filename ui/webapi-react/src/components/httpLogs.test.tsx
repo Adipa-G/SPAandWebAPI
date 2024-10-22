@@ -7,8 +7,8 @@ import '@testing-library/jest-dom'
 import HttpLogs from './httpLogs'
 
 const server = setupServer(
-    http.get('../api/log/levels1', () => {
-        return HttpResponse.json(['Info', 'Error'])
+    http.get('../api/log/levels', () => {
+        return HttpResponse.json({ data: ['Info', 'Error'], success: true })
     }),
 )
 

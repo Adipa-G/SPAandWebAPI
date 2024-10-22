@@ -1,4 +1,4 @@
-﻿import moment from 'moment';
+import moment from 'moment';
 
 export interface UtcViewProps { dateTime: string }
 

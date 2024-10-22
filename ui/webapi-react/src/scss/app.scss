@@ -4,11 +4,15 @@
 @import "app/react_date_picker_overrides";
 
 //general
+@import "app/_general-components.scss";
 @import "app/_general-margins.scss";
 @import "app/_general-loading.scss";
 
 //directives
 @import "app/_directive-sort-header.scss";
+
+//menu
+@import "app/menu.scss";
 
 //views
 @import "app/_view-user-list.scss";

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { OrderData } from "../../services/serviceModels";
 
@@ -28,8 +28,8 @@ const SortHeader = (props: SortHeaderProps) => {
     };
 
     useEffect(() => {
-        if (props.orderData.orderField != orderField ||
-            props.orderData.orderDirection != orderDirection) {
+        if (props.orderData.orderField !== orderField ||
+            props.orderData.orderDirection !== orderDirection) {
             props.orderData.orderField = orderField;
             props.orderData.orderDirection = orderDirection;
             props.orderChanged();

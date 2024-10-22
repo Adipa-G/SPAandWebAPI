@@ -1,4 +1,4 @@
-﻿export interface ErrorMessageProps { errorMessage: string }
+export interface ErrorMessageProps { errorMessage: string }
 
 const ErrorMessage = (props: ErrorMessageProps) => {
     if (props.errorMessage) {

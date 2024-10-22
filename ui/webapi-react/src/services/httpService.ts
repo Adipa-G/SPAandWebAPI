@@ -1,4 +1,4 @@
-﻿import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 
 import { AuthService } from "./authService";
@@ -13,13 +13,19 @@ export class HttpService {
     }
 
     public get = (url: string, success?: Function, error?: Function): void => {
+        let authService = this.authService;
         axios.get(this.serviceBase + url, {
             headers: this.getHeaders()
         }).then(function (result: AxiosResponse) {
+            console.log('4343434343434344334');
             if (success) {
                 success(result.data);
             }
         }).catch(function (ex: AxiosError) {
+            if (ex.status === 401) {
+                authService.logOff();
+                window.location.reload();
+            }
             if (error) {
                 error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex.message}]`);
             }
@@ -27,6 +33,7 @@ export class HttpService {
     }
 
     public post = (url: string, data: any, success?: Function, error?: Function): void => {
+        let authService = this.authService;
         axios.post(this.serviceBase + url, data, {
             headers: this.getHeaders()
         }).then(function (result: AxiosResponse) {
@@ -34,6 +41,10 @@ export class HttpService {
                 success(result.data);
             }
         }).catch(function (ex: AxiosError) {
+            if (ex.status === 401) {
+                authService.logOff();
+                window.location.reload();
+            }
             if (error) {
                 error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex.message}]`);
             }
@@ -41,6 +52,7 @@ export class HttpService {
     }
 
     public delete = (url: string, data: any, success?: Function, error?: Function): void => {
+        let authService = this.authService;
         axios.delete(this.serviceBase + url, {
             headers: this.getHeaders()
         }).then(function (result: AxiosResponse) {
@@ -48,6 +60,10 @@ export class HttpService {
                 success(result.data);
             }
         }).catch(function (ex: AxiosError) {
+            if (ex.status === 401) {
+                authService.logOff();
+                window.location.reload();
+            }
             if (error) {
                 error(`Error while calling API [status : ${ex?.request?.status}, error : ${ex.message}]`);
             }

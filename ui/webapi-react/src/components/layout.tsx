@@ -1,6 +1,5 @@
-﻿import * as jQuery from "jquery";
+import * as jQuery from "jquery";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { Navigate, Route } from 'react-router';
 import { HashRouter, Routes } from 'react-router-dom';
 
@@ -16,8 +15,6 @@ import { SignUp } from "./signup";
 import { Users } from "./users";
 import { SystemLogs } from "./systemLogs";
 import HttpLogs from "./httpLogs";
-
-declare var window: any;
 
 export interface LayoutProps { }
 export interface LayoutState { registrationComplete: boolean }

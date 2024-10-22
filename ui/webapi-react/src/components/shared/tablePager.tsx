@@ -1,7 +1,6 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { PageData } from "../../services/serviceModels";
-import { Link } from "react-router-dom";
 
 declare var Math: any;
 
@@ -48,7 +47,7 @@ const TablePager = (props: TablePagerProps) => {
     };
 
     useEffect(() => {
-        if (props.pageData.pageNumber != pageNumber) {
+        if (props.pageData.pageNumber !== pageNumber) {
             props.pageData.pageNumber = pageNumber;
             props.pageChanged();
         }
@@ -63,10 +62,9 @@ const TablePager = (props: TablePagerProps) => {
     for (var i = 0; i <= (end - start); i++) {
         let iCopy = i;
         var page = <li key={iCopy} className={start + iCopy === pageNumber ? "active" : ""}>
-            <Link to=''
-                onClick={() => start + iCopy <= end ? changePage(start + iCopy) : () => false}>
+            <button className="pagination-button" onClick={() => start + iCopy <= end ? changePage(start + iCopy) : () => false}>
                 {start + iCopy}
-            </Link>
+            </button>
         </li>;
         pages.push(page);
     }
@@ -74,19 +72,17 @@ const TablePager = (props: TablePagerProps) => {
     return <nav>
         <ul className="pagination">
             <li>
-                <Link aria-label="Previous"
-                    to=''
+                <button className="pagination-button" aria-label="Previous"
                     onClick={() => previousEnabled ? changePage(pageNumber - 1) : () => false}>
                     <span aria-hidden="true">&laquo;</span>
-                </Link>
+                </button>
             </li>
             {pages}
             <li>
-                <Link aria-label="Next"
-                    to=''
+                <button className="pagination-button" aria-label="Next"
                     onClick={() => nextEnabled ? changePage(pageNumber + 1) : () => false}>
                     <span aria-hidden="true">&raquo;</span>
-                </Link>
+                </button>
             </li>
         </ul>
     </nav>;

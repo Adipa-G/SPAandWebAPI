@@ -1,4 +1,4 @@
-﻿import { HttpService } from "./httpService";
+import { HttpService } from "./httpService";
 
 import { CallbackFunction, OrderData, PageData } from "./serviceModels";
 

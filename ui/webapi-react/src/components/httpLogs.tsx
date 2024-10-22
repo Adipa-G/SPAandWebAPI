@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import DatePicker from "react-datepicker";
 
@@ -12,9 +12,9 @@ import UtcView from "./shared/utcView";
 import JsonFormatHeighlight from "./shared/jsonFormatHeighlight";
 
 const HttpLogs = () => {
-    const dateFormat: string = "yyyy-MM-dd";
-    const dateService = new DateService();
-    const logService = new LogService();
+    //const dateFormat: string = "yyyy-MM-dd";
+    const dateService = useMemo(() => new DateService(), []);
+    const logService = useMemo(() => new LogService(), []);
 
     const [errorMessage, setErrorMessage] = useState('');
     const [levels, setLevels] = useState<string[]>([]);
@@ -23,24 +23,26 @@ const HttpLogs = () => {
     const [orderDirection, setOrderDirection] = useState('Desc');
     const [orderField, setOrderField] = useState('CalledOn');
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(100);
+    const [pageSize] = useState(100);
     const [trackingId, setTrackingId] = useState<string>('');
     const [logLevel, setLogLevel] = useState<string>('');
     const [fromDate, setFromDate] = useState<Date | null>(null);
     const [toDate, setToDate] = useState<Date | null>(null);
 
-    const filter: HttpLogFilter = {
-        orderField: orderField,
-        orderDirection: orderDirection,
-        pageNumber: pageNumber,
-        pageSize: pageSize,
-        trackingId: trackingId,
-        logLevel: logLevel,
-        fromDate: fromDate != null ? dateService.dateToUtcFormat(fromDate) : null,
-        toDate: toDate != null ? dateService.dateToUtcFormat(toDate) : null
-    };
+    const filter: HttpLogFilter = useMemo(() => {
+        return {
+            orderField: orderField,
+            orderDirection: orderDirection,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            trackingId: trackingId,
+            logLevel: logLevel,
+            fromDate: fromDate != null ? dateService.dateToUtcFormat(fromDate) : null,
+            toDate: toDate != null ? dateService.dateToUtcFormat(toDate) : null
+        }
+    }, [orderField, orderDirection, pageNumber, pageSize, trackingId, logLevel, fromDate, toDate, dateService]);
 
-    if (levels.length == 0) {
+    if (levels.length === 0) {
         logService.getLevels((levelResult) => {
             if (levelResult.success) {
                 setLevels(levelResult.data);
@@ -52,16 +54,16 @@ const HttpLogs = () => {
     }
 
     const orderChanged = () => {
-        if (filter.orderField != orderField) {
+        if (filter.orderField !== orderField) {
             setOrderField(filter.orderField);
         }
-        if (filter.orderDirection != orderDirection) {
+        if (filter.orderDirection !== orderDirection) {
             setOrderDirection(filter.orderDirection);
         }
     };
 
     const pageChanged = () => {
-        if (filter.pageNumber != pageNumber) {
+        if (filter.pageNumber !== pageNumber) {
             setPageNumber(filter.pageNumber);
         }
     };
@@ -85,7 +87,7 @@ const HttpLogs = () => {
                 setErrorMessage(logResult.error);
             }
         });
-    }, [fromDate, toDate, logLevel, trackingId, pageNumber, orderField, orderDirection]);
+    }, [fromDate, toDate, logLevel, trackingId, pageSize, pageNumber, orderField, orderDirection, dateService, filter, logService]);
 
     return (
         <div id="http-log">
@@ -198,10 +200,10 @@ const HttpLogs = () => {
                                         <JsonFormatHeighlight text={log.requestHeaders} />
                                     </div>
                                     <div id={headerReqDataBtnId}>
-                                        <a onClick={() => {
+                                        <button className="link-like-button" onClick={() => {
                                             document.getElementById(headerReqDataId)?.classList.remove('hidden-header-data');
                                             document.getElementById(headerReqDataBtnId)?.classList.add('hidden-header-data');
-                                        }}>Show</a>
+                                        }}>Show</button>
                                     </div>
                                 </dt>);
 
@@ -211,10 +213,10 @@ const HttpLogs = () => {
                                         <JsonFormatHeighlight text={log.responseHeaders} />
                                     </div>
                                     <div id={headerResDataBtnId}>
-                                        <a onClick={() => {
+                                        <button className="link-like-button" onClick={() => {
                                             document.getElementById(headerResDataId)?.classList.remove('hidden-header-data');
                                             document.getElementById(headerResDataBtnId)?.classList.add('hidden-header-data');
-                                        }}>Show</a>
+                                        }}>Show</button>
                                     </div>
                                 </dt>);
 

@@ -1,0 +1,22 @@
+.link-like-button {
+    color: $link-color;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+
+    &:hover,
+    &:focus {
+        color: $link-hover-color;
+        text-decoration: $link-hover-decoration;
+    }
+}
+
+.pagination-button {
+    padding: $padding-base-vertical $padding-base-horizontal;
+    line-height: $line-height-base;
+    text-decoration: none;
+    color: $pagination-color;
+    background-color: $pagination-bg;
+    border: 1px solid $pagination-border;
+    margin-left: -1px;
+}

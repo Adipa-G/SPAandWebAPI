@@ -1,4 +1,4 @@
-﻿import * as jQuery from "jquery";
+import * as jQuery from "jquery";
 import * as React from "react";
 
 import { CallbackResult } from "../services/serviceModels";
@@ -68,7 +68,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
 
     render() {
         return (
-            <form role="form" name="loginForm">
+            <form name="loginForm">
                 <div className="row">
                     <div className="col-md-4 col-md-offset-4">
                         <fieldset>

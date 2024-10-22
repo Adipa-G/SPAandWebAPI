@@ -1,4 +1,4 @@
-﻿export interface SuccessMessageProps { successMessage: string }
+export interface SuccessMessageProps { successMessage: string }
 
 const SuccessMessage = (props: SuccessMessageProps) => {
     if (props.successMessage) {

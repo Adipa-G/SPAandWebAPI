@@ -1,4 +1,4 @@
-﻿import hljs from 'highlightjs';
+import hljs from 'highlightjs';
 import vkbeautify from 'vkbeautify'
 
 export interface JsonFormatHeighlightProps { text: string }

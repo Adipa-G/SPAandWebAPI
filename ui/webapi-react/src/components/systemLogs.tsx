@@ -1,4 +1,4 @@
-﻿import * as jQuery from "jquery";
+import * as jQuery from "jquery";
 import * as React from "react";
 
 import { LogService } from "../services/logService"
@@ -8,9 +8,6 @@ import ErrorMessage from "./shared/errorMessage";
 import TablePager from "./shared/tablePager";
 import SortHeader from "./shared/sortHeader";
 import UtcView from "./shared/utcView";
-
-declare var window: any;
-declare var moment: any;
 
 export interface SystemLogProps { }
 
@@ -157,9 +154,9 @@ export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
             levelsOptions.push(<option key={i} value={level}>{level}</option>);
         }
 
-        for (var i = 0; i < this.state.loggers.length; i++) {
-            let logger = this.state.loggers[i];
-            loggerOptions.push(<option key={i} value={logger}>{logger}</option>);
+        for (var j = 0; j < this.state.loggers.length; j++) {
+            let logger = this.state.loggers[j];
+            loggerOptions.push(<option key={j} value={logger}>{logger}</option>);
         }
 
         return (

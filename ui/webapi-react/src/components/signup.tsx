@@ -1,4 +1,4 @@
-﻿import * as React from "react";
+import * as React from "react";
 import * as jQuery from "jquery";
 
 import { CallbackResult } from "../services/serviceModels";
@@ -105,7 +105,7 @@ export class SignUp extends React.Component<SignupProps, SignupState> {
 
     render() {
         return (
-            <form role="form" name="registrationForm">
+            <form name="registrationForm">
                 <div className="row">
                     <div className="col-md-4 col-md-offset-4">
                         <fieldset>
@@ -149,7 +149,7 @@ export class SignUp extends React.Component<SignupProps, SignupState> {
                         <div className="form-group">
                             <button type="button"
                                 className="btn btn-md btn-info btn-block"
-                                disabled={this.state.successMessage != ''}
+                                disabled={this.state.successMessage !== ''}
                                 onClick={() => { this.register() }}>
                                 Register
                             </button>

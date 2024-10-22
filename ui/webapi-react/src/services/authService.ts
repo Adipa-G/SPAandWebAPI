@@ -1,4 +1,4 @@
-﻿import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 
 import { StorageService } from "./storageService";

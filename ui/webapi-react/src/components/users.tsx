@@ -1,4 +1,4 @@
-﻿import * as jQuery from "jquery";
+import * as jQuery from "jquery";
 import * as React from "react";
 
 import { UserService } from "../services/userService"

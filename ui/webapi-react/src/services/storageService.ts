@@ -1,9 +1,7 @@
-﻿declare var localStorage: any;
+declare var localStorage: any;
 declare var JSON: any;
 
 export class StorageService {
-    constructor() {
-    }
 
     public get = (key: string): any => {
         var value = localStorage.getItem(key);
