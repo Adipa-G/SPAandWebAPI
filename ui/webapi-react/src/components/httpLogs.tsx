@@ -100,7 +100,7 @@ const HttpLogs = () => {
                             data-testid="logLevel"
                             onChange={(e) => setLogLevel(e.currentTarget.value)}>
                             <option value="">Select</option>
-                            {levels.map((level, index) => <option key={index} value={level}>{level}</option>)}
+                            {levels.map((level, index) => <option key={index} value={level} data-testid="logLevel-option">{level}</option>)}
                         </select>
                     </div>
                 </div>

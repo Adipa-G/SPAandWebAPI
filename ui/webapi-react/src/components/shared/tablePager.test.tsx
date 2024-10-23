@@ -1,4 +1,3 @@
-import { BrowserRouter } from 'react-router-dom'
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { PageData } from '../../services/serviceModels';
@@ -6,12 +5,10 @@ import TablePager from "./tablePager";
 
 test('renders the pager', () => {
     let pageData: PageData = { pageSize: 10, pageNumber: 5 };
-    render(<BrowserRouter>
-        <TablePager
-            totalCount={100}
-            pageData={pageData}
-            pageChanged={() => { }} />
-    </BrowserRouter>);
+    render(<TablePager
+        totalCount={100}
+        pageData={pageData}
+        pageChanged={() => { }} />);
 
     var previous = screen.getByLabelText('Previous');
     var page3 = screen.getByText('3');
@@ -34,12 +31,10 @@ test('go to previous page', () => {
     const callback = jest.fn();
     let pageData: PageData = { pageSize: 10, pageNumber: 5 };
 
-    render(<BrowserRouter>
-        <TablePager
-            totalCount={100}
-            pageData={pageData}
-            pageChanged={callback} />
-    </BrowserRouter>);
+    render(<TablePager
+        totalCount={100}
+        pageData={pageData}
+        pageChanged={callback} />);
 
     var previous = screen.getByLabelText('Previous');
     fireEvent(
@@ -58,12 +53,10 @@ test('go to page', () => {
     const callback = jest.fn();
     let pageData: PageData = { pageSize: 10, pageNumber: 5 };
 
-    render(<BrowserRouter>
-        <TablePager
-            totalCount={100}
-            pageData={pageData}
-            pageChanged={callback} />
-    </BrowserRouter>);
+    render(<TablePager
+        totalCount={100}
+        pageData={pageData}
+        pageChanged={callback} />);
 
     var page7 = screen.getByText('7');
     fireEvent(
@@ -82,12 +75,10 @@ test('go to next page', () => {
     const callback = jest.fn();
     let pageData: PageData = { pageSize: 10, pageNumber: 5 };
 
-    render(<BrowserRouter>
-        <TablePager
-            totalCount={100}
-            pageData={pageData}
-            pageChanged={callback} />
-    </BrowserRouter>);
+    render(<TablePager
+        totalCount={100}
+        pageData={pageData}
+        pageChanged={callback} />);
 
     var previous = screen.getByLabelText('Next');
     fireEvent(
