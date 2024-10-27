@@ -221,7 +221,7 @@ const HttpLogs = () => {
                                 </dt>);
 
                                 return (
-                                    <tr key={i}>
+                                    <tr key={i} data-testid='log-row'>
                                         <td><UtcView dateTime={log.logTimestamp}></UtcView> </td>
                                         <td>{log.trackingId}</td>
                                         <td>{log.caller}</td>

@@ -17,7 +17,6 @@ export class HttpService {
         axios.get(this.serviceBase + url, {
             headers: this.getHeaders()
         }).then(function (result: AxiosResponse) {
-            console.log('4343434343434344334');
             if (success) {
                 success(result.data);
             }
