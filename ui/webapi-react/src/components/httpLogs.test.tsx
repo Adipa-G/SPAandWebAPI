@@ -5,47 +5,56 @@ import { CallbackFunction } from '../services/serviceModels';
 import { HttpLogEntry, HttpLogFilter } from '../services/logService';
 import HttpLogs from './httpLogs'
 
+const mockGetLevels = jest.fn();
+const mockGetHttpLogs = jest.fn();
 jest.mock('../services/logService', () => {
     return {
         LogService: function () {
-            const levels = ['Info', 'Error'];
-            const logEntries: HttpLogEntry[] = [{
-                id: 1,
-                trackingId: 'a-track',
-                logTimestamp: '2024-10-24T11:33:00',
-                caller: 'C.Henderson',
-                request: 'req.1',
-                verb: 'GET',
-                requestUri: 'http://localhost/api/users',
-                requestHeaders: 'Accept: text/json',
-                status: '200 OK',
-                response: '{users : [{id : 1}]}',
-                responseHeaders: 'Content-Length: 231',
-                duration: '00:00:03'
-            },
-            {
-                id: 2,
-                trackingId: 'b-track',
-                logTimestamp: '2024-10-25T11:33:00',
-                caller: 'D.Henderson',
-                request: 'req.2',
-                verb: 'GET',
-                requestUri: 'http://localhost/api/users',
-                requestHeaders: 'Accept: text/json',
-                status: '200 OK',
-                response: '{users : [{id : 1}]}',
-                responseHeaders: 'Content-Length: 231',
-                duration: '00:00:03'
-            }];
+
             return {
-                getLevels: jest.fn((callback: CallbackFunction<string[]>) => callback({ data: levels, success: true, totalCount: 2, error: '' })),
-                getHttpLogs: jest.fn((filter: HttpLogFilter, callback: CallbackFunction<HttpLogEntry[]>) => callback({ data: logEntries, success: true, totalCount: 2, error: '' }))
+                getLevels: mockGetLevels,
+                getHttpLogs: mockGetHttpLogs
             };
         }
     }
 });
 
-test('set log levels', async () => {
+beforeEach(() => {
+    const levels = ['Info', 'Error'];
+    const logEntries: HttpLogEntry[] = [{
+        id: 1,
+        trackingId: 'a-track',
+        logTimestamp: '2024-10-24T11:33:00',
+        caller: 'C.Henderson',
+        request: 'req.1',
+        verb: 'GET',
+        requestUri: 'http://localhost/api/users',
+        requestHeaders: 'Accept: text/json',
+        status: '200 OK',
+        response: '{users : [{id : 1}]}',
+        responseHeaders: 'Content-Length: 231',
+        duration: '00:00:03'
+    },
+    {
+        id: 2,
+        trackingId: 'b-track',
+        logTimestamp: '2024-10-25T11:33:00',
+        caller: 'D.Henderson',
+        request: 'req.2',
+        verb: 'GET',
+        requestUri: 'http://localhost/api/users',
+        requestHeaders: 'Accept: text/json',
+        status: '200 OK',
+        response: '{users : [{id : 1}]}',
+        responseHeaders: 'Content-Length: 231',
+        duration: '00:00:03'
+    }];
+
+    mockGetLevels.mockImplementation((callback: CallbackFunction<string[]>) => callback({ data: levels, success: true, totalCount: 2, error: '' }));
+    mockGetHttpLogs.mockImplementation((filter: HttpLogFilter, callback: CallbackFunction<HttpLogEntry[]>) => callback({ data: logEntries, success: true, totalCount: 2, error: '' }));
+});
+
+test('set log levels success', async () => {
     render(<HttpLogs />);
 
     let options = screen.getAllByTestId('logLevel-option')
@@ -55,7 +64,17 @@ test('set log levels', async () => {
     expect(options[1].textContent).toBe('Error')
 });
 
-test('load log entries', async () => {
+test('set log levels error', async () => {
+    mockGetLevels.mockImplementation((callback: CallbackFunction<string[]>) => callback({ data: [], success: false, totalCount: 0, error: 'log level error' }));
+
+    render(<HttpLogs />);
+
+    let error = screen.getByText('log level error');
+
+    expect(error).toHaveClass('alert-danger');
+});
+
+test('load log entries success', async () => {
     render(<HttpLogs />);
 
     let rows = screen.getAllByTestId('log-row')
@@ -63,6 +82,16 @@ test('load log entries', async () => {
     expect(rows.length).toBe(2);
     expect(rows[0].textContent).toContain('a-track')
     expect(rows[1].textContent).toContain('b-track')
+});
+
+test('load log entries error', async () => {
+    mockGetHttpLogs.mockImplementation((filter: HttpLogFilter, callback: CallbackFunction<HttpLogEntry[]>) => callback({ data: [], success: false, totalCount: 0, error: 'logs error' }));
+
+    render(<HttpLogs />);
+
+    let error = screen.getByText('logs error');
+
+    expect(error).toHaveClass('alert-danger');
 });
 
 /*test('set default values', () => {

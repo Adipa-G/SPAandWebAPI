@@ -42,7 +42,7 @@ const HttpLogs = () => {
         }
     }, [orderField, orderDirection, pageNumber, pageSize, trackingId, logLevel, fromDate, toDate, dateService]);
 
-    if (levels.length === 0) {
+    useEffect(() => {
         logService.getLevels((levelResult) => {
             if (levelResult.success) {
                 setLevels(levelResult.data);
@@ -51,7 +51,7 @@ const HttpLogs = () => {
                 setErrorMessage(levelResult.error);
             }
         });
-    }
+    }, [logService])
 
     const orderChanged = () => {
         if (filter.orderField !== orderField) {
