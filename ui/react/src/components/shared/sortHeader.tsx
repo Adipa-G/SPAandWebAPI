@@ -34,7 +34,7 @@ const SortHeader = (props: SortHeaderProps) => {
             props.orderData.orderDirection = orderDirection;
             props.orderChanged();
         }
-    }, [orderDirection]);
+    }, [orderDirection, orderField, props]);
 
     const toggleOrder = () => {
         if (!props.orderData) {
