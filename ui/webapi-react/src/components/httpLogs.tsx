@@ -110,6 +110,7 @@ const HttpLogs = () => {
                         <input className="form-control"
                             type="text"
                             id="trackingId"
+                            data-testid="trackingId"
                             onChange={(e) => setTrackingId(e.currentTarget.value)} />
                     </div>
                 </div>
@@ -123,6 +124,7 @@ const HttpLogs = () => {
                             dateFormat="yyyy-MM-dd"
                             selected={fromDate}
                             showIcon
+                            id="fromDate"
                             onChange={(date) => setFromDate(date)}
                         />
                     </div>

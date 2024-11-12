@@ -32,18 +32,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 20
       - name: Build and Test
         run: |
           cd ui/react
-          npm install -g --prefer-offline webpack webpack-cli jest
-          npm link webpack
-          npm install --prefer-offline gulp
           npm install --prefer-offline
-          gulp copy-libs
-          gulp copy-templates
-          gulp sass
-          npm run-script build
+	  npm run build
           npm test
       - run: echo "🍏 This job's status is ${{ job.status }}."
       
