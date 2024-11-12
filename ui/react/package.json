@@ -2,64 +2,63 @@
   "name": "webapi-react",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
-    "@types/enzyme": "^3.10.8",
-    "@types/jquery": "^3.5.5",
-    "@types/js-cookie": "2.1.0",
-    "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.7",
-    "@types/react-router": "^5.1.15",
-    "@types/react-router-dom": "^5.1.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "@babel/plugin-transform-private-property-in-object": "^7.25.7",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/axios": "^0.14.0",
+    "@types/highlightjs": "^9.12.6",
+    "@types/jest": "^27.5.2",
+    "@types/jquery": "^3.5.31",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^16.18.112",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@types/react-router": "^5.1.20",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/vkbeautify": "^0.99.4",
+    "axios": "^1.7.7",
+    "bootstrap": "^5.3.3",
+    "bootstrap-datetime-picker": "^2.4.4",
+    "highlightjs": "^9.16.2",
+    "jquery": "^3.7.1",
+    "js-cookie": "^3.0.5",
+    "moment": "^2.30.1",
+    "react": "^18.3.1",
+    "react-datepicker": "^7.4.0",
+    "react-dom": "^18.3.1",
+    "react-router": "6.26.2",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "5.0.1",
+    "sass": "^1.79.4",
+    "typescript": "^4.9.5",
+    "vkbeautify": "^0.99.3",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode=development --hot --inline",
-    "build": "webpack --mode=development",
-    "test": "jest",
-    "preinstall__": "start npm i -g webpack webpack-cli jest && start npm link webpack"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/'",
+    "eject": "react-scripts eject"
   },
-  "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "awesome-typescript-loader": "^5.2.0",
-    "babel-jest": "^23.4.2",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
-    "gulp": "^4.0.2",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-sass": "^4.1.0",
-    "gulp-uglify": "^3.0.2",
-    "gulp-watch": "^5.0.1",
-    "jest": "^27.0.4",
-    "jest-cli": "^27.0.4",
-    "source-map-loader": "^0.2.3",
-    "ts-jest": "^27.0.3",
-    "typescript": "^3.9.9",
-    "webpack": "4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.3"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "setupTestFrameworkScriptFile": "<rootDir>/web-src/app-test/setup.js",
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "setup.js"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "testRegex": "(/web-src/app-test/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }

@@ -1,13 +1,26 @@
 {
-    "compilerOptions": {
-        "outDir": "./web/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "target": "es2015",
-        "jsx": "react",
-		"moduleResolution" : "node"
-    },
-    "include": [
-        "./web-src/**/*"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
 }
