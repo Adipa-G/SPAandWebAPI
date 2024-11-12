@@ -160,7 +160,7 @@ test('fetch data when tracking id changed', async () => {
 test('fetch data when from date changed', async () => {
     let logs = render(<HttpLogs />);
 
-    let fromDateInput = logs.container.querySelector('#fromDate');
+    let fromDateInput = logs.container.querySelector('#fromDate')!;
     fireEvent.change(fromDateInput, { target: { value: '2020-03-07' } });
 
     expect(mockGetHttpLogs).toBeCalledTimes(2);
@@ -169,7 +169,7 @@ test('fetch data when from date changed', async () => {
 test('fetch data when to date changed', async () => {
     let logs = render(<HttpLogs />);
 
-    let toDateInput = logs.container.querySelector('#fromDate');
+    let toDateInput = logs.container.querySelector('#fromDate')!;
     fireEvent.change(toDateInput, { target: { value: '2020-03-09' } });
 
     expect(mockGetHttpLogs).toBeCalledTimes(2);
