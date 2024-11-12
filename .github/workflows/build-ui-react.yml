@@ -37,10 +37,6 @@ jobs:
         run: |
           cd ui/react
           npm install --prefer-offline
-	        npm run build
+          npm run build
           npm test
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      
-      
-      
-      
