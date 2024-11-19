@@ -12,7 +12,6 @@ import UtcView from "./shared/utcView";
 import JsonFormatHeighlight from "./shared/jsonFormatHeighlight";
 
 const HttpLogs = () => {
-    //const dateFormat: string = "yyyy-MM-dd";
     const dateService = useMemo(() => new DateService(), []);
     const logService = useMemo(() => new LogService(), []);
 

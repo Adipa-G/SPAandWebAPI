@@ -6,7 +6,7 @@ import { HashRouter, Routes } from 'react-router-dom';
 import { AuthService } from "../services/authService";
 
 import { Menu } from "./menu";
-import { Jumbotron } from "./jumbotron";
+import Jumbotron from "./jumbotron";
 import { Welcome } from "./welcome";
 
 import { Login } from "./login";
