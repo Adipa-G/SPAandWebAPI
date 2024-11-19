@@ -27,36 +27,36 @@ const SortHeader = (props: SortHeaderProps) => {
         return orderDirection === 'Desc';
     };
 
-    useEffect(() => {
-        if (props.orderData.orderField !== orderField ||
-            props.orderData.orderDirection !== orderDirection) {
-            props.orderData.orderField = orderField;
-            props.orderData.orderDirection = orderDirection;
-            props.orderChanged();
-        }
-    }, [orderDirection, orderField]);
-
     const toggleOrder = () => {
         if (!props.orderData) {
             return;
         }
 
         let fieldMatch: boolean = isFieldMatch();
+        let field: string = orderField;
+        let direction: string = orderDirection;
 
         if (!fieldMatch) {
-            setOrderField(props.orderField);
-            setOrderDirection('Asc');
+            field = props.orderField;
+            setOrderField(field);
+            direction = 'Asc';
+
         } else {
             let asc: boolean = isAsc();
             let desc: boolean = isDesc();
             if (asc) {
-                setOrderDirection('Desc');
+                direction = 'Desc';
             } else if (desc) {
-                setOrderDirection('None');
+                direction = 'None';
             } else {
-                setOrderDirection('Asc');
+                direction = 'Asc';
             }
         }
+        setOrderDirection(direction);
+
+        props.orderData.orderField = field;
+        props.orderData.orderDirection = direction;
+        props.orderChanged();
     };
 
     let fieldMatch: boolean = isFieldMatch();
