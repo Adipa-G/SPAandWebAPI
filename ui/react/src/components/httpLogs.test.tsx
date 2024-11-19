@@ -169,52 +169,8 @@ test('fetch data when from date changed', async () => {
 test('fetch data when to date changed', async () => {
     let logs = render(<HttpLogs />);
 
-    let toDateInput = logs.container.querySelector('#fromDate')!;
+    let toDateInput = logs.container.querySelector('#toDate')!;
     fireEvent.change(toDateInput, { target: { value: '2020-03-09' } });
 
     expect(mockGetHttpLogs).toBeCalledTimes(2);
 });
-
-
-/*
-    it("when logLevel changed then call loadHttpLogs", () => {
-        const wrapper = shallow(<HttpLogs />);
-        const instance = wrapper.instance() as any;
-        instance.loadHttpLogs = jest.fn();
-
-        wrapper.find('#logLevel').simulate('change');
-
-        expect(instance.loadHttpLogs).toHaveBeenCalled();
-    });
-
-    it("when trackingId changed then call loadHttpLogs", () => {
-        const wrapper = shallow(<HttpLogs />);
-        const instance = wrapper.instance() as any;
-        instance.loadHttpLogs = jest.fn();
-
-        wrapper.find('#trackingId').simulate('change');
-
-        expect(instance.loadHttpLogs).toHaveBeenCalled();
-    });
-
-    it("when fromDate changed then call loadHttpLogs", () => {
-        const wrapper = shallow(<HttpLogs />);
-        const instance = wrapper.instance() as any;
-        instance.loadHttpLogs = jest.fn();
-
-        wrapper.find('#fromDate').simulate('blur');
-
-        expect(instance.loadHttpLogs).toHaveBeenCalled();
-    });
-
-    it("when toDate changed then call loadHttpLogs", () => {
-        const wrapper = shallow(<HttpLogs />);
-        const instance = wrapper.instance() as any;
-        instance.loadHttpLogs = jest.fn();
-
-        wrapper.find('#toDate').simulate('blur');
-
-        expect(instance.loadHttpLogs).toHaveBeenCalled();
-    });
-});
-*/

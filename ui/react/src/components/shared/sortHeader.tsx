@@ -34,7 +34,7 @@ const SortHeader = (props: SortHeaderProps) => {
             props.orderData.orderDirection = orderDirection;
             props.orderChanged();
         }
-    }, [orderDirection, orderField]); // eslint-disable-line react-hooks/exhaustive-depsa
+    }, [orderDirection, orderField]);
 
     const toggleOrder = () => {
         if (!props.orderData) {

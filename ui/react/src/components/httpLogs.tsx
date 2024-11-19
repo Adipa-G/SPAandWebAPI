@@ -137,6 +137,7 @@ const HttpLogs = () => {
                             dateFormat="yyyy-MM-dd"
                             selected={toDate}
                             showIcon
+                            id="toDate"
                             onChange={(date) => setToDate(date)}
                         />
                     </div>
