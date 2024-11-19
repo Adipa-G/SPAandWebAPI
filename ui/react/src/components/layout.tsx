@@ -7,7 +7,7 @@ import { AuthService } from "../services/authService";
 
 import { Menu } from "./menu";
 import Jumbotron from "./jumbotron";
-import { Welcome } from "./welcome";
+import Welcome from "./welcome";
 
 import { Login } from "./login";
 import { SignUp } from "./signup";

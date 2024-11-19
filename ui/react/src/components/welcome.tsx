@@ -1,15 +1,11 @@
-import * as React from "react";
-
-export interface WelcomeProps { userName: string }
-
-export class Welcome extends React.Component<WelcomeProps, any> {
-    render() {
-        if (this.props.userName) {
-            return <span className="navbar-brand">
-                Welcome {this.props.userName}
-            </span>;
-        } else {
-            return <span className="navbar-brand"></span>;
-        }
-    }
+export interface WelcomeProps {
+    userName: string
 }
+
+const Welcome = (props: WelcomeProps) => {
+    return (props.userName ? <span className="navbar-brand">
+        Welcome {props.userName}
+    </span> : <span className="navbar-brand"></span>);
+};
+
+export default Welcome;
