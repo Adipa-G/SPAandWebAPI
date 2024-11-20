@@ -11,7 +11,11 @@ import SortHeader from "./shared/sortHeader";
 import UtcView from "./shared/utcView";
 import JsonFormatHeighlight from "./shared/jsonFormatHeighlight";
 
-const HttpLogs = () => {
+export interface HttpLogsProps {
+    defaultPageSize: number
+}
+
+const HttpLogs = (props: HttpLogsProps) => {
     const dateService = useMemo(() => new DateService(), []);
     const logService = useMemo(() => new LogService(), []);
 
@@ -22,7 +26,7 @@ const HttpLogs = () => {
     const [orderDirection, setOrderDirection] = useState('Desc');
     const [orderField, setOrderField] = useState('CalledOn');
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize] = useState(100);
+    const [pageSize] = useState(props.defaultPageSize);
     const [trackingId, setTrackingId] = useState<string>('');
     const [logLevel, setLogLevel] = useState<string>('');
     const [fromDate, setFromDate] = useState<Date | null>(null);

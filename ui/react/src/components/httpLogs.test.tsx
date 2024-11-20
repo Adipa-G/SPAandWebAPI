@@ -55,7 +55,7 @@ beforeEach(() => {
 });
 
 test('set log levels success', async () => {
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let options = screen.getAllByTestId('logLevel-option')
 
@@ -67,7 +67,7 @@ test('set log levels success', async () => {
 test('set log levels error', async () => {
     mockGetLevels.mockImplementation((callback: CallbackFunction<string[]>) => callback({ data: [], success: false, totalCount: 0, error: 'log level error' }));
 
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let error = screen.getByText('log level error');
 
@@ -75,7 +75,7 @@ test('set log levels error', async () => {
 });
 
 test('load log entries success', async () => {
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let rows = screen.getAllByTestId('log-row')
 
@@ -102,7 +102,7 @@ test('load log entries render', async () => {
 
     mockGetHttpLogs.mockImplementation((filter: HttpLogFilter, callback: CallbackFunction<HttpLogEntry[]>) => callback({ data: logEntries, success: true, totalCount: 0, error: '' }));
 
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let rows = screen.getAllByTestId('log-row')
 
@@ -122,7 +122,7 @@ test('load log entries render', async () => {
 test('load log entries error', async () => {
     mockGetHttpLogs.mockImplementation((filter: HttpLogFilter, callback: CallbackFunction<HttpLogEntry[]>) => callback({ data: [], success: false, totalCount: 0, error: 'logs error' }));
 
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let error = screen.getByText('logs error');
 
@@ -131,7 +131,7 @@ test('load log entries error', async () => {
 
 
 test('fetch data when sorted', async () => {
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let timeHeader = screen.getByText('Time');
     fireEvent.click(timeHeader);
@@ -139,8 +139,17 @@ test('fetch data when sorted', async () => {
     expect(mockGetHttpLogs).toBeCalledTimes(2);
 });
 
+test('fetch data when paged', async () => {
+    render(<HttpLogs defaultPageSize={1} />);
+
+    let page2Button = screen.getByText('2');
+    fireEvent.click(page2Button);
+
+    expect(mockGetHttpLogs).toBeCalledTimes(2);
+});
+
 test('fetch data when log level changed', async () => {
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let logLevelSelect = screen.getByTestId('logLevel');
     fireEvent.change(logLevelSelect, { target: { value: 'Info' } });
@@ -149,7 +158,7 @@ test('fetch data when log level changed', async () => {
 });
 
 test('fetch data when tracking id changed', async () => {
-    render(<HttpLogs />);
+    render(<HttpLogs defaultPageSize={100} />);
 
     let trackingIdInput = screen.getByTestId('trackingId');
     fireEvent.change(trackingIdInput, { target: { value: '23' } });
@@ -158,7 +167,7 @@ test('fetch data when tracking id changed', async () => {
 });
 
 test('fetch data when from date changed', async () => {
-    let logs = render(<HttpLogs />);
+    let logs = render(<HttpLogs defaultPageSize={100} />);
 
     let fromDateInput = logs.container.querySelector('#fromDate')!;
     fireEvent.change(fromDateInput, { target: { value: '2020-03-07' } });
@@ -167,7 +176,7 @@ test('fetch data when from date changed', async () => {
 });
 
 test('fetch data when to date changed', async () => {
-    let logs = render(<HttpLogs />);
+    let logs = render(<HttpLogs defaultPageSize={100} />);
 
     let toDateInput = logs.container.querySelector('#toDate')!;
     fireEvent.change(toDateInput, { target: { value: '2020-03-09' } });

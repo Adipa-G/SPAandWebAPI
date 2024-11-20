@@ -1,4 +1,22 @@
+import { CallbackFunction, OrderData, PageData } from "./serviceModels";
+
 import { HttpService } from "./httpService";
+
+export interface UserFilter extends OrderData, PageData {
+    orderField: string,
+    orderDirection: string,
+    pageNumber: number,
+    pageSize: number,
+}
+
+export interface UserModel {
+    userName: string
+}
+
+interface UserModelResult {
+    results: UserModel[],
+    totalCount: number
+}
 
 export class UserService {
     httpService: HttpService;
@@ -7,25 +25,45 @@ export class UserService {
         this.httpService = new HttpService();
     }
 
-    getUsers = (sortAndPage: any, callback: Function): void => {
+    getUsers = (filter: UserFilter, callback: CallbackFunction<UserModel[]>): void => {
         this.httpService.post('api/Account/list',
-            sortAndPage,
-            (data: any) => {
-                callback({ success: true, totalCount: data.totalCount, users: data.results });
+            filter,
+            (data: UserModelResult) => {
+                callback({
+                    success: true,
+                    totalCount: data.totalCount,
+                    data: data.results,
+                    error: ''
+                });
             },
-            (error: any) => {
-                callback({ success: false, error: error });
+            (error: string) => {
+                callback({
+                    success: false,
+                    data: [],
+                    totalCount: 0,
+                    error: error
+                });
             });
     }
 
-    deleteUser = (userName: string, callback: Function): void => {
+    deleteUser = (userName: string, callback: CallbackFunction<string>): void => {
         this.httpService.delete(`api/Account/${userName}`,
             null,
             () => {
-                callback({ success: true });
+                callback({
+                    success: true,
+                    error: '',
+                    data: '',
+                    totalCount: 1
+                });
             },
             (error: any) => {
-                callback({ success: false, error: error });
+                callback({
+                    success: false,
+                    error: error,
+                    data: '',
+                    totalCount: 0
+                });
             });
     }
 }
