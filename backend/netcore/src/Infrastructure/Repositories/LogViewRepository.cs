@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
                 var fromDate = request.FromDate.Timestamp();
                 if (fromDate > SqlDateTime.MinValue.Value)
                 {
-                    query = query.Where(lm => lm.LogTimestamp > request.FromDate.Timestamp());
+                    query = query.Where(lm => lm.LogTimestamp > request.FromDate.Timestamp().Ticks);
                 }
             }
             if (!string.IsNullOrWhiteSpace(request.ToDate))
@@ -57,7 +57,7 @@ namespace Infrastructure.Repositories
                 var toDate = request.ToDate.Timestamp();
                 if (toDate > SqlDateTime.MinValue.Value)
                 {
-                    query = query.Where(lm => lm.LogTimestamp < request.ToDate.Timestamp());
+                    query = query.Where(lm => lm.LogTimestamp < request.ToDate.Timestamp().Ticks);
                 }
             }
             if (request.OrderDirection == SortDirection.Asc)
@@ -118,7 +118,7 @@ namespace Infrastructure.Repositories
                     var fromDate = request.FromDate.Timestamp();
                     if (fromDate > SqlDateTime.MinValue.Value)
                     {
-                        query = query.Where(lm => lm.CalledOn > fromDate);
+                        query = query.Where(lm => lm.CalledOn > fromDate.Ticks);
                     }
                 }
                 if (!string.IsNullOrWhiteSpace(request.ToDate))
@@ -126,7 +126,7 @@ namespace Infrastructure.Repositories
                     var toDate = request.ToDate.Timestamp();
                     if (toDate > SqlDateTime.MinValue.Value)
                     {
-                        query = query.Where(lm => lm.CalledOn < toDate);
+                        query = query.Where(lm => lm.CalledOn < toDate.Ticks);
                     }
                 }
                 if (request.OrderDirection == SortDirection.Asc)

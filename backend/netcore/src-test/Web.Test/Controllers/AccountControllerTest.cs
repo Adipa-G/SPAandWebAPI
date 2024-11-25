@@ -33,7 +33,7 @@ namespace Web.Test.Controllers
 
             var result = await _controller.RegisterAsync(new UserModel()) as OkResult;
 
-            Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             await _userRepository.Received(1).RegisterUserAsync(Arg.Any<UserModel>());
         }
 
@@ -44,7 +44,7 @@ namespace Web.Test.Controllers
 
             var result = await _controller.RegisterAsync(new UserModel()) as BadRequestResult;
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.BadRequest));
             await _userRepository.Received(1).RegisterUserAsync(Arg.Any<UserModel>());
         }
 
@@ -55,7 +55,7 @@ namespace Web.Test.Controllers
 
             var result = await _controller.ListAsync(new ListRequest()) as OkObjectResult;
 
-            Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             await _userRepository.Received(1).ListAsync(Arg.Any<ListRequest>());
         }
 
@@ -64,7 +64,7 @@ namespace Web.Test.Controllers
         {
             var result = await _controller.DeleteAsync("abc") as OkResult;
 
-            Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             await _userRepository.Received(1).DeleteAsync("abc");
         }
     }

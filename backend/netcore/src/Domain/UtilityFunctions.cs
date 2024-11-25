@@ -9,9 +9,9 @@ namespace Domain
     {
         private const string DateFormat = "yyyy-MM-ddTHH:mm:ss";
 
-        public static string Timestamp(this DateTime dateTime)
+        public static string Timestamp(this long dateTimeTicks)
         {
-            return dateTime.ToString(DateFormat);
+            return new DateTime(dateTimeTicks).ToString(DateFormat);
         }
 
         public static DateTime Timestamp(this string dateTime)

@@ -13,10 +13,6 @@ export interface HttpLogFilter extends OrderData, PageData {
     toDate: string
 }
 
-export interface SystemLogEntry {
-
-}
-
 export interface HttpLogEntry {
     id: number,
     trackingId: string,
@@ -34,6 +30,31 @@ export interface HttpLogEntry {
 
 interface HttpLogEntryResult {
     results: HttpLogEntry[],
+    totalCount: number
+}
+
+export interface SystemLogFilter extends OrderData, PageData {
+    orderField: string,
+    orderDirection: string,
+    pageNumber: number,
+    pageSize: number,
+    logger: string,
+    logLevel: string,
+    fromDate: string,
+    toDate: string
+}
+
+export interface SystemLogEntry {
+    id: number,
+    logTimestamp: string,
+    logger: string,
+    level: string,
+    message: string,
+    stackTrace: string
+}
+
+interface SystemLogEntryResult {
+    results: SystemLogEntry[],
     totalCount: number
 }
 
@@ -87,7 +108,7 @@ export class LogService {
     getSystemLogs = (sortAndPage: any, callback: CallbackFunction<SystemLogEntry[]>): void => {
         this.httpService.post('api/log/logMessages',
             sortAndPage,
-            (data: any) => {
+            (data: SystemLogEntryResult) => {
                 callback({
                     success: true,
                     data: data.results,

@@ -41,7 +41,7 @@ namespace Infrastructure.Test.Repositories
             var sut = new ConfigRepository(Session);
             var value = sut.GetSettingValue("abc", "pqr");
 
-            Assert.AreEqual("def",value);
+            Assert.That(value, Is.EqualTo("def"));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Infrastructure.Test.Repositories
             await FlushAndClearAsync();
 
             var value = sut.GetSettingValue("abc", "lmn");
-            Assert.AreEqual("pqr", value);
+            Assert.That(value, Is.EqualTo("pqr"));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Infrastructure.Test.Repositories
             await FlushAndClearAsync();
 
             var value = sut.GetSettingValue("abc", "lmn");
-            Assert.AreEqual("pqr", value);
+            Assert.That(value, Is.EqualTo("pqr"));
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result = sut.GetAllLevels();
 
-            Assert.AreEqual(Enum.GetNames(typeof (LogLevel)).Length, result.Count);
+            Assert.That(result.Count, Is.EqualTo(Enum.GetNames(typeof(LogLevel)).Length));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result = sut.GetAllLoggers();
 
-            Assert.AreEqual(Enum.GetNames(typeof(LoggerName)).Length, result.Count);
+            Assert.That(result.Count, Is.EqualTo(Enum.GetNames(typeof(LoggerName)).Length));
         }
 
         [Test]
@@ -65,8 +65,8 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() {LogLevel = LogLevel.Error, PageSize = 10});
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Test message", result.Results[0].Message);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
         }
 
         [Test]
@@ -79,8 +79,8 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() {Logger = "Test", PageSize = 10});
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Test message", result.Results[0].Message);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
         }
 
         [Test]
@@ -94,13 +94,13 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogMessagesAsync(new LogMessageListRequest()
                                    {
-                                       FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
+                                       FromDate = DateTime.UtcNow.AddDays(-1).Ticks.Timestamp(),
                                        PageNumber = 1,
                                        PageSize = 10
                                    });
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Test message", result.Results[0].Message);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
         }
 
         [Test]
@@ -114,13 +114,13 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageNumber = 1,
                     PageSize = 10
                 });
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Test message", result.Results[0].Message);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
         }
 
         [Test]
@@ -135,16 +135,16 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageNumber = 1,
                     PageSize = 10,
                     OrderField = "Message",
                     OrderDirection = SortDirection.Asc
                 });
 
-            Assert.AreEqual(2, result.TotalCount);
-            Assert.AreEqual("A message", result.Results[0].Message);
-            Assert.AreEqual("B message", result.Results[1].Message);
+            Assert.That(result.TotalCount, Is.EqualTo(2));
+            Assert.That(result.Results[0].Message, Is.EqualTo("A message"));
+            Assert.That(result.Results[1].Message, Is.EqualTo("B message"));
         }
 
         [Test]
@@ -159,16 +159,16 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageNumber = 1,
                     PageSize = 10,
                     OrderField = "Message",
                     OrderDirection = SortDirection.Desc
                 });
 
-            Assert.AreEqual(2, result.TotalCount);
-            Assert.AreEqual("B message", result.Results[0].Message);
-            Assert.AreEqual("A message", result.Results[1].Message);
+            Assert.That(result.TotalCount, Is.EqualTo(2));
+            Assert.That(result.Results[0].Message, Is.EqualTo("B message"));
+            Assert.That(result.Results[1].Message, Is.EqualTo("A message"));
         }
 
         [Test]
@@ -183,16 +183,16 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogMessagesAsync(new LogMessageListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageNumber = 2,
                     PageSize = 1,
                     OrderField = "Message",
                     OrderDirection = SortDirection.Asc
                 });
 
-            Assert.AreEqual(2, result.TotalCount);
-            Assert.AreEqual(1, result.Results.Count);
-            Assert.AreEqual("B message", result.Results[0].Message);
+            Assert.That(result.TotalCount, Is.EqualTo(2));
+            Assert.That(result.Results.Count, Is.EqualTo(1));
+            Assert.That(result.Results[0].Message, Is.EqualTo("B message"));
         }
 
 
@@ -206,8 +206,8 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result = await sut.GetLogHttpAsync(new LogHttpListRequest() { LogLevel = LogLevel.Error, PageSize = 10 });
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Track Id", result.Results[0].TrackingId);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].TrackingId, Is.EqualTo("Track Id"));
         }
 
         [Test]
@@ -220,8 +220,8 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result = await sut.GetLogHttpAsync(new LogHttpListRequest() { TrackingId = "Track Id", PageSize = 10 });
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Track Id", result.Results[0].TrackingId);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].TrackingId, Is.EqualTo("Track Id"));
         }
 
         [Test]
@@ -235,12 +235,12 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogHttpAsync(new LogHttpListRequest()
                                {
-                                   FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
+                                   FromDate = DateTime.UtcNow.AddDays(-1).Ticks.Timestamp(),
                                    PageSize = 10
                                });
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Track Id", result.Results[0].TrackingId);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].TrackingId, Is.EqualTo("Track Id"));
         }
 
         [Test]
@@ -254,12 +254,12 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageSize = 10
                 });
 
-            Assert.AreEqual(1, result.TotalCount);
-            Assert.AreEqual("Track Id", result.Results[0].TrackingId);
+            Assert.That(result.TotalCount, Is.EqualTo(1));
+            Assert.That(result.Results[0].TrackingId, Is.EqualTo("Track Id"));
         }
 
         [Test]
@@ -274,16 +274,16 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageNumber = 1,
                     PageSize = 10,
                     OrderField = "TrackingId",
                     OrderDirection = SortDirection.Asc
                 });
 
-            Assert.AreEqual(2, result.TotalCount);
-            Assert.AreEqual("A Track Id", result.Results[0].TrackingId);
-            Assert.AreEqual("B Track Id", result.Results[1].TrackingId);
+            Assert.That(result.TotalCount, Is.EqualTo(2));
+            Assert.That(result.Results[0].TrackingId, Is.EqualTo("A Track Id"));
+            Assert.That(result.Results[1].TrackingId, Is.EqualTo("B Track Id"));
         }
 
         [Test]
@@ -298,16 +298,16 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageNumber = 1,
                     PageSize = 10,
                     OrderField = "TrackingId",
                     OrderDirection = SortDirection.Desc
                 });
 
-            Assert.AreEqual(2, result.TotalCount);
-            Assert.AreEqual("B Track Id", result.Results[0].TrackingId);
-            Assert.AreEqual("A Track Id", result.Results[1].TrackingId);
+            Assert.That(result.TotalCount, Is.EqualTo(2));
+            Assert.That(result.Results[0].TrackingId, Is.EqualTo("B Track Id"));
+            Assert.That(result.Results[1].TrackingId, Is.EqualTo("A Track Id"));
         }
 
         [Test]
@@ -322,16 +322,16 @@ namespace Infrastructure.Test.Repositories
             var result =
                 await sut.GetLogHttpAsync(new LogHttpListRequest()
                 {
-                    ToDate = DateTime.UtcNow.AddDays(1).Timestamp(),
+                    ToDate = DateTime.UtcNow.AddDays(1).Ticks.Timestamp(),
                     PageNumber = 2,
                     PageSize = 1,
                     OrderField = "TrackingId",
                     OrderDirection = SortDirection.Asc
                 });
 
-            Assert.AreEqual(2, result.TotalCount);
-            Assert.AreEqual(1, result.Results.Count);
-            Assert.AreEqual("B Track Id", result.Results[0].TrackingId);
+            Assert.That(result.TotalCount, Is.EqualTo(2));
+            Assert.That(result.Results.Count, Is.EqualTo(1));
+            Assert.That(result.Results[0].TrackingId, Is.EqualTo("B Track Id"));
         }
     }
 }

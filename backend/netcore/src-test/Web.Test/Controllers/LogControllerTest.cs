@@ -32,7 +32,7 @@ namespace Web.Test.Controllers
 
             var result = _controller.Levels() as OkObjectResult;
 
-            Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             _logViewRepository.Received(1).GetAllLevels();
         }
         
@@ -43,7 +43,7 @@ namespace Web.Test.Controllers
 
             var result = _controller.Loggers() as OkObjectResult; 
 
-            Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             _logViewRepository.Received(1).GetAllLoggers();
         }
 
@@ -54,7 +54,7 @@ namespace Web.Test.Controllers
 
             var result = await _controller.LogMessagesAsync(new LogMessageListRequest()) as OkObjectResult; 
 
-            Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             await _logViewRepository.Received(1).GetLogMessagesAsync(Arg.Any<LogMessageListRequest>());
         }
 
@@ -65,7 +65,7 @@ namespace Web.Test.Controllers
 
             var result = await _controller.LogHttpAsync(new LogHttpListRequest()) as OkObjectResult; 
 
-            Assert.AreEqual(HttpStatusCode.OK, (HttpStatusCode)result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             await _logViewRepository.Received(1).GetLogHttpAsync(Arg.Any<LogHttpListRequest>());
         }
     }

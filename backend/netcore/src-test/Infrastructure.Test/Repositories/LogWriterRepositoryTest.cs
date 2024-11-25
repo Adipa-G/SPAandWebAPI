@@ -58,8 +58,8 @@ namespace Infrastructure.Test.Repositories
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
             
-            Assert.AreEqual(1,result.Count);
-            Assert.IsTrue(result.Any(r => r.Message == "Test Message"));
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result.Any(r => r.Message == "Test Message"));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Infrastructure.Test.Repositories
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
 
-            Assert.AreEqual(0, result.Count);
+            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -107,8 +107,8 @@ namespace Infrastructure.Test.Repositories
 
             var result = Session.QueryOver<LogHttpRecord>().List<LogHttpRecord>();
 
-            Assert.AreEqual(1, result.Count);
-            Assert.IsTrue(result.Any(r => r.RequestIdentity == "user"));    
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result.Any(r => r.RequestIdentity == "user"));    
         }
 
         [Test]
@@ -123,8 +123,8 @@ namespace Infrastructure.Test.Repositories
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
 
-            Assert.AreEqual(1, result.Count);
-            Assert.IsTrue(result.Any(r => r.Message == "test sql"));
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result.Any(r => r.Message == "test sql"));
         }
     }
 }

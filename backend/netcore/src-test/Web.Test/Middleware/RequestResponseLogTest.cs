@@ -94,12 +94,12 @@ namespace Web.Test.Middleware
             result.Wait();
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
-            Assert.AreEqual("ABC", logModel.RequestIdentity);
-            Assert.AreEqual("GET", logModel.Verb);
-            Assert.AreEqual(_context.Request.GetUri(), logModel.RequestUri);
-            Assert.IsTrue(logModel.RequestHeaders.Contains("key"));
-            Assert.IsTrue(logModel.RequestHeaders.Contains("value"));
-            Assert.IsTrue(logModel.Request.Contains("request body"));
+            Assert.That(logModel.RequestIdentity, Is.EqualTo("ABC"));
+            Assert.That(logModel.Verb, Is.EqualTo("GET"));
+            Assert.That(logModel.RequestUri, Is.EqualTo(_context.Request.GetUri()));
+            Assert.That(logModel.RequestHeaders.Contains("key"));
+            Assert.That(logModel.RequestHeaders.Contains("value"));
+            Assert.That(logModel.Request.Contains("request body"));
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Web.Test.Middleware
             result.Wait();
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
-            Assert.AreEqual(400, logModel.StatusCode);
+            Assert.That(logModel.StatusCode, Is.EqualTo(400));
         }
 
         public void GivenMiddlewareAndLogNotEnabled_WhenInvokeWithErrorStatusCode_Log()

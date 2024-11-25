@@ -36,7 +36,7 @@ namespace Web.Test.Middleware
             var result = _validateAntiForgeryToken.Invoke(_context);
             result.Wait();
 
-            Assert.AreEqual(1,_next.InvokeCount);
+            Assert.That(_next.InvokeCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Web.Test.Middleware
             var result = _validateAntiForgeryToken.Invoke(_context);
             result.Wait();
 
-            Assert.AreEqual(1, _next.InvokeCount);
+            Assert.That(_next.InvokeCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Web.Test.Middleware
             var result = _validateAntiForgeryToken.Invoke(_context);
             result.Wait();
 
-            Assert.AreEqual(0, _next.InvokeCount);
+            Assert.That(_next.InvokeCount, Is.EqualTo(0));
         }
     }
 }

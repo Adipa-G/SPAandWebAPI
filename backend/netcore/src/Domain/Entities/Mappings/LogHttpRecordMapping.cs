@@ -9,7 +9,7 @@ namespace Domain.Entities.Mappings
             Id(x => x.Id).UnsavedValue(0).GeneratedBy.Native();
             Map(x => x.Level).Not.Nullable();
             Map(x => x.TrackingId);
-            Map(x => x.CalledOn).Not.Nullable();
+            Map(x => x.CalledOn).CustomType<long>().Not.Nullable();
             Map(x => x.CallerAddress).Not.Nullable();
             Map(x => x.RequestIdentity).Length(256).Not.Nullable();
             Map(x => x.Verb).Length(50).Not.Nullable();

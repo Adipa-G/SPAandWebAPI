@@ -1,7 +1,8 @@
-import * as jQuery from "jquery";
-import * as React from "react";
+import { useState, useEffect, useMemo } from "react";
 
-import { LogService } from "../services/logService"
+import DatePicker from "react-datepicker";
+
+import { SystemLogEntry, SystemLogFilter, LogService } from "../services/logService"
 import { DateService } from "../services/dateService"
 
 import ErrorMessage from "./shared/errorMessage";
@@ -9,269 +10,212 @@ import TablePager from "./shared/tablePager";
 import SortHeader from "./shared/sortHeader";
 import UtcView from "./shared/utcView";
 
-export interface SystemLogProps { }
-
-export interface SytemLogState {
-    filter: any,
-    levels: Array<any>,
-    loggers: Array<any>,
-    logs: Array<any>,
-    totalCount: number,
-    errorMessage: string;
+export interface SystemLogsProps {
+    defaultPageSize: number
 }
 
-export class SystemLogs extends React.Component<SystemLogProps, SytemLogState> {
-    dateFormat: string = "yyyy-MM-dd";
-    dateService: DateService;
-    logService: LogService;
+const SystemLogs = (props: SystemLogsProps) => {
+    const dateService = useMemo(() => new DateService(), []);
+    const logService = useMemo(() => new LogService(), []);
 
-    constructor(props: any) {
-        super(props);
-        this.logService = new LogService();
-        this.dateService = new DateService();
+    const [errorMessage, setErrorMessage] = useState('');
+    const [levels, setLevels] = useState<string[]>([]);
+    const [loggerNames, setLoggerNames] = useState<string[]>([]);
+    const [logs, setLogs] = useState<SystemLogEntry[]>();
+    const [totalCount, setTotalCount] = useState(0);
+    const [orderDirection, setOrderDirection] = useState('Desc');
+    const [orderField, setOrderField] = useState('LogTimestamp');
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize] = useState(props.defaultPageSize);
+    const [logLevel, setLogLevel] = useState<string>('');
+    const [loggerName, setLoggerName] = useState<string>('');
+    const [fromDate, setFromDate] = useState<Date | null>(null);
+    const [toDate, setToDate] = useState<Date | null>(null);
 
-        this.state = {
-            filter: {
-                OrderField: 'LogTimestamp',
-                OrderDirection: 'Desc',
-                PageNumber: 1,
-                PageSize: 100,
-                Logger: '',
-                LogLevel: '',
-                FromDate: '',
-                ToDate: ''
-            },
-            levels: [],
-            loggers: [],
-            logs: [],
-            totalCount: 0,
-            errorMessage: ''
-        };
-    }
-
-    componentDidMount = () => {
-        this.init(() => {
-            this.loadSystemLogs();
-            this.initDatePickers();
-        });
-    }
-
-    initDatePickers = () => {
-        ($('#fromDateGroup') as any).datetimepicker({
-            format: "YYYY-MM-DD"
-        });
-
-        ($('#toDateGroup') as any).datetimepicker({
-            format: "YYYY-MM-DD"
-        });
-    }
-
-    init = (callback: Function) => {
-        this.logService.getLevels((levelsResult: any) => {
-            this.logService.getLoggers((loggersResult: any) => {
-                let error: any = null;
-                let levels: Array<any> = [];
-                let loggers: Array<any> = [];
-
-                if (!levelsResult.success) {
-                    error = levelsResult.error;
-                }
-                else if (loggersResult.success) {
-                    levels = levelsResult.data;
-                    loggers = loggersResult.data;
-                } else {
-                    error = loggersResult.error;
-                }
-
-                this.setState((prevState: SytemLogState) => {
-                    let newState: SytemLogState = jQuery.extend(true, {}, prevState) as SytemLogState;
-                    if (error) {
-                        newState.errorMessage = error;
-                    } else {
-                        newState.errorMessage = '';
-                        newState.levels = levels;
-                        newState.loggers = loggers;
-                    }
-                    return newState;
-                });
-
-                callback();
-            });
-        });
-    }
-
-    loadSystemLogs = () => {
-        let loggerName: string = $('#loggerName').val() as string;
-        let level: string = $('#logLevel').val() as string;
-
-        let fromDate: string = $('#fromDate').val() as string;
-        if (fromDate) {
-            fromDate = this.dateService.dateToUtcFormat(fromDate);
+    const filter: SystemLogFilter = useMemo(() => {
+        return {
+            orderField: orderField,
+            orderDirection: orderDirection,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            logger: loggerName,
+            logLevel: logLevel,
+            fromDate: fromDate != null ? dateService.dateToUtcFormat(fromDate) : null,
+            toDate: toDate != null ? dateService.dateToUtcFormat(toDate) : null
         }
+    }, [orderField, orderDirection, pageNumber, pageSize, loggerName, logLevel, fromDate, toDate, dateService]);
 
-        let toDate: string = $('#toDate').val() as string;
-        if (toDate) {
-            toDate = this.dateService.dateToUtcFormat(toDate);
-        }
-
-        let filter = jQuery.extend(true, {}, this.state.filter) as any;
-        filter.Logger = loggerName;
-        filter.LogLevel = level;
-        filter.FromDate = fromDate;
-        filter.ToDate = toDate;
-
-        this.logService.getSystemLogs(filter, (result: any) => {
-            if (result.success) {
-                this.setState((prevState: SytemLogState) => {
-                    let newState: SytemLogState = jQuery.extend(true, {}, prevState) as SytemLogState;
-                    newState.logs = result.data;
-                    newState.totalCount = result.totalCount;
-                    newState.filter = filter;
-                    newState.errorMessage = '';
-                    return newState;
-                });
-            } else {
-                this.setState((prevState: SytemLogState) => {
-                    let newState: SytemLogState = jQuery.extend(true, {}, prevState) as SytemLogState;
-                    newState.errorMessage = result.error;
-                    newState.filter = filter;
-                    return newState;
-                });
+    useEffect(() => {
+        logService.getLevels((levelResult) => {
+            if (levelResult.success) {
+                setLevels(levelResult.data);
+            }
+            else {
+                setErrorMessage(levelResult.error);
             }
         });
-    }
 
-    orderOrPageChanged = () => {
-        this.loadSystemLogs();
-    }
+        logService.getLoggers((loggersResult) => {
+            if (loggersResult.success) {
+                setLoggerNames(loggersResult.data);
+            }
+            else {
+                setErrorMessage(loggersResult.error);
+            }
+        });
+    }, [logService])
 
-    render() {
-        let levelsOptions: Array<any> = [];
-        let loggerOptions: Array<any> = [];
-
-        for (var i = 0; i < this.state.levels.length; i++) {
-            let level = this.state.levels[i];
-            levelsOptions.push(<option key={i} value={level}>{level}</option>);
+    const orderChanged = () => {
+        if (filter.orderField !== orderField) {
+            setOrderField(filter.orderField);
         }
-
-        for (var j = 0; j < this.state.loggers.length; j++) {
-            let logger = this.state.loggers[j];
-            loggerOptions.push(<option key={j} value={logger}>{logger}</option>);
+        if (filter.orderDirection !== orderDirection) {
+            setOrderDirection(filter.orderDirection);
         }
+    };
 
-        return (
-            <div id="system-log">
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-2">
-                        <div className="form-group">
-                            <label>Level</label>
-                            <select className="form-control"
-                                id="logLevel"
-                                onChange={() => { this.loadSystemLogs(); }}>
-                                <option value="">Select</option>
-                                {levelsOptions}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="form-group">
-                            <label>Logger Name</label>
-                            <select className="form-control"
-                                id="loggerName"
-                                onChange={() => { this.loadSystemLogs(); }}>
-                                <option value="">Select</option>
-                                {loggerOptions}
-                            </select>
-                        </div>
+    const pageChanged = () => {
+        if (filter.pageNumber !== pageNumber) {
+            setPageNumber(filter.pageNumber);
+        }
+    };
+
+    useEffect(() => {
+        filter.orderField = orderField;
+        filter.orderDirection = orderDirection;
+        filter.pageNumber = pageNumber;
+        filter.pageSize = pageSize;
+        filter.logger = loggerName;
+        filter.logLevel = logLevel;
+        filter.fromDate = fromDate != null ? dateService.dateToUtcFormat(fromDate) : null;
+        filter.toDate = toDate != null ? dateService.dateToUtcFormat(toDate) : null;
+
+        logService.getSystemLogs(filter, (logResult) => {
+            if (logResult.success) {
+                setLogs(logResult.data);
+                setTotalCount(logResult.totalCount);
+            }
+            else {
+                setErrorMessage(logResult.error);
+            }
+        });
+    }, [fromDate, toDate, logLevel, loggerName, pageSize, pageNumber, orderField, orderDirection, dateService, filter, logService]);
+
+    return (
+        <div id="http-log">
+            <div className="row">
+                <div className="col-md-4 col-md-offset-2">
+                    <div className="form-group">
+                        <label>Level</label>
+                        <select className="form-control"
+                            id="logLevel"
+                            data-testid="logLevel"
+                            onChange={(e) => setLogLevel(e.currentTarget.value)}>
+                            <option value="">Select</option>
+                            {levels.map((level, index) => <option key={index} value={level} data-testid="logLevel-option">{level}</option>)}
+                        </select>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-2">
-                        <label>Date Range</label>
-                        <div className="input-group" id="fromDateGroup">
-                            <input type="text"
-                                id="fromDate"
-                                className="form-control"
-                                placeholder="yyyy-MM-dd"
-                                onBlur={() => { this.loadSystemLogs(); }} />
-                            <div className="input-group-addon">
-                                <i className="fa fa-calendar"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <label>&nbsp;</label>
-                        <div className="input-group" id="toDateGroup">
-                            <input type="text"
-                                id="toDate"
-                                className="form-control"
-                                placeholder="yyyy-MM-dd"
-                                onBlur={() => { this.loadSystemLogs(); }} />
-                            <div className="input-group-addon">
-                                <i className="fa fa-calendar"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row top-margin-lg">
-                    <div className="col-md-8 col-md-offset-2">
-                        <table className="table table-striped table-bordered table-hover table-responsive">
-                            <thead>
-                                <tr>
-                                    <SortHeader
-                                        headerText="Time"
-                                        orderData={this.state.filter}
-                                        orderField="LogTimestamp"
-                                        orderChanged={() => this.orderOrPageChanged()} />
-                                    <SortHeader
-                                        headerText="Logger"
-                                        orderData={this.state.filter}
-                                        orderField="Logger"
-                                        orderChanged={() => this.orderOrPageChanged()} />
-                                    <SortHeader
-                                        headerText="Level"
-                                        orderData={this.state.filter}
-                                        orderField="Level"
-                                        orderChanged={() => this.orderOrPageChanged()} />
-                                    <th>Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.logs.map((log, i) => {
-
-                                    let details: Array<any> = [];
-                                    if (log.message) {
-                                        details.push(<dl key="MsgLabel{i}">Message</dl>);
-                                        details.push(<dt key="Msg{i}">{log.message}</dt>);
-                                    }
-                                    if (log.stackTrace) {
-                                        details.push(<dl key="'StackLabel{i}">Stacktrace</dl>);
-                                        details.push(<dt key="'Stack{i}">{log.stackTrace}</dt>);
-                                    }
-
-                                    return (
-                                        <tr key={i}>
-                                            <td><UtcView dateTime={log.logTimestamp}></UtcView> </td>
-                                            <td>{log.logger}</td>
-                                            <td>{log.level}</td>
-                                            <td>
-                                                <dl className="dl-horizontal">
-                                                    {details}
-                                                </dl>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                        <TablePager
-                            totalCount={this.state.totalCount}
-                            pageData={this.state.filter}
-                            pageChanged={() => this.orderOrPageChanged()} />
-                        <ErrorMessage errorMessage={this.state.errorMessage} />
+                <div className="col-md-4">
+                    <div className="form-group">
+                        <label>Logger Name</label>
+                        <select className="form-control"
+                            id="loggerName"
+                            data-testid="loggerName"
+                            onChange={(e) => setLoggerName(e.currentTarget.value)}>
+                            <option value="">Select</option>
+                            {loggerNames.map((loggerName, index) => <option key={index} value={loggerName} data-testid="loggerName-option">{loggerName}</option>)}
+                        </select>
                     </div>
                 </div>
             </div>
-        );
-    }
+            <div className="row">
+                <div className="col-md-4 col-md-offset-2">
+                    <label>Date Range</label>
+                    <div className="input-group" id="fromDateGroup">
+                        <DatePicker
+                            className="form-control"
+                            dateFormat="yyyy-MM-dd"
+                            selected={fromDate}
+                            showIcon
+                            id="fromDate"
+                            onChange={(date) => setFromDate(date)}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <label>&nbsp;</label>
+                    <div className="input-group" id="toDateGroup">
+                        <DatePicker
+                            className="form-control"
+                            dateFormat="yyyy-MM-dd"
+                            selected={toDate}
+                            showIcon
+                            id="toDate"
+                            onChange={(date) => setToDate(date)}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="row top-margin-lg">
+                <div className="col-md-8 col-md-offset-2">
+                    <table className="table table-striped table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <SortHeader
+                                    headerText="Time"
+                                    orderData={filter}
+                                    orderField="LogTimestamp"
+                                    orderChanged={() => orderChanged()} />
+                                <SortHeader
+                                    headerText="Logger"
+                                    orderData={filter}
+                                    orderField="Logger"
+                                    orderChanged={() => orderChanged()} />
+                                <SortHeader
+                                    headerText="Level"
+                                    orderData={filter}
+                                    orderField="Level"
+                                    orderChanged={() => orderChanged()} />
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {(logs || []).map((log, i) => {
+                                let details: Array<any> = [];
+                                if (log.message) {
+                                    details.push(<dl key="MsgLabel{i}">Message</dl>);
+                                    details.push(<dt key="Msg{i}">{log.message}</dt>);
+                                }
+                                if (log.stackTrace) {
+                                    details.push(<dl key="'StackLabel{i}">Stacktrace</dl>);
+                                    details.push(<dt key="'Stack{i}">{log.stackTrace}</dt>);
+                                }
+
+                                return (
+                                    <tr key={i} data-testid='log-row'>
+                                        <td><UtcView dateTime={log.logTimestamp}></UtcView> </td>
+                                        <td>{log.logger}</td>
+                                        <td>{log.level}</td>
+                                        <td>
+                                            <dl className="dl-horizontal">
+                                                {details}
+                                            </dl>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                    <TablePager
+                        totalCount={totalCount}
+                        pageData={filter}
+                        pageChanged={() => pageChanged()} />
+                    <ErrorMessage errorMessage={errorMessage} />
+                </div>
+            </div>
+        </div>
+    );
 }
+
+export default SystemLogs;

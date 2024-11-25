@@ -13,7 +13,7 @@ import { Login } from "./login";
 import { SignUp } from "./signup";
 
 import Users from "./users";
-import { SystemLogs } from "./systemLogs";
+import SystemLogs from "./systemLogs";
 import HttpLogs from "./httpLogs";
 
 export interface LayoutProps { }
@@ -109,7 +109,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
                             <Route path="/systemLog" element={
                                 !isAuth ?
                                     <Navigate to="/login" /> :
-                                    <SystemLogs />
+                                    <SystemLogs defaultPageSize={100} />
                             } />
                             <Route path="/httpLog" element={
                                 !isAuth ?

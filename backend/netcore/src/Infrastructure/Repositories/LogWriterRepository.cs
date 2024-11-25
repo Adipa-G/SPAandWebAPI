@@ -41,7 +41,7 @@ namespace Infrastructure.Repositories
                 Level = LogLevel.Debug,
                 Logger = Enum.GetName(typeof(LoggerName), LoggerName.SQL),
                 Message = message,
-                LogTimestamp = DateTime.UtcNow
+                LogTimestamp = DateTime.UtcNow.Ticks
             };
 
             lock (_messageRecords)
@@ -57,7 +57,7 @@ namespace Infrastructure.Repositories
                 Level = level,
                 Logger = Enum.GetName(typeof(LoggerName), logger),
                 Message = message,
-                LogTimestamp = DateTime.UtcNow,
+                LogTimestamp = DateTime.UtcNow.Ticks,
                 StackTrace = ex == null ? string.Empty : FlattenException(ex)
             };
 
@@ -75,7 +75,7 @@ namespace Infrastructure.Repositories
                 RequestIdentity = log.RequestIdentity,
                 Request = log.Request,
                 CallDuration = log.CallDuration,
-                CalledOn = log.CalledOn,
+                CalledOn = log.CalledOn.Ticks,
                 CallerAddress = log.CallerAddress,
                 ReasonPhrase = log.ReasonPhrase,
                 RequestHeaders = log.RequestHeaders,

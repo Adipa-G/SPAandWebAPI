@@ -8,7 +8,7 @@ namespace Domain.Entities
         public virtual long Id { get; set; }
         public virtual LogLevel Level { get; set; }
         public virtual string TrackingId { get; set; }
-        public virtual DateTime CalledOn { get; set; }
+        public virtual long CalledOn { get; set; }
         public virtual string CallerAddress { get; set; }
         public virtual string RequestIdentity { get; set; }
         public virtual string Verb { get; set; }

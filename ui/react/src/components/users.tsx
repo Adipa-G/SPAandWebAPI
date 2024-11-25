@@ -17,7 +17,7 @@ const Users = (props: UsersProps) => {
     const [users, setUsers] = useState<UserModel[]>([]);
     const [totalCount, setTotalCount] = useState(0);
     const [orderDirection, setOrderDirection] = useState('Desc');
-    const [orderField, setOrderField] = useState('CalledOn');
+    const [orderField, setOrderField] = useState('UserName');
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize] = useState(props.defaultPageSize);
 

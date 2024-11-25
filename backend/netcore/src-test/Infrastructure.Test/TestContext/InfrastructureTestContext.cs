@@ -26,7 +26,7 @@ namespace Infrastructure.Test.TestContext
             {
                 Level = LogLevel.Error,
                 Logger = "Test",
-                LogTimestamp = DateTime.UtcNow,
+                LogTimestamp = DateTime.UtcNow.Ticks,
                 Message = message,
                 StackTrace = "Test stack trace"
             });
@@ -42,7 +42,7 @@ namespace Infrastructure.Test.TestContext
                 Response = "Test Resp",
                 StatusCode = 200,
                 RequestIdentity = "User",
-                CalledOn = DateTime.UtcNow,
+                CalledOn = DateTime.UtcNow.Ticks,
                 CallDuration = new TimeSpan(0,1,0),
                 CallerAddress = "127.0.0.1",
                 ReasonPhrase = "OK",

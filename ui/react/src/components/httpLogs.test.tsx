@@ -27,6 +27,7 @@ beforeEach(() => {
         logTimestamp: '2024-10-24T11:33:00',
         caller: 'C.Henderson',
         request: 'req.1',
+
         verb: 'GET',
         requestUri: 'http://localhost/api/users',
         requestHeaders: 'Accept: text/json',
