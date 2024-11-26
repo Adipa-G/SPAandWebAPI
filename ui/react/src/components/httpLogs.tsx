@@ -147,7 +147,7 @@ const HttpLogs = (props: HttpLogsProps) => {
                 </div>
             </div>
             <div className="row top-margin-lg">
-                <div className="col-md-8 col-md-offset-2">
+                <div className="col-md-12 table-container">
                     <table className="table table-striped table-bordered table-hover table-responsive">
                         <thead>
                             <tr>

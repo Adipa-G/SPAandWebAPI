@@ -8,7 +8,7 @@ test('render when auth', async () => {
 
     let title = await screen.queryAllByText('React/WebAPI Seed')
 
-    expect(title.length).toBe(1);
+    expect(title.length).toBe(0);
 });
 
 test('render when no auth', async () => {
@@ -16,5 +16,5 @@ test('render when no auth', async () => {
 
     let title = await screen.queryAllByText('React/WebAPI Seed')
 
-    expect(title.length).toBe(0);
+    expect(title.length).toBe(1);
 });

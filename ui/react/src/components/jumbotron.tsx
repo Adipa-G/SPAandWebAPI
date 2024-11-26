@@ -3,7 +3,7 @@ export interface JumbotronProps {
 }
 
 const Jumbotron = (props: JumbotronProps) => {
-    return (props.isAuth ? <div className="jumbotron">
+    return (!props.isAuth ? <div className="jumbotron">
         <div className="container">
             <div className="page-header text-center">
                 <h1>React/WebAPI Seed</h1>

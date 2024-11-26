@@ -5,12 +5,12 @@ import { HashRouter, Routes } from 'react-router-dom';
 
 import { AuthService } from "../services/authService";
 
-import { Menu } from "./menu";
+import Menu from "./menu";
 import Jumbotron from "./jumbotron";
 import Welcome from "./welcome";
 
 import { Login } from "./login";
-import { SignUp } from "./signup";
+import SignUp from "./signup";
 
 import Users from "./users";
 import SystemLogs from "./systemLogs";

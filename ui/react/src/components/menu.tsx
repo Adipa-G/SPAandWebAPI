@@ -1,32 +1,33 @@
-import * as React from "react";
 import { Link } from 'react-router-dom';
 
-export interface MenuProps { isAuth: boolean, logOff: Function }
-export interface MenuState { }
+export interface MenuProps {
+    isAuth: boolean,
+    logOff: Function
+}
 
-export class Menu extends React.Component<MenuProps, MenuState> {
-
-    logOff = () => {
-        this.props.logOff();
+const Menu = (props: MenuProps) => {
+    const logOff = () => {
+        props.logOff();
     }
 
-    render() {
-        if (this.props.isAuth) {
-            return <ul className="nav navbar-nav navbar-right">
-                <li><a href="#/users">Users</a></li>
-                <li><a href="#/systemLog">System Log</a></li>
-                <li><a href="#/httpLog">Http Log</a></li>
-                <li>
-                    <button className="logout-button" onClick={() => { this.logOff() }}>
-                        Logout
-                    </button>
-                </li>
-            </ul>;
-        } else {
-            return <ul className="nav navbar-nav navbar-right">
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/signup">Sign up</Link></li>
-            </ul>;
-        }
+    if (props.isAuth) {
+        return (<ul className="nav navbar-nav navbar-right">
+            <li><a href="#/users">Users</a></li>
+            <li><a href="#/systemLog">System Log</a></li>
+            <li><a href="#/httpLog">Http Log</a></li>
+            <li>
+                <button className="logout-button" onClick={() => { logOff() }}>
+                    Logout
+                </button>
+            </li>
+        </ul>);
+    }
+    else {
+        return (<ul className="nav navbar-nav navbar-right">
+            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/signup">Sign up</Link></li>
+        </ul>);
     }
 }
+
+export default Menu;
