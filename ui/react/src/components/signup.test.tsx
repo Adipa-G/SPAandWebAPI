@@ -2,7 +2,6 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import { CallbackFunction } from '../services/serviceModels';
-import { UserModel, UserFilter } from '../services/userService';
 import SignUp from './signup'
 
 const mockSignup = jest.fn();
