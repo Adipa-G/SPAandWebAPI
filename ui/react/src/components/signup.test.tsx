@@ -5,7 +5,7 @@ import { CallbackFunction } from '../services/serviceModels';
 import SignUp from './signup'
 
 const mockSignup = jest.fn();
-jest.mock('../services/AuthService', () => {
+jest.mock('../services/authService', () => {
     return {
         AuthService: function () {
             return {
