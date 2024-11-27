@@ -1,112 +1,81 @@
-import * as jQuery from "jquery";
-import * as React from "react";
+import { useState, useMemo } from "react";
 
 import { CallbackResult } from "../services/serviceModels";
 import { AuthService } from "../services/authService";
 
 import ErrorMessage from "./shared/errorMessage";
 
-export interface LoginProps { loginComplete: Function }
-export interface LoginState { errorMessage: string, userName: string, password: string }
+export interface LoginProps {
+    loginComplete: Function
+}
 
-export class Login extends React.Component<LoginProps, LoginState> {
-    authService: AuthService;
+const Login = (props: LoginProps) => {
+    const authService = useMemo(() => new AuthService(), []);
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    constructor(props: any) {
-        super(props);
-        this.authService = new AuthService();
-
-        this.state = {
-            errorMessage: '',
-            userName: '',
-            password: ''
-        };
-    }
-
-    setUserName = (event: any): void => {
-        let userName: string = event.target.value as string;
-        this.setState((prevState: LoginState) => {
-            let newState: LoginState = jQuery.extend(true, {}, prevState) as LoginState;
-            newState.userName = userName;
-            return newState;
-        });
-    }
-
-    setPassword = (event: any): void => {
-        let password: string = event.target.value as string;
-        this.setState((prevState: LoginState) => {
-            let newState: LoginState = jQuery.extend(true, {}, prevState) as LoginState;
-            newState.password = password;
-            return newState;
-        });
-    }
-
-    login = () => {
-        if (!this.state.userName || !this.state.password) {
-            this.setState({
-                errorMessage: 'Please enter a username and password'
-            });
+    const login = () => {
+        if (!userName || !password) {
+            setErrorMessage('Please enter a username and password');
             return;
         }
 
-        this.setState((prevState: LoginState) => {
-            let newState: LoginState = jQuery.extend(true, {}, prevState) as LoginState;
-            newState.errorMessage = '';
-            return newState;
-        });
+        setErrorMessage('');
 
-        this.authService.authenticate(this.state.userName, this.state.password, (result: CallbackResult) => {
+        authService.authenticate(userName, password, (result: CallbackResult) => {
             if (result.success) {
-                this.props.loginComplete();
+                props.loginComplete();
             } else {
-                this.setState({
-                    errorMessage: 'Invalid credentials. Please try again.'
-                });
+                setErrorMessage('Invalid credentials. Please try again.');
             }
         });
     }
 
-    render() {
-        return (
-            <form name="loginForm">
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
-                        <fieldset>
-                            <legend className="h2">Login</legend>
-                            <div className="form-group" >
-                                <label>User Name</label>
-                                <input type="text"
-                                    id="loginUserName"
-                                    name="loginUserName"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    onChange={(event: any) => this.setUserName(event)} />
-                            </div>
-                            <div className="form-group">
-                                <label>Password</label>
-                                <input type="password"
-                                    id="loginPassword"
-                                    name="loginPassword"
-                                    className="form-control"
-                                    placeholder="Password"
-                                    onChange={(event: any) => this.setPassword(event)} />
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
-                        <ErrorMessage errorMessage={this.state.errorMessage} />
-                        <div className="form-group">
-                            <button type="button"
-                                className="btn btn-md btn-info btn-block"
-                                onClick={() => this.login()}>
-                                Login
-                            </button>
+    return (
+        <form name="loginForm">
+            <div className="row">
+                <div className="col-md-4 col-md-offset-4">
+                    <fieldset>
+                        <legend className="h2">Login</legend>
+                        <div className="form-group" >
+                            <label>User Name</label>
+                            <input type="text"
+                                id="loginUserName"
+                                name="loginUserName"
+                                data-testid="loginUserName"
+                                className="form-control"
+                                placeholder="Username"
+                                onChange={(e) => setUserName(e.currentTarget.value)} />
                         </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input type="password"
+                                id="loginPassword"
+                                name="loginPassword"
+                                data-testid="loginPassword"
+                                className="form-control"
+                                placeholder="Password"
+                                onChange={(e) => setPassword(e.currentTarget.value)} />
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-4 col-md-offset-4">
+                    <ErrorMessage errorMessage={errorMessage} />
+                    <div className="form-group">
+                        <button type="button"
+                            data-testid="login-button"
+                            className="btn btn-md btn-info btn-block"
+                            onClick={() => login()}>
+                            Login
+                        </button>
                     </div>
                 </div>
-            </form>
-        );
-    }
+            </div>
+        </form>
+    );
 }
+
+export default Login;

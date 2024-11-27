@@ -8,7 +8,7 @@ import './css/idea.css';
 import './css/loading-bar.css';
 import '../node_modules/react-datepicker/dist/react-datepicker.css'
 
-import { Layout } from "./components/layout";
+import Layout from "./components/layout";
 
 import reportWebVitals from './reportWebVitals';
 
