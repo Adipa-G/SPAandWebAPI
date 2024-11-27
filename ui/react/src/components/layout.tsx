@@ -27,14 +27,14 @@ const Layout = () => {
             authService.logOff();
             setLoginComplete(false);
             setRegistrationComplete(false);
-        }, 2000);
+        }, 100);
     };
 
     const logInComplete = () => {
         setTimeout(() => {
             setLoginComplete(true);
             setRegistrationComplete(false);
-        }, 2000);
+        }, 100);
     };
 
     const signUpComplete = () => {
