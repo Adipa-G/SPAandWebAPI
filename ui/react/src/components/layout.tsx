@@ -48,7 +48,7 @@ const Layout = () => {
         let auth = authService.getAuth();
         setIsAuth(auth.isAuth);
         setUserName(auth.userName);
-    }, [registrationComplete, loginComplete])
+    }, [registrationComplete, loginComplete, authService])
 
     return (
         <HashRouter>
