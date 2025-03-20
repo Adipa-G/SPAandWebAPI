@@ -9,7 +9,8 @@ import { ServerLogService } from "../services/serverLogService";
 
 @Component({
     selector: 'log-messages',
-    templateUrl: './logMessagesComponent.html'
+    templateUrl: './logMessagesComponent.html',
+    standalone: false
 })
 
 export class LogMessagesComponent {

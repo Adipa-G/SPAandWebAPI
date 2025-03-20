@@ -8,7 +8,8 @@ import { UserService } from '../services/userService';
 
 @Component({
     selector: 'admin-users',
-    templateUrl: './userListComponent.html'
+    templateUrl: './userListComponent.html',
+    standalone: false
 })
 
 export class UserListComponent {

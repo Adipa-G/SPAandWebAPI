@@ -9,7 +9,8 @@ import { AuthService } from '../services/authService';
 
 @Component({
     selector: 'common-menu',
-    templateUrl: './menuComponent.html'
+    templateUrl: './menuComponent.html',
+    standalone: false
 })
 
 export class MenuComponent {

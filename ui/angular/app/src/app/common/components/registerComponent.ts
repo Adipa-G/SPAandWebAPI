@@ -11,7 +11,8 @@ import { RegisterService } from '../services/registerService';
 
 @Component({
     selector: 'common-signup',
-    templateUrl: './registerComponent.html'
+    templateUrl: './registerComponent.html',
+    standalone: false
 })
 
 export class RegisterComponent {

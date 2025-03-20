@@ -9,7 +9,8 @@ import { ServerLogService } from "../services/serverLogService";
 
 @Component({
     selector: 'http-logs',
-    templateUrl: './httpLogComponent.html'
+    templateUrl: './httpLogComponent.html',
+    standalone: false
 })
 
 export class HttpLogComponent {

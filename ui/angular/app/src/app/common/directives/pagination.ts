@@ -19,7 +19,8 @@ import { OrderAndPage } from '../../domain/common/orderAndPage';
         '      (click)="pageClick(pageOptions.pageNumber + 1)">' +
         '         <i class="fa fa-angle-right"></i>&nbsp;' +
         '     </button>' +
-        '</div>'
+        '</div>',
+    standalone: false
 })
 
 export class Pagination implements OnChanges {

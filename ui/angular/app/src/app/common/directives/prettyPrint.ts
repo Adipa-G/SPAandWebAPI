@@ -2,7 +2,8 @@
 
 @Component({
     selector: '[pretty-print]',
-    template: '<pre>{{prettyPrintOutput}}</pre>'
+    template: '<pre>{{prettyPrintOutput}}</pre>',
+    standalone: false
 })
 
 export class PrettyPrint implements OnChanges {

@@ -5,7 +5,8 @@ import { Constants } from "../../common/services/constants";
 
 @Component({
     selector: '[utc-to-local]',
-    template: '{{localTimeStr}}'
+    template: '{{localTimeStr}}',
+    standalone: false
 })
 
 export class UtcToLocal implements OnChanges {

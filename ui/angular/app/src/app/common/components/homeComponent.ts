@@ -6,7 +6,8 @@ import {AuthService} from '../services/authService';
 
 @Component({
     selector: 'common-home',
-    templateUrl: './homeComponent.html'
+    templateUrl: './homeComponent.html',
+    standalone: false
 })
 
 export class HomeComponent {

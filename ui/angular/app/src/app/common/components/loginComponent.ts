@@ -7,7 +7,8 @@ import { AuthService } from '../services/authService';
 
 @Component({
     selector: 'common-login',
-    templateUrl: './loginComponent.html'
+    templateUrl: './loginComponent.html',
+    standalone: false
 })
 
 export class LoginComponent {

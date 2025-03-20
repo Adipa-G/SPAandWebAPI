@@ -4,7 +4,8 @@ import { OrderAndPage } from '../../domain/common/orderAndPage';
 
 @Component({
     selector: '[sort-header]',
-    template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}&nbsp;<i class=\'fa {{sortIcon}}\'></i></span>'
+    template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}&nbsp;<i class=\'fa {{sortIcon}}\'></i></span>',
+    standalone: false
 })
 
 export class SortHeader implements DoCheck {

@@ -16,7 +16,8 @@ import { ServerLogService } from './admin/services/serverLogService';
     selector: 'angular-auth-app',
     providers: [Constants, UtilsService, StorageService, LogService, ErrorService,
         AuthService, HttpClientWrapper, RegisterService, UserService, ServerLogService],
-    templateUrl: './app.html'
+    templateUrl: './app.html',
+    standalone: false
 })
 
 export class AppComponent implements OnInit {

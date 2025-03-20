@@ -25,8 +25,7 @@ Technical details,
 
 ### ui/Angular
 
-* Angular 15.0 
-* Angular cli
+* Angular 19.0 
 * Bootstrap for UI
 * Sass
 * Karma

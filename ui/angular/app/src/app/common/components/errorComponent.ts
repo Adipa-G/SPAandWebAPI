@@ -7,7 +7,8 @@ import { ErrorService } from '../services/errorService';
 
 @Component({
     selector: 'common-error',
-    templateUrl: './errorComponent.html'
+    templateUrl: './errorComponent.html',
+    standalone: false
 })
 
 export class ErrorComponent {
