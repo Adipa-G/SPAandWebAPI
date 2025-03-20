@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Navigate, Route } from 'react-router';
-import { HashRouter, Routes } from 'react-router-dom';
+import { HashRouter, Routes } from 'react-router';
 
 import { AuthService } from "../services/authService";
 

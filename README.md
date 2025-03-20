@@ -18,10 +18,10 @@ Technical details,
 * Integration tests for repositories, using SQLLite databases 
 
 ### ui/React
-* React 17.0
+* React 19.0
 * Bootstrap
 * Sass
-* Jest
+* React testing library
 
 ### ui/Angular
 
@@ -40,7 +40,7 @@ Technical details,
 * Karma
 
 ### backend/netcore
-* .Net 7 used to implement API with built in DI
+* .Net 8 used to implement API with built in DI
 * IdentityServer 4 used to provide OAuth tokens
 * NHibernate as ORM
 
