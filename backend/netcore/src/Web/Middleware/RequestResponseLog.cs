@@ -135,9 +135,9 @@ namespace Web.Middleware
         private string GetHeaderList(IHeaderDictionary dictionary)
         {
             var sb = new StringBuilder();
-            foreach (var keyValuePair in dictionary)
+            foreach (var (key, value) in dictionary)
             {
-                sb.AppendFormat("[Key : {0}, Value : {1}],", keyValuePair.Key, String.Join(",", keyValuePair.Value));
+                sb.AppendFormat("[Key : {0}, Value : {1}],", key, String.Join(",", value.ToString()));
             }
             return sb.ToString();
         }
