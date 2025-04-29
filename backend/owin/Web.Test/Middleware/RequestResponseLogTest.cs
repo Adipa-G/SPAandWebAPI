@@ -106,13 +106,13 @@ namespace Web.Test.Middleware
             await _requestResponseLog.Invoke(_context);
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
-            Assert.AreEqual("ABC", logModel.RequestIdentity);
-            Assert.AreEqual("127.0.0.1", logModel.CallerAddress);
-            Assert.AreEqual("GET", logModel.Verb);
-            Assert.AreEqual(_request.Uri, logModel.RequestUri);
-            Assert.IsTrue(logModel.RequestHeaders.Contains("key"));
-            Assert.IsTrue(logModel.RequestHeaders.Contains("value"));
-            Assert.IsTrue(logModel.Request.Contains("request body"));
+            Assert.That(logModel.RequestIdentity, Is.EqualTo("ABC"));
+            Assert.That(logModel.CallerAddress, Is.EqualTo("127.0.0.1"));
+            Assert.That(logModel.Verb, Is.EqualTo("GET"));
+            Assert.That(logModel.RequestUri, Is.EqualTo(_request.Uri));
+            Assert.That(logModel.RequestHeaders.Contains("key"), Is.True);
+            Assert.That(logModel.RequestHeaders.Contains("value"), Is.True);
+            Assert.That(logModel.Request.Contains("request body"), Is.True);
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Web.Test.Middleware
             await _requestResponseLog.Invoke(_context);
 
             _logRepository.Received(1).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
-            Assert.AreEqual(400, logModel.StatusCode);
+            Assert.That(logModel.StatusCode, Is.EqualTo(400));
         }
 
         [Test]

@@ -44,8 +44,8 @@ namespace Infrastructure.Test.Repositories
 
             var user = sut.FindUser("a", "abcdef");
 
-            Assert.IsTrue(result.Succeeded);
-            Assert.IsNotNull(user);
+            Assert.That(result.Succeeded, Is.True);
+            Assert.That(user, Is.Not.Null);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Infrastructure.Test.Repositories
             FlushAndClear();
 
             user = sut.Find(new UserLoginInfo("facebook","key1"));
-            Assert.IsNotNull(user);
+            Assert.That(user, Is.Not.Null);
         }
 
         [Test]
@@ -74,8 +74,8 @@ namespace Infrastructure.Test.Repositories
 
             var results = sut.List(new ListRequest() { PageSize = 10, PageNumber = 1 });
 
-            Assert.AreEqual(1, results.TotalCount);
-            Assert.AreEqual("Test", results.Results[0].UserName);
+            Assert.That(results.TotalCount, Is.EqualTo(1));
+            Assert.That(results.Results[0].UserName, Is.EqualTo("Test"));
         }
 
         [Test]
@@ -92,8 +92,8 @@ namespace Infrastructure.Test.Repositories
 
             var results = sut.List(new ListRequest() { PageSize = 3, PageNumber = 2 });
 
-            Assert.AreEqual(4, results.TotalCount);
-            Assert.AreEqual("Test4", results.Results[0].UserName);
+            Assert.That(results.TotalCount, Is.EqualTo(4));
+            Assert.That(results.Results[0].UserName, Is.EqualTo("Test4"));
         }
 
         [Test]
@@ -116,9 +116,9 @@ namespace Infrastructure.Test.Repositories
                     OrderDirection = SortDirection.Desc
                 });
 
-            Assert.AreEqual(3, results.TotalCount);
-            Assert.AreEqual("C", results.Results[0].UserName);
-            Assert.AreEqual("A", results.Results[2].UserName);
+            Assert.That(results.TotalCount, Is.EqualTo(3));
+            Assert.That(results.Results[0].UserName, Is.EqualTo("C"));
+            Assert.That(results.Results[2].UserName, Is.EqualTo("A"));
         }
 
         [Test]
@@ -129,13 +129,13 @@ namespace Infrastructure.Test.Repositories
             Session.Flush();
 
             var results = sut.List(new ListRequest() { PageSize = 3, PageNumber = 1 });
-            Assert.AreEqual(1, results.TotalCount);
+            Assert.That(results.TotalCount, Is.EqualTo(1));
 
             sut.Delete("User1");
             Session.Flush();
 
             results = sut.List(new ListRequest() {PageSize = 3, PageNumber = 1});
-            Assert.AreEqual(0, results.TotalCount);
+            Assert.That(results.TotalCount, Is.EqualTo(0));
         }
     }
 }

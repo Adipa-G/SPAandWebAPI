@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Owin;
 
 namespace Web.Middleware
@@ -25,7 +26,7 @@ namespace Web.Middleware
                 var cookieValue = context.Request.Cookies[XsrfTokenCookie];
                 var header = context.Request.Headers[XsrfTokenHeader];
 
-                if (cookieValue != header)
+                if (cookieValue != HttpUtility.UrlDecode(header))
                 {
                     valid = false;
                 }

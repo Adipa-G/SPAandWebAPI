@@ -39,7 +39,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.Levels();
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             _logViewRepository.Received(1).GetAllLevels();
         }
 
@@ -51,7 +51,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.Loggers();
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             _logViewRepository.Received(1).GetAllLoggers();
         }
 
@@ -63,7 +63,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.LogMessages(new LogMessageListRequest());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             _logViewRepository.Received(1).GetLogMessages(Arg.Any<LogMessageListRequest>());
         }
 
@@ -75,7 +75,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.LogHttp(new LogHttpListRequest());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));  
             _logViewRepository.Received(1).GetLogHttp(Arg.Any<LogHttpListRequest>());
         }
     }

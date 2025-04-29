@@ -39,7 +39,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.Register(new UserModel());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.OK,result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             _authRepository.Received(1).RegisterUser(Arg.Any<UserModel>());
         }
 
@@ -51,7 +51,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.Register(new UserModel());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
             _authRepository.Received(1).RegisterUser(Arg.Any<UserModel>());
         }
 
@@ -63,7 +63,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.List(new ListRequest());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             _authRepository.Received(1).List(Arg.Any<ListRequest>());
         }
 
@@ -75,7 +75,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.Delete("abc");
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             _authRepository.Received(1).Delete("abc");
         }
     }
