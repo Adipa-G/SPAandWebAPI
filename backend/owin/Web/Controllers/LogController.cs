@@ -33,7 +33,7 @@ namespace Web.Controllers
         [Route("logMessages")]
         public IHttpActionResult LogMessages(LogMessageListRequest request)
         {
-            //throw new Exception("sfuffed");
+            // throw new Exception("sfuffed");
             return Ok(_logViewRepository.GetLogMessages(request));
         }
 
