@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -21,15 +21,15 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <ItemGroup>
-    <PackageReference Include="Antlr3.Runtime" Version="3.5.1" />
-    <PackageReference Include="FluentNHibernate" Version="3.4.1" />
-    <PackageReference Include="Iesi.Collections" Version="4.1.1" />
-    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
-    <PackageReference Include="NHibernate" Version="5.5.2" />
-    <PackageReference Include="NHibernate.AspNet.Identity" Version="5.0.2" />
-    <PackageReference Include="Ninject" Version="3.3.4" />
-    <PackageReference Include="Remotion.Linq" Version="2.2.0" />
-    <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
+    <PackageReference Include="Antlr3.Runtime" />
+    <PackageReference Include="FluentNHibernate" />
+    <PackageReference Include="Iesi.Collections" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" />
+    <PackageReference Include="NHibernate" />
+    <PackageReference Include="NHibernate.AspNet.Identity" />
+    <PackageReference Include="Ninject" />
+    <PackageReference Include="Remotion.Linq" />
+    <PackageReference Include="Remotion.Linq.EagerFetching" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
