@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Domain.Interfaces.Repositories;
+﻿using Domain.Interfaces.Repositories;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using NHibernate;
 using NHibernate.AspNet.Identity;
 using Ninject;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Web.OAuth
 {
@@ -40,7 +40,7 @@ namespace Web.OAuth
 
             if (allowedOrigin == null) allowedOrigin = "*";
 
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {allowedOrigin});
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
             IdentityUser user;
             var sessionFactory = _kernel.Get<ISessionFactory>();

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
 using Domain.Models.Log;
 using Infrastructure.Repositories;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Linq;
 
 namespace Infrastructure.Test.Repositories
 {
@@ -46,12 +46,12 @@ namespace Infrastructure.Test.Repositories
             _config.LogLevelGeneral.Returns(LogLevel.Debug);
 
             var sut = new LogWriterRepository(Session.SessionFactory);
-            sut.Log(LogLevel.Error,LoggerName.General, "Test Message", new Exception());
+            sut.Log(LogLevel.Error, LoggerName.General, "Test Message", new Exception());
             sut.LogThreadExec(_config, Session);
             FlushAndClear();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
-            
+
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result.Any(r => r.Message == "Test Message"), Is.True);
         }
@@ -102,7 +102,7 @@ namespace Infrastructure.Test.Repositories
             var result = Session.QueryOver<LogHttpRecord>().List<LogHttpRecord>();
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.Any(r => r.RequestIdentity == "user"), Is.True);    
+            Assert.That(result.Any(r => r.RequestIdentity == "user"), Is.True);
         }
 
         [Test]

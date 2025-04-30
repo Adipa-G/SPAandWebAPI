@@ -2,7 +2,7 @@
 
 namespace Domain.Models
 {
-    public class ListResult<T> where T:class
+    public class ListResult<T> where T : class
     {
         public IList<T> Results { get; set; }
 

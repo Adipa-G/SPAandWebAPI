@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Enum;
+﻿using Domain.Enum;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
@@ -13,6 +6,13 @@ using Microsoft.Owin;
 using Ninject;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Security.Principal;
+using System.Text;
+using System.Threading.Tasks;
 using Web.Middleware;
 
 namespace Web.Test.Middleware
@@ -86,19 +86,19 @@ namespace Web.Test.Middleware
         public async Task GivenMiddleware_WhenInvoke_LogRequest()
         {
             HttpLogModel logModel = null;
-            _logRepository.LogRequest(Arg.Any<LogLevel>(),Arg.Do<HttpLogModel>(x => logModel = x),Arg.Any<Exception>());
+            _logRepository.LogRequest(Arg.Any<LogLevel>(), Arg.Do<HttpLogModel>(x => logModel = x), Arg.Any<Exception>());
 
             _config.LogRequests.Returns(true);
-            
-            _request.User.Returns(new GenericPrincipal(new GenericIdentity("ABC"), new[] {"a", "b"}));
+
+            _request.User.Returns(new GenericPrincipal(new GenericIdentity("ABC"), new[] { "a", "b" }));
             _request.Body.Returns(new MemoryStream(Encoding.UTF8.GetBytes("request body")));
             _request.Method.Returns("GET");
             _request.RemoteIpAddress.Returns("127.0.0.1");
             _request.Uri.Returns(new Uri("http://www.google.com"));
             _request.ContentType.Returns("application/json");
 
-            var headers = new Dictionary<string,string[]>();
-            headers["key"] = new [] {"value"};
+            var headers = new Dictionary<string, string[]>();
+            headers["key"] = new[] { "value" };
             _request.Headers.Returns(new HeaderDictionary(headers));
 
             _response.Body.Returns(new MemoryStream(new byte[20]));

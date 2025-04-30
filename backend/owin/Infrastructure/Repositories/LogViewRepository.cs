@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Domain;
+﻿using Domain;
 using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Repositories;
@@ -9,6 +6,9 @@ using Domain.Models;
 using Domain.Models.Log;
 using NHibernate;
 using NHibernate.Criterion;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Infrastructure.Repositories
 {
@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
 
         public List<string> GetAllLevels()
         {
-            return new List<string>(Enum.GetNames(typeof (LogLevel)));
+            return new List<string>(Enum.GetNames(typeof(LogLevel)));
         }
 
         public List<string> GetAllLoggers()
@@ -71,7 +71,7 @@ namespace Infrastructure.Repositories
                                 Id = r.Id,
                                 LogTimestamp = r.LogTimestamp.Timestamp(),
                                 Message = r.Message,
-                                Level = Enum.GetName(typeof (LogLevel), r.Level),
+                                Level = Enum.GetName(typeof(LogLevel), r.Level),
                                 Logger = r.Logger,
                                 StackTrace = r.StackTrace
                             })
@@ -140,7 +140,7 @@ namespace Infrastructure.Repositories
                                 Request = r.Request.Length > 1000 ? r.Request.Substring(0, 1000) : r.Request,
                                 Status = string.Format("{0}\n{1}", r.StatusCode, r.ReasonPhrase),
                                 ResponseHeaders = r.ResponseHeaders,
-                                Response = r.Response.Length > 1000 ? r.Response.Substring(0,1000) : r.Response,
+                                Response = r.Response.Length > 1000 ? r.Response.Substring(0, 1000) : r.Response,
                                 Duration = r.CallDuration.TotalSeconds.ToString()
                             })
                     .ToList();

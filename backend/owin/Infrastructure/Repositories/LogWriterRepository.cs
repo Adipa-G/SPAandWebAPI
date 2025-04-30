@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
 using NHibernate;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
 
 namespace Infrastructure.Repositories
 {
@@ -108,7 +108,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public void LogThreadExec(IConfig config,ISession session)
+        public void LogThreadExec(IConfig config, ISession session)
         {
             lock (_messageRecords)
             {

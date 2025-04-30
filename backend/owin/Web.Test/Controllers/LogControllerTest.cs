@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Web.Http.Controllers;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Web.Http;
-using System.Web.Http.Routing;
-using Domain.Interfaces.Repositories;
+﻿using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Log;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Routing;
 using Web.Controllers;
 
 namespace Web.Test.Controllers
@@ -34,7 +34,7 @@ namespace Web.Test.Controllers
         [Test]
         public void GivenLevels_WhenLevels_ThenReturn()
         {
-            _logViewRepository.GetAllLevels().Returns(new List<string>() {"Info", "Error"});
+            _logViewRepository.GetAllLevels().Returns(new List<string>() { "Info", "Error" });
 
             var actionResult = _controller.Levels();
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
@@ -75,7 +75,7 @@ namespace Web.Test.Controllers
             var actionResult = _controller.LogHttp(new LogHttpListRequest());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;
 
-            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));  
+            Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             _logViewRepository.Received(1).GetLogHttp(Arg.Any<LogHttpListRequest>());
         }
     }

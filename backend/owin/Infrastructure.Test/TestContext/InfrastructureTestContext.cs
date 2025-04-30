@@ -1,8 +1,8 @@
-﻿using System;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Enum;
 using NHibernate;
 using NHibernate.AspNet.Identity;
+using System;
 
 namespace Infrastructure.Test.TestContext
 {
@@ -21,7 +21,7 @@ namespace Infrastructure.Test.TestContext
             _session.Save(user);
         }
 
-        public void LogMessage(LogLevel level, string logger,string message)
+        public void LogMessage(LogLevel level, string logger, string message)
         {
             _session.Save(new LogMessageRecord()
             {
@@ -33,7 +33,7 @@ namespace Infrastructure.Test.TestContext
             });
         }
 
-        public void LogHttp(LogLevel level,string trackId)
+        public void LogHttp(LogLevel level, string trackId)
         {
             _session.Save(new LogHttpRecord()
             {
@@ -44,7 +44,7 @@ namespace Infrastructure.Test.TestContext
                 StatusCode = 200,
                 RequestIdentity = "User",
                 CalledOn = DateTime.UtcNow,
-                CallDuration = new TimeSpan(0,1,0),
+                CallDuration = new TimeSpan(0, 1, 0),
                 CallerAddress = "127.0.0.1",
                 ReasonPhrase = "OK",
                 Verb = "GET",

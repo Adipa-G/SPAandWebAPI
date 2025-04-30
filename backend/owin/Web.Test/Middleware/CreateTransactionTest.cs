@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using NHibernate;
 using Ninject;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Threading.Tasks;
 using Web.Middleware;
 
 namespace Web.Test.Middleware
@@ -13,8 +13,8 @@ namespace Web.Test.Middleware
     public class CreateTransactionTest
     {
         private ISessionFactory _sessionFactory;
-        private ISession _session; 
-        private ITransaction _transaction; 
+        private ISession _session;
+        private ITransaction _transaction;
         private IKernel _kernel;
         private IOwinContext _context;
         private IOwinRequest _request;
@@ -75,7 +75,7 @@ namespace Web.Test.Middleware
             _request.Method.Returns("POST");
 
             Assert.ThrowsAsync<Exception>(() => _createTransaction.Invoke(_context));
-            
+
             _session.Received(1).BeginTransaction();
             _transaction.Received(0).Commit();
             _transaction.Received(1).Rollback();

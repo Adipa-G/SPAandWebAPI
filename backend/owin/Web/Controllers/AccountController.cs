@@ -1,9 +1,9 @@
-﻿using System;
-using System.Web.Http;
-using Domain.Interfaces.Repositories;
+﻿using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Auth;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Web.Http;
 
 namespace Web.Controllers
 {
@@ -22,20 +22,20 @@ namespace Web.Controllers
         [Route("Register")]
         public IHttpActionResult Register(UserModel userModel)
         {
-             if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-             IdentityResult result = _authRepository.RegisterUser(userModel);
-             IHttpActionResult errorResult = GetErrorResult(result);
+            IdentityResult result = _authRepository.RegisterUser(userModel);
+            IHttpActionResult errorResult = GetErrorResult(result);
 
-             if (errorResult != null)
-             {
-                 return errorResult;
-             }
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
 
-             return Ok();
+            return Ok();
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

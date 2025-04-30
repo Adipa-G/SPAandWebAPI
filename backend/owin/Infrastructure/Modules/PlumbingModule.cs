@@ -1,5 +1,4 @@
-﻿using System.Web.Http.ExceptionHandling;
-using Domain.Interfaces.Config;
+﻿using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
 using Infrastructure.Config;
 using Infrastructure.Plumbing;
@@ -7,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using NHibernate;
 using NHibernate.AspNet.Identity;
 using Ninject.Modules;
+using System.Web.Http.ExceptionHandling;
 using ExceptionLogger = Infrastructure.Plumbing.ExceptionLogger;
 
 namespace Infrastructure.Modules

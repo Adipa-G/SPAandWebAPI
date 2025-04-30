@@ -38,8 +38,8 @@ namespace Infrastructure.Test.Repositories
         [Test]
         public void GivenNoUser_WhenRegisterUser_ThenCreateUser()
         {
-            var sut = new AuthRepository(Session,new UserManager<IdentityUser>(new UserStore<IdentityUser>(Session)));
-            var result = sut.RegisterUser(new UserModel() {UserName = "a", Password = "abcdef",ConfirmPassword = "abcdef" });
+            var sut = new AuthRepository(Session, new UserManager<IdentityUser>(new UserStore<IdentityUser>(Session)));
+            var result = sut.RegisterUser(new UserModel() { UserName = "a", Password = "abcdef", ConfirmPassword = "abcdef" });
             FlushAndClear();
 
             var user = sut.FindUser("a", "abcdef");
@@ -59,7 +59,7 @@ namespace Infrastructure.Test.Repositories
             sut.AddLogin(user.Id, new UserLoginInfo("facebook", "key1"));
             FlushAndClear();
 
-            user = sut.Find(new UserLoginInfo("facebook","key1"));
+            user = sut.Find(new UserLoginInfo("facebook", "key1"));
             Assert.That(user, Is.Not.Null);
         }
 
@@ -134,7 +134,7 @@ namespace Infrastructure.Test.Repositories
             sut.Delete("User1");
             Session.Flush();
 
-            results = sut.List(new ListRequest() {PageSize = 3, PageNumber = 1});
+            results = sut.List(new ListRequest() { PageSize = 3, PageNumber = 1 });
             Assert.That(results.TotalCount, Is.EqualTo(0));
         }
     }

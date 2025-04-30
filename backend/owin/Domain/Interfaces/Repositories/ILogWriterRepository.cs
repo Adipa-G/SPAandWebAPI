@@ -1,6 +1,6 @@
-﻿using System;
-using Domain.Enum;
+﻿using Domain.Enum;
 using Domain.Models.Log;
+using System;
 
 namespace Domain.Interfaces.Repositories
 {

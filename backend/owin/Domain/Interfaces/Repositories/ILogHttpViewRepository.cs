@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Domain.Models;
+﻿using Domain.Models;
 using Domain.Models.Log;
+using System.Collections.Generic;
 
 namespace Domain.Interfaces.Repositories
 {

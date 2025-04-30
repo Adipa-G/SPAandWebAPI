@@ -1,7 +1,7 @@
-﻿using System;
-using System.Web.Http;
-using Domain.Interfaces.Repositories;
+﻿using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
+using System;
+using System.Web.Http;
 
 namespace Web.Controllers
 {

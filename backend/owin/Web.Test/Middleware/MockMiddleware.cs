@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Owin;
+using System;
 using System.Threading.Tasks;
-using Microsoft.Owin;
 
 namespace Web.Test.Middleware
 {
@@ -21,7 +21,7 @@ namespace Web.Test.Middleware
             {
                 throw new Exception();
             }
-            InvokeCount ++;
+            InvokeCount++;
             return Task.FromResult(0);
         }
     }

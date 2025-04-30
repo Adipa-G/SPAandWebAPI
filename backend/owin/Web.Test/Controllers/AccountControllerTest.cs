@@ -1,15 +1,15 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Web.Http;
-using System.Web.Http.Controllers;
-using System.Web.Http.Routing;
-using Domain.Interfaces.Repositories;
+﻿using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Auth;
 using Microsoft.AspNet.Identity;
 using NSubstitute;
 using NUnit.Framework;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Routing;
 using Web.Controllers;
 
 namespace Web.Test.Controllers
@@ -46,7 +46,7 @@ namespace Web.Test.Controllers
         [Test]
         public void GivenFailedRegistration_WhenRegister_ThenReturnBadRequest()
         {
-            _authRepository.RegisterUser(Arg.Any<UserModel>()).Returns(new IdentityResult(new[] {"Error"}));
+            _authRepository.RegisterUser(Arg.Any<UserModel>()).Returns(new IdentityResult(new[] { "Error" }));
 
             var actionResult = _controller.Register(new UserModel());
             var result = actionResult.ExecuteAsync(new CancellationToken()).Result;

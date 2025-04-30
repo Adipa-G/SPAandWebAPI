@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using Domain.Interfaces.Repositories;
+﻿using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Auth;
 using Microsoft.AspNet.Identity;
 using NHibernate;
 using NHibernate.AspNet.Identity;
 using NHibernate.Criterion;
+using System.Linq;
 
 namespace Infrastructure.Repositories
 {
@@ -14,13 +14,13 @@ namespace Infrastructure.Repositories
         private ISession _session;
         private UserManager<IdentityUser> _userManager;
 
-        public AuthRepository(ISession session,UserManager<IdentityUser> userManager)
+        public AuthRepository(ISession session, UserManager<IdentityUser> userManager)
         {
             _session = session;
             _userManager = userManager;
         }
 
-        public  IdentityResult RegisterUser(UserModel userModel)
+        public IdentityResult RegisterUser(UserModel userModel)
         {
             IdentityUser user = new IdentityUser
             {
@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
             IdentityUser user = _userManager.Find(userName, password);
             return user;
         }
-        
+
         public IdentityUser Find(UserLoginInfo loginInfo)
         {
             IdentityUser user = _userManager.Find(loginInfo);
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
             return result;
         }
 
-        public  IdentityResult AddLogin(string userId, UserLoginInfo login)
+        public IdentityResult AddLogin(string userId, UserLoginInfo login)
         {
             var result = _userManager.AddLogin(userId, login);
             return result;

@@ -12,7 +12,7 @@ namespace Web.Modules
         public override void Load()
         {
             Bind<IAuthorizationServerOptionsProvider>().To<AuthorizationServerOptionsProvider>().InTransientScope();
-            Bind<IAuthorizationServerProvider>().To<AuthorizationServerProvider>().InTransientScope(); 
+            Bind<IAuthorizationServerProvider>().To<AuthorizationServerProvider>().InTransientScope();
             Bind<ILogger>().ToConstant(Log.Logger).InSingletonScope();
         }
     }

@@ -1,11 +1,11 @@
-﻿using System;
-using Domain;
+﻿using Domain;
 using Domain.Enum;
 using Domain.Models;
 using Domain.Models.Log;
 using Infrastructure.Repositories;
 using Infrastructure.Test.TestContext;
 using NUnit.Framework;
+using System;
 
 namespace Infrastructure.Test.Repositories
 {
@@ -62,7 +62,7 @@ namespace Infrastructure.Test.Repositories
             FlushAndClear();
 
             var sut = new LogViewRepository(Session);
-            var result = sut.GetLogMessages(new LogMessageListRequest() {LogLevel = LogLevel.Error, PageSize = 10});
+            var result = sut.GetLogMessages(new LogMessageListRequest() { LogLevel = LogLevel.Error, PageSize = 10 });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
@@ -76,7 +76,7 @@ namespace Infrastructure.Test.Repositories
             FlushAndClear();
 
             var sut = new LogViewRepository(Session);
-            var result = sut.GetLogMessages(new LogMessageListRequest() {Logger = "Test", PageSize = 10});
+            var result = sut.GetLogMessages(new LogMessageListRequest() { Logger = "Test", PageSize = 10 });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
@@ -92,11 +92,11 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result =
                 sut.GetLogMessages(new LogMessageListRequest()
-                                   {
-                                       FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
-                                       PageNumber = 1,
-                                       PageSize = 10
-                                   });
+                {
+                    FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
+                    PageNumber = 1,
+                    PageSize = 10
+                });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
@@ -126,8 +126,8 @@ namespace Infrastructure.Test.Repositories
         public void GivenLogMessages_WhenGetLogMessagesWithOrderAsc_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
-            context.LogMessage(LogLevel.Error, "Test","A message");
-            context.LogMessage(LogLevel.Error, "Test","B message");
+            context.LogMessage(LogLevel.Error, "Test", "A message");
+            context.LogMessage(LogLevel.Error, "Test", "B message");
             FlushAndClear();
 
             var sut = new LogViewRepository(Session);
@@ -199,7 +199,7 @@ namespace Infrastructure.Test.Repositories
         public void GivenLevelMatching_WhenGetLogHttp_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
-            context.LogHttp(LogLevel.Error,"Track Id");
+            context.LogHttp(LogLevel.Error, "Track Id");
             FlushAndClear();
 
             var sut = new LogViewRepository(Session);
@@ -233,10 +233,10 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result =
                 sut.GetLogHttp(new LogHttpListRequest()
-                               {
-                                   FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
-                                   PageSize = 10
-                               });
+                {
+                    FromDate = DateTime.UtcNow.AddDays(-1).Timestamp(),
+                    PageSize = 10
+                });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].TrackingId, Is.EqualTo("Track Id"));

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using Domain.Enum;
+﻿using Domain.Enum;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Repositories;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
 
 namespace Infrastructure.Config
 {

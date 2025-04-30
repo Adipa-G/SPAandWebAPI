@@ -1,6 +1,6 @@
-using System;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
+using System;
 
 namespace Web.OAuth
 {

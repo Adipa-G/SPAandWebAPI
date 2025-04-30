@@ -1,16 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Domain.Enum;
+﻿using Domain.Enum;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
 using Microsoft.Owin;
 using Ninject;
 using Serilog;
+using System;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Web.Middleware
 {
@@ -22,7 +22,7 @@ namespace Web.Middleware
         [Inject]
         public IConfig Config { get; set; }
 
-        public RequestResponseLog(OwinMiddleware next,IKernel kernel) : base(next)
+        public RequestResponseLog(OwinMiddleware next, IKernel kernel) : base(next)
         {
             kernel.Inject(this);
 
@@ -49,17 +49,17 @@ namespace Web.Middleware
 
                 await Next.Invoke(context);
 
-                var error = context.Response != null && context.Response.StatusCode != (int) HttpStatusCode.OK;
+                var error = context.Response != null && context.Response.StatusCode != (int)HttpStatusCode.OK;
                 if (Config.LogRequests
                     || error)
                 {
-                    UpdateForResponse(httpLogModel,context.Response, responseStream);
-                    LogRepository.LogRequest(error? LogLevel.Error : LogLevel.Info, httpLogModel, null);
+                    UpdateForResponse(httpLogModel, context.Response, responseStream);
+                    LogRepository.LogRequest(error ? LogLevel.Error : LogLevel.Info, httpLogModel, null);
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex,ex.Message);
+                Log.Error(ex, ex.Message);
                 UpdateForResponse(httpLogModel, context.Response, responseStream);
                 LogRepository.LogRequest(LogLevel.Info, httpLogModel, ex);
             }
@@ -102,7 +102,7 @@ namespace Web.Middleware
             model.StatusCode = response.StatusCode;
             model.ReasonPhrase = response.ReasonPhrase;
             model.ResponseHeaders = GetHeaderList(response.Headers);
-            
+
             if (IsTextContentType(response.ContentType))
             {
                 responseStream.Seek(0, SeekOrigin.Begin);
@@ -112,7 +112,7 @@ namespace Web.Middleware
             {
                 model.Response = $"Content type : {response.ContentType}, length : {response.Body.Length} bytes";
             }
-            
+
             model.CallDuration = DateTime.UtcNow - model.CalledOn;
         }
 
@@ -121,7 +121,7 @@ namespace Web.Middleware
             var sb = new StringBuilder();
             foreach (var keyValuePair in dictionary)
             {
-                sb.AppendFormat("[Key : {0}, Value : {1}],", keyValuePair.Key, String.Join(",",keyValuePair.Value));
+                sb.AppendFormat("[Key : {0}, Value : {1}],", keyValuePair.Key, String.Join(",", keyValuePair.Value));
             }
             return sb.ToString();
         }
@@ -138,7 +138,7 @@ namespace Web.Middleware
         {
             if (contentType == null)
                 return Encoding.UTF8;
-            
+
             try
             {
                 var charset = "utf-8";

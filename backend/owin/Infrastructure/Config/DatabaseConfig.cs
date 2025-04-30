@@ -1,5 +1,5 @@
-﻿using System.Configuration;
-using Domain.Interfaces.Config;
+﻿using Domain.Interfaces.Config;
+using System.Configuration;
 
 namespace Infrastructure.Config
 {

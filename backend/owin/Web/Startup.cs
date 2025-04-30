@@ -1,8 +1,4 @@
-﻿using System;
-using System.Web.Http;
-using System.Web.Http.ExceptionHandling;
-using System.Web.Routing;
-using Domain.Interfaces.Plumbing;
+﻿using Domain.Interfaces.Plumbing;
 using Infrastructure.Modules;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
@@ -13,6 +9,10 @@ using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using Serilog;
+using System;
+using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using System.Web.Routing;
 using Web;
 using Web.Middleware;
 using Web.Modules;
@@ -31,13 +31,13 @@ namespace Web
 
             var kernel = CreateKernelAndInitDefaults();
 
-            ConfigureOAuth(app,kernel);
+            ConfigureOAuth(app, kernel);
 
             app.UseNinjectMiddleware(() => kernel);
             app.Use(typeof(RequestResponseLog), kernel);
-            app.Use(typeof(CreateTransaction),kernel);
+            app.Use(typeof(CreateTransaction), kernel);
             app.Use(typeof(ValidateAntiForgeryToken));
-            
+
             var config = new HttpConfiguration();
             config.Services.Add(typeof(IExceptionLogger), kernel.Get<IExceptionLogger>());
             config.Filters.Add(new AuthorizeAttribute());
@@ -45,11 +45,11 @@ namespace Web
             WebApiConfig.Register(config);
             app.UseWebApi(config);
             app.UseNinjectWebApi(config);
- 
+
             app.UseCors(CorsOptions.AllowAll);
         }
 
-        private void ConfigureOAuth(IAppBuilder app,IKernel kernel)
+        private void ConfigureOAuth(IAppBuilder app, IKernel kernel)
         {
             //use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
@@ -58,7 +58,7 @@ namespace Web
             var oAuthServerOptions = kernel.Get<IAuthorizationServerOptionsProvider>().GetOptions();
             oAuthServerOptions.TokenEndpointPath = new PathString("/connect/token");
             oAuthServerOptions.AllowInsecureHttp = true;
-           
+
             // Token Generation
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(OAuthBearerOptions);
@@ -80,7 +80,7 @@ namespace Web
         private void InitDatabaseDefaults(IKernel kernel)
         {
             var nHibernateSessionFactory = kernel.Get<INHibernateSessionFactory>();
-            nHibernateSessionFactory.Update(true,true);
+            nHibernateSessionFactory.Update(true, true);
         }
 
         private void ConfigureLogging()

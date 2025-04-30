@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using NHibernate;
 using Ninject;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Web.Middleware
 {

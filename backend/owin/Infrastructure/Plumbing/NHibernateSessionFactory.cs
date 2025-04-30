@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
 using FluentNHibernate.Cfg;
@@ -10,6 +8,8 @@ using NHibernate.AspNet.Identity;
 using NHibernate.Cache;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Tool.hbm2ddl;
+using System;
+using System.Reflection;
 
 namespace Infrastructure.Plumbing
 {
@@ -40,7 +40,7 @@ namespace Infrastructure.Plumbing
                 .BuildConfiguration();
         }
 
-        public void Update( bool useStdOut, bool doUpdate)
+        public void Update(bool useStdOut, bool doUpdate)
         {
             CreateConfiguration(CreateDatabaseConfiguration())
                 .ExposeConfiguration(c => new SchemaUpdate(c).Execute(useStdOut, doUpdate))
@@ -73,10 +73,10 @@ namespace Infrastructure.Plumbing
                 .Cache(c => c.UseQueryCache().ProviderClass<HashtableCacheProvider>())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ConfigSetting>())
                 .ExposeConfiguration(x => x.SetInterceptor(_interceptor))
-                .ExposeConfiguration(x => x.AddDeserializedMapping(identityMapping,null));
+                .ExposeConfiguration(x => x.AddDeserializedMapping(identityMapping, null));
         }
 
-        private  IPersistenceConfigurer CreateDatabaseConfiguration()
+        private IPersistenceConfigurer CreateDatabaseConfiguration()
         {
             return SQLiteConfiguration
                 .Standard

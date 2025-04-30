@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Web.Middleware;
 
 namespace Web.Test.Middleware
@@ -42,7 +42,7 @@ namespace Web.Test.Middleware
 
             var responseCookies = new ResponseCookieCollection(new HeaderDictionary(new Dictionary<string, string[]>()));
             _response.Cookies.Returns(responseCookies);
-            
+
             await _validateAntiForgeryToken.Invoke(_context);
 
             Assert.That(_next.InvokeCount, Is.EqualTo(1));
@@ -54,12 +54,12 @@ namespace Web.Test.Middleware
             _request.Method.Returns("POST");
 
             var requestCookieDictionary = new Dictionary<string, string>();
-            requestCookieDictionary.Add("XSRF-TOKEN","123");
+            requestCookieDictionary.Add("XSRF-TOKEN", "123");
             var requestCookies = new RequestCookieCollection(requestCookieDictionary);
             _request.Cookies.Returns(requestCookies);
 
             var requestHeaderDictionary = new Dictionary<string, string[]>();
-            requestHeaderDictionary.Add("X-XSRF-TOKEN", new []{"123"});
+            requestHeaderDictionary.Add("X-XSRF-TOKEN", new[] { "123" });
             var requestHeaders = new HeaderDictionary(requestHeaderDictionary);
             _request.Headers.Returns(requestHeaders);
 

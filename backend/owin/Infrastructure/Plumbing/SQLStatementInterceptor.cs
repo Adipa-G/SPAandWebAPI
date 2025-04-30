@@ -6,7 +6,7 @@ using Ninject;
 
 namespace Infrastructure.Plumbing
 {
-    public class SQLStatementInterceptor : EmptyInterceptor , ISQLStatementInterceptor
+    public class SQLStatementInterceptor : EmptyInterceptor, ISQLStatementInterceptor
     {
         private readonly IKernel _kernel;
 
