@@ -115,7 +115,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public void LogThreadExec(IConfig config,ISession session)
+        public void LogThreadExec(IConfig config, ISession session)
         {
             lock (_messageRecords)
             {

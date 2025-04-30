@@ -23,10 +23,10 @@ namespace Infrastructure.Repositories
         public async Task<UserModel> RegisterUserAsync(UserModel userModel)
         {
             var user = new User()
-                       {
-                           UserName = userModel.UserName,
-                           Password = userModel.Password.CalcSha512()
-                       };
+            {
+                UserName = userModel.UserName,
+                Password = userModel.Password.CalcSha512()
+            };
 
             await _session.SaveAsync(user);
 
@@ -54,9 +54,9 @@ namespace Infrastructure.Repositories
             {
                 return null;
             }
-            return new UserModel() {UserName = user.UserName };
+            return new UserModel() { UserName = user.UserName };
         }
-        
+
         public async Task<ListResult<UserListItemModel>> ListAsync(ListRequest request)
         {
             var query = _session.QueryOver<User>();
@@ -71,13 +71,13 @@ namespace Infrastructure.Repositories
             }
 
             var totalCount = await query.RowCountAsync();
-            
+
             var queryResults = await query.Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ListAsync();
 
             var results = queryResults
-                .Select(r => new UserListItemModel() {UserName = r.UserName})
+                .Select(r => new UserListItemModel() { UserName = r.UserName })
                 .ToList();
 
             return new ListResult<UserListItemModel>()

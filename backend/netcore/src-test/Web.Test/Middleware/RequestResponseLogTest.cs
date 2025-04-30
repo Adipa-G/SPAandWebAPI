@@ -55,7 +55,7 @@ namespace Web.Test.Middleware
 
             _logRepository.Received(0).LogRequest(Arg.Any<LogLevel>(), Arg.Any<HttpLogModel>(), null);
         }
-        
+
         [Test]
         public void GivenMiddlewareAndLogNotEnabled_WhenInvokeWithException_Log()
         {
@@ -75,18 +75,18 @@ namespace Web.Test.Middleware
         public void GivenMiddleware_WhenInvoke_LogRequest()
         {
             HttpLogModel logModel = null;
-            _logRepository.LogRequest(Arg.Any<LogLevel>(),Arg.Do<HttpLogModel>(x => logModel = x),Arg.Any<Exception>());
+            _logRepository.LogRequest(Arg.Any<LogLevel>(), Arg.Do<HttpLogModel>(x => logModel = x), Arg.Any<Exception>());
 
             _config.LogRequests.Returns(true);
-            
+
             _context.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes("request body"));
             _context.Request.Method = "GET";
             _context.Request.ContentType = "application/json";
             var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.NameIdentifier, "ABC"));
-            _context.User = new ClaimsPrincipal(new ClaimsIdentity(claims, "Done")); 
+            _context.User = new ClaimsPrincipal(new ClaimsIdentity(claims, "Done"));
 
-            _context.Request.Headers.Add(new KeyValuePair<string, StringValues>("key","value"));
+            _context.Request.Headers.Add(new KeyValuePair<string, StringValues>("key", "value"));
 
             _context.Response.Body = new MemoryStream(new byte[20]);
 

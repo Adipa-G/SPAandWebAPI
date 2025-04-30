@@ -5,7 +5,7 @@ using NHibernate.SqlCommand;
 
 namespace Infrastructure.Test.Repositories
 {
-    public class TestSQLStatementInterceptor : EmptyInterceptor , ISQLStatementInterceptor
+    public class TestSQLStatementInterceptor : EmptyInterceptor, ISQLStatementInterceptor
     {
         public override SqlString OnPrepareStatement(SqlString sql)
         {

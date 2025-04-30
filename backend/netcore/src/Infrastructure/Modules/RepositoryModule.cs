@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Modules
 {
-    public class RepositoryModule 
+    public class RepositoryModule
     {
         public static void Load(IServiceCollection serviceCollection)
         {

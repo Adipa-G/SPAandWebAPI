@@ -8,7 +8,7 @@ namespace Infrastructure.Config
     public class Config : IConfig
     {
         private readonly IConfigRepository _repository;
-        private readonly Dictionary<string, object> _cache; 
+        private readonly Dictionary<string, object> _cache;
 
         public Config(IConfigRepository repository)
         {
@@ -34,14 +34,14 @@ namespace Infrastructure.Config
             set { _repository.SetSettingValue("LogSqlStatements", value); }
         }
 
-        private T Get<T>(string key,T defaultValue)
+        private T Get<T>(string key, T defaultValue)
         {
             if (_cache.ContainsKey(key))
             {
                 return (T)_cache[key];
             }
-            T value = _repository.GetSettingValue(key,defaultValue);
-            _cache.Add(key,value);
+            T value = _repository.GetSettingValue(key, defaultValue);
+            _cache.Add(key, value);
             return value;
         }
 
@@ -51,7 +51,7 @@ namespace Infrastructure.Config
             if (_cache.ContainsKey(key))
             {
                 _cache.Remove(key);
-                _cache.Add(key,value);
+                _cache.Add(key, value);
             }
         }
     }

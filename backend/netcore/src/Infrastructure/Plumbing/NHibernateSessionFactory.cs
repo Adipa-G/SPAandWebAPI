@@ -47,7 +47,7 @@ namespace Infrastructure.Plumbing
                 .BuildConfiguration();
         }
 
-        public void Update( bool useStdOut, bool doUpdate)
+        public void Update(bool useStdOut, bool doUpdate)
         {
             CreateConfiguration(CreateDatabaseConfiguration())
                 .ExposeConfiguration(c => new SchemaUpdate(c).Execute(useStdOut, doUpdate))
@@ -76,7 +76,7 @@ namespace Infrastructure.Plumbing
                 .ExposeConfiguration(x => x.SetInterceptor(_interceptor));
         }
 
-        private  IPersistenceConfigurer CreateDatabaseConfiguration()
+        private IPersistenceConfigurer CreateDatabaseConfiguration()
         {
             return SQLiteConfiguration
                 .Standard
@@ -86,7 +86,7 @@ namespace Infrastructure.Plumbing
 
         private IPersistenceConfigurer CreateTestDatabaseConfiguration()
         {
-            return  SQLiteConfiguration
+            return SQLiteConfiguration
                 .Standard
                 .InMemory()
                 .ShowSql();

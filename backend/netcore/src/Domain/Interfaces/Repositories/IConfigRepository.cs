@@ -2,7 +2,7 @@
 {
     public interface IConfigRepository
     {
-        T GetSettingValue<T>(string key,T defaultValue);
+        T GetSettingValue<T>(string key, T defaultValue);
         void SetSettingValue<T>(string key, T value);
     }
 }

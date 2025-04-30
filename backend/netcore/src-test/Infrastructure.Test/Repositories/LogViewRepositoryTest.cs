@@ -63,7 +63,7 @@ namespace Infrastructure.Test.Repositories
             await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
-            var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() {LogLevel = LogLevel.Error, PageSize = 10});
+            var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() { LogLevel = LogLevel.Error, PageSize = 10 });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
@@ -77,7 +77,7 @@ namespace Infrastructure.Test.Repositories
             await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
-            var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() {Logger = "Test", PageSize = 10});
+            var result = await sut.GetLogMessagesAsync(new LogMessageListRequest() { Logger = "Test", PageSize = 10 });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
@@ -93,11 +93,11 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result =
                 await sut.GetLogMessagesAsync(new LogMessageListRequest()
-                                   {
-                                       FromDate = DateTime.UtcNow.AddDays(-1).Ticks.Timestamp(),
-                                       PageNumber = 1,
-                                       PageSize = 10
-                                   });
+                {
+                    FromDate = DateTime.UtcNow.AddDays(-1).Ticks.Timestamp(),
+                    PageNumber = 1,
+                    PageSize = 10
+                });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].Message, Is.EqualTo("Test message"));
@@ -127,8 +127,8 @@ namespace Infrastructure.Test.Repositories
         public async Task GivenLogMessages_WhenGetLogMessagesAsyncWithOrderAsc_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
-            context.LogMessage(LogLevel.Error, "Test","A message");
-            context.LogMessage(LogLevel.Error, "Test","B message");
+            context.LogMessage(LogLevel.Error, "Test", "A message");
+            context.LogMessage(LogLevel.Error, "Test", "B message");
             await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
@@ -200,7 +200,7 @@ namespace Infrastructure.Test.Repositories
         public async Task GivenLevelMatching_WhenGetLogHttpAsync_ThenReturn()
         {
             var context = new InfrastructureTestContext(Session);
-            context.LogHttp(LogLevel.Error,"Track Id");
+            context.LogHttp(LogLevel.Error, "Track Id");
             await FlushAndClearAsync();
 
             var sut = new LogViewRepository(Session);
@@ -234,10 +234,10 @@ namespace Infrastructure.Test.Repositories
             var sut = new LogViewRepository(Session);
             var result =
                 await sut.GetLogHttpAsync(new LogHttpListRequest()
-                               {
-                                   FromDate = DateTime.UtcNow.AddDays(-1).Ticks.Timestamp(),
-                                   PageSize = 10
-                               });
+                {
+                    FromDate = DateTime.UtcNow.AddDays(-1).Ticks.Timestamp(),
+                    PageSize = 10
+                });
 
             Assert.That(result.TotalCount, Is.EqualTo(1));
             Assert.That(result.Results[0].TrackingId, Is.EqualTo("Track Id"));

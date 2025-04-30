@@ -31,14 +31,14 @@ namespace Web.Controllers
 
         [HttpPost]
         [Route("logMessages")]
-        public async Task<ActionResult> LogMessagesAsync([FromBody]LogMessageListRequest request)
+        public async Task<ActionResult> LogMessagesAsync([FromBody] LogMessageListRequest request)
         {
             return Ok(await _logViewRepository.GetLogMessagesAsync(request));
         }
 
         [HttpPost]
         [Route("logHttp")]
-        public async Task<ActionResult> LogHttpAsync([FromBody]LogHttpListRequest request)
+        public async Task<ActionResult> LogHttpAsync([FromBody] LogHttpListRequest request)
         {
             return Ok(await _logViewRepository.GetLogHttpAsync(request));
         }

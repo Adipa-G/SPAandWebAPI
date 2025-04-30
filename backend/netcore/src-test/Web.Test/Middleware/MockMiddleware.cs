@@ -21,7 +21,7 @@ namespace Web.Test.Middleware
             {
                 throw new Exception();
             }
-            InvokeCount ++;
+            InvokeCount++;
             return Task.FromResult(0);
         }
     }

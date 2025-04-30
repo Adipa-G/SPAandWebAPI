@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
             _session = session;
         }
 
-        public T GetSettingValue<T>(string key,T defaultValue)
+        public T GetSettingValue<T>(string key, T defaultValue)
         {
             ConfigSetting setting = _session.QueryOver<ConfigSetting>()
                    .Where(u => u.ConfigKey == key)
@@ -22,7 +22,7 @@ namespace Infrastructure.Repositories
 
             if (setting == null || string.IsNullOrWhiteSpace(setting.ConfigValue))
             {
-                SetSettingValue(key,defaultValue);
+                SetSettingValue(key, defaultValue);
                 return defaultValue;
             }
 

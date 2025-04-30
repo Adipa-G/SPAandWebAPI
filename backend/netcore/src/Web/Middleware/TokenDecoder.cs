@@ -18,7 +18,7 @@ namespace Web.Middleware
         private readonly IPathProvider _pathProvider;
         private readonly RequestDelegate _next;
 
-        public TokenDecoder(RequestDelegate next,IPathProvider pathProvider,string issuer)
+        public TokenDecoder(RequestDelegate next, IPathProvider pathProvider, string issuer)
         {
             _issuer = issuer;
             _next = next;
@@ -45,7 +45,7 @@ namespace Web.Middleware
                 {
                     ValidateAudience = false,
                     ValidIssuer = _issuer,
-                    IssuerSigningKeys = new List<SecurityKey>() { new X509SecurityKey(cert)}
+                    IssuerSigningKeys = new List<SecurityKey>() { new X509SecurityKey(cert) }
                 };
 
                 try

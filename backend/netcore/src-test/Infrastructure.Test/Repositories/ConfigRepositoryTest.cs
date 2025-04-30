@@ -35,7 +35,7 @@ namespace Infrastructure.Test.Repositories
         [Test]
         public async Task GivenSettingValue_WhenGetSettingValue_ThenReturnValue()
         {
-            await Session.SaveAsync(new ConfigSetting() {ConfigKey = "abc", ConfigValue = "def"});
+            await Session.SaveAsync(new ConfigSetting() { ConfigKey = "abc", ConfigValue = "def" });
             await FlushAndClearAsync();
 
             var sut = new ConfigRepository(Session);

@@ -22,25 +22,25 @@ namespace Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
-        public async Task<ActionResult> RegisterAsync([FromBody]UserModel userModel)
+        public async Task<ActionResult> RegisterAsync([FromBody] UserModel userModel)
         {
-             if (!ModelState.IsValid)
-             {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-             }
+            }
 
-             var result = await _userRepository.RegisterUserAsync(userModel);
-             if (result == null)
-             {
-                 return BadRequest();
-             }
+            var result = await _userRepository.RegisterUserAsync(userModel);
+            if (result == null)
+            {
+                return BadRequest();
+            }
 
-             return Ok();
+            return Ok();
         }
 
         [HttpPost]
         [Route("list")]
-        public async Task<ActionResult> ListAsync([FromBody]ListRequest request)
+        public async Task<ActionResult> ListAsync([FromBody] ListRequest request)
         {
             return Ok(await _userRepository.ListAsync(request));
         }

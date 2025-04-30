@@ -13,7 +13,7 @@ namespace Web.Test.Middleware
     [TestFixture]
     public class CreateTransactionTest
     {
-        private ISession _session; 
+        private ISession _session;
         private ITransaction _transaction;
         private IServiceProvider _serviceProvider;
 
@@ -46,7 +46,7 @@ namespace Web.Test.Middleware
         {
             _context.Request.Method = "GET";
 
-            await _createTransaction.Invoke(_context,_session);
+            await _createTransaction.Invoke(_context, _session);
 
             _session.Received(0).BeginTransaction();
             _transaction.Received(0).Commit();
@@ -58,7 +58,7 @@ namespace Web.Test.Middleware
         {
             _context.Request.Method = "POST";
 
-            await _createTransaction.Invoke(_context,_session);
+            await _createTransaction.Invoke(_context, _session);
 
             _session.Received(1).BeginTransaction();
             await _transaction.Received(1).CommitAsync();
@@ -73,7 +73,7 @@ namespace Web.Test.Middleware
             _context.Request.Method = "POST";
 
             Assert.ThrowsAsync<Exception>(() => _createTransaction.Invoke(_context, _session));
-            
+
             _session.Received(1).BeginTransaction();
             await _transaction.Received(0).CommitAsync();
             await _transaction.Received(1).RollbackAsync();

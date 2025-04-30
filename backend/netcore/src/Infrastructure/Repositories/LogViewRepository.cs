@@ -25,7 +25,7 @@ namespace Infrastructure.Repositories
 
         public List<string> GetAllLevels()
         {
-            return new List<string>(Enum.GetNames(typeof (LogLevel)));
+            return new List<string>(Enum.GetNames(typeof(LogLevel)));
         }
 
         public List<string> GetAllLoggers()
@@ -81,7 +81,7 @@ namespace Infrastructure.Repositories
                                 Id = r.Id,
                                 LogTimestamp = r.LogTimestamp.Timestamp(),
                                 Message = r.Message,
-                                Level = Enum.GetName(typeof (LogLevel), r.Level),
+                                Level = Enum.GetName(typeof(LogLevel), r.Level),
                                 Logger = r.Logger,
                                 StackTrace = r.StackTrace
                             })

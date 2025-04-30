@@ -38,14 +38,14 @@ namespace Infrastructure.Test.Repositories
         public async Task GivenNoUser_WhenRegisterUserAsync_ThenCreateUser()
         {
             var sut = new UserRepository(Session);
-            await sut.RegisterUserAsync(new UserModel() {UserName = "a", Password = "abcdef",ConfirmPassword = "abcdef" });
+            await sut.RegisterUserAsync(new UserModel() { UserName = "a", Password = "abcdef", ConfirmPassword = "abcdef" });
             await FlushAndClearAsync();
 
             var user = await sut.FindUserAsync("a", "abcdef");
 
             Assert.That(user, Is.Not.Null);
         }
-        
+
         [Test]
         public async Task GivenUser_WhenListAsync_ThenList()
         {
@@ -112,14 +112,14 @@ namespace Infrastructure.Test.Repositories
             await Session.FlushAsync();
 
             var sut = new UserRepository(Session);
-            
+
             var results = await sut.ListAsync(new ListRequest() { PageSize = 3, PageNumber = 1 });
             Assert.That(results.TotalCount, Is.EqualTo(1));
 
             await sut.DeleteAsync("A");
             await Session.FlushAsync();
 
-            results = await sut.ListAsync(new ListRequest() {PageSize = 3, PageNumber = 1});
+            results = await sut.ListAsync(new ListRequest() { PageSize = 3, PageNumber = 1 });
             Assert.That(results.TotalCount, Is.EqualTo(0));
         }
     }

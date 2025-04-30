@@ -16,11 +16,11 @@ namespace Infrastructure.Test.TestContext
 
         public void User(string name)
         {
-            var user = new User() {UserName = name, Password = "123"};
+            var user = new User() { UserName = name, Password = "123" };
             _session.Save(user);
         }
 
-        public void LogMessage(LogLevel level, string logger,string message)
+        public void LogMessage(LogLevel level, string logger, string message)
         {
             _session.Save(new LogMessageRecord()
             {
@@ -32,7 +32,7 @@ namespace Infrastructure.Test.TestContext
             });
         }
 
-        public void LogHttp(LogLevel level,string trackId)
+        public void LogHttp(LogLevel level, string trackId)
         {
             _session.Save(new LogHttpRecord()
             {
@@ -43,7 +43,7 @@ namespace Infrastructure.Test.TestContext
                 StatusCode = 200,
                 RequestIdentity = "User",
                 CalledOn = DateTime.UtcNow.Ticks,
-                CallDuration = new TimeSpan(0,1,0),
+                CallDuration = new TimeSpan(0, 1, 0),
                 CallerAddress = "127.0.0.1",
                 ReasonPhrase = "OK",
                 Verb = "GET",

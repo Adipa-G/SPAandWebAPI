@@ -52,12 +52,12 @@ namespace Infrastructure.Test.Repositories
             _config.LogLevelGeneral.Returns(LogLevel.Debug);
 
             var sut = new LogWriterRepository(_sessionFactory);
-            sut.Log(LogLevel.Error,LoggerName.General, "Test Message", new Exception());
+            sut.Log(LogLevel.Error, LoggerName.General, "Test Message", new Exception());
             sut.LogThreadExec(_config, Session);
             await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
-            
+
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result.Any(r => r.Message == "Test Message"));
         }
@@ -108,7 +108,7 @@ namespace Infrastructure.Test.Repositories
             var result = Session.QueryOver<LogHttpRecord>().List<LogHttpRecord>();
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.Any(r => r.RequestIdentity == "user"));    
+            Assert.That(result.Any(r => r.RequestIdentity == "user"));
         }
 
         [Test]

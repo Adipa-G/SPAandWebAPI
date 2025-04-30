@@ -29,7 +29,7 @@ namespace Web.Test.Controllers
         [Test]
         public async Task GivenSuccessRegistration_WhenRegisterAsync_ThenReturnOK()
         {
-            _userRepository.RegisterUserAsync(Arg.Any<UserModel>()).Returns(new UserModel() {UserName = "A"});
+            _userRepository.RegisterUserAsync(Arg.Any<UserModel>()).Returns(new UserModel() { UserName = "A" });
 
             var result = await _controller.RegisterAsync(new UserModel()) as OkResult;
 

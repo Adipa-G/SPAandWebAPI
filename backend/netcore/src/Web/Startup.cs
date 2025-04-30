@@ -45,7 +45,7 @@ namespace Web
 
             _configuration = builder.Build();
         }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IPathProvider>(_pathProvider);
@@ -75,7 +75,7 @@ namespace Web
             {
                 options.EnableEndpointRouting = false;
                 options.Filters.Add(new AuthorizeFilter(defaultPolicy));
-            }).AddNewtonsoftJson(); 
+            }).AddNewtonsoftJson();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
@@ -90,7 +90,7 @@ namespace Web
         {
             var issuer = $"http://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
 
-            var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory,"app"));
+            var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory, "app"));
             var defoptions = new DefaultFilesOptions();
             defoptions.DefaultFileNames.Clear();
             defoptions.FileProvider = fileProvider;
@@ -118,8 +118,8 @@ namespace Web
         private X509Certificate2 GetCertificate()
         {
             var cert = X509CertificateLoader.LoadPkcs12FromFile(Path.Combine("Configuration", "idsrv4test.pfx"),
-                "idsrv3test", 
-                X509KeyStorageFlags.DefaultKeySet, 
+                "idsrv3test",
+                X509KeyStorageFlags.DefaultKeySet,
                 new Pkcs12LoaderLimits()
                 {
                     PreserveStorageProvider = true

@@ -28,20 +28,20 @@ namespace Web.Test.Controllers
         [Test]
         public void GivenLevels_WhenLevels_ThenReturn()
         {
-            _logViewRepository.GetAllLevels().Returns(new List<string>() {"Info", "Error"});
+            _logViewRepository.GetAllLevels().Returns(new List<string>() { "Info", "Error" });
 
             var result = _controller.Levels() as OkObjectResult;
 
             Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             _logViewRepository.Received(1).GetAllLevels();
         }
-        
+
         [Test]
         public void GivenLoggers_WhenLoggers_ThenReturn()
         {
             _logViewRepository.GetAllLoggers().Returns(new List<string>() { "General", "SQL" });
 
-            var result = _controller.Loggers() as OkObjectResult; 
+            var result = _controller.Loggers() as OkObjectResult;
 
             Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             _logViewRepository.Received(1).GetAllLoggers();
@@ -52,7 +52,7 @@ namespace Web.Test.Controllers
         {
             _logViewRepository.GetLogMessagesAsync(Arg.Any<LogMessageListRequest>()).Returns(new ListResult<LogMessageListItemModel>());
 
-            var result = await _controller.LogMessagesAsync(new LogMessageListRequest()) as OkObjectResult; 
+            var result = await _controller.LogMessagesAsync(new LogMessageListRequest()) as OkObjectResult;
 
             Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             await _logViewRepository.Received(1).GetLogMessagesAsync(Arg.Any<LogMessageListRequest>());
@@ -63,7 +63,7 @@ namespace Web.Test.Controllers
         {
             _logViewRepository.GetLogHttpAsync(Arg.Any<LogHttpListRequest>()).Returns(new ListResult<LogHttpListItemModel>());
 
-            var result = await _controller.LogHttpAsync(new LogHttpListRequest()) as OkObjectResult; 
+            var result = await _controller.LogHttpAsync(new LogHttpListRequest()) as OkObjectResult;
 
             Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
             await _logViewRepository.Received(1).GetLogHttpAsync(Arg.Any<LogHttpListRequest>());

@@ -26,4 +26,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Adipa\CodePlayground\github-repo\SPAandWebAPI\backend\netcore\src\Domain\.editorconfig" />
+  </ItemGroup>
+
 </Project>
