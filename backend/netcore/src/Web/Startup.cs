@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
@@ -116,7 +117,13 @@ namespace Web
 
         private X509Certificate2 GetCertificate()
         {
-            var cert = new X509Certificate2(Path.Combine("Configuration", "idsrv4test.pfx"), "idsrv3test");
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(Path.Combine("Configuration", "idsrv4test.pfx"),
+                "idsrv3test", 
+                X509KeyStorageFlags.DefaultKeySet, 
+                new Pkcs12LoaderLimits()
+                {
+                    PreserveStorageProvider = true
+                });
             return cert;
         }
 

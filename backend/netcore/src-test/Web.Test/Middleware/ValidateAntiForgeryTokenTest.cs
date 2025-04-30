@@ -44,8 +44,8 @@ namespace Web.Test.Middleware
         {
             _request.Method = "POST";
 
-            _request.Headers.Add("Cookie", new CookieHeaderValue("XSRF-TOKEN", "123").ToString());
-            _request.Headers.Add("X-XSRF-TOKEN", "123");
+            _request.Headers.Append("Cookie", new CookieHeaderValue("XSRF-TOKEN", "123").ToString());
+            _request.Headers.Append("X-XSRF-TOKEN", "123");
 
             var result = _validateAntiForgeryToken.Invoke(_context);
             result.Wait();
@@ -58,8 +58,8 @@ namespace Web.Test.Middleware
         {
             _request.Method = "POST";
 
-            _request.Headers.Add("Cookie", new CookieHeaderValue("XSRF-TOKEN", "123").ToString());
-            _request.Headers.Add("X-XSRF-TOKEN", "1234");
+            _request.Headers.Append("Cookie", new CookieHeaderValue("XSRF-TOKEN", "123").ToString());
+            _request.Headers.Append("X-XSRF-TOKEN", "1234");
 
             var result = _validateAntiForgeryToken.Invoke(_context);
             result.Wait();

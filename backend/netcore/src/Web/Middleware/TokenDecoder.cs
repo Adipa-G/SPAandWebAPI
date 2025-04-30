@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -30,11 +31,14 @@ namespace Web.Middleware
             {
                 var token = context.Request.Headers["Authorization"][0];
                 token = token.Replace("Bearer ", "");
-                
-                var cert =
-                    new X509Certificate2(
-                        Path.Combine(_pathProvider.HostingDirectory, "Configuration", "idsrv4test.pfx"),
-                        "idsrv3test");
+
+                var cert = X509CertificateLoader.LoadPkcs12FromFile(Path.Combine("Configuration", "idsrv4test.pfx"),
+                    "idsrv3test",
+                    X509KeyStorageFlags.DefaultKeySet,
+                    new Pkcs12LoaderLimits()
+                    {
+                        PreserveStorageProvider = true
+                    });
 
                 var handler = new JwtSecurityTokenHandler();
                 var validationParameters = new TokenValidationParameters()

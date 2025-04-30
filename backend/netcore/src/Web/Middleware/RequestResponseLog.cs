@@ -90,7 +90,7 @@ namespace Web.Middleware
             var model = new HttpLogModel();
             model.TrackingId = Guid.NewGuid().ToString("d");
             request.HttpContext.TraceIdentifier = model.TrackingId;
-            request.HttpContext.Response.Headers.Add("Http-Tracking-Id", new[] { model.TrackingId });
+            request.HttpContext.Response.Headers.Append("Http-Tracking-Id", new[] { model.TrackingId });
 
             model.RequestIdentity = request.HttpContext.User != null && request.HttpContext.User.Identity.IsAuthenticated
                 ? ((ClaimsIdentity)request.HttpContext.User.Identity).Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value
