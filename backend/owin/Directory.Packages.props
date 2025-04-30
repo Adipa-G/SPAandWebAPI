@@ -11,7 +11,7 @@
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.22.0" />
     <PackageVersion Include="Microsoft.AspNet.Cors" Version="5.2.9" />
     <PackageVersion Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
-    <PackageVersion Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
+    <PackageVersion Include="Microsoft.AspNet.Identity.Owin" Version="2.2.4" />
     <PackageVersion Include="Microsoft.AspNet.WebApi" Version="5.2.9" />
     <PackageVersion Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
     <PackageVersion Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
