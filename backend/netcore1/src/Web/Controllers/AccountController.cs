@@ -22,9 +22,7 @@ public class AccountController : Controller
         _userManager = userManager;
         _applicationDbContext = applicationDbContext;
     }
-
-    //
-    // POST: /Account/Register
+    
     [HttpPost("~/api/Account/Register")]
     [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody] UserModel model)
@@ -51,13 +49,6 @@ public class AccountController : Controller
         return BadRequest(ModelState);
     }
 
-    #region Helpers
-
-    // The following code creates the database and schema if they don't exist.
-    // This is a temporary workaround since deploying database through EF migrations is
-    // not yet supported in this release.
-    // Please see this http://go.microsoft.com/fwlink/?LinkID=615859 for more information on how to do deploy the database
-    // when publishing your application.
     private static void EnsureDatabaseCreated(ApplicationDbContext context)
     {
         if (!_databaseChecked)
@@ -74,6 +65,4 @@ public class AccountController : Controller
             ModelState.AddModelError(string.Empty, error.Description);
         }
     }
-
-    #endregion
 }

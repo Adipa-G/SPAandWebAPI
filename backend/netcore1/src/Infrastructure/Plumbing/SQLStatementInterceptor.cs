@@ -2,18 +2,22 @@
 using Domain.Interfaces.Plumbing;
 using Domain.Interfaces.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using NHibernate;
-using NHibernate.SqlCommand;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Plumbing
 {
-    public class SQLStatementInterceptor : EmptyInterceptor, ISQLStatementInterceptor
+    public class SQLStatementInterceptor : ILoggerFactory
     {
         private readonly IServiceProvider _serviceProvider;
 
         public SQLStatementInterceptor(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+        }
+
+        public ILogger CreateLogger(string categoryName)
+        {
+            return new SQLLogger();
         }
 
         public override SqlString OnPrepareStatement(SqlString sql)
@@ -31,6 +35,24 @@ namespace Infrastructure.Plumbing
             repo.LogSQL(sqlString);
 
             return sql;
+        }
+    }
+
+    class SQLLogger : ILogger
+    {
+        public bool IsEnabled(LogLevel logLevel)
+        {
+            return true;
+        }
+
+        public IDisposable BeginScope<TState>(TState state) where TState : notnull
+        {
+            return null;
+        }
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            
         }
     }
 }

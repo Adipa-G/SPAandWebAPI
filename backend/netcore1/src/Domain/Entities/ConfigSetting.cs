@@ -1,5 +1,8 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities
 {
+    [Table("ConfigSettings")]
     public class ConfigSetting
     {
         public virtual long Id { get; set; }
