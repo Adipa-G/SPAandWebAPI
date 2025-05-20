@@ -40,7 +40,7 @@ public class AuthorizationController : Controller
     }
 
     [HttpPost("~/connect/token"), IgnoreAntiforgeryToken, Produces("application/json")]
-    public async Task<IActionResult> Exchange()
+    public async Task<IActionResult> ExchangeAsync()
     {
         var request = HttpContext.GetOpenIddictServerRequest();
         if (request.IsPasswordGrantType())

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using NHibernate;
 
 namespace Domain.Interfaces.Plumbing
 {

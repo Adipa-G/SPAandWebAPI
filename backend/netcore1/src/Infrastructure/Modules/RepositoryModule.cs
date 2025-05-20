@@ -10,7 +10,6 @@ namespace Infrastructure.Modules
         {
             serviceCollection.AddSingleton<ILogWriterRepository, LogWriterRepository>();
 
-            serviceCollection.AddTransient<IUserRepository, UserRepository>();
             serviceCollection.AddTransient<IConfigRepository, ConfigRepository>();
             serviceCollection.AddTransient<ILogViewRepository, LogViewRepository>();
         }

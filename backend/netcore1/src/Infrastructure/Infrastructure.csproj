@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentNHibernate" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" />
+    <PackageReference Include="NHibernate" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

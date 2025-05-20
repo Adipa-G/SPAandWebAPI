@@ -5,8 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="FluentNHibernate" Version="3.4.1" />
-    <PackageVersion Include="IdentityServer4" Version="4.1.2" />
-    <PackageVersion Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
+	<PackageVersion Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
     <PackageVersion Include="Microsoft.AspNetCore.Diagnostics" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.2" />
@@ -16,7 +15,6 @@
     <PackageVersion Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.StaticFiles" Version="2.3.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.4" />

@@ -14,12 +14,6 @@ namespace Infrastructure.Test.TestContext
             _session = session;
         }
 
-        public void User(string name)
-        {
-            var user = new User() { UserName = name, Password = "123" };
-            _session.Save(user);
-        }
-
         public void LogMessage(LogLevel level, string logger, string message)
         {
             _session.Save(new LogMessageRecord()

@@ -2,6 +2,6 @@
 {
     public interface IDatabaseConfig
     {
-        string DatabaseFileName { get; }
+        string DatabasePath { get; }
     }
 }

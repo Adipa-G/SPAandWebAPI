@@ -1,5 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json.Serialization;
+using Domain.Interfaces.Config;
+using Domain.Interfaces.Plumbing;
+using Infrastructure.Converters;
+using Infrastructure.Modules;
 using Infrastructure.Plumbing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 using Quartz;
 using Web.Middleware;
 using Web.Models;
@@ -27,14 +33,21 @@ public class Startup
     
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
+        PlumbingModule.Load(services, Configuration);
+        RepositoryModule.Load(services);
 
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddControllers().AddJsonOptions(options =>
         {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            options.JsonSerializerOptions.Converters.Add(new IntNullableEnumConverter<Domain.Enum.LogLevel?>());
+        });
 
-            var dbFileName = Path.Combine(AppContext.BaseDirectory, Configuration["Database:DatabaseFileName"]);
+        services.AddDbContext<ApplicationDbContext>((sp,options) =>
+        {
+            var dbConfig = sp.GetService<IDatabaseConfig>();
+            
             // Configure the context to use sqlite.
-            options.UseSqlite($"Filename={dbFileName}");
+            options.UseSqlite($"Filename={dbConfig.DatabasePath}");
 
             // Register the entity sets needed by OpenIddict.
             // Note: use the generic overload if you need
@@ -106,6 +119,11 @@ public class Startup
         // Register the worker responsible for creating and seeding the SQL database.
         // Note: in a real world application, this step should be part of a setup script.
         services.AddHostedService<Worker>();
+
+        services.AddLogging(loggingBuilder =>
+        {
+            loggingBuilder.AddConsole(c => c.LogToStandardErrorThreshold = LogLevel.Information);
+        });
     }
 
     public void Configure(IApplicationBuilder app)
@@ -125,6 +143,8 @@ public class Startup
             .UseDeveloperExceptionPage();
 
         app.UseMiddleware<ValidateAntiForgeryToken>();
+        app.UseMiddleware<CreateTransaction>();
+        //TODO app.UseMiddleware<RequestResponseLog>();
 
         app.UseRouting();
 
@@ -136,5 +156,13 @@ public class Startup
             endpoints.MapControllers();
             endpoints.MapDefaultControllerRoute();
         });
+
+        InitDatabaseDefaults(app.ApplicationServices);
+    }
+
+    private void InitDatabaseDefaults(IServiceProvider services)
+    {
+        var nHibernateSessionFactory = services.GetService<INHibernateSessionFactory>();
+        nHibernateSessionFactory.Update(true, true);
     }
 }

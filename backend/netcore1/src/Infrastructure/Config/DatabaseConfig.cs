@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Domain.Interfaces.Config;
 using Microsoft.Extensions.Configuration;
 
@@ -8,11 +9,11 @@ namespace Infrastructure.Config
     {
         private IConfiguration _configuration;
 
-        public DatabaseConfig(IConfigurationRoot configuration)
+        public DatabaseConfig(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public string DatabaseFileName => _configuration["Database:DatabaseFileName"];
+        public string DatabasePath => Path.Combine(AppContext.BaseDirectory, _configuration["Database:DatabaseFileName"]);
     }
 }

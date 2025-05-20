@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentNHibernate" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NHibernate" />
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
