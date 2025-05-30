@@ -1,14 +1,13 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Domain.Models
+namespace Domain.Models;
+
+public enum SortDirection
 {
-    public enum SortDirection
-    {
-        [EnumMember(Value = "None")]
-        None = 0,
-        [EnumMember(Value = "Asc")]
-        Asc = 1,
-        [EnumMember(Value = "Desc")]
-        Desc = 2
-    }
+    [EnumMember(Value = "None")]
+    None = 0,
+    [EnumMember(Value = "Asc")]
+    Asc = 1,
+    [EnumMember(Value = "Desc")]
+    Desc = 2
 }

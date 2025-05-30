@@ -1,7 +1,6 @@
-﻿namespace Domain.Interfaces.Config
+﻿namespace Domain.Interfaces.Config;
+
+public interface IDatabaseConfig
 {
-    public interface IDatabaseConfig
-    {
-        string DatabasePath { get; }
-    }
+    string DatabasePath { get; }
 }

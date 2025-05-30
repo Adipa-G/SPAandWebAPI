@@ -1,10 +1,9 @@
-﻿namespace Domain.Enum
+﻿namespace Domain.Enum;
+
+public enum LogLevel
 {
-    public enum LogLevel
-    {
-        Info = 10,
-        Debug = 20,
-        Warn = 30,
-        Error = 40,
-    }
+    Info = 10,
+    Debug = 20,
+    Warn = 30,
+    Error = 40,
 }

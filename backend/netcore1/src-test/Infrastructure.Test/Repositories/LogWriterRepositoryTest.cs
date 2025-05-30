@@ -1,89 +1,92 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
-using Domain.Interfaces.Plumbing;
+using Domain.Interfaces.DataContext;
 using Domain.Models.Log;
 using Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Infrastructure.Test.Repositories
+namespace Infrastructure.Test.Repositories;
+
+[TestFixture]
+public class LogWriterRepositoryTest : RepositoryTestBase
 {
-    [TestFixture]
-    public class LogWriterRepositoryTest : RepositoryTestBase
+    private ILogConfig _logConfig;
+    private IApplicationDbContextFactory _contextFactory;
+
+    [SetUp]
+    public async Task SetUpAsync()
     {
-        private ILogConfig _logConfig;
-        private INHibernateSessionFactory _sessionFactory;
+        await BaseSetUpAsync();
 
-        [OneTimeSetUp]
-        protected override void OneTimeSetUp()
+        _logConfig = Substitute.For<ILogConfig>();
+        _contextFactory = Substitute.For<IApplicationDbContextFactory>();
+    }
+
+    [TearDown]
+    public async Task TearDownAsync()
+    {
+        await BaseTearDownAsync();
+
+        _logConfig = null;
+        _contextFactory = null;
+    }
+
+    [Test]
+    public async Task GivenConfigLevelPermits_WhenLog_ThenLog()
+    {
+        _logConfig.LogLevelGeneral.Returns(LogLevel.Debug);
+
+        await using (var context = CreateContext())
         {
-            base.OneTimeSetUp();
-            _logConfig = Substitute.For<ILogConfig>();
-            _sessionFactory = Substitute.For<INHibernateSessionFactory>();
-        }
-
-        [OneTimeTearDown]
-        protected override void OneTimeTearDown()
-        {
-            base.OneTimeTearDown();
-        }
-
-        [SetUp]
-        protected override void SetUp()
-        {
-            base.SetUp();
-            _sessionFactory.GetSessionFactory().Returns(Session.SessionFactory);
-            LogWriterRepository.TEST_MODE = true;
-        }
-
-        [TearDown]
-        public override async Task TearDownAsync()
-        {
-            await base.TearDownAsync();
-        }
-
-        [Test]
-        public async Task GivenConfigLevelPermits_WhenLog_ThenLog()
-        {
-            _logConfig.LogLevelGeneral.Returns(LogLevel.Debug);
-
-            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
+            var sut = new LogWriterRepository(_contextFactory, _logConfig);
             sut.Log(LogLevel.Error, LoggerName.General, "Test Message", new Exception());
-            sut.LogThreadExec(_logConfig, Session);
-            await FlushAndClearAsync();
+            sut.LogThreadExec(_logConfig, context);
+            await context.SaveChangesAsync();
+        }
 
-            var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
+        await using (var context = CreateContext())
+        {
+            var result = await context.LogMessageRecords.ToListAsync();
 
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result.Any(r => r.Message == "Test Message"));
         }
+    }
 
-        [Test]
-        public async Task GivenConfigLevelNotPermits_WhenLog_ThenDoesNot()
+    [Test]
+    public async Task GivenConfigLevelNotPermits_WhenLog_ThenDoesNot()
+    {
+        _logConfig.LogLevelGeneral.Returns(LogLevel.Error);
+
+        await using (var context = CreateContext())
         {
-            _logConfig.LogLevelGeneral.Returns(LogLevel.Error);
-
-            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
+            var sut = new LogWriterRepository(_contextFactory, _logConfig);
             sut.Log(LogLevel.Debug, LoggerName.General, "Test Message", new Exception());
-            sut.LogThreadExec(_logConfig, Session);
-            await FlushAndClearAsync();
+            sut.LogThreadExec(_logConfig, context);
+            await context.SaveChangesAsync();
+        }
 
-            var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
+        await using (var context = CreateContext())
+        {
+            var result = await context.LogMessageRecords.ToListAsync();
 
             Assert.That(result.Count, Is.EqualTo(0));
         }
+    }
 
-        [Test]
-        public async Task Given_WhenLogRequest_ThenLog()
+    [Test]
+    public async Task Given_WhenLogRequest_ThenLog()
+    {
+        _logConfig.LogLevelGeneral.Returns(LogLevel.Error);
+
+        await using (var context = CreateContext())
         {
-            _logConfig.LogLevelGeneral.Returns(LogLevel.Error);
-
-            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
-
+            var sut = new LogWriterRepository(_contextFactory, _logConfig);
             sut.LogRequest(LogLevel.Debug,
                 new HttpLogModel()
                 {
@@ -102,26 +105,35 @@ namespace Infrastructure.Test.Repositories
                     RequestIdentity = "user"
                 }, new Exception());
 
-            sut.LogThreadExec(_logConfig, Session);
-            await FlushAndClearAsync();
+            sut.LogThreadExec(_logConfig, context);
+            await context.SaveChangesAsync();
+        }
 
-            var result = Session.QueryOver<LogHttpRecord>().List<LogHttpRecord>();
+        await using (var context = CreateContext())
+        {
+            var result = await context.LogHttpRecords.ToListAsync();
 
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result.Any(r => r.RequestIdentity == "user"));
         }
+    }
 
-        [Test]
-        public async Task GivenConfigPermits_WhenLogSQL_TheLog()
+    [Test]
+    public async Task GivenConfigPermits_WhenLogSQL_TheLog()
+    {
+        _logConfig.LogSqlStatements.Returns(true);
+
+        await using (var context = CreateContext())
         {
-            _logConfig.LogSqlStatements.Returns(true);
-
-            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
+            var sut = new LogWriterRepository(_contextFactory, _logConfig);
             sut.LogSQL("test sql");
-            sut.LogThreadExec(_logConfig, Session);
-            await FlushAndClearAsync();
+            sut.LogThreadExec(_logConfig, context);
+            await context.SaveChangesAsync();
+        }
 
-            var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
+        await using (var context = CreateContext())
+        {
+            var result = await context.LogMessageRecords.ToListAsync();
 
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result.Any(r => r.Message == "test sql"));

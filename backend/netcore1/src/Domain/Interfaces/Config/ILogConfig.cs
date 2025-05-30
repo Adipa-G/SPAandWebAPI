@@ -1,11 +1,10 @@
 ﻿using Domain.Enum;
 
-namespace Domain.Interfaces.Config
+namespace Domain.Interfaces.Config;
+
+public interface ILogConfig
 {
-    public interface ILogConfig
-    {
-        LogLevel LogLevelGeneral { get; }
-        bool LogRequests { get;  }
-        bool LogSqlStatements { get; }
-    }
+    LogLevel LogLevelGeneral { get; }
+    bool LogRequests { get;  }
+    bool LogSqlStatements { get; }
 }

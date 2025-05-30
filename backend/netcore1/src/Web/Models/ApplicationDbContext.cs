@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Domain.Entities.Mappings;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web.Models;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions options)
         : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(builder);
+        builder.ApplyConfiguration(new LogHttpRecordConfiguration());
+        builder.ApplyConfiguration(new LogMessageRecordConfiguration());
 
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
+        base.OnModelCreating(builder);
     }
+
+    public DbSet<LogHttpRecord> LogHttpRecords { get; set; }
+
+    public DbSet<LogMessageRecord> LogMessageRecords { get; set; }
 }

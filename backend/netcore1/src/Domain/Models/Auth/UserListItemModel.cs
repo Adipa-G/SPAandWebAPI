@@ -1,7 +1,6 @@
-﻿namespace Domain.Models.Auth
+﻿namespace Domain.Models.Auth;
+
+public class UserListItemModel
 {
-    public class UserListItemModel
-    {
-        public string UserName { get; set; }
-    }
+    public string UserName { get; set; }
 }

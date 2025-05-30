@@ -1,12 +1,11 @@
-﻿namespace Infrastructure.Plumbing
-{
-    public class PathProvider : IPathProvider
-    {
-        public PathProvider(string hostingDirectory)
-        {
-            HostingDirectory = hostingDirectory;
-        }
+﻿namespace Infrastructure.Plumbing;
 
-        public string HostingDirectory { get; }
+public class PathProvider : IPathProvider
+{
+    public PathProvider(string hostingDirectory)
+    {
+        HostingDirectory = hostingDirectory;
     }
+
+    public string HostingDirectory { get; }
 }

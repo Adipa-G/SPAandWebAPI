@@ -1,40 +1,35 @@
 ﻿using System.Threading.Tasks;
-using Infrastructure.Plumbing;
-using NHibernate;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Web.Models;
 
-namespace Infrastructure.Test.Repositories
+namespace Infrastructure.Test.Repositories;
+
+public abstract class RepositoryTestBase
 {
-    public abstract class RepositoryTestBase
+    protected SqliteConnection Connection;
+
+    public async Task BaseSetUpAsync()
     {
-        protected ISession Session;
-        protected ITransaction Transaction;
+        Connection = new SqliteConnection("DataSource=:memory:");
+        Connection.Open();
 
-        protected virtual void OneTimeSetUp()
-        {
-            Session = new NHibernateSessionFactory(null, new TestSQLStatementInterceptor()).GetTestSession();
-        }
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(Connection).Options;
 
-        protected virtual void OneTimeTearDown()
+        await using (var context = new ApplicationDbContext(options))
         {
-            Session.Close();
-            Session.Dispose();
+            await context.Database.EnsureCreatedAsync();
         }
+    }
 
-        protected virtual void SetUp()
-        {
-            Transaction = Session.BeginTransaction();
-        }
+    public async Task BaseTearDownAsync()
+    {
+        await Connection.CloseAsync();
+    }
 
-        public virtual async Task TearDownAsync()
-        {
-            await Transaction.RollbackAsync();
-            await FlushAndClearAsync();
-        }
-
-        protected async Task FlushAndClearAsync()
-        {
-            await Session.FlushAsync();
-            Session.Clear();
-        }
+    protected ApplicationDbContext CreateContext()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(Connection).Options;
+        return new ApplicationDbContext(options);
     }
 }

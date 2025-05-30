@@ -3,39 +3,38 @@ using Domain.Enum;
 using Domain.Interfaces.Config;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Config
+namespace Infrastructure.Config;
+
+public class LogConfig : ILogConfig
 {
-    public class LogConfig : ILogConfig
+    private readonly IConfiguration _configuration;
+
+    public LogConfig(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
+        _configuration = configuration;
+    }
 
-        public LogConfig(IConfiguration configuration)
+    public LogLevel LogLevelGeneral
+    {
+        get
         {
-            _configuration = configuration;
+            return Enum.Parse<LogLevel>(_configuration["Logging:Default"] ?? "Debug");
         }
+    }
 
-        public LogLevel LogLevelGeneral
+    public bool LogRequests
+    {
+        get
         {
-            get
-            {
-                return Enum.Parse<LogLevel>(_configuration["Logging:Default"] ?? "Debug");
-            }
+            return  bool.Parse(_configuration["Logging:LogRequests"] ?? "false");
         }
+    }
 
-        public bool LogRequests
+    public bool LogSqlStatements
+    {
+        get
         {
-            get
-            {
-                return  bool.Parse(_configuration["Logging:LogRequests"] ?? "false");
-            }
-        }
-
-        public bool LogSqlStatements
-        {
-            get
-            {
-                return bool.Parse(_configuration["Logging:LogSqlStatements"] ?? "false");
-            }
+            return bool.Parse(_configuration["Logging:LogSqlStatements"] ?? "false");
         }
     }
 }

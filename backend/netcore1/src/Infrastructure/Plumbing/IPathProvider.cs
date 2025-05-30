@@ -1,7 +1,6 @@
-﻿namespace Infrastructure.Plumbing
+﻿namespace Infrastructure.Plumbing;
+
+public interface IPathProvider
 {
-    public interface IPathProvider
-    {
-        string HostingDirectory { get; }
-    }
+    string HostingDirectory { get; }
 }

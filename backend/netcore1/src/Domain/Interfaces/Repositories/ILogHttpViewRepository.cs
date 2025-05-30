@@ -2,11 +2,10 @@
 using Domain.Models;
 using Domain.Models.Log;
 
-namespace Domain.Interfaces.Repositories
+namespace Domain.Interfaces.Repositories;
+
+public interface ILogHttpViewRepository
 {
-    public interface ILogHttpViewRepository
-    {
-        List<string> GetAllLevels();
-        ListResult<LogHttpListItemModel> GetLogHttp(LogHttpListRequest request);
-    }
+    List<string> GetAllLevels();
+    ListResult<LogHttpListItemModel> GetLogHttp(LogHttpListRequest request);
 }

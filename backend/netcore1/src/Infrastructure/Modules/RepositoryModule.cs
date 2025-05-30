@@ -2,14 +2,13 @@
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Modules
+namespace Infrastructure.Modules;
+
+public class RepositoryModule
 {
-    public class RepositoryModule
+    public static void Load(IServiceCollection serviceCollection)
     {
-        public static void Load(IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddSingleton<ILogWriterRepository, LogWriterRepository>();
-            serviceCollection.AddTransient<ILogViewRepository, LogViewRepository>();
-        }
+        serviceCollection.AddSingleton<ILogWriterRepository, LogWriterRepository>();
+        serviceCollection.AddTransient<ILogViewRepository, LogViewRepository>();
     }
 }

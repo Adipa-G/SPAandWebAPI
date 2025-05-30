@@ -6,52 +6,51 @@ using System.Web;
 using System;
 using System.Linq;
 
-namespace Web.Middleware
+namespace Web.Middleware;
+
+public class ValidateAntiForgeryToken
 {
-    public class ValidateAntiForgeryToken
+    private const string XsrfTokenCookie = "XSRF-TOKEN";
+    private const string XsrfTokenHeader = "X-" + XsrfTokenCookie;
+
+    private readonly RequestDelegate _next;
+
+    public ValidateAntiForgeryToken(RequestDelegate next)
     {
-        private const string XsrfTokenCookie = "XSRF-TOKEN";
-        private const string XsrfTokenHeader = "X-" + XsrfTokenCookie;
+        _next = next;
+    }
 
-        private readonly RequestDelegate _next;
+    public async Task Invoke(HttpContext context)
+    {
+        var needValidation = new[] { "POST", "PUT", "DELETE" }.Contains(context.Request.Method);
 
-        public ValidateAntiForgeryToken(RequestDelegate next)
+        bool valid = true;
+        if (needValidation && context.Request.Cookies[XsrfTokenCookie] != StringValues.Empty)
         {
-            _next = next;
+            var cookieValue = context.Request.Cookies[XsrfTokenCookie];
+            var header = context.Request.Headers[XsrfTokenHeader];
+
+            if (cookieValue != header
+                && HttpUtility.UrlDecode(cookieValue) != header
+                && cookieValue != HttpUtility.UrlDecode(header))
+            {
+                valid = false;
+            }
         }
 
-        public async Task Invoke(HttpContext context)
+        if (valid)
         {
-            var needValidation = new[] { "POST", "PUT", "DELETE" }.Contains(context.Request.Method);
-
-            bool valid = true;
-            if (needValidation && context.Request.Cookies[XsrfTokenCookie] != StringValues.Empty)
+            await _next.Invoke(context);
+            if (context.Request.Cookies[XsrfTokenCookie] == StringValues.Empty)
             {
-                var cookieValue = context.Request.Cookies[XsrfTokenCookie];
-                var header = context.Request.Headers[XsrfTokenHeader];
-
-                if (cookieValue != header
-                    && HttpUtility.UrlDecode(cookieValue) != header
-                    && cookieValue != HttpUtility.UrlDecode(header))
-                {
-                    valid = false;
-                }
+                var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                context.Response.Cookies.Append(XsrfTokenCookie, token);
             }
-
-            if (valid)
-            {
-                await _next.Invoke(context);
-                if (context.Request.Cookies[XsrfTokenCookie] == StringValues.Empty)
-                {
-                    var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-                    context.Response.Cookies.Append(XsrfTokenCookie, token);
-                }
-            }
-            else
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsync("The CSRF token in the cookie doesn't match the one received in a form/header.");
-            }
+        }
+        else
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            await context.Response.WriteAsync("The CSRF token in the cookie doesn't match the one received in a form/header.");
         }
     }
 }
