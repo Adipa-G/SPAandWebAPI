@@ -18,6 +18,7 @@ namespace Web.Middleware
         public async Task Invoke(HttpContext context, ISession session)
         {
             var needTransaction = new[] { "POST", "PUT", "DELETE" }.Contains(context.Request.Method);
+            needTransaction = false;
             if (needTransaction)
             {
                 using (var transaction = session.BeginTransaction())

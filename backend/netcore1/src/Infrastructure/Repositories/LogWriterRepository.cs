@@ -9,6 +9,7 @@ using Domain.Interfaces.Config;
 using Domain.Interfaces.Plumbing;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
+using Microsoft.Extensions.Configuration;
 using NHibernate;
 
 namespace Infrastructure.Repositories
@@ -20,12 +21,15 @@ namespace Infrastructure.Repositories
         private readonly IList<LogMessageRecord> _messageRecords = new List<LogMessageRecord>();
         private readonly IList<LogHttpRecord> _httpRecords = new List<LogHttpRecord>();
 
+        private readonly ILogConfig _logConfig;
         private readonly INHibernateSessionFactory _sessionFactory;
 
 
-        public LogWriterRepository(INHibernateSessionFactory sessionFactory)
+        public LogWriterRepository(INHibernateSessionFactory sessionFactory, 
+            ILogConfig logConfig)
         {
             _sessionFactory = sessionFactory;
+            _logConfig = logConfig;
 
             if (!TEST_MODE)
             {
@@ -102,8 +106,7 @@ namespace Infrastructure.Repositories
                 {
                     try
                     {
-                        var config = new Config.Config(new ConfigRepository(session));
-                        LogThreadExec(config, session);
+                        LogThreadExec(_logConfig, session);
                         transaction.Commit();
                     }
                     catch (Exception)
@@ -115,7 +118,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public void LogThreadExec(IConfig config, ISession session)
+        public void LogThreadExec(ILogConfig logConfig, ISession session)
         {
             lock (_messageRecords)
             {
@@ -123,11 +126,11 @@ namespace Infrastructure.Repositories
                 {
                     var shouldLog = messageRecord.Logger ==
                                     Enum.GetName(typeof(LoggerName), LoggerName.General)
-                                    && messageRecord.Level >= config.LogLevelGeneral;
+                                    && messageRecord.Level >= logConfig.LogLevelGeneral;
 
                     shouldLog = shouldLog ||
                                 (messageRecord.Logger == Enum.GetName(typeof(LoggerName), LoggerName.SQL) &&
-                                    config.LogSqlStatements);
+                                    logConfig.LogSqlStatements);
 
                     if (shouldLog)
                     {

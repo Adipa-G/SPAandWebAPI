@@ -15,14 +15,14 @@ namespace Infrastructure.Test.Repositories
     [TestFixture]
     public class LogWriterRepositoryTest : RepositoryTestBase
     {
-        private IConfig _config;
+        private ILogConfig _logConfig;
         private INHibernateSessionFactory _sessionFactory;
 
         [OneTimeSetUp]
         protected override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
-            _config = Substitute.For<IConfig>();
+            _logConfig = Substitute.For<ILogConfig>();
             _sessionFactory = Substitute.For<INHibernateSessionFactory>();
         }
 
@@ -49,11 +49,11 @@ namespace Infrastructure.Test.Repositories
         [Test]
         public async Task GivenConfigLevelPermits_WhenLog_ThenLog()
         {
-            _config.LogLevelGeneral.Returns(LogLevel.Debug);
+            _logConfig.LogLevelGeneral.Returns(LogLevel.Debug);
 
-            var sut = new LogWriterRepository(_sessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
             sut.Log(LogLevel.Error, LoggerName.General, "Test Message", new Exception());
-            sut.LogThreadExec(_config, Session);
+            sut.LogThreadExec(_logConfig, Session);
             await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
@@ -65,11 +65,11 @@ namespace Infrastructure.Test.Repositories
         [Test]
         public async Task GivenConfigLevelNotPermits_WhenLog_ThenDoesNot()
         {
-            _config.LogLevelGeneral.Returns(LogLevel.Error);
+            _logConfig.LogLevelGeneral.Returns(LogLevel.Error);
 
-            var sut = new LogWriterRepository(_sessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
             sut.Log(LogLevel.Debug, LoggerName.General, "Test Message", new Exception());
-            sut.LogThreadExec(_config, Session);
+            sut.LogThreadExec(_logConfig, Session);
             await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();
@@ -80,9 +80,9 @@ namespace Infrastructure.Test.Repositories
         [Test]
         public async Task Given_WhenLogRequest_ThenLog()
         {
-            _config.LogLevelGeneral.Returns(LogLevel.Error);
+            _logConfig.LogLevelGeneral.Returns(LogLevel.Error);
 
-            var sut = new LogWriterRepository(_sessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
 
             sut.LogRequest(LogLevel.Debug,
                 new HttpLogModel()
@@ -102,7 +102,7 @@ namespace Infrastructure.Test.Repositories
                     RequestIdentity = "user"
                 }, new Exception());
 
-            sut.LogThreadExec(_config, Session);
+            sut.LogThreadExec(_logConfig, Session);
             await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogHttpRecord>().List<LogHttpRecord>();
@@ -114,11 +114,11 @@ namespace Infrastructure.Test.Repositories
         [Test]
         public async Task GivenConfigPermits_WhenLogSQL_TheLog()
         {
-            _config.LogSqlStatements.Returns(true);
+            _logConfig.LogSqlStatements.Returns(true);
 
-            var sut = new LogWriterRepository(_sessionFactory);
+            var sut = new LogWriterRepository(_sessionFactory, _logConfig);
             sut.LogSQL("test sql");
-            sut.LogThreadExec(_config, Session);
+            sut.LogThreadExec(_logConfig, Session);
             await FlushAndClearAsync();
 
             var result = Session.QueryOver<LogMessageRecord>().List<LogMessageRecord>();

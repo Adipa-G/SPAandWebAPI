@@ -21,8 +21,7 @@ namespace Infrastructure.Plumbing
             var sqlString = sql.ToString();
             var lower = sqlString.ToLower();
             if (lower.Contains("logmessagerecord")
-                || lower.Contains("loghttprecord")
-                || lower.Contains("configsetting"))
+                || lower.Contains("loghttprecord"))
             {
                 return sql;
             }

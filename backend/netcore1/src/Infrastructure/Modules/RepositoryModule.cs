@@ -9,8 +9,6 @@ namespace Infrastructure.Modules
         public static void Load(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<ILogWriterRepository, LogWriterRepository>();
-
-            serviceCollection.AddTransient<IConfigRepository, ConfigRepository>();
             serviceCollection.AddTransient<ILogViewRepository, LogViewRepository>();
         }
     }

@@ -11,6 +11,7 @@ using Domain.Interfaces.Config;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
 using Microsoft.AspNetCore.Http;
+using OpenIddict.Abstractions;
 
 namespace Web.Middleware
 {
@@ -18,14 +19,14 @@ namespace Web.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogWriterRepository _logRepository;
-        private readonly IConfig _config;
+        private readonly ILogConfig _logConfig;
 
 
-        public RequestResponseLog(RequestDelegate next, ILogWriterRepository logRepository, IConfig config)
+        public RequestResponseLog(RequestDelegate next, ILogWriterRepository logRepository, ILogConfig logConfig)
         {
             _next = next;
             _logRepository = logRepository;
-            _config = config;
+            _logConfig = logConfig;
         }
 
         public async Task Invoke(HttpContext context)
@@ -55,7 +56,7 @@ namespace Web.Middleware
                         await _next.Invoke(context);
 
                         var error = context.Response != null && context.Response.StatusCode != (int)HttpStatusCode.OK;
-                        if (_config.LogRequests
+                        if (_logConfig.LogRequests
                             || error)
                         {
                             var httpLogModel = UpdateForRequest(context.Request, requestStream);
@@ -92,7 +93,7 @@ namespace Web.Middleware
             request.HttpContext.Response.Headers.Append("Http-Tracking-Id", new[] { model.TrackingId });
 
             model.RequestIdentity = request.HttpContext.User != null && request.HttpContext.User.Identity.IsAuthenticated
-                ? ((ClaimsIdentity)request.HttpContext.User.Identity).Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value
+                ? ((ClaimsIdentity)request.HttpContext.User.Identity).Claims.Single(c => c.Type == OpenIddictConstants.Claims.Name).Value
                 : "(anonymous)";
             model.CallerAddress = request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty;
             model.Verb = request.Method;

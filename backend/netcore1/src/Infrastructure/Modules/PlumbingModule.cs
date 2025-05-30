@@ -17,7 +17,7 @@ namespace Infrastructure.Modules
             serviceCollection.AddScoped(p => p.GetService<INHibernateSessionFactory>().GetSessionFactory().OpenSession());
 
             serviceCollection.AddTransient<ISQLStatementInterceptor, SQLStatementInterceptor>();
-            serviceCollection.AddTransient<IConfig, Config.Config>();
+            serviceCollection.AddTransient<ILogConfig, Config.LogConfig>();
         }
     }
 }

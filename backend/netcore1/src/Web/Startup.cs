@@ -144,7 +144,7 @@ public class Startup
 
         app.UseMiddleware<ValidateAntiForgeryToken>();
         app.UseMiddleware<CreateTransaction>();
-        //TODO app.UseMiddleware<RequestResponseLog>();
+        app.UseMiddleware<RequestResponseLog>();
 
         app.UseRouting();
 

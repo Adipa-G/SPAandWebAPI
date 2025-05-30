@@ -72,7 +72,7 @@ namespace Infrastructure.Plumbing
             return Fluently.Configure()
                 .Database(configurer)
                 .Cache(c => c.UseQueryCache().ProviderClass<HashtableCacheProvider>())
-                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<ConfigSetting>())
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<LogHttpRecord>())
                 .ExposeConfiguration(x => x.SetInterceptor(_interceptor));
         }
 
