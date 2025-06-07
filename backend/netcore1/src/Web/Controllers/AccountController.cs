@@ -8,41 +8,35 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OpenIddict.Validation.AspNetCore;
+using Web.DataContext;
 using Web.Models;
 
 namespace Web.Controllers;
 
 [Route("~/api/account")]
-public class AccountController : Controller
+public class AccountController(
+    UserManager<ApplicationUser> userManager,
+    ApplicationDbContext applicationDbContext)
+    : Controller
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly ApplicationDbContext _applicationDbContext;
+    private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
     private static bool _databaseChecked;
-
-    public AccountController(
-        UserManager<ApplicationUser> userManager,
-        ApplicationDbContext applicationDbContext)
-    {
-        _userManager = userManager;
-        _applicationDbContext = applicationDbContext;
-    }
 
     [AllowAnonymous]
     [HttpPost]
     [Route("register")]
     public async Task<IActionResult> RegisterAsync([FromBody] UserModel model)
     {
-        EnsureDatabaseCreated(_applicationDbContext);
         if (ModelState.IsValid)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            var user = await userManager.FindByNameAsync(model.UserName);
             if (user != null)
             {
                 return StatusCode(StatusCodes.Status409Conflict);
             }
 
             user = new ApplicationUser { UserName = model.UserName };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 return Ok();
@@ -64,7 +58,7 @@ public class AccountController : Controller
             return BadRequest(ModelState);
         }
 
-        var query = _userManager.Users;
+        var query = userManager.Users;
         
         if (request.OrderDirection == SortDirection.Asc)
         {
@@ -105,29 +99,14 @@ public class AccountController : Controller
             return BadRequest(ModelState);
         }
 
-        var user = await _userManager.FindByNameAsync(userName);
+        var user = await userManager.FindByNameAsync(userName);
 
         if (user != null)
         {
-            await _userManager.DeleteAsync(user);
+            await userManager.DeleteAsync(user);
             return Ok();
         }
         return NotFound();
-    }
-
-    #region Helpers
-    // The following code creates the database and schema if they don't exist.
-    // This is a temporary workaround since deploying database through EF migrations is
-    // not yet supported in this release.
-    // Please see this http://go.microsoft.com/fwlink/?LinkID=615859 for more information on how to do deploy the database
-    // when publishing your application.
-    private static void EnsureDatabaseCreated(ApplicationDbContext context)
-    {
-        if (!_databaseChecked)
-        {
-            _databaseChecked = true;
-            context.Database.EnsureCreated();
-        }
     }
 
     private void AddErrors(IdentityResult result)
@@ -137,6 +116,4 @@ public class AccountController : Controller
             ModelState.AddModelError(string.Empty, error.Description);
         }
     }
-
-    #endregion
 }

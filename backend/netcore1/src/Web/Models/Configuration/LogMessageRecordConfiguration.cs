@@ -1,12 +1,15 @@
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.Entities.Mappings;
+namespace Web.Models.Configuration;
 
 public class LogMessageRecordConfiguration : IEntityTypeConfiguration<LogMessageRecord>
 {
     public void Configure(EntityTypeBuilder<LogMessageRecord> builder)
     {
+        builder.ToTable("LogMessageRecords");
+
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.LogTimestamp)

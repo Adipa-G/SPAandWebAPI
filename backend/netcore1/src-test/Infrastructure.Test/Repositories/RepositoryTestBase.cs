@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Web.Models;
+using Web.DataContext;
 
 namespace Infrastructure.Test.Repositories;
 

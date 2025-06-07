@@ -1,10 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Enum;
 
 namespace Domain.Entities;
 
-[Table("LogHttpRecords")]
 public class LogHttpRecord
 {
     public virtual long Id { get; set; }

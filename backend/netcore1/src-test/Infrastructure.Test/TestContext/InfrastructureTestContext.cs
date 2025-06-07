@@ -1,21 +1,15 @@
 ﻿using System;
 using Domain.Entities;
 using Domain.Enum;
+using Infrastructure.DataContext;
 
 namespace Infrastructure.Test.TestContext;
 
-public class InfrastructureTestContext
+public class InfrastructureTestContext(IApplicationDbContext dbContext)
 {
-    private readonly IApplicationDbContext _dbContext;
-
-    public InfrastructureTestContext(IApplicationDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public void LogMessage(LogLevel level, string logger, string message)
     {
-        _dbContext.LogMessageRecords.Add(new LogMessageRecord()
+        dbContext.LogMessageRecords.Add(new LogMessageRecord()
         {
             Level = LogLevel.Error,
             Logger = "Test",
@@ -27,7 +21,7 @@ public class InfrastructureTestContext
 
     public void LogHttp(LogLevel level, string trackId)
     {
-        _dbContext.LogHttpRecords.Add(new LogHttpRecord()
+        dbContext.LogHttpRecords.Add(new LogHttpRecord()
         {
             Level = level,
             TrackingId = trackId,

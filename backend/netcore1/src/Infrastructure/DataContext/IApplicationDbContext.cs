@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Entities;
+namespace Infrastructure.DataContext;
 
 public interface IApplicationDbContext : IDisposable
 {

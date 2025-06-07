@@ -4,13 +4,8 @@ namespace Domain.Models.Log;
 
 public class HttpLogModel
 {
-    public HttpLogModel()
-    {
-        CalledOn = DateTime.UtcNow;
-    }
-
     public string TrackingId { get; set; }
-    public DateTime CalledOn { get; set; }
+    public DateTime CalledOn { get; set; } = DateTime.UtcNow;
     public string CallerAddress { get; set; }
     public string RequestIdentity { get; set; }
     public string Verb { get; set; }

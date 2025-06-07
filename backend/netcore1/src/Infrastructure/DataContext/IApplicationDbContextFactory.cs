@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-
-namespace Domain.Interfaces.DataContext;
+﻿namespace Infrastructure.DataContext;
 
 public interface IApplicationDbContextFactory
 {

@@ -5,14 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Config;
 
-public class DatabaseConfig : IDatabaseConfig
+public class DatabaseConfig(IConfiguration configuration)
 {
-    private IConfiguration _configuration;
-
-    public DatabaseConfig(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
-    public string DatabasePath => Path.Combine(AppContext.BaseDirectory, _configuration["Database:DatabaseFileName"]);
+    public string DatabasePath => Path.Combine(AppContext.BaseDirectory, configuration["Database:DatabaseFileName"]);
 }

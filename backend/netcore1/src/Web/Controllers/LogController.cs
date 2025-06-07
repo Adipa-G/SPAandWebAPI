@@ -8,21 +8,14 @@ using OpenIddict.Validation.AspNetCore;
 namespace Web.Controllers;
 
 [Route("~/api/log")]
-public class LogController : Controller
+public class LogController(ILogViewRepository logViewRepository) : Controller
 {
-    private readonly ILogViewRepository _logViewRepository;
-
-    public LogController(ILogViewRepository logViewRepository)
-    {
-        _logViewRepository = logViewRepository;
-    }
-
     [HttpGet]
     [Route("levels")]
     [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     public IActionResult Levels()
     {
-        return Ok(_logViewRepository.GetAllLevels());
+        return Ok(logViewRepository.GetAllLevels());
     }
 
     [HttpGet]
@@ -30,7 +23,7 @@ public class LogController : Controller
     [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     public IActionResult Loggers()
     {
-        return Ok(_logViewRepository.GetAllLoggers());
+        return Ok(logViewRepository.GetAllLoggers());
     }
 
     [HttpPost]
@@ -42,7 +35,7 @@ public class LogController : Controller
         {
             return BadRequest(ModelState);
         }
-        return Ok(await _logViewRepository.GetLogMessagesAsync(request));
+        return Ok(await logViewRepository.GetLogMessagesAsync(request));
     }
 
     [HttpPost]
@@ -55,6 +48,6 @@ public class LogController : Controller
         {
             return BadRequest(ModelState);
         }
-        return Ok(await _logViewRepository.GetLogHttpAsync(request));
+        return Ok(await logViewRepository.GetLogHttpAsync(request));
     }
 }

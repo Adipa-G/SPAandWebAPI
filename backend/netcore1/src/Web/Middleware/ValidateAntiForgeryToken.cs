@@ -8,17 +8,10 @@ using System.Linq;
 
 namespace Web.Middleware;
 
-public class ValidateAntiForgeryToken
+public class ValidateAntiForgeryToken(RequestDelegate next)
 {
     private const string XsrfTokenCookie = "XSRF-TOKEN";
     private const string XsrfTokenHeader = "X-" + XsrfTokenCookie;
-
-    private readonly RequestDelegate _next;
-
-    public ValidateAntiForgeryToken(RequestDelegate next)
-    {
-        _next = next;
-    }
 
     public async Task Invoke(HttpContext context)
     {
@@ -40,12 +33,12 @@ public class ValidateAntiForgeryToken
 
         if (valid)
         {
-            await _next.Invoke(context);
             if (context.Request.Cookies[XsrfTokenCookie] == StringValues.Empty)
             {
                 var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
                 context.Response.Cookies.Append(XsrfTokenCookie, token);
             }
+            await next.Invoke(context);
         }
         else
         {

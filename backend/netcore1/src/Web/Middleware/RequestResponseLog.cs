@@ -15,25 +15,13 @@ using OpenIddict.Abstractions;
 
 namespace Web.Middleware;
 
-public class RequestResponseLog
+public class RequestResponseLog(RequestDelegate next, ILogWriterRepository logRepository, ILogConfig logConfig)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogWriterRepository _logRepository;
-    private readonly ILogConfig _logConfig;
-
-
-    public RequestResponseLog(RequestDelegate next, ILogWriterRepository logRepository, ILogConfig logConfig)
-    {
-        _next = next;
-        _logRepository = logRepository;
-        _logConfig = logConfig;
-    }
-
     public async Task Invoke(HttpContext context)
     {
         if (!context.Request.Path.ToString().Contains("api/"))
         {
-            await _next.Invoke(context);
+            await next.Invoke(context);
         }
         else
         {
@@ -53,22 +41,22 @@ public class RequestResponseLog
                     }
                     context.Response.Body = responseStream;
 
-                    await _next.Invoke(context);
+                    await next.Invoke(context);
 
                     var error = context.Response != null && context.Response.StatusCode != (int)HttpStatusCode.OK;
-                    if (_logConfig.LogRequests
+                    if (logConfig.LogRequests
                         || error)
                     {
                         var httpLogModel = UpdateForRequest(context.Request, requestStream);
                         UpdateForResponse(httpLogModel, context.Response, responseStream);
-                        _logRepository.LogRequest(error ? LogLevel.Error : LogLevel.Info, httpLogModel, null);
+                        logRepository.LogRequest(error ? LogLevel.Error : LogLevel.Info, httpLogModel, null);
                     }
                 }
                 catch (Exception ex)
                 {
                     var httpLogModel = UpdateForRequest(context.Request, requestStream);
                     UpdateForResponse(httpLogModel, context.Response, responseStream);
-                    _logRepository.LogRequest(LogLevel.Error, httpLogModel, ex);
+                    logRepository.LogRequest(LogLevel.Error, httpLogModel, ex);
                 }
                 finally
                 {

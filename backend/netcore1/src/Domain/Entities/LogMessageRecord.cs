@@ -1,10 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Enum;
 
 namespace Domain.Entities;
 
-[Table("LogMessageRecords")]
 public class LogMessageRecord
 {
     public virtual long Id { get; set; }

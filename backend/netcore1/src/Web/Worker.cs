@@ -4,20 +4,15 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Web.Models;
+using Web.DataContext;
 
 namespace Web;
 
-public class Worker : IHostedService
+public class Worker(IServiceProvider serviceProvider) : IHostedService
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public Worker(IServiceProvider serviceProvider)
-        => _serviceProvider = serviceProvider;
-
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await using var scope = _serviceProvider.CreateAsyncScope();
+        await using var scope = serviceProvider.CreateAsyncScope();
 
         var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ApplicationDbContext>>();
         await using var context = await contextFactory.CreateDbContextAsync(cancellationToken);

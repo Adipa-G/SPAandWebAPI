@@ -6,24 +6,16 @@ using System.Threading.Tasks;
 using Domain;
 using Domain.Entities;
 using Domain.Enum;
-using Domain.Interfaces.DataContext;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Domain.Models.Log;
+using Infrastructure.DataContext;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories;
 
-public class LogViewRepository : ILogViewRepository
+public class LogViewRepository(IApplicationDbContextFactory contextFactory) : ILogViewRepository
 {
-    private readonly IApplicationDbContextFactory _contextFactory;
-
-    public LogViewRepository(IApplicationDbContextFactory contextFactory)
-    {
-        _contextFactory = contextFactory;
-    }
-
     public List<string> GetAllLevels()
     {
         return new List<string>(Enum.GetNames(typeof(LogLevel)));
@@ -36,7 +28,7 @@ public class LogViewRepository : ILogViewRepository
 
     public async Task<ListResult<LogMessageListItemModel>> GetLogMessagesAsync(LogMessageListRequest request)
     {
-        using var context = _contextFactory.CreateDbContext();
+        using var context = contextFactory.CreateDbContext();
 
         var query = context.LogMessageRecords.AsQueryable();
         if (request.LogLevel.HasValue)
@@ -101,7 +93,7 @@ public class LogViewRepository : ILogViewRepository
 
     public async Task<ListResult<LogHttpListItemModel>> GetLogHttpAsync(LogHttpListRequest request)
     {
-        using var context = _contextFactory.CreateDbContext();
+        using var context = contextFactory.CreateDbContext();
 
         var query = context.LogHttpRecords.AsQueryable();
         if (!string.IsNullOrEmpty(request.TrackingId))

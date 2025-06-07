@@ -1,15 +1,15 @@
 ﻿using Domain.Entities;
-using Domain.Entities.Mappings;
+using Infrastructure.DataContext;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Web.Models;
+using Web.Models.Configuration;
 
-namespace Web.Models;
+namespace Web.DataContext;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
+public class ApplicationDbContext(DbContextOptions options)
+    : IdentityDbContext<ApplicationUser>(options), IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions options)
-        : base(options) { }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new LogHttpRecordConfiguration());

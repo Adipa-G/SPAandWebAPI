@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json.Serialization;
-using Domain.Entities;
 using Domain.Interfaces.Config;
-using Domain.Interfaces.DataContext;
 using Infrastructure.Config;
 using Infrastructure.Converters;
+using Infrastructure.DataContext;
+using Infrastructure.Logging;
 using Infrastructure.Modules;
 using Infrastructure.Plumbing;
 using Microsoft.AspNetCore.Builder;
@@ -20,25 +20,17 @@ using Quartz;
 using Web.DataContext;
 using Web.Middleware;
 using Web.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Web;
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
-    public IConfiguration Configuration { get; }
-    public PathProvider PathProvider { get; }
+    public IConfiguration Configuration { get; } = configuration;
+    public PathProvider PathProvider { get; } = new(Directory.GetCurrentDirectory());
 
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-        PathProvider = new PathProvider(Directory.GetCurrentDirectory());
-    }
-    
     public void ConfigureServices(IServiceCollection services)
     {
         var dbConfig = new DatabaseConfig(Configuration);
-        services.AddSingleton<IDatabaseConfig>(dbConfig);
 
         PlumbingModule.Load(services, Configuration);
         RepositoryModule.Load(services);
@@ -116,6 +108,7 @@ public class Startup
         services.AddLogging(loggingBuilder =>
         {
             loggingBuilder.AddConsole(c => c.LogToStandardErrorThreshold = LogLevel.Information);
+            loggingBuilder.AddDbLogger();
         });
     }
 

@@ -5,9 +5,9 @@ using System.Threading;
 using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
-using Domain.Interfaces.DataContext;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
+using Infrastructure.DataContext;
 
 namespace Infrastructure.Repositories;
 

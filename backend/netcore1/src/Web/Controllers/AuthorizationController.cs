@@ -23,22 +23,12 @@ using Web.Models;
 
 namespace Web.Controllers;
 
-public class AuthorizationController : Controller
+public class AuthorizationController(
+    SignInManager<ApplicationUser> signInManager,
+    UserManager<ApplicationUser> userManager,
+    IOptionsMonitor<OpenIddictServerOptions> oidcOptions)
+    : Controller
 {
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private IOptionsMonitor<OpenIddictServerOptions> _oidcOptions;
-
-    public AuthorizationController(
-        SignInManager<ApplicationUser> signInManager,
-        UserManager<ApplicationUser> userManager,
-        IOptionsMonitor<OpenIddictServerOptions> oidcOptions)
-    {
-        _signInManager = signInManager;
-        _userManager = userManager;
-        _oidcOptions = oidcOptions;
-    }
-
     [HttpPost("~/connect/token"), IgnoreAntiforgeryToken, Produces("application/json")]
     public async Task<IActionResult> ExchangeAsync()
     {
@@ -46,7 +36,7 @@ public class AuthorizationController : Controller
         if (request.IsPasswordGrantType())
         {
             var baseUrl = $"{this.Request.Scheme}://{this.Request.Host}/";
-            var user = await _userManager.FindByNameAsync(request.Username);
+            var user = await userManager.FindByNameAsync(request.Username);
             if (user == null)
             {
                 var properties = new AuthenticationProperties(new Dictionary<string, string>
@@ -60,7 +50,7 @@ public class AuthorizationController : Controller
             }
 
             // Validate the username/password parameters and ensure the account is not locked out.
-            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: true);
+            var result = await signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: true);
             if (!result.Succeeded)
             {
                 var properties = new AuthenticationProperties(new Dictionary<string, string>
@@ -73,16 +63,16 @@ public class AuthorizationController : Controller
                 return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
             }
 
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await userManager.GetRolesAsync(user);
 
-            var options = _oidcOptions.CurrentValue;
+            var options = oidcOptions.CurrentValue;
 
             var claims = new Dictionary<string, object>
             {
-                { OpenIddictConstants.Claims.Subject, await _userManager.GetUserIdAsync(user) },
-                { OpenIddictConstants.Claims.Email, await _userManager.GetEmailAsync(user) },
-                { OpenIddictConstants.Claims.Name, await _userManager.GetUserNameAsync(user) },
-                { OpenIddictConstants.Claims.PreferredUsername, await _userManager.GetUserNameAsync(user) },
+                { OpenIddictConstants.Claims.Subject, await userManager.GetUserIdAsync(user) },
+                { OpenIddictConstants.Claims.Email, await userManager.GetEmailAsync(user) },
+                { OpenIddictConstants.Claims.Name, await userManager.GetUserNameAsync(user) },
+                { OpenIddictConstants.Claims.PreferredUsername, await userManager.GetUserNameAsync(user) },
                 { OpenIddictConstants.Claims.Role, ImmutableArray.Create<string>(roles.ToArray()) },
                 { "scope", ImmutableArray.Create<string>(new[]
                 {

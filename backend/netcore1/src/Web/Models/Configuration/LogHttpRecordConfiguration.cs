@@ -1,13 +1,16 @@
 using System;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.Entities.Mappings;
+namespace Web.Models.Configuration;
 
 public class LogHttpRecordConfiguration : IEntityTypeConfiguration<LogHttpRecord>
 {
     public void Configure(EntityTypeBuilder<LogHttpRecord> builder)
     {
+        builder.ToTable("LogHttpRecords");
+
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Level)
