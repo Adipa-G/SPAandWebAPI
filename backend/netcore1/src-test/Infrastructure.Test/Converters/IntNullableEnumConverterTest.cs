@@ -9,21 +9,16 @@ namespace Infrastructure.Test.Converters;
 [TestFixture]
 public class IntNullableEnumConverterTest
 {
-    private JsonSerializerOptions _options;
-
-    public IntNullableEnumConverterTest()
+    private JsonSerializerOptions _options = new()
     {
-        _options = new JsonSerializerOptions
+        Converters =
         {
-            Converters =
-            {
-                new IntNullableEnumConverter<Domain.Enum.LogLevel?>()
-            }
-        };
-    }
+            new IntNullableEnumConverter<Domain.Enum.LogLevel?>()
+        }
+    };
 
     [Test]
-    public void Can_Serialise_Null_Enum()
+    public void GivenNullEnum_WhenSerialise_ThenSerialise()
     {
         var model = new LogMessageListRequest();
 
@@ -33,7 +28,7 @@ public class IntNullableEnumConverterTest
     }
 
     [Test]
-    public void Can_Serialise_Not_Null_Enum()
+    public void GivenEnum_WhenSerialise_ThenSerialise()
     {
         var model = new LogMessageListRequest(){LogLevel = LogLevel.Debug};
 
@@ -43,7 +38,7 @@ public class IntNullableEnumConverterTest
     }
 
     [Test]
-    public void Can_Deserialise_Null_Enum()
+    public void GivenNullEnum_WhenDeserialise_ThenDeserialise()
     {
         var req = "{\"Logger\":null,\"LogLevel\":\"\",\"FromDate\":null,\"ToDate\":null,\"PageNumber\":0,\"PageSize\":0,\"OrderField\":null,\"OrderDirection\":0}";
 
@@ -53,7 +48,7 @@ public class IntNullableEnumConverterTest
     }
 
     [Test]
-    public void Can_Deserialise_Not_Null_Enum()
+    public void GivenEnum_WhenDeserialise_ThenDeserialise()
     {
         var req = "{\"Logger\":null,\"LogLevel\":\"Debug\",\"FromDate\":null,\"ToDate\":null,\"PageNumber\":0,\"PageSize\":0,\"OrderField\":null,\"OrderDirection\":0}";
 
