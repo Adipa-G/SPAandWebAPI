@@ -21,6 +21,7 @@ public class LogWriterRepositoryTest : RepositoryTestBase
     [SetUp]
     public async Task SetUpAsync()
     {
+        LogWriterRepository.TEST_MODE = true;
         await BaseSetUpAsync();
 
         _logConfig = Substitute.For<ILogConfig>();

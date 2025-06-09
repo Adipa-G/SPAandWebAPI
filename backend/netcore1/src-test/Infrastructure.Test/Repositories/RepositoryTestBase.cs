@@ -24,7 +24,15 @@ public abstract class RepositoryTestBase
 
     public async Task BaseTearDownAsync()
     {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(Connection).Options;
+
+        await using (var context = new ApplicationDbContext(options))
+        {
+            await context.Database.EnsureDeletedAsync();
+        }
+
         await Connection.CloseAsync();
+        await Connection.DisposeAsync();
     }
 
     protected ApplicationDbContext CreateContext()

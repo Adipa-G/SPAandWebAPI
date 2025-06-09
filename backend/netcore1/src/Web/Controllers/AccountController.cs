@@ -8,20 +8,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OpenIddict.Validation.AspNetCore;
-using Web.DataContext;
 using Web.Models;
 
 namespace Web.Controllers;
 
 [Route("~/api/account")]
-public class AccountController(
-    UserManager<ApplicationUser> userManager,
-    ApplicationDbContext applicationDbContext)
-    : Controller
+public class AccountController(UserManager<ApplicationUser> userManager) : Controller
 {
-    private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
-    private static bool _databaseChecked;
-
     [AllowAnonymous]
     [HttpPost]
     [Route("register")]
