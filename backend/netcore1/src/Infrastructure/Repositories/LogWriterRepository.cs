@@ -118,7 +118,9 @@ public class LogWriterRepository : ILogWriterRepository
     {
         lock (_messageRecords)
         {
-            foreach (var messageRecord in _messageRecords)
+            var copy = new List<LogMessageRecord>(_messageRecords);
+            _messageRecords.Clear();
+            foreach (var messageRecord in copy)
             {
                 var shouldLog = messageRecord.Logger ==
                                 Enum.GetName(typeof(LoggerName), LoggerName.General)
@@ -133,16 +135,16 @@ public class LogWriterRepository : ILogWriterRepository
                     context.LogMessageRecords.Add(messageRecord);
                 }
             }
-            _messageRecords.Clear();
         }
 
         lock (_httpRecords)
         {
-            foreach (var httpRecord in _httpRecords)
+            var copy = new List<LogHttpRecord>(_httpRecords);
+            _httpRecords.Clear();
+            foreach (var httpRecord in copy)
             {
                 context.LogHttpRecords.Add(httpRecord);
             }
-            _httpRecords.Clear();
         }
     }
 

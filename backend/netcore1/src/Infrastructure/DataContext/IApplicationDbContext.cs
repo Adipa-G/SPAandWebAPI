@@ -12,4 +12,6 @@ public interface IApplicationDbContext : IDisposable
     DbSet<LogMessageRecord> LogMessageRecords { get; set; }
 
     int SaveChanges();
+    
+    IServiceProvider ServiceProvider { get; set; }
 }

@@ -7,8 +7,8 @@ namespace Infrastructure.Modules;
 
 public class PlumbingModule
 {
-    public static void Load(IServiceCollection serviceCollection, IConfiguration configuration)
+    public static void Load(IServiceCollection services, IConfiguration configuration)
     {
-        serviceCollection.AddTransient<ILogConfig, LogConfig>();
+        services.AddTransient<ILogConfig, LogConfig>();
     }
 }
