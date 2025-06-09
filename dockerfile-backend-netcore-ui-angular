@@ -3,8 +3,8 @@ COPY ./backend/netcore /app/backendbuild
 WORKDIR /app/backendbuild
 RUN dotnet restore
 RUN dotnet build
-RUN dotnet ./src-test/Infrastructure.Test/bin/Debug/netcoreapp2.1/Infrastructure.Test.dll
-RUN dotnet ./src-test/Web.Test/bin/Debug/netcoreapp2.1/Web.Test.dll
+RUN dotnet ./src-test/Infrastructure.Test/bin/Debug/net9.0/Infrastructure.Test.dll
+RUN dotnet ./src-test/Web.Test/bin/Debug/net9.0/Web.Test.dll
 RUN dotnet publish -c Release -o /out
 RUN cp -r src/Web/Configuration /out
 

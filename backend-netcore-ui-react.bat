@@ -15,6 +15,6 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 echo ==================== DONE =======================
 echo ==================== STARTING APP =======================
 pushd backend\netcore\src\Web
-dotnet bin\Debug\netcoreapp2.1\Web.dll
+dotnet bin\Debug\net9.0\Web.dll
 if %errorlevel% neq 0 exit /b %errorlevel%
 popd
