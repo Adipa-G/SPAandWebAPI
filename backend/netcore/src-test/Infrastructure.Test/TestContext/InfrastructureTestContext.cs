@@ -1,56 +1,42 @@
 ﻿using System;
 using Domain.Entities;
 using Domain.Enum;
-using NHibernate;
+using Infrastructure.DataContext;
 
-namespace Infrastructure.Test.TestContext
+namespace Infrastructure.Test.TestContext;
+
+public class InfrastructureTestContext(IApplicationDbContext dbContext)
 {
-    public class InfrastructureTestContext
+    public void LogMessage(LogLevel level, string logger, string message)
     {
-        private readonly ISession _session;
-
-        public InfrastructureTestContext(ISession session)
+        dbContext.LogMessageRecords.Add(new LogMessageRecord()
         {
-            _session = session;
-        }
+            Level = LogLevel.Error,
+            Logger = "Test",
+            LogTimestamp = DateTime.UtcNow.Ticks,
+            Message = message,
+            StackTrace = "Test stack trace"
+        });
+    }
 
-        public void User(string name)
+    public void LogHttp(LogLevel level, string trackId)
+    {
+        dbContext.LogHttpRecords.Add(new LogHttpRecord()
         {
-            var user = new User() { UserName = name, Password = "123" };
-            _session.Save(user);
-        }
-
-        public void LogMessage(LogLevel level, string logger, string message)
-        {
-            _session.Save(new LogMessageRecord()
-            {
-                Level = LogLevel.Error,
-                Logger = "Test",
-                LogTimestamp = DateTime.UtcNow.Ticks,
-                Message = message,
-                StackTrace = "Test stack trace"
-            });
-        }
-
-        public void LogHttp(LogLevel level, string trackId)
-        {
-            _session.Save(new LogHttpRecord()
-            {
-                Level = level,
-                TrackingId = trackId,
-                Request = "Test Req",
-                Response = "Test Resp",
-                StatusCode = 200,
-                RequestIdentity = "User",
-                CalledOn = DateTime.UtcNow.Ticks,
-                CallDuration = new TimeSpan(0, 1, 0),
-                CallerAddress = "127.0.0.1",
-                ReasonPhrase = "OK",
-                Verb = "GET",
-                RequestHeaders = "Req Headers",
-                RequestUri = new Uri("http://localhost/index.html"),
-                ResponseHeaders = "Resp Headers",
-            });
-        }
+            Level = level,
+            TrackingId = trackId,
+            Request = "Test Req",
+            Response = "Test Resp",
+            StatusCode = 200,
+            RequestIdentity = "User",
+            CalledOn = DateTime.UtcNow.Ticks,
+            CallDuration = new TimeSpan(0, 1, 0),
+            CallerAddress = "127.0.0.1",
+            ReasonPhrase = "OK",
+            Verb = "GET",
+            RequestHeaders = "Req Headers",
+            RequestUri = new Uri("http://localhost/index.html"),
+            ResponseHeaders = "Resp Headers",
+        });
     }
 }

@@ -1,46 +1,53 @@
 ﻿using System.Threading.Tasks;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OpenIddict.Validation.AspNetCore;
 
-namespace Web.Controllers
+namespace Web.Controllers;
+
+[Route("~/api/log")]
+public class LogController(ILogViewRepository logViewRepository) : Controller
 {
-    [Route("api/Log")]
-    public class LogController : Controller
+    [HttpGet]
+    [Route("levels")]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    public IActionResult Levels()
     {
-        private readonly ILogViewRepository _logViewRepository;
+        return Ok(logViewRepository.GetAllLevels());
+    }
 
-        public LogController(ILogViewRepository logViewRepository)
-        {
-            _logViewRepository = logViewRepository;
-        }
+    [HttpGet]
+    [Route("loggers")]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    public IActionResult Loggers()
+    {
+        return Ok(logViewRepository.GetAllLoggers());
+    }
 
-        [HttpGet]
-        [Route("levels")]
-        public ActionResult Levels()
+    [HttpPost]
+    [Route("logMessages")]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> LogMessagesAsync([FromBody] LogMessageListRequest request)
+    {
+        if (!ModelState.IsValid)
         {
-            return Ok(_logViewRepository.GetAllLevels());
+            return BadRequest(ModelState);
         }
+        return Ok(await logViewRepository.GetLogMessagesAsync(request));
+    }
 
-        [HttpGet]
-        [Route("loggers")]
-        public ActionResult Loggers()
-        {
-            return Ok(_logViewRepository.GetAllLoggers());
-        }
+    [HttpPost]
+    [Route("logHttp")]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    public async Task<IActionResult> LogHttpAsync([FromBody] LogHttpListRequest request)
+    {
 
-        [HttpPost]
-        [Route("logMessages")]
-        public async Task<ActionResult> LogMessagesAsync([FromBody] LogMessageListRequest request)
+        if (!ModelState.IsValid)
         {
-            return Ok(await _logViewRepository.GetLogMessagesAsync(request));
+            return BadRequest(ModelState);
         }
-
-        [HttpPost]
-        [Route("logHttp")]
-        public async Task<ActionResult> LogHttpAsync([FromBody] LogHttpListRequest request)
-        {
-            return Ok(await _logViewRepository.GetLogHttpAsync(request));
-        }
+        return Ok(await logViewRepository.GetLogHttpAsync(request));
     }
 }

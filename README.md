@@ -40,27 +40,16 @@ Technical details,
 
 ### backend/netcore
 * .Net 9 used to implement API with built in DI
-* IdentityServer 4 used to provide OAuth tokens
-* NHibernate as ORM
-
-### backend/owin
-* .Net 4.8 
-* Ninject as DI
-* NHibernate as ORM
-* OWin OAuth
-
-### backend/owin-identityserver3
-* .Net 4.8
-* Ninject as DI
-* NHibernate as ORM
-* IdentityServer3 Auth
+* OpenIdDict used to provide OAuth tokens
+* EF as ORM
 
 ### Running locally with batch file
 * Checkout the project
 * Update config (create database with scripts (backend/<project>/SQL) / Set Paths in .bat files where absolute paths are used)
 * Run backend-<backend>-ui-<ui>.bat file
 * Visit the url (http://localhost:5000/)
-### Running locally in Docker (only with .netcore backend)
+
+### Running locally in Docker
 * Install docker and enable Kubernetes
 * Checkout the project
 * Build desired docker container

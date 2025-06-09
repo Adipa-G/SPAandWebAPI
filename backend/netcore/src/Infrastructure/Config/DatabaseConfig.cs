@@ -1,18 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Domain.Interfaces.Config;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Config
+namespace Infrastructure.Config;
+
+public class DatabaseConfig(IConfiguration configuration)
 {
-    public class DatabaseConfig : IDatabaseConfig
-    {
-        private IConfiguration _configuration;
-
-        public DatabaseConfig(IConfigurationRoot configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public string DatabaseFileName => _configuration["Database:DatabaseFileName"];
-    }
+    public string DatabasePath => Path.Combine(AppContext.BaseDirectory, configuration["Database:DatabaseFileName"]);
 }

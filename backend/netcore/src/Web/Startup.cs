@@ -1,147 +1,73 @@
-﻿using System;
-using System.Buffers;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.Security.Cryptography.X509Certificates;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using Domain.Interfaces.Config;
-using Domain.Interfaces.Plumbing;
-using IdentityServer4.Configuration;
-using Infrastructure.Config;
+﻿using System.IO;
+using System.Text.Json.Serialization;
+using Infrastructure.Converters;
+using Infrastructure.Logging;
 using Infrastructure.Modules;
 using Infrastructure.Plumbing;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging.Console;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 using Web.Middleware;
 using Web.Modules;
 
-namespace Web
+namespace Web;
+
+public class Startup(IConfiguration configuration)
 {
-    public class Startup
+    public IConfiguration Configuration { get; } = configuration;
+    public PathProvider PathProvider { get; } = new(Directory.GetCurrentDirectory());
+
+    public void ConfigureServices(IServiceCollection services)
     {
-        private readonly PathProvider _pathProvider;
-        public readonly IConfigurationRoot _configuration;
+        PlumbingModule.Load(services, Configuration);
+        RepositoryModule.Load(services);
+        DbContextModule.Load(services, Configuration);
+        IdentityModule.Load(services);
 
-        public Startup(IWebHostEnvironment env)
+        services.AddControllers().AddJsonOptions(options =>
         {
-            _pathProvider = new PathProvider(Directory.GetCurrentDirectory());
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-
-            _configuration = builder.Build();
-        }
-
-        public void ConfigureServices(IServiceCollection services)
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            options.JsonSerializerOptions.Converters.Add(new IntNullableEnumConverter<Domain.Enum.LogLevel?>());
+        });
+        
+        services.AddLogging(loggingBuilder =>
         {
-            services.AddSingleton<IPathProvider>(_pathProvider);
+            loggingBuilder.AddConsole(c => c.LogToStandardErrorThreshold = LogLevel.Information);
+            loggingBuilder.AddDbLogger();
+        });
+    }
 
-            services.AddSingleton<IDatabaseConfig>(
-                new DatabaseConfig(_configuration));
+    public void Configure(IApplicationBuilder app)
+    {
+        var fileProvider = new PhysicalFileProvider(Path.Combine(PathProvider.HostingDirectory, "app"));
+        var defoptions = new DefaultFilesOptions();
+        defoptions.DefaultFileNames.Clear();
+        defoptions.FileProvider = fileProvider;
+        defoptions.DefaultFileNames.Add("index.html");
 
-            PlumbingModule.Load(services);
-            RepositoryModule.Load(services);
-            AuthModule.Load(services);
-
-            var cert = GetCertificate();
-            services.AddIdentityServer(o => new IdentityServerOptions()
+        app.UseDefaultFiles(defoptions)
+            .UseStaticFiles(new StaticFileOptions()
             {
-                Endpoints = new EndpointsOptions()
-                {
-                    EnableDiscoveryEndpoint = true,
-                    EnableTokenEndpoint = true
-                }
-            }).AddSigningCredential(cert);
+                FileProvider = fileProvider,
+                RequestPath = new PathString("")
+            })
+            .UseDeveloperExceptionPage();
 
-            var defaultPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
+        app.UseMiddleware<ValidateAntiForgeryToken>();
+        app.UseMiddleware<RequestResponseLog>();
 
-            services.AddMvc(options =>
-            {
-                options.EnableEndpointRouting = false;
-                options.Filters.Add(new AuthorizeFilter(defaultPolicy));
-            }).AddNewtonsoftJson();
+        app.UseRouting();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddConsole(c => c.LogToStandardErrorThreshold = LogLevel.Information);
-            });
-        }
-
-        public void Configure(IApplicationBuilder app)
+        app.UseEndpoints(endpoints =>
         {
-            var issuer = $"http://{_configuration["Hosting:HostName"]}:{_configuration["Hosting:Port"]}";
-
-            var fileProvider = new PhysicalFileProvider(Path.Combine(_pathProvider.HostingDirectory, "app"));
-            var defoptions = new DefaultFilesOptions();
-            defoptions.DefaultFileNames.Clear();
-            defoptions.FileProvider = fileProvider;
-            defoptions.DefaultFileNames.Add("index.html");
-            app.UseDefaultFiles(defoptions);
-
-            app.UseDeveloperExceptionPage()
-                .UseDefaultFiles()
-                .UseCors(c => c.AllowAnyOrigin())
-                .UseStaticFiles(new StaticFileOptions()
-                {
-                    FileProvider = fileProvider,
-                    RequestPath = new PathString("")
-                })
-                .UseMiddleware<ValidateAntiForgeryToken>()
-                .UseMiddleware<RequestResponseLog>()
-                .UseIdentityServer()
-                .UseMiddleware<TokenDecoder>(issuer)
-                .UseMiddleware<CreateTransaction>()
-                .UseMvcWithDefaultRoute();
-
-            InitDatabaseDefaults(app.ApplicationServices);
-        }
-
-        private X509Certificate2 GetCertificate()
-        {
-            var cert = X509CertificateLoader.LoadPkcs12FromFile(Path.Combine("Configuration", "idsrv4test.pfx"),
-                "idsrv3test",
-                X509KeyStorageFlags.DefaultKeySet,
-                new Pkcs12LoaderLimits()
-                {
-                    PreserveStorageProvider = true
-                });
-            return cert;
-        }
-
-        private void InitDatabaseDefaults(IServiceProvider services)
-        {
-            var nHibernateSessionFactory = services.GetService<INHibernateSessionFactory>();
-            nHibernateSessionFactory.Update(true, true);
-        }
-
-        public static void Main(string[] args)
-        {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
-
-            host.Run();
-        }
+            endpoints.MapControllers();
+            endpoints.MapDefaultControllerRoute();
+        });
     }
 }

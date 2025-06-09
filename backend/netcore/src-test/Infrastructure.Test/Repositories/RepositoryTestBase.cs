@@ -1,40 +1,43 @@
 ﻿using System.Threading.Tasks;
-using Infrastructure.Plumbing;
-using NHibernate;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Web.DataContext;
 
-namespace Infrastructure.Test.Repositories
+namespace Infrastructure.Test.Repositories;
+
+public abstract class RepositoryTestBase
 {
-    public abstract class RepositoryTestBase
+    protected SqliteConnection Connection;
+
+    public async Task BaseSetUpAsync()
     {
-        protected ISession Session;
-        protected ITransaction Transaction;
+        Connection = new SqliteConnection("DataSource=:memory:");
+        Connection.Open();
 
-        protected virtual void OneTimeSetUp()
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(Connection).Options;
+
+        await using (var context = new ApplicationDbContext(options))
         {
-            Session = new NHibernateSessionFactory(null, new TestSQLStatementInterceptor()).GetTestSession();
+            await context.Database.EnsureCreatedAsync();
+        }
+    }
+
+    public async Task BaseTearDownAsync()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(Connection).Options;
+
+        await using (var context = new ApplicationDbContext(options))
+        {
+            await context.Database.EnsureDeletedAsync();
         }
 
-        protected virtual void OneTimeTearDown()
-        {
-            Session.Close();
-            Session.Dispose();
-        }
+        await Connection.CloseAsync();
+        await Connection.DisposeAsync();
+    }
 
-        protected virtual void SetUp()
-        {
-            Transaction = Session.BeginTransaction();
-        }
-
-        public virtual async Task TearDownAsync()
-        {
-            await Transaction.RollbackAsync();
-            await FlushAndClearAsync();
-        }
-
-        protected async Task FlushAndClearAsync()
-        {
-            await Session.FlushAsync();
-            Session.Clear();
-        }
+    protected ApplicationDbContext CreateContext()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite(Connection).Options;
+        return new ApplicationDbContext(options);
     }
 }

@@ -2,167 +2,167 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Enum;
 using Domain.Interfaces.Config;
-using Domain.Interfaces.Plumbing;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Log;
-using NHibernate;
+using Infrastructure.DataContext;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories;
+
+public class LogWriterRepository : ILogWriterRepository
 {
-    public class LogWriterRepository : ILogWriterRepository
+    public static bool TEST_MODE = false;
+
+    private readonly IList<LogMessageRecord> _messageRecords = new List<LogMessageRecord>();
+    private readonly IList<LogHttpRecord> _httpRecords = new List<LogHttpRecord>();
+
+    private readonly ILogConfig _logConfig;
+    private readonly IApplicationDbContextFactory _contextFactory;
+
+
+    public LogWriterRepository(IApplicationDbContextFactory contextFactory, 
+        ILogConfig logConfig)
     {
-        public static bool TEST_MODE = false;
+        _contextFactory = contextFactory;
+        _logConfig = logConfig;
 
-        private readonly IList<LogMessageRecord> _messageRecords = new List<LogMessageRecord>();
-        private readonly IList<LogHttpRecord> _httpRecords = new List<LogHttpRecord>();
-
-        private readonly INHibernateSessionFactory _sessionFactory;
-
-
-        public LogWriterRepository(INHibernateSessionFactory sessionFactory)
+        if (!TEST_MODE)
         {
-            _sessionFactory = sessionFactory;
-
-            if (!TEST_MODE)
-            {
-                var logThread = new Thread(LogThreadExec);
-                logThread.Start();
-            }
+            var logThread = new Thread(LogThreadExec);
+            logThread.Start();
         }
+    }
 
-        public void LogSQL(string message)
+    public void LogSQL(string message)
+    {
+        var record = new LogMessageRecord()
         {
-            var record = new LogMessageRecord()
-            {
-                Level = LogLevel.Debug,
-                Logger = Enum.GetName(typeof(LoggerName), LoggerName.SQL),
-                Message = message,
-                LogTimestamp = DateTime.UtcNow.Ticks
-            };
+            Level = LogLevel.Debug,
+            Logger = Enum.GetName(typeof(LoggerName), LoggerName.SQL),
+            Message = message,
+            LogTimestamp = DateTime.UtcNow.Ticks
+        };
 
-            lock (_messageRecords)
-            {
-                _messageRecords.Add(record);
-            }
+        lock (_messageRecords)
+        {
+            _messageRecords.Add(record);
         }
+    }
 
-        public void Log(LogLevel level, LoggerName logger, string message, Exception ex)
+    public void Log(LogLevel level, LoggerName logger, string message, Exception ex)
+    {
+        var record = new LogMessageRecord()
         {
-            var record = new LogMessageRecord()
-            {
-                Level = level,
-                Logger = Enum.GetName(typeof(LoggerName), logger),
-                Message = message,
-                LogTimestamp = DateTime.UtcNow.Ticks,
-                StackTrace = ex == null ? string.Empty : FlattenException(ex)
-            };
+            Level = level,
+            Logger = Enum.GetName(typeof(LoggerName), logger),
+            Message = message,
+            LogTimestamp = DateTime.UtcNow.Ticks,
+            StackTrace = ex == null ? string.Empty : FlattenException(ex)
+        };
 
-            lock (_messageRecords)
-            {
-                _messageRecords.Add(record);
-            }
+        lock (_messageRecords)
+        {
+            _messageRecords.Add(record);
         }
+    }
 
-        public void LogRequest(LogLevel level, HttpLogModel log, Exception ex)
+    public void LogRequest(LogLevel level, HttpLogModel log, Exception ex)
+    {
+        var record = new LogHttpRecord()
         {
-            var record = new LogHttpRecord()
-            {
-                Level = level,
-                RequestIdentity = log.RequestIdentity,
-                Request = log.Request,
-                CallDuration = log.CallDuration,
-                CalledOn = log.CalledOn.Ticks,
-                CallerAddress = log.CallerAddress,
-                ReasonPhrase = log.ReasonPhrase,
-                RequestHeaders = log.RequestHeaders,
-                RequestUri = log.RequestUri,
-                Response = log.Response + "\n" + (ex == null ? string.Empty : FlattenException(ex)),
-                ResponseHeaders = log.RequestHeaders,
-                StatusCode = log.StatusCode,
-                TrackingId = log.TrackingId,
-                Verb = log.Verb,
-            };
+            Level = level,
+            RequestIdentity = log.RequestIdentity,
+            Request = log.Request,
+            CallDuration = log.CallDuration,
+            CalledOn = log.CalledOn.Ticks,
+            CallerAddress = log.CallerAddress,
+            ReasonPhrase = log.ReasonPhrase,
+            RequestHeaders = log.RequestHeaders,
+            RequestUri = log.RequestUri,
+            Response = log.Response + "\n" + (ex == null ? string.Empty : FlattenException(ex)),
+            ResponseHeaders = log.RequestHeaders,
+            StatusCode = log.StatusCode,
+            TrackingId = log.TrackingId,
+            Verb = log.Verb,
+        };
 
-            lock (_httpRecords)
-            {
-                _httpRecords.Add(record);
-            }
+        lock (_httpRecords)
+        {
+            _httpRecords.Add(record);
         }
+    }
 
-        private void LogThreadExec()
+    private void LogThreadExec()
+    {
+        while (true)
         {
-            while (true)
+            using (var context = _contextFactory.CreateDbContext())
             {
-                using (var session = _sessionFactory.GetSessionFactory().OpenSession())
-                using (var transaction = session.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        var config = new Config.Config(new ConfigRepository(session));
-                        LogThreadExec(config, session);
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                    }
+                    LogThreadExec(_logConfig, context);
+                    context.SaveChanges();
                 }
-                Thread.Sleep(1000);
-            }
-        }
-
-        public void LogThreadExec(IConfig config, ISession session)
-        {
-            lock (_messageRecords)
-            {
-                foreach (var messageRecord in _messageRecords)
+                catch (Exception ex)
                 {
-                    var shouldLog = messageRecord.Logger ==
-                                    Enum.GetName(typeof(LoggerName), LoggerName.General)
-                                    && messageRecord.Level >= config.LogLevelGeneral;
-
-                    shouldLog = shouldLog ||
-                                (messageRecord.Logger == Enum.GetName(typeof(LoggerName), LoggerName.SQL) &&
-                                    config.LogSqlStatements);
-
-                    if (shouldLog)
-                    {
-                        session.Save(messageRecord);
-                    }
+                    Console.Write(ex.StackTrace);
                 }
-                _messageRecords.Clear();
             }
-
-            lock (_httpRecords)
-            {
-                foreach (var httpRecord in _httpRecords)
-                {
-                    session.Save(httpRecord);
-                }
-                _httpRecords.Clear();
-            }
+            Thread.Sleep(1000);
         }
+    }
 
-        private string FlattenException(Exception exception)
+    public void LogThreadExec(ILogConfig logConfig, IApplicationDbContext context)
+    {
+        lock (_messageRecords)
         {
-            var stringBuilder = new StringBuilder();
-
-            while (exception != null)
+            var copy = new List<LogMessageRecord>(_messageRecords);
+            _messageRecords.Clear();
+            foreach (var messageRecord in copy)
             {
-                stringBuilder.AppendLine(exception.Message);
-                stringBuilder.AppendLine(exception.StackTrace);
+                var shouldLog = messageRecord.Logger ==
+                                Enum.GetName(typeof(LoggerName), LoggerName.General)
+                                && messageRecord.Level >= logConfig.LogLevelGeneral;
 
-                exception = exception.InnerException;
+                shouldLog = shouldLog ||
+                            (messageRecord.Logger == Enum.GetName(typeof(LoggerName), LoggerName.SQL) &&
+                             logConfig.LogSqlStatements);
+
+                if (shouldLog)
+                {
+                    context.LogMessageRecords.Add(messageRecord);
+                }
             }
-
-            string result = stringBuilder.ToString();
-            if (result.Length > 1024)
-                result = result.Substring(0, 1024);
-            return result;
         }
+
+        lock (_httpRecords)
+        {
+            var copy = new List<LogHttpRecord>(_httpRecords);
+            _httpRecords.Clear();
+            foreach (var httpRecord in copy)
+            {
+                context.LogHttpRecords.Add(httpRecord);
+            }
+        }
+    }
+
+    private string FlattenException(Exception exception)
+    {
+        var stringBuilder = new StringBuilder();
+
+        while (exception != null)
+        {
+            stringBuilder.AppendLine(exception.Message);
+            stringBuilder.AppendLine(exception.StackTrace);
+
+            exception = exception.InnerException;
+        }
+
+        string result = stringBuilder.ToString();
+        if (result.Length > 1024)
+            result = result.Substring(0, 1024);
+        return result;
     }
 }

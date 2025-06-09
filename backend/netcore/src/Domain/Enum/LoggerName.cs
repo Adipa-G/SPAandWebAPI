@@ -1,8 +1,7 @@
-﻿namespace Domain.Enum
+﻿namespace Domain.Enum;
+
+public enum LoggerName
 {
-    public enum LoggerName
-    {
-        General = 10,
-        SQL = 20,
-    }
+    General = 10,
+    SQL = 20,
 }

@@ -1,20 +1,14 @@
 ﻿using Domain.Interfaces.Config;
-using Domain.Interfaces.Plumbing;
-using Infrastructure.Plumbing;
+using Infrastructure.Config;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Modules
+namespace Infrastructure.Modules;
+
+public class PlumbingModule
 {
-    public class PlumbingModule
+    public static void Load(IServiceCollection services, IConfiguration configuration)
     {
-        public static void Load(IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddTransient<IConfig, Config.Config>();
-
-            serviceCollection.AddSingleton<INHibernateSessionFactory, NHibernateSessionFactory>();
-            serviceCollection.AddScoped(p => p.GetService<INHibernateSessionFactory>().GetSessionFactory().OpenSession());
-
-            serviceCollection.AddTransient<ISQLStatementInterceptor, SQLStatementInterceptor>();
-        }
+        services.AddTransient<ILogConfig, LogConfig>();
     }
 }
