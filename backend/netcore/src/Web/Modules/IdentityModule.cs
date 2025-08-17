@@ -32,7 +32,8 @@ public class IdentityModule
                 options.AddDevelopmentEncryptionCertificate()
                     .AddDevelopmentSigningCertificate();
                 options.UseAspNetCore()
-                    .EnableTokenEndpointPassthrough();
+                    .EnableTokenEndpointPassthrough()
+                    .DisableTransportSecurityRequirement();
                 options.IgnoreEndpointPermissions();
                 options.IgnoreGrantTypePermissions();
                 options.IgnoreScopePermissions();
