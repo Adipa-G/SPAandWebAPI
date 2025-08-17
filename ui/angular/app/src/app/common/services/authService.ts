@@ -49,7 +49,7 @@ export class AuthService {
 
     public authenticate(loginInfo: LoginInfo): void {
         var creds = "grant_type=password&username=" + loginInfo.userName + "&password=" + loginInfo.password
-            + "&client_id=default&client_secret=no-secret&scope=openid";
+            + "&client_id=default&scope=openid";
 
         var headers = new HttpHeaders({
             'Content-Type': 'application/x-www-form-urlencoded',
