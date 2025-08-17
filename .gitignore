@@ -1,15 +1,9 @@
-MVC6/artifacts/**/*.*
-Angular2/src/Web/node_modules/*
-Angular2/src/Web/wwwroot/appScripts/**/*.*
-Angular2/src/Web/wwwroot/templates/**/*.*
-Angular2/src/Web/wwwroot/libs/*
 **/node_modules/**/*.*
 **/bin/**/*.*
 **/obj/**/*.*
 **/node_modules/**/*.*
 **/node_modules/*
 **/wwwroot/*
-/_old/*
 /backend/netcore/src/Web/app/*
 **/angularjs/dist/*
 **/.vs/*
