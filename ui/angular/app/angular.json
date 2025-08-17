@@ -114,6 +114,17 @@
               "src/assets"
             ]
           }
+        },
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "angular-auth-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-auth-app:serve:production"
+            }
+          }
         }
       }
     },
@@ -123,14 +134,13 @@
       "prefix": "",
       "architect": {
         "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+          "builder": "playwright-ng-schematics:playwright",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-auth-app:serve"
+            "devServerTarget": "angular-auth-app-e2e:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-auth-app:serve:production"
+              "devServerTarget": "angular-auth-app-e2e:serve:production"
             }
           }
         }
