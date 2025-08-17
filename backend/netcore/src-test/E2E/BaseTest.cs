@@ -12,7 +12,7 @@ public class BaseTest
 
         return new HttpClient
         {
-            BaseAddress = new Uri(config["ApiURL"]),
+            BaseAddress = new Uri(config["ApiURL"] ?? string.Empty),
         };
     }
 
@@ -27,7 +27,7 @@ public class BaseTest
         return response.IsSuccessStatusCode;
     }
 
-    protected async Task<string> Login(string userName)
+    protected async Task<string?> Login(string userName)
     {
         var keyValues = new[]
         {
