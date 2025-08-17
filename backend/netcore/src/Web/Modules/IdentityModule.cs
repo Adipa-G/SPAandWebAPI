@@ -33,6 +33,10 @@ public class IdentityModule
                     .AddDevelopmentSigningCertificate();
                 options.UseAspNetCore()
                     .EnableTokenEndpointPassthrough();
+                options.IgnoreEndpointPermissions();
+                options.IgnoreGrantTypePermissions();
+                options.IgnoreScopePermissions();
+                options.IgnoreResponseTypePermissions();
             })
 
             .AddValidation(options =>

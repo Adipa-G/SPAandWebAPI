@@ -24,17 +24,9 @@ public class DbContextModule
         var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlite($"Filename={dbConfig.DatabasePath}").Options;
         services.AddSingleton(options);
 
-        services.AddDbContextFactory<ApplicationDbContext>((sp, options) =>
-        {
-            options.UseSqlite($"Filename={dbConfig.DatabasePath}");
-            options.UseOpenIddict();
-        });
+        services.AddDbContextFactory<ApplicationDbContext>();
 
-        services.AddDbContext<ApplicationDbContext>((sp, options) =>
-        {
-            options.UseSqlite($"Filename={dbConfig.DatabasePath}");
-            options.UseOpenIddict();
-        });
+        services.AddDbContext<ApplicationDbContext>();
 
         services.AddScoped<IApplicationDbContext>(sp =>
         {

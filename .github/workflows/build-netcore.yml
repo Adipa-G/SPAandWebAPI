@@ -45,4 +45,17 @@ jobs:
           path: "**/*.trx"                            
           reporter: dotnet-trx
           fail-on-error: true
+      - name: Run application
+        run: dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E
+      - name: Wait for the application to start
+        run: |
+          for i in {1..30}; do
+            if curl --fail http://localhost:5000/alive; then
+              echo "Web app is up!"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Web app did not start in time."
+          exit 1
       - run: echo "🍏 This job's status is ${{ job.status }}."

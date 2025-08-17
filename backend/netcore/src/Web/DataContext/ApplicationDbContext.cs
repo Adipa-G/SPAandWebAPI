@@ -17,6 +17,7 @@ public class ApplicationDbContext(DbContextOptions options)
     {
         builder.ApplyConfiguration(new LogHttpRecordConfiguration());
         builder.ApplyConfiguration(new LogMessageRecordConfiguration());
+        builder.UseOpenIddict();
 
         base.OnModelCreating(builder);
     }
