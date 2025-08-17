@@ -46,7 +46,7 @@ jobs:
           reporter: dotnet-trx
           fail-on-error: true
       - name: Run application
-        run: dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E
+        run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
       - name: Wait for the application to start
         run: |
           for i in {1..30}; do
