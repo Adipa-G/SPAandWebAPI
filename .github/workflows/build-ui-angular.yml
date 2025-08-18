@@ -57,8 +57,8 @@ jobs:
           ng test --watch=false
       - name: Copy angular application
         run: |
-          ls -r ui/angular/app/dist/angular-auth-app/browser
-          cp -r -Force .\ui\angular\app\dist\angular-auth-app\browser\* .\backend\netcore\src\Web\app
+          cp -r ./ui/angular/app/dist/angular-auth-app/browser/* ./backend/netcore/src/Web/app
+          ls -r ./backend/netcore/src/Web/app
       - name: Run application
         run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
       - name: Wait for the application to start
