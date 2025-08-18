@@ -21,28 +21,8 @@ jobs:
           path:
             - 'ui/angular/**'
     - run: echo "🍏 This job's status is ${{ job.status }}."
-            
+     
   build-and-test-solution:
-    needs: changes
-    if: ${{ needs.changes.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-      - name: Build and Test
-        run: |
-          cd ui/angular/app
-          npm install -g --prefer-offline @angular/cli
-          npm install --prefer-offline
-          ng build
-          ng test --watch=false
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      
-  build-and-run-e2e:
     needs: changes
     if: ${{ needs.changes.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'}}
     runs-on: ubuntu-latest
@@ -71,10 +51,15 @@ jobs:
         run: |
           cd ui/angular/app
           ng build
+      - name: NPM test
+        run: |
+          cd ui/angular/app
+          ng test --watch=false
       - name: Copy angular application
         run: |
           mkdir ./backend/netcore/src/Web/bin/Debug/net9.0/app
           cp -r ui/angular/app/dist/angular-auth-app/browser backend/netcore/src/Web/bin/Debug/net9.0/app
+          ls backend/netcore/src/Web/bin/Debug/net9.0/app
       - name: Run application
         run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
       - name: Wait for the application to start
