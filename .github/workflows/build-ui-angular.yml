@@ -58,7 +58,7 @@ jobs:
       - name: Copy angular application
         run: |
           mkdir ./backend/netcore/src/Web/bin/Debug/net9.0/app
-          cp -r ui/angular/app/dist/angular-auth-app/browser backend/netcore/src/Web/bin/Debug/net9.0/app
+          cp -r ui/angular/app/dist/angular-auth-app backend/netcore/src/Web/bin/Debug/net9.0/app
           ls backend/netcore/src/Web/bin/Debug/net9.0
       - name: Run application
         run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
