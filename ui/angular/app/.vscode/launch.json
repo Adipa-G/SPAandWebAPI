@@ -5,7 +5,8 @@
         "name": "Lunch Chrome",
         "type": "chrome",
         "request": "launch",
-        "url": "http://localhost:4200",
+        "url": "http://localhost:5000",
+        "port": 5000,
         "webRoot": "${workspaceFolder}/src/app",
         "sourceMaps": true,
         "sourceMapPathOverrides": {
@@ -21,7 +22,7 @@
         "name": "Attach Chrome",
         "type": "chrome",
         "request": "attach",
-        "url": "http://localhost:4200",
+        "url": "http://localhost:5000",
         "port": 9222,
         "webRoot": "${workspaceFolder}/src/app",
         "sourceMaps": true,
