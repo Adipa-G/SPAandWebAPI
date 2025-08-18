@@ -61,6 +61,20 @@ jobs:
         run: dotnet restore ./backend/netcore/Mvc.sln 
       - name: Build 
         run: dotnet build ./backend/netcore/Mvc.sln 
+      - name: NPM install
+        run: |
+          cd ui/angular/app
+          npm install -g --prefer-offline @angular/cli
+          npm install --prefer-offline
+          npx playwright install
+      - name: NPM build
+        run: |
+          cd ui/angular/app
+          ng build
+      - name: Copy angular application
+        run: |
+          cd ui/angular/app
+          cp -r dist/angular-auth-app/browser ./backend/netcore/src/Web/bin/Debug/net9.0/app
       - name: Run application
         run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
       - name: Wait for the application to start
@@ -76,9 +90,5 @@ jobs:
           exit 1
       - name: Run e2e
         run: |
-          cd ui/angular/app
-          npm install -g --prefer-offline @angular/cli
-          npm install --prefer-offline
-          npx playwright install
           ng e2e
       - run: echo "🍏 This job's status is ${{ job.status }}."
