@@ -62,7 +62,7 @@ export default defineConfig({
     command: 'echo "Starting server..."',
     port: 5000,
     reuseExistingServer: true,
-    stdout: 'ignore',
+    stdout: 'pipe',
     stderr: 'pipe',
   },
 });
