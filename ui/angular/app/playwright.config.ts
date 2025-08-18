@@ -60,8 +60,8 @@ export default defineConfig({
 
   // Run your local dev server before starting the tests.
   webServer: {
-    command: 'npm run start',
-    port: 5000,
+    command: '',
+    port: 1,
     reuseExistingServer: true,
     stdout: 'ignore',
     stderr: 'pipe',
