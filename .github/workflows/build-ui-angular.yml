@@ -66,15 +66,15 @@ jobs:
           cd ui/angular/app
           npm install -g --prefer-offline @angular/cli
           npm install --prefer-offline
-          npx playwright install
+          npx playwright install --with-deps chromium
       - name: NPM build
         run: |
           cd ui/angular/app
           ng build
       - name: Copy angular application
         run: |
-          cd ui/angular/app
-          cp -r dist/angular-auth-app/browser ./backend/netcore/src/Web/bin/Debug/net9.0/app
+          mkdir ./backend/netcore/src/Web/bin/Debug/net9.0/app
+          cp -r ui/angular/app/dist/angular-auth-app/browser backend/netcore/src/Web/bin/Debug/net9.0/app
       - name: Run application
         run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
       - name: Wait for the application to start
