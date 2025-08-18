@@ -73,6 +73,7 @@ jobs:
           exit 1
       - name: Run e2e
         run: |
+          DEBUG=pw:api
           cd ui/angular/app
           ng e2e
       - run: echo "🍏 This job's status is ${{ job.status }}."
