@@ -57,6 +57,7 @@ jobs:
           ng test --watch=false
       - name: Copy angular application
         run: |
+          ls -r ui/angular/app/dist/angular-auth-app
           mkdir ./backend/netcore/src/Web/bin/Debug/net9.0/app
           cp -r ui/angular/app/dist/angular-auth-app/browser/* backend/netcore/src/Web/bin/Debug/net9.0/app
           ls -r backend/netcore/src/Web/bin/Debug/net9.0
