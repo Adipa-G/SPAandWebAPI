@@ -79,5 +79,6 @@ jobs:
           cd ui/angular/app
           npm install -g --prefer-offline @angular/cli
           npm install --prefer-offline
+          npx playwright install
           ng e2e
       - run: echo "🍏 This job's status is ${{ job.status }}."
