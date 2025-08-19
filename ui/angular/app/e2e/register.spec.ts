@@ -6,10 +6,6 @@ const password = 'Welcome@123';
 test('register user', async ({ page }) => {
   await page.goto('/');
 
-  page.on('framenavigated', async () => {
-    console.log('Navigation occurred:', await page.url());
-  });
-
   await page.waitForSelector('a:has-text("Sign Up")', { state: 'visible' });
   await page.click('a:has-text("Sign Up")');
     

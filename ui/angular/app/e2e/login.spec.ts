@@ -4,12 +4,8 @@ import { registerUser } from './utils/auth-helpers';
 const userName = `testuser_${Date.now()}`;
 const password = 'Welcome@123';
 
-test('register user', async ({ page }) => {
+test('login user', async ({ page }) => {
   await page.goto('/');
-
-  page.on('framenavigated', async () => {
-    console.log('Navigation occurred:', await page.url());
-  });
 
   await registerUser(page, userName, password);
   

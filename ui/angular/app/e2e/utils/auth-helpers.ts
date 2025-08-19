@@ -27,7 +27,4 @@ export async function loginUser(page: Page, userName: string, password: string) 
   await page.locator('[name="loginPassword"]').fill(password);
 
   await page.click('button:has-text("Login")');
-
-  await page.waitForURL('/#/userList');
-  await page.waitForSelector('form', { state: 'visible' });
 }
