@@ -74,5 +74,5 @@ jobs:
       - name: Run e2e
         run: |
           cd ui/angular/app
-          npx playwright test
+          npm run e2e
       - run: echo "🍏 This job's status is ${{ job.status }}."
