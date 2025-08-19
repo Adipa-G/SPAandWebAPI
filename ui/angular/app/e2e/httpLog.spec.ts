@@ -14,6 +14,8 @@ test('shows http log', async ({ page }) => {
 
   await page.click('a:has-text("Http Log")');
   await page.waitForURL('/#/httpLog');
+
+  await page.waitForSelector('td');
   
   var htmlContent = await page.content();
   expect(htmlContent).toContain('api/Account/list');

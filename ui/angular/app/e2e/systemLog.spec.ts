@@ -14,6 +14,8 @@ test('shows system log', async ({ page }) => {
 
   await page.click('a:has-text("System Log")');
   await page.waitForURL('/#/logMessages');
+
+  await page.waitForSelector('td');
   
   var htmlContent = await page.content();
   expect(htmlContent).toContain('OpenIddict.Validation.AspNetCore was successfully authenticated');
