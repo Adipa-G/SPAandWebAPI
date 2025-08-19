@@ -46,7 +46,7 @@ jobs:
           cd ui/angular/app
           npm install -g --prefer-offline @angular/cli
           npm install --prefer-offline
-          npx playwright install chromium
+          npx playwright install --only-shell chromium
       - name: NPM build
         run: |
           cd ui/angular/app
