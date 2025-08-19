@@ -118,11 +118,9 @@
         "e2e": {
           "builder": "playwright-ng-schematics:playwright",
           "options": {
-            "devServerTarget": "angular-auth-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-auth-app:serve:production"
             }
           }
         }
