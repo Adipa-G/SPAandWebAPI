@@ -75,5 +75,5 @@ jobs:
         run: |
           DEBUG=pw:api
           cd ui/angular/app
-          ng e2e
+          npx playwright test --debug
       - run: echo "🍏 This job's status is ${{ job.status }}."
