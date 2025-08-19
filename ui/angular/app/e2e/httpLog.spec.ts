@@ -18,5 +18,5 @@ test('shows http log', async ({ page }) => {
   await page.waitForSelector('td');
   
   var htmlContent = await page.content();
-  expect(htmlContent).toContain('api/Account/list');
+  expect(htmlContent).toContain('api/account/register');
 });
