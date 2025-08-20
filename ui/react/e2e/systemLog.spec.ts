@@ -18,5 +18,5 @@ test('shows system log', async ({ page }) => {
   await page.waitForSelector('td');
   
   var htmlContent = await page.content();
-  expect(htmlContent).toContain('OpenIddict.Validation.AspNetCore was successfully authenticated');
+  expect(htmlContent).toContain('successfully processed by OpenIddict');
 });
