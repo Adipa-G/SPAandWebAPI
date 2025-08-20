@@ -33,7 +33,7 @@ export class AuthService {
 
     authenticate = (userName: string, password: string, callback: CallbackFunction): void => {
         const url = this.serviceBase + 'connect/token';
-        const data = `grant_type=password&username=${userName}&password=${password}&client_id=default&client_secret=no-secret&scope=all`;
+        const data = `grant_type=password&username=${userName}&password=${password}&client_id=default&scope=openid`;
         const xsrfToken = Cookies.get("XSRF-TOKEN");
 
         var self = this;

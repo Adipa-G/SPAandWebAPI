@@ -8,7 +8,7 @@ const Jumbotron = (props: JumbotronProps) => {
             <div className="page-header text-center">
                 <h1>React/WebAPI Seed</h1>
             </div>
-            <p>A seed app for react using WebAPI. IdentityServer used for Auth. NHibernate used as the ORM</p>
+            <p>A seed app for react using WebAPI. OpenIddict used for Auth. EF used as the ORM</p>
         </div>
     </div> : null);
 };
