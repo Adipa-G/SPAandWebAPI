@@ -1,3 +1,8 @@
+@use "sass:color";
+@use "../variables";
+@use "mixins/gradients";
+@use "mixins/vendor-prefixes";
+
 // Paper 3.3.5
 // Bootswatch
 // -----------------------------------------------------
@@ -9,7 +14,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
 
 .navbar {
   border: none;
-  @include box-shadow(0 1px 2px rgba(0,0,0,.3));
+  @include vendor-prefixes.box-shadow(0 1px 2px rgba(0,0,0,.3));
 
   &-brand {
     font-size: 24px;
@@ -21,11 +26,11 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
       input[type=text],
       input[type=password] {
         color: #fff;
-        @include box-shadow(inset 0 -1px 0 $navbar-inverse-link-color);
-        @include placeholder($navbar-inverse-link-color);
+        @include vendor-prefixes.box-shadow(inset 0 -1px 0 variables.$navbar-inverse-link-color);
+        @include vendor-prefixes.placeholder(variables.$navbar-inverse-link-color);
 
         &:focus {
-          @include box-shadow(inset 0 -2px 0 #fff);
+          @include vendor-prefixes.box-shadow(inset 0 -2px 0 #fff);
         }
       }
     }
@@ -45,41 +50,41 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
 
     &:hover,
     &:active:hover {
-      background-color: darken($bg, 6%);
+      background-color: color.adjust($bg, $lightness: -6%);
     }
 
     &:active {
-      background-color: darken($bg, 12%);
-      @include gradient-radial(darken($bg, 12%) 10%, $bg 11%);
+      background-color: color.adjust($bg, $lightness: -12%);
+      @include gradients.gradient-radial(color.adjust($bg, $lightness: -12%) 10%, $bg 11%);
       background-size: 1000% 1000%;
-      @include box-shadow(2px 2px 4px rgba(0,0,0,.4));
+      @include vendor-prefixes.box-shadow(2px 2px 4px rgba(0,0,0,.4));
     }
   }
 }
 
-@include btn(default,$btn-default-bg);
-@include btn(primary,$btn-primary-bg);
-@include btn(success,$btn-success-bg);
-@include btn(info,$btn-info-bg);
-@include btn(warning,$btn-warning-bg);
-@include btn(danger,$btn-danger-bg);
+@include btn(default,variables.$btn-default-bg);
+@include btn(primary,variables.$btn-primary-bg);
+@include btn(success,variables.$btn-success-bg);
+@include btn(info,variables.$btn-info-bg);
+@include btn(warning,variables.$btn-warning-bg);
+@include btn(danger,variables.$btn-danger-bg);
 @include btn(link,#fff);
 
 .btn {
   text-transform: uppercase;
   border: none;
-  @include box-shadow(1px 1px 4px rgba(0,0,0,.4));
-  @include transition(all 0.4s);
+  @include vendor-prefixes.box-shadow(1px 1px 4px rgba(0,0,0,.4));
+  @include vendor-prefixes.transition(all 0.4s);
 
   &-link {
-    border-radius: $btn-border-radius-base;
-    @include box-shadow(none);
-    color: $btn-default-color;
+    border-radius: variables.$btn-border-radius-base;
+    @include vendor-prefixes.box-shadow(none);
+    color: variables.$btn-default-color;
 
     &:hover,
     &:focus {
-      @include box-shadow(none);
-      color: $btn-default-color;
+      @include vendor-prefixes.box-shadow(none);
+      color: variables.$btn-default-color;
       text-decoration: none;
     }
   }
@@ -130,7 +135,7 @@ button {
 }
 
 a {
-  @include transition(all 0.2s);
+  @include vendor-prefixes.transition(all 0.2s);
 }
 
 // Tables =====================================================================
@@ -139,7 +144,7 @@ a {
   > tbody > tr,
   > tbody > tr > th,
   > tbody > tr > td {
-    @include transition(all 0.2s);
+    @include vendor-prefixes.transition(all 0.2s);
   }
 }
 
@@ -165,26 +170,26 @@ input[type=number],
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
-  @include box-shadow(inset 0 -1px 0 #ddd);
+  @include vendor-prefixes.box-shadow(inset 0 -1px 0 #ddd);
   font-size: 16px;
 
   &:focus {
-    @include box-shadow(inset 0 -2px 0 $brand-primary);
+    @include vendor-prefixes.box-shadow(inset 0 -2px 0 variables.$brand-primary);
   }
 
   &[disabled],
   &[readonly] {
-    @include box-shadow(none);
+    @include vendor-prefixes.box-shadow(none);
     border-bottom: 1px dotted #ddd;
   }
 
   &.input {
     &-sm {
-      font-size: $font-size-small;
+      font-size: variables.$font-size-small;
     }
 
     &-lg {
-      font-size: $font-size-large;
+      font-size: variables.$font-size-large;
     }
   }
 }
@@ -202,7 +207,7 @@ select.form-control {
   background-size: 13px;
   background-repeat: no-repeat;
   background-position: right center;
-  @include box-shadow(inset 0 -1px 0 #ddd);
+  @include vendor-prefixes.box-shadow(inset 0 -1px 0 #ddd);
   font-size: 16px;
   line-height: 1.5;
 
@@ -212,16 +217,16 @@ select.form-control {
 
   &.input {
     &-sm {
-      font-size: $font-size-small;
+      font-size: variables.$font-size-small;
     }
 
     &-lg {
-      font-size: $font-size-large;
+      font-size: variables.$font-size-large;
     }
   }
 
   &:focus {
-    @include box-shadow(inset 0 -2px 0 $brand-primary);
+    @include vendor-prefixes.box-shadow(inset 0 -2px 0 variables.$brand-primary);
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAMAAACelLz8AAAAJ1BMVEUhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISF8S9ewAAAADHRSTlMAAgMJC0uWpKa6wMxMdjkoAAAANUlEQVR4AeXJyQEAERAAsNl7Hf3X6xt0QL6JpZWq30pdvdadme+0PMdzvHm8YThHcT1H7K0BtOMDniZhWOgAAAAASUVORK5CYII=);
   }
 
@@ -268,38 +273,38 @@ input[type="radio"],
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    @include transition(240ms);
+    @include vendor-prefixes.transition(240ms);
   }
 
   &:before {
     position: absolute;
     left: 0;
     top: -3px;
-    background-color: $brand-primary;
-    @include scale(0);
+    background-color: variables.$brand-primary;
+    @include vendor-prefixes.scale(0);
   }
 
   &:after {
     position: relative;
     top: -3px;
-    border: 2px solid $gray;
+    border: 2px solid variables.$gray;
   }
 
   &:checked:before {
-    @include scale(0.5);
+    @include vendor-prefixes.scale(0.5);
   }
 
   &:disabled:checked:before {
-    background-color: $gray-light;
+    background-color: variables.$gray-light;
   }
 
   &:checked:after {
-    border-color: $brand-primary;
+    border-color: variables.$brand-primary;
   }
 
   &:disabled:after,
   &:disabled:checked:after {
-    border-color: $gray-light;
+    border-color: variables.$gray-light;
   }
 }
 
@@ -318,7 +323,7 @@ input[type="checkbox"],
   }
 
   &:focus:after {
-    border-color: $brand-primary;
+    border-color: variables.$brand-primary;
   }
 
   &:after {
@@ -328,9 +333,9 @@ input[type="checkbox"],
     height: 18px;
     margin-top: -2px;
     margin-right: 5px;
-    border: 2px solid $gray;
+    border: 2px solid variables.$gray;
     border-radius: 2px;
-    @include transition(240ms);
+    @include vendor-prefixes.transition(240ms);
   }
 
   &:checked:before {
@@ -344,20 +349,20 @@ input[type="checkbox"],
     border: 2px solid #fff;
     border-top-width: 0;
     border-left-width: 0;
-    @include rotate(45deg);
+    @include vendor-prefixes.rotate(45deg);
   }
 
   &:checked:after {
-    background-color: $brand-primary;
-    border-color: $brand-primary;
+    background-color: variables.$brand-primary;
+    border-color: variables.$brand-primary;
   }
 
   &:disabled:after {
-    border-color: $gray-light;
+    border-color: variables.$gray-light;
   }
 
   &:disabled:checked:after {
-    background-color: $gray-light;
+    background-color: variables.$gray-light;
     border-color: transparent;
   }
 }
@@ -371,7 +376,7 @@ input[type="checkbox"],
   input:not([type=checkbox]):focus,
   .form-control:focus {
     border-bottom: none;
-    @include box-shadow(inset 0 -2px 0 $brand-warning);
+    @include vendor-prefixes.box-shadow(inset 0 -2px 0 variables.$brand-warning);
   }
 }
 
@@ -384,7 +389,7 @@ input[type="checkbox"],
   input:not([type=checkbox]):focus,
   .form-control:focus {
     border-bottom: none;
-    @include box-shadow(inset 0 -2px 0 $brand-danger);
+    @include vendor-prefixes.box-shadow(inset 0 -2px 0 variables.$brand-danger);
   }
 }
 
@@ -397,16 +402,16 @@ input[type="checkbox"],
   input:not([type=checkbox]):focus,
   .form-control:focus {
     border-bottom: none;
-    @include box-shadow(inset 0 -2px 0 $brand-success);
+    @include vendor-prefixes.box-shadow(inset 0 -2px 0 variables.$brand-success);
   }
 }
 
 // Remove the Bootstrap feedback styles for input addons
 .input-group-addon {
   .has-warning &, .has-error &, .has-success & {
-    color: $input-color;
-    border-color: $input-group-addon-border-color;
-    background-color: $input-group-addon-bg;
+    color: variables.$input-color;
+    border-color: variables.$input-group-addon-border-color;
+    background-color: variables.$input-group-addon-bg;
   }
 }
 
@@ -425,31 +430,31 @@ input[type="checkbox"],
     margin-right: 0;
     background-color: transparent;
     border: none;
-    color: $navbar-default-link-color;
-    @include box-shadow(inset 0 -1px 0 #ddd);
-    @include transition(all 0.2s);
+    color: variables.$navbar-default-link-color;
+    @include vendor-prefixes.box-shadow(inset 0 -1px 0 #ddd);
+    @include vendor-prefixes.transition(all 0.2s);
 
     &:hover {
       background-color: transparent;
-      @include box-shadow(inset 0 -2px 0 $brand-primary);
-      color: $brand-primary;
+      @include vendor-prefixes.box-shadow(inset 0 -2px 0 variables.$brand-primary);
+      color: variables.$brand-primary;
     }
   }
 
   & > li.active > a,
   & > li.active > a:focus {
     border: none;
-    @include box-shadow(inset 0 -2px 0 $brand-primary);
-    color: $brand-primary;
+    @include vendor-prefixes.box-shadow(inset 0 -2px 0 variables.$brand-primary);
+    color: variables.$brand-primary;
 
     &:hover {
       border: none;
-      color: $brand-primary;
+      color: variables.$brand-primary;
     }
   }
 
   & > li.disabled > a {
-    @include box-shadow(inset 0 -1px 0 #ddd);
+    @include vendor-prefixes.box-shadow(inset 0 -1px 0 #ddd);
   }
 
   &.nav-justified {
@@ -472,7 +477,7 @@ input[type="checkbox"],
 .dropdown-menu {
   margin-top: 0;
   border: none;
-  @include box-shadow(0 1px 4px rgba(0,0,0,.3));
+  @include vendor-prefixes.box-shadow(0 1px 4px rgba(0,0,0,.3));
 }
 
 // Indicators =================================================================
@@ -482,19 +487,19 @@ input[type="checkbox"],
   color: #fff;
 
   &-success {
-    background-color: $brand-success;
+    background-color: variables.$brand-success;
   }
 
   &-info {
-    background-color: $brand-info;
+    background-color: variables.$brand-info;
   }
 
   &-warning {
-    background-color: $brand-warning;
+    background-color: variables.$brand-warning;
   }
 
   &-danger {
-    background-color: $brand-danger;
+    background-color: variables.$brand-danger;
   }
 
   a:not(.close):not(.btn),
@@ -518,10 +523,10 @@ input[type="checkbox"],
   height: 6px;
   border-radius: 0;
 
-  @include box-shadow(none);
+  @include vendor-prefixes.box-shadow(none);
 
   &-bar {
-    @include box-shadow(none);
+    @include vendor-prefixes.box-shadow(none);
 
     &:last-child {
       border-radius: 0 3px 3px 0;
@@ -537,23 +542,23 @@ input[type="checkbox"],
         left: 0;
         right: 0;
         z-index: -1;
-        background-color: lighten($progress-bar-bg, 35%);
+        background-color: color.adjust(variables.$progress-bar-bg, $lightness: 35%);
       }
     }
 
     &-success:last-child.progress-bar:before {
-      background-color: lighten($brand-success, 35%);
+      background-color: color.adjust(variables.$brand-success, $lightness: 35%);
     }
 
     &-info:last-child.progress-bar:before {
-      background-color: lighten($brand-info, 45%);
+      background-color: color.adjust(variables.$brand-info, $lightness: 45%);
     }
     &-warning:last-child.progress-bar:before {
-      background-color: lighten($brand-warning, 35%);
+      background-color: color.adjust(variables.$brand-warning, $lightness: 35%);
     }
 
     &-danger:last-child.progress-bar:before {
-      background-color: lighten($brand-danger, 25%);
+      background-color: color.adjust(variables.$brand-danger, $lightness: 25%);
     }
   }
 }
@@ -567,7 +572,7 @@ input[type="checkbox"],
   font-weight: 300;
   line-height: 24px;
   opacity: 0.6;
-  @include transition(all 0.2s);
+  @include vendor-prefixes.transition(all 0.2s);
 
   &:hover {
     opacity: 1;
@@ -581,19 +586,19 @@ input[type="checkbox"],
   }
 
   &-item-text {
-    color: $gray-light;
+    color: variables.$gray-light;
   }
 }
 
 .well {
   border-radius: 0;
-  @include box-shadow(none);
+  @include vendor-prefixes.box-shadow(none);
 }
 
 .panel {
   border: none;
   border-radius: 2px;
-  @include box-shadow(0 1px 4px rgba(0,0,0,.3));
+  @include vendor-prefixes.box-shadow(0 1px 4px rgba(0,0,0,.3));
 
   &-heading {
     border-bottom: none;
@@ -606,7 +611,7 @@ input[type="checkbox"],
 
 .popover {
   border: none;
-  @include box-shadow(0 1px 4px rgba(0,0,0,.3));
+  @include vendor-prefixes.box-shadow(0 1px 4px rgba(0,0,0,.3));
 }
 
 .carousel {

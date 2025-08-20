@@ -1,11 +1,13 @@
-@import "_variables";
+@use "sass:math";
+@use "sass:color";
+@use "_variables";
 
 //general
-@import "app/_general-margins.scss";
-@import "app/_general-loading.scss";
+@use "app/_general-margins.scss";
+@use "app/_general-loading.scss";
 
 //directives
-@import "app/_directive-sort-header.scss";
+@use "app/_directive-sort-header.scss";
 
 //views
-@import "app/_view-user-list.scss";
+@use "app/_view-user-list.scss";

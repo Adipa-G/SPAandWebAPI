@@ -28,8 +28,8 @@
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        plugins : ['karma-jasmine', 'karma-phantomjs-launcher'],
-        browsers: ['PhantomJS'],
+        plugins : ['karma-chrome-launcher','karma-jasmine'],
+        browsers: ['ChromeHeadless'],
         singleRun: false
     });
 };

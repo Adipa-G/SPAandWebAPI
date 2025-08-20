@@ -43,3 +43,60 @@ jobs:
           gulp copyAppJS
           gulp test
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      
+  build-and-test-solution:
+    needs: changes
+    if: ${{ needs.changes.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: dotnet restore ./backend/netcore/Mvc.sln 
+      - name: Build 
+        run: dotnet build ./backend/netcore/Mvc.sln 
+      - name: NPM install
+        run: |
+          cd ui/angularjs
+          npm install --prefer-offline
+          npx playwright install chromium
+      - name: NPM build
+        run: |
+          cd ui/angularjs
+          gulp copy-libs
+          gulp copy-templates
+          gulp sass
+          gulp copyAppJS
+      - name: NPM test
+        run: |
+          cd ui/angularjs
+          gulp test
+      - name: Copy angularjs application
+        run: |
+          cp -r ./ui/angularjs/dist/* ./backend/netcore/src/Web/app
+      - name: Run application
+        run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
+      - name: Wait for the application to start
+        run: |
+          for i in {1..30}; do
+            if curl --fail http://localhost:5000/alive; then
+              echo " - Web app is up!"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Web app did not start in time."
+          exit 1
+      - name: Run e2e
+        run: |
+          cd ui/angularjs
+          npx playwright test
+      - run: echo "🍏 This job's status is ${{ job.status }}."

@@ -2,24 +2,25 @@
   "version": "0.0.0",
   "name": "owin-angular",
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "@playwright/test": "1.54.2",
+    "gulp": "^4.0.2",
     "gulp-clean-css": "^2.0.9",
     "gulp-concat": "^2.6.0",
-    "gulp-karma": "^0.0.5",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^5.1.0",
-    "sass": "^1.63.0",
     "gulp-templatecache": "^0.0.4",
     "gulp-uglify": "^1.5.3",
     "gulp-watch": "^4.3.5",
     "jasmine": "^2.4.1",
-    "karma": "^6.4.1",
+    "jasmine-core": "^4.6.0",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^3.1.1",
     "karma-jasmine": "^1.0.2",
-    "karma-phantomjs-launcher": "^1.0.0",
-    "phantomjs": "^2.1.7",
-    "phantomjs-prebuilt": "^2.1.7"
+    "sass": "^1.63.0",
+    "vinyl": "^3.0.1"
   },
   "scripts": {
-    "preinstall": "node preinstall.js"
+    "preinstall": "node preinstall.js",
+    "test": "karma start"
   }
 }

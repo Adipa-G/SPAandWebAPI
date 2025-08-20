@@ -25,7 +25,7 @@
         var login = function (loginData) {
             var deferred = $q.defer();
 
-            var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password + "&client_id=default&client_secret=no-secret&scope=all";
+            var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password + "&client_id=default&scope=openid";
             var headers = { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } };
 
             $http.post(serviceBase + 'connect/token', data, headers)
