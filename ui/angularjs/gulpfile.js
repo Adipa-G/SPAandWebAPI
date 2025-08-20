@@ -94,6 +94,7 @@ gulp.task('test', function (done) {
         });
 });
 
+
 // Watch task
 gulp.task('watch', function () {
     gulp.watch('./web-src/app/views/**/*.html', gulp.series('copy-templates'));
