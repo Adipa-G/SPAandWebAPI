@@ -30,6 +30,7 @@ export default defineConfig({
     headless: true, // Explicitly set headless mode
   },
 
+  
   /* Configure projects for major browsers */
   projects: [
     {

@@ -24,25 +24,6 @@ jobs:
             
   build-and-test-solution:
     needs: changes
-    if: ${{ needs.changes.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - name: Build and Test
-        run: |
-          cd ui/react
-          npm install --prefer-offline
-          npm run build
-          npm test
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      
-  build-and-test-solution:
-    needs: changes
     if: ${{ needs.changes.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'}}
     runs-on: ubuntu-latest
     steps:
