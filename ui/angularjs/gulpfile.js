@@ -1,14 +1,11 @@
 /// <binding AfterBuild='copy-templates,sass,copyAppJS' />
 var path = require("path");
 var gulp = require('gulp');
-var rename = require('gulp-rename');
 var sass = require('gulp-sass')(require('sass'));
-var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 const { Server } = require('karma');
-var templateCache = require('gulp-templatecache');
 
 // Copy libs task
 gulp.task('copy-libs', function () {
@@ -81,7 +78,6 @@ gulp.task('test', function (done) {
     };
 
     return gulp.src('./web-src/app/views/**/*.html')
-        .pipe(templateCache(options))
         .pipe(gulp.dest('./web-test/app'))
         .on('end', function() {
             const server = new Server({
