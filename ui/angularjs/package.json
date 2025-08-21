@@ -3,7 +3,7 @@
   "name": "owin-angular",
   "devDependencies": {
     "@playwright/test": "1.54.2",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "gulp-clean-css": "^2.0.9",
     "gulp-concat": "^2.6.0",
     "gulp-sass": "^5.1.0",
