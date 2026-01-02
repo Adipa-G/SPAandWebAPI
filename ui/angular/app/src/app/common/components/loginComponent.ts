@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { LoginInfo } from '../../domain/auth/loginInfo';
@@ -12,9 +12,13 @@ import { AuthService } from '../services/authService';
 })
 
 export class LoginComponent {
+    private authService = inject(AuthService);
+
     loginInfo: LoginInfo;
 
-    constructor(private authService: AuthService) {
+    constructor() {
+        const authService = this.authService;
+
         this.authService = authService;
         this.loginInfo = new LoginInfo();
     }

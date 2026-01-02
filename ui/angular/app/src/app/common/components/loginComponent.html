@@ -7,7 +7,7 @@
                     <label for="loginUserName">User Name</label>
                     <input type="text" id="loginUserName" required name="loginUserName"
                            class="form-control" placeholder="Username"
-                           #loginUserName="ngModel" [(ngModel)]="loginInfo.userName" autofocus>
+                           #loginUserName="ngModel" [(ngModel)]="loginInfo.userName">
                     <div [hidden]="loginUserName.valid || loginUserName.pristine" class="alert alert-danger">
                         User name is required
                     </div>

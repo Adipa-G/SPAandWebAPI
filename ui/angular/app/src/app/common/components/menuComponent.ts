@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
@@ -13,15 +13,21 @@ import { AuthService } from '../services/authService';
     standalone: false
 })
 
-export class MenuComponent {
+export class MenuComponent implements OnDestroy {
+    private router = inject(Router);
+    private authService = inject(AuthService);
+    private errorService = inject(ErrorService);
+
     currentAuth: AuthenticationDetails;
 
     authChangedSubscription: any;
     authErrorSubscription: any;
 
-    constructor(private router: Router,
-        private authService: AuthService,
-        private errorService: ErrorService) {
+    constructor() {
+        const router = this.router;
+        const authService = this.authService;
+        const errorService = this.errorService;
+
         this.router = router;
         this.authChangedSubscription = authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
         this.authErrorSubscription = errorService.authErrorOccured$.subscribe(auth => this.onAuthError(auth));

@@ -1,4 +1,4 @@
-﻿import { Injectable, Inject } from '@angular/core';
+﻿import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 
 import { Constants } from '../../common/services/constants';
@@ -7,7 +7,9 @@ import { Constants } from '../../common/services/constants';
 export class UtilsService {
     private constants: Constants;
 
-    constructor(@Inject(Constants) constants: Constants) {
+    constructor() {
+        const constants = inject<Constants>(Constants);
+
         this.constants = constants;
     }
 
@@ -16,8 +18,8 @@ export class UtilsService {
             return '';
         }
 
-        var momentDate = moment(date, this.constants.getShortDateFormat());
-        var result = momentDate.utc().format(this.constants.getServerDateFormat());
+        const momentDate = moment(date, this.constants.getShortDateFormat());
+        const result = momentDate.utc().format(this.constants.getServerDateFormat());
 
         if (result === 'Invalid date') {
             return '';

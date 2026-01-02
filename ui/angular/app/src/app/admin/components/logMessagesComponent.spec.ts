@@ -38,7 +38,7 @@ class MockServerLogService {
     }
 
     getLogMessages() {
-        var result = {
+        const result = {
             results: [
                 {
                     'level': 'Error',
@@ -70,9 +70,9 @@ describe('LogMessagesComponent', () => {
     let comp: LogMessagesComponent;
     let fixture: ComponentFixture<LogMessagesComponent>;
 
-    var errorService = new MockErrorService();
-    var utilsService = new MockUtilsService();
-    var serverLogService = new MockServerLogService();
+    const errorService = new MockErrorService();
+    const utilsService = new MockUtilsService();
+    const serverLogService = new MockServerLogService();
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
@@ -106,7 +106,7 @@ describe('LogMessagesComponent', () => {
         comp.totalCount = 0;
         comp.logMessages = [];
 
-        var filter = comp.initFilter();
+        const filter = comp.initFilter();
         comp.updateView(filter);
 
         expect(comp.filter).toBeDefined();

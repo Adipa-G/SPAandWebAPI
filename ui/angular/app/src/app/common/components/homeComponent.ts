@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+﻿import { Component, OnDestroy, inject } from '@angular/core';
 
 import {AuthenticationDetails} from '../../domain/auth/authenticationDetails';
 
@@ -10,11 +10,15 @@ import {AuthService} from '../services/authService';
     standalone: false
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
+    private authService = inject(AuthService);
+
     currentAuth: AuthenticationDetails;
     private subscription: any;
 
-    constructor(private authService: AuthService) {
+    constructor() {
+        const authService = this.authService;
+
         this.subscription = authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
         this.currentAuth = authService.getCurrentAuth();
     }

@@ -49,7 +49,7 @@ describe('AuthService', () => {
             ]
         };
 
-        authService.authenticate(<any>{});
+        authService.authenticate(({} as any));
 
         const req = httpTestingController.expectOne({ method: 'POST', url: 'connect/token' });
         req.flush(mockResponse);

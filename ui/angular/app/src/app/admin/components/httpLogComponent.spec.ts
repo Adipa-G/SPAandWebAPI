@@ -25,7 +25,7 @@ class MockServerLogService {
     }
 
     getLogHttp() {
-        var result = {
+        const result = {
             results: [
                 {
                     'level': 'Error',
@@ -56,9 +56,9 @@ describe('HttpLogComponent', () => {
     let comp: HttpLogComponent;
     let fixture: ComponentFixture<HttpLogComponent>;
 
-    var errorService = new MockErrorService();
-    var utilsService = new MockUtilsService();
-    var serverLogService = new MockServerLogService();
+    const errorService = new MockErrorService();
+    const utilsService = new MockUtilsService();
+    const serverLogService = new MockServerLogService();
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
@@ -93,7 +93,7 @@ describe('HttpLogComponent', () => {
         comp.totalCount = 0;
         comp.httpLogs = [];
 
-        var filter = comp.initFilter();
+        const filter = comp.initFilter();
         comp.updateView(filter);
 
         expect(comp.filter).toBeDefined();

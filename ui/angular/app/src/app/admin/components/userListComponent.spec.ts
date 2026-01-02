@@ -13,7 +13,7 @@ class MockUserService {
     throwError: boolean;
 
     getUsers() {
-        var result = {
+        const result = {
             results: [
                 {
                     'id': '1',
@@ -33,7 +33,7 @@ class MockUserService {
         if (this.throwError) {
             return throwError(() => new Error('error!'));
         } else {
-            var result = {};
+            const result = {};
             return of(result);
         }
     }
@@ -56,8 +56,8 @@ describe('UserListComponent', () => {
     let comp: UserListComponent;
     let fixture: ComponentFixture<UserListComponent>;
 
-    var errorService = new MockErrorService();
-    var userService = new MockUserService();
+    const errorService = new MockErrorService();
+    const userService = new MockUserService();
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
@@ -88,7 +88,7 @@ describe('UserListComponent', () => {
         comp.totalCount = 0;
         comp.users = [];
 
-        var filter = comp.initOrderAndPagingDetails();
+        const filter = comp.initOrderAndPagingDetails();
         comp.updateView(filter);
 
         expect(comp.orderAndPage).toBeDefined();

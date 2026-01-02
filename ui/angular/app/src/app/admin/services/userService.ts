@@ -1,4 +1,4 @@
-﻿import { Injectable, Inject } from '@angular/core';
+﻿import { Injectable, inject } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
@@ -11,8 +11,10 @@ export class UserService {
     private httpClient: HttpClientWrapper;
     private constants: Constants;
 
-    constructor(@Inject(HttpClientWrapper) httpClient: HttpClientWrapper,
-        @Inject(Constants) constants: Constants) {
+    constructor() {
+        const httpClient = inject<HttpClientWrapper>(HttpClientWrapper);
+        const constants = inject<Constants>(Constants);
+
         this.httpClient = httpClient;
         this.constants = constants;
     }

@@ -8,7 +8,7 @@
 
 export class PrettyPrint implements OnChanges {
     @Input('pretty-print') sourceStr: string;
-    @Input('format') format: string;
+    @Input() format: string;
 
     prettyPrintOutput: string;
 
@@ -17,7 +17,7 @@ export class PrettyPrint implements OnChanges {
             return;
         }
 
-        var fixedStr = this.sourceStr.replace(/Bearer [^\s]*/g, "Bearer (token)");
+        const fixedStr = this.sourceStr.replace(/Bearer [^\s]*/g, "Bearer (token)");
 
         try {
 
@@ -26,11 +26,11 @@ export class PrettyPrint implements OnChanges {
             }
         } catch (e1) {
             try {
-                var result = '';
-                var level = 0;
+                let result = '';
+                let level = 0;
 
-                for (var i = 0; i < fixedStr.length; i++) {
-                    var chr = fixedStr[i];
+                for (let i = 0; i < fixedStr.length; i++) {
+                    const chr = fixedStr[i];
                     if (['{', '['].indexOf(chr) >= 0) {
                         level++;
                     }

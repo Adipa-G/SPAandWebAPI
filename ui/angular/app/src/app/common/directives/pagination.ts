@@ -28,7 +28,7 @@ export class Pagination implements OnChanges {
     @Input('total-count') totalCount: number;
     @Output('page-changed') pageChanged = new EventEmitter<OrderAndPage>();
 
-    start: number = 1;
+    start = 1;
     totalPages: number;
 
     public pageClick(pageNumber: number): void {
@@ -47,7 +47,7 @@ export class Pagination implements OnChanges {
     }
 
     private setPages(): void {
-        var pageSize = 1;
+        let pageSize = 1;
         if (this.pageOptions.pageSize > 0) {
             pageSize = this.pageOptions.pageSize;
         }

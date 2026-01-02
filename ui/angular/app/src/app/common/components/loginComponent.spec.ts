@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
     let comp: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
 
-    var authService = new MockAuthService();
+    const authService = new MockAuthService();
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({

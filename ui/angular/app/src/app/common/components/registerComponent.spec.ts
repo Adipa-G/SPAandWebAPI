@@ -32,7 +32,7 @@ class MockErrorService {
 }
 
 class MockRouter {
-    public navigate(route: Array<string>) {
+    public navigate(route: string[]) {
     }
 }
 
@@ -41,9 +41,9 @@ describe('RegisterComponent', () => {
     let comp: RegisterComponent;
     let fixture: ComponentFixture<RegisterComponent>;
 
-    var regervice = new MockRegisterService();
-    var errorService = new MockErrorService();
-    var router = new MockRouter();
+    const regervice = new MockRegisterService();
+    const errorService = new MockErrorService();
+    const router = new MockRouter();
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({

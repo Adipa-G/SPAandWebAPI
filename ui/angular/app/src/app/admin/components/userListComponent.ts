@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 import { UserInfo } from '../../domain/admin/userInfo';
@@ -13,12 +13,18 @@ import { UserService } from '../services/userService';
 })
 
 export class UserListComponent {
+    private errorService = inject(ErrorService);
+    private userService = inject(UserService);
+
     orderAndPage: OrderAndPage;
     errorMessage: string;
     users: UserInfo[];
     totalCount: number;
 
-    constructor(private errorService: ErrorService, private userService: UserService) {
+    constructor() {
+        const errorService = this.errorService;
+        const userService = this.userService;
+
         this.errorService = errorService;
         this.userService = userService;
         this.users = [];
@@ -43,7 +49,7 @@ export class UserListComponent {
     }
 
     initOrderAndPagingDetails(): OrderAndPage {
-        var orderAndPage: OrderAndPage = new OrderAndPage();
+        const orderAndPage: OrderAndPage = new OrderAndPage();
         orderAndPage.orderField = 'UserName';
         orderAndPage.orderDirection = 'Asc';
         orderAndPage.pageNumber = 1;
@@ -54,7 +60,7 @@ export class UserListComponent {
     deleteUser(userName: string): void {
         this.userService.deleteUser(userName).subscribe({
             complete: () => {
-                for (var i = 0; i < this.users.length; i++) {
+                for (let i = 0; i < this.users.length; i++) {
                     if (this.users[i].userName === userName) {
                         this.users.splice(i, 1);
                         this.totalCount--;

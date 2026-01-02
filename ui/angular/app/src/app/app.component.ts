@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Constants } from './common/services/constants';
@@ -21,7 +21,8 @@ import { ServerLogService } from './admin/services/serverLogService';
 })
 
 export class AppComponent implements OnInit {
-    constructor(private router: Router) { }
+    private router = inject(Router);
+
     ngOnInit() {
         this.router.navigate(['/home']);
     }

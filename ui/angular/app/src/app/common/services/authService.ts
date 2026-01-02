@@ -1,8 +1,6 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { Injectable, inject } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { map } from 'rxjs/operators';
 
 import { ErrorInfo } from '../../domain/errorInfo';
 import { LoginInfo } from '../../domain/auth/loginInfo';
@@ -16,15 +14,23 @@ import { StorageService } from './storageService';
 
 @Injectable()
 export class AuthService {
+    private httpClient = inject(HttpClient);
+    private constants = inject(Constants);
+    private logService = inject(LogService);
+    private errorService = inject(ErrorService);
+    private storageService = inject(StorageService);
+
     currentAuth: AuthenticationDetails;
 
     public authChanged$: EventEmitter<AuthenticationDetails>;
 
-    constructor(private httpClient: HttpClient,
-        private constants: Constants,
-        private logService: LogService,
-        private errorService: ErrorService,
-        private storageService: StorageService) {
+    constructor() {
+        const httpClient = this.httpClient;
+        const constants = this.constants;
+        const logService = this.logService;
+        const errorService = this.errorService;
+        const storageService = this.storageService;
+
         this.httpClient = httpClient;
         this.constants = constants;
         this.logService = logService;
@@ -48,10 +54,10 @@ export class AuthService {
     }
 
     public authenticate(loginInfo: LoginInfo): void {
-        var creds = "grant_type=password&username=" + loginInfo.userName + "&password=" + loginInfo.password
+        const creds = "grant_type=password&username=" + loginInfo.userName + "&password=" + loginInfo.password
             + "&client_id=default&scope=openid";
 
-        var headers = new HttpHeaders({
+        const headers = new HttpHeaders({
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-XSRF-TOKEN': this.storageService.getCookie('XSRF-TOKEN')
         });

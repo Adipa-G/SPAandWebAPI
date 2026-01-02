@@ -54,7 +54,7 @@ describe('UserService', () => {
 
         userService.getUsers(new OrderAndPage())
             .subscribe((response: any) => {
-                var users = response.data;
+                const users = response.data;
 
                 expect(users.length).toBe(1);
                 expect(users[0].userName).toEqual('Picard');

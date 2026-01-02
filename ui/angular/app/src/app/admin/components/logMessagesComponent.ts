@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 
 import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
 import { LogMessageInfo } from '../../domain/admin/logMessageInfo';
@@ -14,6 +14,10 @@ import { ServerLogService } from "../services/serverLogService";
 })
 
 export class LogMessagesComponent {
+    private errorService = inject(ErrorService);
+    private serverLogService = inject(ServerLogService);
+    private utilsService = inject(UtilsService);
+
     filter: LogMessageFilter;
     errorMessage: string;
     logLevels: string[];
@@ -21,9 +25,11 @@ export class LogMessagesComponent {
     logMessages: LogMessageInfo[];
     totalCount: number;
 
-    constructor(private errorService: ErrorService,
-        private serverLogService: ServerLogService,
-        private utilsService: UtilsService) {
+    constructor() {
+        const errorService = this.errorService;
+        const serverLogService = this.serverLogService;
+        const utilsService = this.utilsService;
+
         this.errorService = errorService;
         this.serverLogService = serverLogService;
         this.utilsService = utilsService;
@@ -78,7 +84,7 @@ export class LogMessagesComponent {
     }
 
     initFilter(): LogMessageFilter {
-        var logMessageFilter: LogMessageFilter = new LogMessageFilter();
+        const logMessageFilter: LogMessageFilter = new LogMessageFilter();
         logMessageFilter.orderField = 'LogTimestamp';
         logMessageFilter.orderDirection = 'Desc';
         logMessageFilter.pageNumber = 1;

@@ -1,4 +1,4 @@
-﻿import { Injectable, Inject } from '@angular/core';
+﻿import { Injectable, inject } from '@angular/core';
 
 import { LogService } from './logService';
 
@@ -6,13 +6,15 @@ import { LogService } from './logService';
 export class StorageService {
     private logService: LogService;
 
-    constructor( @Inject(LogService) logService: LogService) {
+    constructor() {
+        const logService = inject<LogService>(LogService);
+
         this.logService = logService;
     }
 
     public getCookie(name): string {
-        let value = "; " + document.cookie;
-        let parts = value.split("; " + name + "=");
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
         if (parts.length === 2) {
             return parts.pop().split(";").shift();
         }
@@ -20,10 +22,10 @@ export class StorageService {
     }
 
     public getLocalStorage<T>(key: string): T {
-        var text: any = localStorage.getItem(key);
-        var data: T;
+        const text: any = localStorage.getItem(key);
+        let data: T;
         try {
-            data = <T>JSON.parse(text);
+            data = JSON.parse(text) as T;
         } catch (error) {
             this.logService.log("LocalStorageService::readObject: can't convert string from local storage" +
                 " to object using JSON.parse(). Error: " + error);

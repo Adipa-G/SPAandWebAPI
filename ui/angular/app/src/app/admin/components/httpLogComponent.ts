@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 
 import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
 import { HttpLogInfo } from '../../domain/admin/httpLogInfo';
@@ -14,15 +14,21 @@ import { ServerLogService } from "../services/serverLogService";
 })
 
 export class HttpLogComponent {
+    private errorService = inject(ErrorService);
+    private serverLogService = inject(ServerLogService);
+    private utilsService = inject(UtilsService);
+
     filter: HttpLogFilter;
     errorMessage: string;
     logLevels: string[];
     httpLogs: HttpLogInfo[];
     totalCount: number;
 
-    constructor(private errorService: ErrorService,
-        private serverLogService: ServerLogService,
-        private utilsService: UtilsService) {
+    constructor() {
+        const errorService = this.errorService;
+        const serverLogService = this.serverLogService;
+        const utilsService = this.utilsService;
+
         this.errorService = errorService;
         this.serverLogService = serverLogService;
         this.utilsService = utilsService;
@@ -65,7 +71,7 @@ export class HttpLogComponent {
     }
 
     initFilter(): HttpLogFilter {
-        var httpLogFilter: HttpLogFilter = new HttpLogFilter();
+        const httpLogFilter: HttpLogFilter = new HttpLogFilter();
         httpLogFilter.orderField = 'CalledOn';
         httpLogFilter.orderDirection = 'Desc';
         httpLogFilter.pageNumber = 1;

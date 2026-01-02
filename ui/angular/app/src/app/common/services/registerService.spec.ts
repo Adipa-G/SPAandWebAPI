@@ -53,7 +53,7 @@ describe('RegisterService', () => {
 
         registerService.register(new RegistrationInfo())
             .subscribe((response: any) => {
-                var info = response.data;
+                const info = response.data;
                 expect(info.userName).toEqual('Picard');
             });
 

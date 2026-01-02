@@ -1,23 +1,29 @@
 ﻿import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { StorageService } from './storageService';
 import { AuthService } from './authService';
 
 @Injectable()
 export class HttpClientWrapper {
-    constructor(private httpClient: HttpClient,
-        private storageService: StorageService,
-        private authService: AuthService) {
+    private httpClient = inject(HttpClient);
+    private storageService = inject(StorageService);
+    private authService = inject(AuthService);
+
+    constructor() {
+        const httpClient = this.httpClient;
+        const storageService = this.storageService;
+        const authService = this.authService;
+
         this.httpClient = httpClient;
         this.storageService = storageService;
         this.authService = authService;
     }
 
     private createHeaders(): HttpHeaders {
-        var authData = this.authService.getCurrentAuth();
-        var accessToken = authData != null && authData.access_token != null ? authData.access_token : "";
-        var xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
+        const authData = this.authService.getCurrentAuth();
+        const accessToken = authData != null && authData.access_token != null ? authData.access_token : "";
+        const xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
 
         const headers = {
             'Content-Type': 'application/json',

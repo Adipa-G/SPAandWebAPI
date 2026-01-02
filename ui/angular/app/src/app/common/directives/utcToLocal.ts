@@ -1,4 +1,4 @@
-﻿import { Component, OnChanges, Input, Inject } from '@angular/core';
+﻿import { Component, OnChanges, Input, inject } from '@angular/core';
 import moment from 'moment';
 
 import { Constants } from "../../common/services/constants";
@@ -10,16 +10,20 @@ import { Constants } from "../../common/services/constants";
 })
 
 export class UtcToLocal implements OnChanges {
+    private constants = inject<Constants>(Constants);
+
     @Input('utc-to-local') utcTimeStr: string;
 
     localTimeStr: string;
 
-    constructor(@Inject(Constants) private constants: Constants) {
+    constructor() {
+        const constants = this.constants;
+
         this.constants = constants;
     }
 
     ngOnChanges(changes) {
-        var localTime = moment.utc(this.utcTimeStr).toDate();
+        const localTime = moment.utc(this.utcTimeStr).toDate();
         this.localTimeStr = moment(localTime).format(this.constants.getServerDateFormat());
     }
 }

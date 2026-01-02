@@ -21,7 +21,7 @@ describe('ErrorComponent', () => {
     let comp: ErrorComponent;
     let fixture: ComponentFixture<ErrorComponent>;
 
-    var errorService = new MockErrorService();
+    const errorService = new MockErrorService();
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({

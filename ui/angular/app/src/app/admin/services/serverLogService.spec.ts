@@ -55,7 +55,7 @@ describe('ServerLogService', () => {
 
         serverLogService.getLogLevels()
             .subscribe((response: any) => {
-                var levels = response.data;
+                const levels = response.data;
 
                 expect(levels.length).toBe(1);
                 expect(levels[0].level).toEqual('Info 0');
@@ -73,7 +73,7 @@ describe('ServerLogService', () => {
         };
 
         serverLogService.getLoggers().subscribe((response: any) => {
-            var loggers = response.data;
+            const loggers = response.data;
 
             expect(loggers.length).toBe(1);
             expect(loggers[0].name).toEqual('Http');
@@ -91,7 +91,7 @@ describe('ServerLogService', () => {
         };
 
         serverLogService.getLogMessages(new LogMessageFilter()).subscribe((response: any) => {
-            var messages = response.data;
+            const messages = response.data;
 
             expect(messages.length).toBe(1);
             expect(messages[0].message).toEqual('Test message');
@@ -109,7 +109,7 @@ describe('ServerLogService', () => {
         };
 
         serverLogService.getLogHttp(new HttpLogFilter()).subscribe((response: any) => {
-            var logs = response.data;
+            const logs = response.data;
 
             expect(logs.length).toBe(1);
             expect(logs[0].logMessage).toEqual('Test log');

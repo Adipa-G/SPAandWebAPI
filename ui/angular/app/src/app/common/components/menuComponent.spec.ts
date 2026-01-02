@@ -41,9 +41,9 @@ class MockErrorService {
 }
 
 class MockRouter {
-    public currentRoute: Array<string>;
+    public currentRoute: string[];
 
-    public navigate(route: Array<string>) {
+    public navigate(route: string[]) {
         this.currentRoute = route;
     }
 }
@@ -53,9 +53,9 @@ describe('MenuComponent', () => {
     let comp: MenuComponent;
     let fixture: ComponentFixture<MenuComponent>;
 
-    var authService = new MockAuthService();
-    var errorService = new MockErrorService();
-    var router = new MockRouter();
+    const authService = new MockAuthService();
+    const errorService = new MockErrorService();
+    const router = new MockRouter();
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
@@ -85,7 +85,7 @@ describe('MenuComponent', () => {
         comp.currentAuth = new AuthenticationDetails();
         comp.currentAuth.isAuth = true;
 
-        var auth = new AuthenticationDetails();
+        const auth = new AuthenticationDetails();
         auth.isAuth = false;
 
         comp.onAuthChanged(auth);
@@ -98,7 +98,7 @@ describe('MenuComponent', () => {
         comp.currentAuth = new AuthenticationDetails();
         comp.currentAuth.isAuth = false;
 
-        var auth = new AuthenticationDetails();
+        const auth = new AuthenticationDetails();
         auth.isAuth = true;
 
         comp.onAuthChanged(auth);

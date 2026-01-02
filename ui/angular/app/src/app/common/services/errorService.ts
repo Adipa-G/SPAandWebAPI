@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { Injectable, inject } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 import { ErrorInfo } from '../../domain/errorInfo';
@@ -7,10 +7,14 @@ import { LogService } from './logService';
 
 @Injectable()
 export class ErrorService {
+    private logService = inject(LogService);
+
     public errorOccured$: EventEmitter<ErrorInfo>;
     public authErrorOccured$: EventEmitter<ErrorInfo>;
 
-    constructor(private logService: LogService) {
+    constructor() {
+        const logService = this.logService;
+
         this.logService = logService;
 
         this.errorOccured$ = new EventEmitter<ErrorInfo>();
@@ -23,7 +27,7 @@ export class ErrorService {
     }
 
     public handleHttpError(error) {
-        var errorInfo = new ErrorInfo(JSON.stringify(error));
+        const errorInfo = new ErrorInfo(JSON.stringify(error));
 
         if (error.status === 401) {
             this.logService.log(JSON.stringify(error));
