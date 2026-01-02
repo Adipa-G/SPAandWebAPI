@@ -1,10 +1,10 @@
 ﻿<form #loginForm="ngForm">
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-4 offset-md-4">
             <fieldset>
                 <legend class="h2">Sign up</legend>
-                <div class="form-group">
-                    <label for="regUserName">User Name</label>
+                <div class="mb-3">
+                    <label for="regUserName" class="form-label">User Name</label>
                     <input type="text" id="regUserName" required name="regUserName"
                            class="form-control" placeholder="Username"
                            #regUserName="ngModel" [(ngModel)]="regInfo.userName">
@@ -12,8 +12,8 @@
                         User name is required
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="regPassword">Password</label>
+                <div class="mb-3">
+                    <label for="regPassword" class="form-label">Password</label>
                     <input type="password" id="regPassword" required minlength="6"
                            class="form-control" placeholder="Password" name="regPassword"
                            #regPassword="ngModel" [(ngModel)]="regInfo.password">
@@ -21,8 +21,8 @@
                         Password is required and should be at least 6 characters long
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="regPassword">Confirm Password</label>
+                <div class="mb-3">
+                    <label for="regConfirmPassword" class="form-label">Confirm Password</label>
                     <input type="password" id="regConfirmPassword" required minlength="6"
                            class="form-control" placeholder="Password" name="regConfirmPassword"
                            #regConfirmPassword="ngModel" [(ngModel)]="regInfo.confirmPassword">
@@ -34,14 +34,16 @@
         </div>
     </div>
     <div class="row" [hidden]="!success">
-        <div class="col-md-4 col-md-offset-4 alert alert-success">
-            Registration successful! You will be redirected to login shortly.
+        <div class="col-md-4 offset-md-4">
+            <div class="alert alert-success" role="alert">
+                Registration successful! You will be redirected to login shortly.
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="form-group">
-                <button type="button" class="btn btn-md btn-info btn-block" 
+        <div class="col-md-4 offset-md-4">
+            <div class="mb-3">
+                <button type="button" class="btn btn-info w-100" 
                         [disabled]="!loginForm.form.valid" (click)="register()">Sign up</button>
             </div>
         </div>

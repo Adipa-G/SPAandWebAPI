@@ -1,26 +1,43 @@
-﻿<div class="navbar navbar-inverse" role="navigation" data-ng-controller="indexController">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navCollapseMenu" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span [hidden]="!currentAuth.isAuth" class="navbar-brand">
-                Welcome {{currentAuth.userName}}
-            </span>
-        </div>
-        <div class="collapse navbar-collapse" id="navCollapseMenu">
-            <ul class="nav navbar-nav navbar-right">
-                <li [hidden]="!currentAuth.isAuth"><a [routerLink]="['/userList']">Users</a></li>
-                <li [hidden]="!currentAuth.isAuth"><a [routerLink]="['/logMessages']">System Log</a></li>
-                <li [hidden]="!currentAuth.isAuth"><a [routerLink]="['/httpLog']">Http Log</a></li>
-                <li [hidden]="!currentAuth.isAuth"><a href="" (click)="logOut()">Logout</a></li>
-                <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['/login']">Login</a></li>
-                <li [hidden]="currentAuth.isAuth"> <a [routerLink]="['/register']">Sign Up</a></li>
-            </ul>
-        </div>
+﻿<nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
+  <div class="container">
+    <a class="navbar-brand" [hidden]="!currentAuth.isAuth">
+      Welcome {{currentAuth.userName}}
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navCollapseMenu"
+      aria-controls="navCollapseMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navCollapseMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" [hidden]="!currentAuth.isAuth">
+          <a class="nav-link" [routerLink]="['/userList']">Users</a>
+        </li>
+        <li class="nav-item" [hidden]="!currentAuth.isAuth">
+          <a class="nav-link" [routerLink]="['/logMessages']">System Log</a>
+        </li>
+        <li class="nav-item" [hidden]="!currentAuth.isAuth">
+          <a class="nav-link" [routerLink]="['/httpLog']">Http Log</a>
+        </li>
+        <li class="nav-item" [hidden]="!currentAuth.isAuth">
+          <a class="nav-link" href="#" (click)="logOut()">Logout</a>
+        </li>
+
+        <li class="nav-item" [hidden]="currentAuth.isAuth">
+          <a class="nav-link" [routerLink]="['/login']">Login</a>
+        </li>
+        <li class="nav-item" [hidden]="currentAuth.isAuth">
+          <a class="nav-link" [routerLink]="['/register']">Sign Up</a>
+        </li>
+      </ul>
     </div>
-</div>
+  </div>
+</nav>

@@ -1,7 +1,11 @@
 ﻿<div class="container" [hidden]="currentErrors.length === 0">
   @for (currentError of currentErrors; track currentError) {
-    <div class="row alert alert-danger">
-      <div class="col-md-10 col-md-offset-1">{{currentError.message}}</div>
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="alert alert-danger" role="alert">
+          {{currentError.message}}
+        </div>
+      </div>
     </div>
   }
 </div>
