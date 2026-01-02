@@ -137,7 +137,7 @@ test('fetch data when sorted', async () => {
     let timeHeader = screen.getByText('Time');
     fireEvent.click(timeHeader);
 
-    expect(mockGetHttpLogs).toBeCalledTimes(2);
+    expect(mockGetHttpLogs).toHaveBeenCalledTimes(2);
 });
 
 test('fetch data when paged', async () => {
@@ -146,7 +146,7 @@ test('fetch data when paged', async () => {
     let page2Button = screen.getByText('2');
     fireEvent.click(page2Button);
 
-    expect(mockGetHttpLogs).toBeCalledTimes(2);
+    expect(mockGetHttpLogs).toHaveBeenCalledTimes(2);
 });
 
 test('fetch data when log level changed', async () => {
@@ -155,7 +155,7 @@ test('fetch data when log level changed', async () => {
     let logLevelSelect = screen.getByTestId('logLevel');
     fireEvent.change(logLevelSelect, { target: { value: 'Info' } });
 
-    expect(mockGetHttpLogs).toBeCalledTimes(2);
+    expect(mockGetHttpLogs).toHaveBeenCalledTimes(2);
 });
 
 test('fetch data when tracking id changed', async () => {
@@ -164,7 +164,7 @@ test('fetch data when tracking id changed', async () => {
     let trackingIdInput = screen.getByTestId('trackingId');
     fireEvent.change(trackingIdInput, { target: { value: '23' } });
 
-    expect(mockGetHttpLogs).toBeCalledTimes(2);
+    expect(mockGetHttpLogs).toHaveBeenCalledTimes(2);
 });
 
 test('fetch data when from date changed', async () => {
@@ -173,7 +173,7 @@ test('fetch data when from date changed', async () => {
     let fromDateInput = logs.container.querySelector('#fromDate')!;
     fireEvent.change(fromDateInput, { target: { value: '2020-03-07' } });
 
-    expect(mockGetHttpLogs).toBeCalledTimes(2);
+    expect(mockGetHttpLogs).toHaveBeenCalledTimes(2);
 });
 
 test('fetch data when to date changed', async () => {
@@ -182,5 +182,5 @@ test('fetch data when to date changed', async () => {
     let toDateInput = logs.container.querySelector('#toDate')!;
     fireEvent.change(toDateInput, { target: { value: '2020-03-09' } });
 
-    expect(mockGetHttpLogs).toBeCalledTimes(2);
+    expect(mockGetHttpLogs).toHaveBeenCalledTimes(2);
 });

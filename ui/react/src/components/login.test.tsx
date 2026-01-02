@@ -41,7 +41,7 @@ test('login invalid credentials', async () => {
 
     let error = screen.getByText('Invalid credentials. Please try again.');
     expect(error).toHaveClass('alert-danger');
-    expect(mockLoginCallback).not.toBeCalled();
+    expect(mockLoginCallback).not.toHaveBeenCalled();
 });
 
 test('login with valid credentials', async () => {
@@ -58,5 +58,5 @@ test('login with valid credentials', async () => {
     let loginButton = screen.getByTestId('login-button');
     fireEvent.click(loginButton);
 
-    expect(mockLoginCallback).toBeCalled();
+    expect(mockLoginCallback).toHaveBeenCalled();
 });

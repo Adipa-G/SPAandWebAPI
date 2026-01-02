@@ -39,5 +39,5 @@ test('call logout when logout menu clicked', async () => {
     var logoutMenu = screen.getByText('Logout');
     fireEvent.click(logoutMenu);
 
-    expect(mockLogOff).toBeCalled();
+    expect(mockLogOff).toHaveBeenCalled();
 });

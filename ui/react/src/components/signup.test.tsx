@@ -95,7 +95,7 @@ test('signup error', async () => {
 
     let error = screen.getByText('error while registering :registration error');
     expect(error).toHaveClass('alert-danger');
-    expect(mockSignupCallback).not.toBeCalled();
+    expect(mockSignupCallback).not.toHaveBeenCalled();
 });
 
 test('signup success', async () => {
@@ -117,5 +117,5 @@ test('signup success', async () => {
 
     let error = screen.getByText('Registration successful!');
     expect(error).toHaveClass('alert-success');
-    expect(mockSignupCallback).toBeCalled();
+    expect(mockSignupCallback).toHaveBeenCalled();
 });

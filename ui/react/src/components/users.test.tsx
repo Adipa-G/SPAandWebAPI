@@ -56,7 +56,7 @@ test('fetch data when sorted', async () => {
     let userNameHeader = screen.getByText('UserName');
     fireEvent.click(userNameHeader);
 
-    expect(mockGetUsers).toBeCalledTimes(2);
+    expect(mockGetUsers).toHaveBeenCalledTimes(2);
 });
 
 test('fetch data when paged', async () => {
@@ -65,7 +65,7 @@ test('fetch data when paged', async () => {
     let pageNumber = screen.getByText('2');
     fireEvent.click(pageNumber);
 
-    expect(mockGetUsers).toBeCalledTimes(2);
+    expect(mockGetUsers).toHaveBeenCalledTimes(2);
 });
 
 test('delete user success', async () => {
@@ -77,7 +77,7 @@ test('delete user success', async () => {
     let deleteButtons = screen.getAllByTestId('delete-user-btn')
     fireEvent.click(deleteButtons[0]);
 
-    expect(mockDeleteUser).toBeCalledTimes(1);
+    expect(mockDeleteUser).toHaveBeenCalledTimes(1);
     let rows = screen.getAllByTestId('user-row')
 
     expect(rows.length).toBe(1);
