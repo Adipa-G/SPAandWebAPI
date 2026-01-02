@@ -2,7 +2,7 @@
   "version": "0.0.0",
   "name": "owin-angular",
   "devDependencies": {
-    "@playwright/test": "1.54.2",
+    "@playwright/test": "1.57.0",
     "gulp": "^5.0.1",
     "gulp-clean-css": "^2.0.9",
     "gulp-concat": "^2.6.0",
