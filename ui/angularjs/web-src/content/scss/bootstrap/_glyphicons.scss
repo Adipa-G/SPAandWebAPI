@@ -13,12 +13,28 @@
   // Import the fonts
   @font-face {
     font-family: 'Glyphicons Halflings';
-    src: url(if(variables.$bootstrap-sass-asset-helper, twbs-font-path('#{variables.$icon-font-path}#{variables.$icon-font-name}.eot'), '#{variables.$icon-font-path}#{variables.$icon-font-name}.eot'));
-    src: url(if(variables.$bootstrap-sass-asset-helper, twbs-font-path('#{variables.$icon-font-path}#{variables.$icon-font-name}.eot?#iefix'), '#{variables.$icon-font-path}#{variables.$icon-font-name}.eot?#iefix')) format('embedded-opentype'),
-         url(if(variables.$bootstrap-sass-asset-helper, twbs-font-path('#{variables.$icon-font-path}#{variables.$icon-font-name}.woff2'), '#{variables.$icon-font-path}#{variables.$icon-font-name}.woff2')) format('woff2'),
-         url(if(variables.$bootstrap-sass-asset-helper, twbs-font-path('#{variables.$icon-font-path}#{variables.$icon-font-name}.woff'), '#{variables.$icon-font-path}#{variables.$icon-font-name}.woff')) format('woff'),
-         url(if(variables.$bootstrap-sass-asset-helper, twbs-font-path('#{variables.$icon-font-path}#{variables.$icon-font-name}.ttf'), '#{variables.$icon-font-path}#{variables.$icon-font-name}.ttf')) format('truetype'),
-         url(if(variables.$bootstrap-sass-asset-helper, twbs-font-path('#{variables.$icon-font-path}#{variables.$icon-font-name}.svg##{variables.$icon-font-svg-id}'), '#{variables.$icon-font-path}#{variables.$icon-font-name}.svg##{variables.$icon-font-svg-id}')) format('svg');
+    $glyph-eot-path: '#{variables.$icon-font-path}#{variables.$icon-font-name}.eot';
+    $glyph-eot-iefix-path: '#{variables.$icon-font-path}#{variables.$icon-font-name}.eot?#iefix';
+    $glyph-woff2-path: '#{variables.$icon-font-path}#{variables.$icon-font-name}.woff2';
+    $glyph-woff-path: '#{variables.$icon-font-path}#{variables.$icon-font-name}.woff';
+    $glyph-ttf-path: '#{variables.$icon-font-path}#{variables.$icon-font-name}.ttf';
+    $glyph-svg-path: '#{variables.$icon-font-path}#{variables.$icon-font-name}.svg##{variables.$icon-font-svg-id}';
+
+    @if variables.$bootstrap-sass-asset-helper {
+      $glyph-eot-path: twbs-font-path($glyph-eot-path);
+      $glyph-eot-iefix-path: twbs-font-path($glyph-eot-iefix-path);
+      $glyph-woff2-path: twbs-font-path($glyph-woff2-path);
+      $glyph-woff-path: twbs-font-path($glyph-woff-path);
+      $glyph-ttf-path: twbs-font-path($glyph-ttf-path);
+      $glyph-svg-path: twbs-font-path($glyph-svg-path);
+    }
+
+    src: url($glyph-eot-path);
+    src: url($glyph-eot-iefix-path) format('embedded-opentype'),
+         url($glyph-woff2-path) format('woff2'),
+         url($glyph-woff-path) format('woff'),
+         url($glyph-ttf-path) format('truetype'),
+         url($glyph-svg-path) format('svg');
   }
 }
 
