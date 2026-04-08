@@ -1,6 +1,14 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
+if (!process.env.CHROME_BIN) {
+  try {
+    process.env.CHROME_BIN = require('playwright').chromium.executablePath();
+  } catch {
+    // Fall back to a system Chrome installation when Playwright browsers are unavailable.
+  }
+}
+
 module.exports = function (config) {
   config.set({
     basePath: '',

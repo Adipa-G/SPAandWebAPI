@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -9,6 +10,9 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+const baseURL = process.env['PLAYWRIGHT_TEST_BASE_URL'] ?? 'http://localhost:5000';
+const repoRoot = path.resolve(__dirname, '..', '..', '..');
+
 export default defineConfig({
   testDir: './e2e',
   /* Run tests in files in parallel */
@@ -24,7 +28,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: process.env['PLAYWRIGHT_TEST_BASE_URL'] ?? 'http://localhost:5000',
+    baseURL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     headless: true, // Explicitly set headless mode
@@ -59,10 +63,12 @@ export default defineConfig({
   ],
 
   // Run your local dev server before starting the tests.
-  webServer: {
-    command: 'echo "Starting server..."',
-    port: 5000,
+  webServer: process.env['PLAYWRIGHT_TEST_BASE_URL'] ? undefined : {
+    command: 'backend-netcore-ui-angular.bat',
+    cwd: repoRoot,
+    url: baseURL,
     reuseExistingServer: true,
+    timeout: 10 * 60 * 1000,
     stdout: 'pipe',
     stderr: 'pipe',
   },
