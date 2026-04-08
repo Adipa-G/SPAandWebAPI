@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.27.1",
+    "@playwright/test": "^1.59.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
@@ -32,9 +33,8 @@
     "@types/react-router": "^5.1.20",
     "@types/vkbeautify": "^0.99.4",
     "@vitejs/plugin-react": "^5.1.0",
-    "@playwright/test": "^1.59.1",
     "jsdom": "^27.0.1",
-    "typescript": "^4.9.5",
+    "typescript": "^6.0.2",
     "vite": "^7.1.10",
     "vitest": "^3.2.4",
     "web-vitals": "^2.1.4"
