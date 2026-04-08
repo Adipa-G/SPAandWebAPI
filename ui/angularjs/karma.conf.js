@@ -1,4 +1,12 @@
-﻿module.exports = function (config) {
+﻿if (!process.env.CHROME_BIN) {
+  try {
+    process.env.CHROME_BIN = require('playwright').chromium.executablePath();
+  } catch {
+    // Fall back to a system Chrome installation when Playwright browsers are unavailable.
+  }
+}
+
+module.exports = function (config) {
     config.set({
         basePath: '',
         frameworks: ['jasmine'],
@@ -29,7 +37,13 @@
         logLevel: config.LOG_INFO,
         autoWatch: true,
         plugins : ['karma-chrome-launcher','karma-jasmine'],
-        browsers: ['ChromeHeadless'],
+        browsers: ['ChromeHeadlessNoSandbox'],
+        customLaunchers: {
+          ChromeHeadlessNoSandbox: {
+            base: 'ChromeHeadless',
+            flags: ['--no-sandbox']
+          }
+        },
         singleRun: false
     });
 };

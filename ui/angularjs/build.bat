@@ -1,12 +1,8 @@
 call npm install --prefer-offline
 if %errorlevel% neq 0 exit /b %errorlevel%
-call gulp copy-libs
+call npx playwright install chromium
 if %errorlevel% neq 0 exit /b %errorlevel%
-call gulp copy-templates
+call npx gulp build
 if %errorlevel% neq 0 exit /b %errorlevel%
-call gulp sass
-if %errorlevel% neq 0 exit /b %errorlevel%
-call gulp copyAppJS
-if %errorlevel% neq 0 exit /b %errorlevel%
-call gulp test
+call npx gulp test
 if %errorlevel% neq 0 exit /b %errorlevel%

@@ -7,6 +7,16 @@ var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 const { Server } = require('karma');
 
+function ensureChromeBin() {
+    if (!process.env.CHROME_BIN) {
+        try {
+            process.env.CHROME_BIN = require('playwright').chromium.executablePath();
+        } catch {
+            // Fall back to a system Chrome installation when Playwright browsers are unavailable.
+        }
+    }
+}
+
 // Copy libs task
 gulp.task('copy-libs', function () {
     return Promise.all([
@@ -68,7 +78,9 @@ gulp.task('copyAppJS', function () {
     return Promise.all([appJs, indexHtml, commonScripts]);
 });
 
-gulp.task('test', function (done) {
+gulp.task('build', gulp.series('copy-libs', 'copy-templates', 'sass', 'copyAppJS'));
+
+gulp.task('test', gulp.series('build', function (done) {
     var options = {
         output: 'templates.js',
         strip: 'app',
@@ -80,6 +92,7 @@ gulp.task('test', function (done) {
     return gulp.src('./web-src/app/views/**/*.html')
         .pipe(gulp.dest('./web-test/app'))
         .on('end', function() {
+            ensureChromeBin();
             const server = new Server({
                 configFile: __dirname + '/karma.conf.js',
                 singleRun: true
@@ -88,7 +101,7 @@ gulp.task('test', function (done) {
             });
             server.start();
         });
-});
+}));
 
 
 // Watch task
@@ -99,4 +112,4 @@ gulp.task('watch', function () {
 });
 
 // Default task
-gulp.task('default', gulp.series('copy-libs', 'copy-templates', 'sass', 'copyAppJS'));
+gulp.task('default', gulp.series('build'));
