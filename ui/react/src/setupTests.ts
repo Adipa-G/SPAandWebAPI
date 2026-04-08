@@ -1,9 +1,11 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
-import { TextEncoder, TextDecoder } from 'util'
+import '@testing-library/jest-dom/vitest';
+import { TextDecoder, TextEncoder } from 'util';
+import { vi } from 'vitest';
 
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
+globalThis.TextEncoder = TextEncoder;
+globalThis.TextDecoder = TextDecoder as typeof globalThis.TextDecoder;
+
+// Temporary compatibility shim while moving test code from jest.* to vi.*.
+if (!(globalThis as any).jest) {
+	(globalThis as any).jest = vi;
+}

@@ -56,7 +56,7 @@ jobs:
           npm test
       - name: Copy react application
         run: |
-          cp -r ./ui/react/build/* ./backend/netcore/src/Web/app
+          cp -r ./ui/react/dist/* ./backend/netcore/src/Web/app
       - name: Run application
         run: nohup dotnet run --project ./backend/netcore/src/Web/Web.csproj --launch-profile E2E &
       - name: Wait for the application to start

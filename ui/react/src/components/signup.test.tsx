@@ -4,8 +4,8 @@ import '@testing-library/jest-dom'
 import { CallbackFunction } from '../services/serviceModels';
 import SignUp from './signup'
 
-const mockSignup = jest.fn();
-jest.mock('../services/authService', () => {
+const mockSignup = vi.fn();
+vi.mock('../services/authService', () => {
     return {
         AuthService: function () {
             return {
@@ -77,7 +77,7 @@ test('signup with incorrect confirmed password', async () => {
 });
 
 test('signup error', async () => {
-    const mockSignupCallback = jest.fn();
+    const mockSignupCallback = vi.fn();
     mockSignup.mockImplementation((userName: string, password: string, callback: CallbackFunction) => callback({ data: [], success: false, totalCount: 0, error: 'registration error' }));
     render(<SignUp signupComplete={mockSignupCallback} />);
 
@@ -99,7 +99,7 @@ test('signup error', async () => {
 });
 
 test('signup success', async () => {
-    const mockSignupCallback = jest.fn();
+    const mockSignupCallback = vi.fn();
     mockSignup.mockImplementation((userName: string, password: string, callback: CallbackFunction) => callback({ data: [], success: true, totalCount: 0, error: '' }));
     render(<SignUp signupComplete={mockSignupCallback} />);
 

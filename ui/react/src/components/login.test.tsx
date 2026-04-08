@@ -4,8 +4,8 @@ import '@testing-library/jest-dom'
 import { CallbackFunction } from '../services/serviceModels';
 import Login from './login'
 
-const mockAuthenticate = jest.fn();
-jest.mock('../services/authService', () => {
+const mockAuthenticate = vi.fn();
+vi.mock('../services/authService', () => {
     return {
         AuthService: function () {
             return {
@@ -26,7 +26,7 @@ test('login with no username or password', async () => {
 });
 
 test('login invalid credentials', async () => {
-    const mockLoginCallback = jest.fn();
+    const mockLoginCallback = vi.fn();
     mockAuthenticate.mockImplementation((userName: string, password: string, callback: CallbackFunction) => callback({ data: [], success: false, totalCount: 0, error: 'invalid credentials' }));
     render(<Login loginComplete={mockLoginCallback} />);
 
@@ -45,7 +45,7 @@ test('login invalid credentials', async () => {
 });
 
 test('login with valid credentials', async () => {
-    const mockLoginCallback = jest.fn();
+    const mockLoginCallback = vi.fn();
     mockAuthenticate.mockImplementation((userName: string, password: string, callback: CallbackFunction) => callback({ data: [], success: true, totalCount: 0, error: 'success login' }));
     render(<Login loginComplete={mockLoginCallback} />);
 

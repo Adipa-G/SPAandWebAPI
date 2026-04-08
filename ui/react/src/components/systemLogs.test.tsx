@@ -5,10 +5,10 @@ import { CallbackFunction } from '../services/serviceModels';
 import { SystemLogEntry, SystemLogFilter } from '../services/logService';
 import SystemLogs from './systemLogs'
 
-const mockGetLevels = jest.fn();
-const mockGetLoggerNames = jest.fn();
-const mockGetSystemLogs = jest.fn();
-jest.mock('../services/logService', () => {
+const mockGetLevels = vi.fn();
+const mockGetLoggerNames = vi.fn();
+const mockGetSystemLogs = vi.fn();
+vi.mock('../services/logService', () => {
     return {
         LogService: function () {
 

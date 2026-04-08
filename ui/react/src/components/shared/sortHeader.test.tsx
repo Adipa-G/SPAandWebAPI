@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import SortHeader from "./sortHeader";
 
 test('sort by field ascending', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let orderData = { orderField: "OtherField", orderDirection: "Desc" };
 
     render(<table><thead><tr><SortHeader
@@ -29,7 +29,7 @@ test('sort by field ascending', () => {
 });
 
 test('sort by field descending', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let orderData = { orderField: "ThisField", orderDirection: "Asc" };
 
     render(<table><thead><tr><SortHeader
@@ -55,7 +55,7 @@ test('sort by field descending', () => {
 });
 
 test('sort by field cleard', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let orderData = { orderField: "ThisField", orderDirection: "Desc" };
 
     render(<table><thead><tr><SortHeader

@@ -5,9 +5,9 @@ import { CallbackFunction } from '../services/serviceModels';
 import { UserModel, UserFilter } from '../services/userService';
 import Users from './users'
 
-const mockGetUsers = jest.fn();
-const mockDeleteUser = jest.fn();
-jest.mock('../services/userService', () => {
+const mockGetUsers = vi.fn();
+const mockDeleteUser = vi.fn();
+vi.mock('../services/userService', () => {
     return {
         UserService: function () {
             return {
@@ -69,8 +69,8 @@ test('fetch data when paged', async () => {
 });
 
 test('delete user success', async () => {
-    let confirmSpy = jest.spyOn(window, 'confirm');
-    confirmSpy.mockImplementation(jest.fn(() => true));
+    let confirmSpy = vi.spyOn(window, 'confirm');
+    confirmSpy.mockImplementation(vi.fn(() => true));
 
     render(<Users defaultPageSize={100} />);
 
@@ -84,8 +84,8 @@ test('delete user success', async () => {
 });
 
 test('delete user error', async () => {
-    let confirmSpy = jest.spyOn(window, 'confirm');
-    confirmSpy.mockImplementation(jest.fn(() => true));
+    let confirmSpy = vi.spyOn(window, 'confirm');
+    confirmSpy.mockImplementation(vi.fn(() => true));
 
     mockDeleteUser.mockImplementation((userName: string, callback: CallbackFunction<string>) => callback({ data: '', success: false, totalCount: 0, error: 'delete error' }));
 

@@ -5,9 +5,9 @@ import { CallbackFunction } from '../services/serviceModels';
 import { HttpLogEntry, HttpLogFilter } from '../services/logService';
 import HttpLogs from './httpLogs'
 
-const mockGetLevels = jest.fn();
-const mockGetHttpLogs = jest.fn();
-jest.mock('../services/logService', () => {
+const mockGetLevels = vi.fn();
+const mockGetHttpLogs = vi.fn();
+vi.mock('../services/logService', () => {
     return {
         LogService: function () {
 

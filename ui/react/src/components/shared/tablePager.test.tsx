@@ -28,7 +28,7 @@ test('renders the pager', () => {
 });
 
 test('go to previous page', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let pageData: PageData = { pageSize: 10, pageNumber: 5 };
 
     render(<TablePager
@@ -50,7 +50,7 @@ test('go to previous page', () => {
 });
 
 test('go to page', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let pageData: PageData = { pageSize: 10, pageNumber: 5 };
 
     render(<TablePager
@@ -72,7 +72,7 @@ test('go to page', () => {
 });
 
 test('go to next page', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let pageData: PageData = { pageSize: 10, pageNumber: 5 };
 
     render(<TablePager

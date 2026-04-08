@@ -33,7 +33,7 @@ test('render when logged in', async () => {
 });
 
 test('call logout when logout menu clicked', async () => {
-    const mockLogOff = jest.fn();
+    const mockLogOff = vi.fn();
     render(<BrowserRouter><Menu isAuth={true} logOff={mockLogOff} /></BrowserRouter>);
 
     var logoutMenu = screen.getByText('Logout');
