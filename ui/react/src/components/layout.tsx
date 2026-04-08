@@ -53,21 +53,27 @@ const Layout = () => {
     return (
         <HashRouter>
             <div>
-                <div className="navbar navbar-inverse" role="navigation">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-primary" role="navigation">
                     <div className="container">
-                        <div className="navbar-header">
-                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#navCollapseMenu" aria-expanded="false">
-                                <span className="sr-only">Toggle navigation</span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                                <span className="icon-bar"></span>
-                            </button>
+                        <div className="navbar-brand p-0 m-0">
                             <Welcome userName={userName} />
                         </div>
-                        <Menu isAuth={isAuth} logOff={() => logOff()} />
+                        <button
+                            className="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#mainNavbar"
+                            aria-controls="mainNavbar"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="mainNavbar">
+                            <Menu isAuth={isAuth} logOff={() => logOff()} />
+                        </div>
                     </div>
-                </div>
+                </nav>
                 <Jumbotron isAuth={isAuth} />
                 <div className="container">
                     <Routes>

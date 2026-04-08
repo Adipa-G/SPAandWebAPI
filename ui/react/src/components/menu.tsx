@@ -11,11 +11,11 @@ const Menu = (props: MenuProps) => {
     }
 
     if (props.isAuth) {
-        return (<ul className="nav navbar-nav navbar-right">
-            <li><a href="#/users">Users</a></li>
-            <li><a href="#/systemLog">System Log</a></li>
-            <li><a href="#/httpLog">Http Log</a></li>
-            <li>
+        return (<ul className="navbar-nav ms-auto">
+            <li className="nav-item"><a className="nav-link" href="#/users">Users</a></li>
+            <li className="nav-item"><a className="nav-link" href="#/systemLog">System Log</a></li>
+            <li className="nav-item"><a className="nav-link" href="#/httpLog">Http Log</a></li>
+            <li className="nav-item">
                 <button className="logout-button" onClick={() => { logOff() }}>
                     Logout
                 </button>
@@ -23,9 +23,9 @@ const Menu = (props: MenuProps) => {
         </ul>);
     }
     else {
-        return (<ul className="nav navbar-nav navbar-right">
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/signup">Sign up</Link></li>
+        return (<ul className="navbar-nav ms-auto">
+            <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/signup">Sign up</Link></li>
         </ul>);
     }
 }

@@ -1,20 +1,18 @@
-@import "_variables";
-
 //third party component customisations
-@import "app/react_date_picker_overrides";
+@use "app/react_date_picker_overrides";
 
 //general
-@import "app/_general-components.scss";
-@import "app/_general-margins.scss";
-@import "app/_general-loading.scss";
+@use "app/general-components";
+@use "app/general-margins";
+@use "app/general-loading";
 
 //directives
-@import "app/_directive-sort-header.scss";
+@use "app/directive-sort-header";
 
 //menu
-@import "app/menu.scss";
+@use "app/menu";
 
 //views
-@import "app/_view-user-list.scss";
-@import "app/_view-system-log.scss";
-@import "app/_view-http-log.scss";
+@use "app/view-user-list";
+@use "app/view-system-log";
+@use "app/view-http-log";

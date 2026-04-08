@@ -55,10 +55,10 @@ const SignUp = (props: SignupProps) => {
     return (
         <form name="registrationForm">
             <div className="row">
-                <div className="col-md-4 col-md-offset-4">
+                <div className="col-md-4 offset-md-4">
                     <fieldset>
                         <legend className="h2">Register</legend>
-                        <div className="form-group">
+                        <div className="mb-3">
                             <label>User Name</label>
                             <input type="text"
                                 id="registrationUserName"
@@ -68,7 +68,7 @@ const SignUp = (props: SignupProps) => {
                                 placeholder="Username"
                                 onChange={(e) => setUserName(e.currentTarget.value)} />
                         </div>
-                        <div className="form-group">
+                        <div className="mb-3">
                             <label>Password</label>
                             <input type="password"
                                 id="registrationPassword"
@@ -78,7 +78,7 @@ const SignUp = (props: SignupProps) => {
                                 placeholder="Password"
                                 onChange={(e) => setPassword(e.currentTarget.value)} />
                         </div>
-                        <div className="form-group">
+                        <div className="mb-3">
                             <label>Confirm Password</label>
                             <input type="password"
                                 id="registrationConfirmPassword"
@@ -92,15 +92,15 @@ const SignUp = (props: SignupProps) => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-4 col-md-offset-4">
+                <div className="col-md-4 offset-md-4">
                     <ErrorMessage errorMessage={errorMessage} />
 
                     <SuccessMessage successMessage={successMessage} />
 
-                    <div className="form-group">
+                    <div className="mb-3">
                         <button type="button"
                             data-testid="register-button"
-                            className="btn btn-md btn-info btn-block"
+                            className="btn btn-info w-100"
                             disabled={successMessage !== ''}
                             onClick={() => { register() }}>
                             Register

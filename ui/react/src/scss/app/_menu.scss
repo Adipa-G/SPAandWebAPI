@@ -1,13 +1,14 @@
 .logout-button {
-    padding-top: $navbar-padding-vertical;
-    padding-bottom: $navbar-padding-vertical;
-    color: $navbar-inverse-link-color;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    color: var(--bs-navbar-color);
     background-color: transparent;
     border: none;
 
     &:hover,
     &:focus {
-        color: $navbar-inverse-link-hover-color;
-        background-color: $navbar-inverse-link-hover-bg;
+        color: var(--bs-navbar-hover-color);
+        background-color: transparent;
     }
 }

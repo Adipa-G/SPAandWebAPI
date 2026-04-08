@@ -95,8 +95,8 @@ const HttpLogs = (props: HttpLogsProps) => {
     return (
         <div id="http-log">
             <div className="row">
-                <div className="col-md-4 col-md-offset-2">
-                    <div className="form-group">
+                <div className="col-md-4 offset-md-2">
+                    <div className="mb-3">
                         <label>Level</label>
                         <select className="form-control"
                             id="logLevel"
@@ -108,7 +108,7 @@ const HttpLogs = (props: HttpLogsProps) => {
                     </div>
                 </div>
                 <div className="col-md-4">
-                    <div className="form-group">
+                    <div className="mb-3">
                         <label>Tracking Id</label>
                         <input className="form-control"
                             type="text"
@@ -119,7 +119,7 @@ const HttpLogs = (props: HttpLogsProps) => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-4 col-md-offset-2">
+                <div className="col-md-4 offset-md-2">
                     <label>Date Range</label>
                     <div className="input-group" id="fromDateGroup">
                         <DatePicker
@@ -148,7 +148,7 @@ const HttpLogs = (props: HttpLogsProps) => {
             </div>
             <div className="row top-margin-lg">
                 <div className="col-md-12 table-container">
-                    <table className="table table-striped table-bordered table-hover table-responsive">
+                    <table className="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
                                 <SortHeader

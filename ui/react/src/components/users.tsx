@@ -84,8 +84,8 @@ const Users = (props: UsersProps) => {
 
     return (
         <div className="row">
-            <div className="col-md-8 col-md-offset-2">
-                <table className="table table-striped table-bordered table-hover table-responsive">
+            <div className="col-md-8 offset-md-2">
+                <table className="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <SortHeader
@@ -101,10 +101,10 @@ const Users = (props: UsersProps) => {
                             return (
                                 <tr key={i} data-testid='user-row'>
                                     <td> {user.userName} </td>
-                                    <td className="text-right">
+                                    <td className="text-end">
                                         <button type="button"
                                             data-testid='delete-user-btn'
-                                            className="btn btn-danger btn-xs" onClick={() => deleteUser(user)}>
+                                            className="btn btn-danger btn-sm" onClick={() => deleteUser(user)}>
                                             <i className="fa fa-trash-o"></i>
                                         </button>
                                     </td>

@@ -65,10 +65,10 @@ const SortHeader = (props: SortHeaderProps) => {
 
     var sortIndicator = <span></span>;
     if (fieldMatch && asc) {
-        sortIndicator = <i className="pull-right fa fa-sort-alpha-asc"></i>;
+        sortIndicator = <i className="float-end fa fa-sort-alpha-asc"></i>;
     }
     if (fieldMatch && desc) {
-        sortIndicator = <i className="pull-right fa fa-sort-alpha-desc"></i>;
+        sortIndicator = <i className="float-end fa fa-sort-alpha-desc"></i>;
     }
 
     return (

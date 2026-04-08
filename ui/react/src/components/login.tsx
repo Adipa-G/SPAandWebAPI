@@ -35,10 +35,10 @@ const Login = (props: LoginProps) => {
     return (
         <form name="loginForm">
             <div className="row">
-                <div className="col-md-4 col-md-offset-4">
+                <div className="col-md-4 offset-md-4">
                     <fieldset>
                         <legend className="h2">Login</legend>
-                        <div className="form-group" >
+                        <div className="mb-3" >
                             <label>User Name</label>
                             <input type="text"
                                 id="loginUserName"
@@ -48,7 +48,7 @@ const Login = (props: LoginProps) => {
                                 placeholder="Username"
                                 onChange={(e) => setUserName(e.currentTarget.value)} />
                         </div>
-                        <div className="form-group">
+                        <div className="mb-3">
                             <label>Password</label>
                             <input type="password"
                                 id="loginPassword"
@@ -62,12 +62,12 @@ const Login = (props: LoginProps) => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-4 col-md-offset-4">
+                <div className="col-md-4 offset-md-4">
                     <ErrorMessage errorMessage={errorMessage} />
-                    <div className="form-group">
+                    <div className="mb-3">
                         <button type="button"
                             data-testid="login-button"
-                            className="btn btn-md btn-info btn-block"
+                            className="btn btn-info w-100"
                             onClick={() => login()}>
                             Login
                         </button>

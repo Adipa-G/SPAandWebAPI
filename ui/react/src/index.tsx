@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './scss/bootstrap.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './scss/app.scss';
-import './css/bootstrap-datetimepicker.css';
 import './css/font-awesome.min.css';
 import './css/idea.css';
 import './css/loading-bar.css';
