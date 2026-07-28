@@ -62,11 +62,11 @@
               <tbody>
                 @for (log of httpLogs; track log) {
                   <tr>
-                    <td [utc-to-local]="log.logTimestamp"></td>
+                    <td [utc-to-local]="log.calledOn"></td>
                     <td>{{ log.trackingId }}</td>
-                    <td>{{ log.caller }}</td>
-                    <td>{{ log.status }}</td>
-                    <td>{{ log.duration }}</td>
+                    <td>{{ log.callerAddress }}</td>
+                    <td>{{ log.statusCode }}</td>
+                    <td>{{ log.calledDuration }}</td>
                     <td>
                       <dl class="row">
                         <dt class="col-sm-1">Verb</dt>
