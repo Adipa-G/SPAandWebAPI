@@ -8,7 +8,7 @@ import { LogService } from '../services/logService';
 import { StorageService } from '../services/storageService';
 
 import { AuthService } from './authService';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 
 describe('AuthService', () => {
@@ -26,7 +26,7 @@ describe('AuthService', () => {
                 HttpClientWrapper,
                 LogService,
                 StorageService,
-                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
                 provideHttpClientTesting()
             ]
         });
@@ -59,6 +59,6 @@ describe('AuthService', () => {
         authService.clearAuthData();
 
         expect(authService.currentAuth).toBeDefined();
-        expect(authService.currentAuth.isAuth).toBe(false);
+        expect(authService.currentAuth!.isAuth).toBe(false);
     }));
 });

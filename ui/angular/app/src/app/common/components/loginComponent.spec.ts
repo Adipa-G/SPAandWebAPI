@@ -9,7 +9,7 @@ import { AuthService } from '../services/authService';
 import { LoginComponent } from './loginComponent';
 
 class MockAuthService {
-    public loginInfo: LoginInfo;
+    public loginInfo!: LoginInfo;
 
     public authenticate(loginInfo: LoginInfo): void {
         this.loginInfo = loginInfo;

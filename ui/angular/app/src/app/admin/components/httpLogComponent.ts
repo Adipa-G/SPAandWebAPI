@@ -1,4 +1,4 @@
-﻿import { Component, inject } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
 import { HttpLogInfo } from '../../domain/admin/httpLogInfo';
@@ -10,6 +10,7 @@ import { ServerLogService } from "../services/serverLogService";
 @Component({
     selector: 'http-logs',
     templateUrl: './httpLogComponent.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
@@ -19,7 +20,7 @@ export class HttpLogComponent {
     private utilsService = inject(UtilsService);
 
     filter: HttpLogFilter;
-    errorMessage: string;
+    errorMessage = '';
     logLevels: string[];
     httpLogs: HttpLogInfo[];
     totalCount: number;

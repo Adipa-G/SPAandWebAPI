@@ -12,7 +12,7 @@ import { LogService } from '../../common/services/logService';
 import { StorageService } from '../../common/services/storageService';
 
 import { ServerLogService } from './serverLogService';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('ServerLogService', () => {
     let constants: Constants;
@@ -30,7 +30,7 @@ describe('ServerLogService', () => {
                 LogService,
                 ServerLogService,
                 StorageService,
-                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
                 provideHttpClientTesting(),
             ]
         });

@@ -89,7 +89,7 @@ describe('HttpLogComponent', () => {
     });
 
     it('when updateView then set values', (done) => {
-        comp.filter = null;
+        (comp as any).filter = null;
         comp.totalCount = 0;
         comp.httpLogs = [];
 

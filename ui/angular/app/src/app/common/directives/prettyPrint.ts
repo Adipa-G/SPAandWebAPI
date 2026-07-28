@@ -1,18 +1,19 @@
-﻿import { Component, OnChanges, Input, Inject } from '@angular/core';
+﻿import { Component, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: '[pretty-print]',
     template: '<pre>{{prettyPrintOutput}}</pre>',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
 export class PrettyPrint implements OnChanges {
-    @Input('pretty-print') sourceStr: string;
-    @Input() format: string;
+    @Input('pretty-print') sourceStr!: string;
+    @Input() format?: string;
 
-    prettyPrintOutput: string;
+    prettyPrintOutput = '';
 
-    ngOnChanges(changes) {
+    ngOnChanges() {
         if (!this.sourceStr) {
             return;
         }
@@ -24,13 +25,12 @@ export class PrettyPrint implements OnChanges {
             if (!this.format || this.format.toLowerCase() === 'json') {
                 this.prettyPrintOutput = JSON.stringify(JSON.parse(fixedStr), null, 2);
             }
-        } catch (e1) {
+        } catch {
             try {
                 let result = '';
                 let level = 0;
 
-                for (let i = 0; i < fixedStr.length; i++) {
-                    const chr = fixedStr[i];
+                for (const chr of fixedStr) {
                     if (['{', '['].indexOf(chr) >= 0) {
                         level++;
                     }
@@ -44,7 +44,7 @@ export class PrettyPrint implements OnChanges {
                     result += chr;
                 }
                 this.prettyPrintOutput = result;
-            } catch (e2) {
+            } catch {
                 this.prettyPrintOutput = fixedStr;
             }
         }

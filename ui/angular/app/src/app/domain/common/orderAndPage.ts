@@ -1,6 +1,6 @@
 ﻿export class OrderAndPage {
-    orderField : string;
-    orderDirection : string;
-    pageNumber : number;
-    pageSize : number;
+    orderField = '';
+    orderDirection = '';
+    pageNumber = 0;
+    pageSize = 0;
 }

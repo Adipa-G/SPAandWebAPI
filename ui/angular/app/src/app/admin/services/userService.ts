@@ -1,5 +1,4 @@
 ﻿import { Injectable, inject } from '@angular/core';
-import { map } from 'rxjs/operators';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 

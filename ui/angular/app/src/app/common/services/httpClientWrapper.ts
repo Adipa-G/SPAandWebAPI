@@ -25,7 +25,7 @@ export class HttpClientWrapper {
         const accessToken = authData != null && authData.access_token != null ? authData.access_token : "";
         const xsrfToken = this.storageService.getCookie('XSRF-TOKEN');
 
-        const headers = {
+        const headers: Record<string, string> = {
             'Content-Type': 'application/json',
             'X-XSRF-TOKEN': xsrfToken || '',
         }
@@ -35,19 +35,19 @@ export class HttpClientWrapper {
         return new HttpHeaders(headers);
     }
 
-    public get(url) {
+    public get(url: string) {
         return this.httpClient.get(url, {
             headers: this.createHeaders()
         });
     }
 
-    public post(url, data) {
+    public post(url: string, data: string) {
         return this.httpClient.post(url, data, {
             headers: this.createHeaders()
         });
     }
 
-    public delete(url) {
+    public delete(url: string) {
         return this.httpClient.delete(url, {
             headers: this.createHeaders()
         });

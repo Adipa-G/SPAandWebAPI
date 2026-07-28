@@ -1,5 +1,4 @@
-﻿import { Component, inject } from '@angular/core';
-import { NgForm } from '@angular/forms';
+﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { LoginInfo } from '../../domain/auth/loginInfo';
 
@@ -8,6 +7,7 @@ import { AuthService } from '../services/authService';
 @Component({
     selector: 'common-login',
     templateUrl: './loginComponent.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 

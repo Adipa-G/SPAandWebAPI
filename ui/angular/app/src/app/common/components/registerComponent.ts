@@ -1,5 +1,4 @@
-﻿import { Component, inject } from '@angular/core';
-import { NgForm } from '@angular/forms';
+﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 
@@ -12,6 +11,7 @@ import { RegisterService } from '../services/registerService';
 @Component({
     selector: 'common-signup',
     templateUrl: './registerComponent.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 

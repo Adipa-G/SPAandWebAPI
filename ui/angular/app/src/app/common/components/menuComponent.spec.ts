@@ -41,7 +41,7 @@ class MockErrorService {
 }
 
 class MockRouter {
-    public currentRoute: string[];
+    public currentRoute!: string[];
 
     public navigate(route: string[]) {
         this.currentRoute = route;
@@ -108,7 +108,7 @@ describe('MenuComponent', () => {
     });
 
     it('when onAuthError then navigate to login', (done) => {
-        comp.onAuthError(new ErrorInfo('error'));
+        comp.onAuthError();
 
         expect(router.currentRoute[0]).toBe('/login');
         expect(authService.authCleard).toBe(true);

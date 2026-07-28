@@ -1,7 +1,5 @@
 ﻿import { Injectable, inject } from '@angular/core';
 
-import { map } from "rxjs/operators";
-
 import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
 import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
 

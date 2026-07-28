@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +37,7 @@ import { UserListComponent } from './admin/components/userListComponent';
 import { HttpLogComponent } from './admin/components/httpLogComponent';
 import { LogMessagesComponent } from './admin/components/logMessagesComponent';
 
-import { routing, appRoutingProviders } from './app.routing';
+import { routing } from './app.routing';
 
 @NgModule({
     declarations: [
@@ -70,7 +70,7 @@ import { routing, appRoutingProviders } from './app.routing';
             UtilsService,
             ServerLogService,
             UserService,
-            provideHttpClient(withInterceptorsFromDi())
+            provideHttpClient(withXhr(), withInterceptorsFromDi())
         ]
 })
 export class AppModule { }

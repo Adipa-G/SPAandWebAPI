@@ -10,7 +10,7 @@ import { UserService } from '../services/userService';
 import { UserListComponent } from './userListComponent';
 
 class MockUserService {
-    throwError: boolean;
+    throwError = false;
 
     getUsers() {
         const result = {
@@ -29,7 +29,7 @@ class MockUserService {
         return of(result);
     }
 
-    deleteUser(userName) {
+    deleteUser() {
         if (this.throwError) {
             return throwError(() => new Error('error!'));
         } else {
@@ -46,7 +46,7 @@ class MockErrorService {
         this.errorCount = 0;
     }
 
-    handleHttpError(error) {
+    handleHttpError() {
         this.errorCount++;
     }
 }
@@ -84,7 +84,7 @@ describe('UserListComponent', () => {
     });
 
     it('when updateView then set values', (done) => {
-        comp.orderAndPage = null;
+        (comp as any).orderAndPage = null;
         comp.totalCount = 0;
         comp.users = [];
 

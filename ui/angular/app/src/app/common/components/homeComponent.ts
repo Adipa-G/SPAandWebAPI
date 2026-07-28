@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy, inject } from '@angular/core';
+﻿import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import {AuthenticationDetails} from '../../domain/auth/authenticationDetails';
 
@@ -7,6 +7,7 @@ import {AuthService} from '../services/authService';
 @Component({
     selector: 'common-home',
     templateUrl: './homeComponent.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 

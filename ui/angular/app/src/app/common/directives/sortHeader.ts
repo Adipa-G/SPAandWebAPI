@@ -1,20 +1,21 @@
-﻿import { Component, DoCheck, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, DoCheck, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 
 @Component({
     selector: '[sort-header]',
     template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text}}&nbsp;<i class=\'fa {{sortIcon}}\'></i></span>',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
 export class SortHeader implements DoCheck {
-    @Input() text: string;
-    @Input('order-field') orderField: string;
-    @Input('sort-header') orderOptions: OrderAndPage;
+    @Input() text!: string;
+    @Input('order-field') orderField!: string;
+    @Input('sort-header') orderOptions!: OrderAndPage;
     @Output('order-changed') orderChanged = new EventEmitter<OrderAndPage>();
 
-    sortIcon: string;
+    sortIcon = '';
 
     public headerClick(): void {
         if (this.orderField !== this.orderOptions.orderField) {

@@ -1,5 +1,6 @@
 ﻿import { Injectable, inject } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { ErrorInfo } from '../../domain/errorInfo';
 
@@ -26,7 +27,7 @@ export class ErrorService {
         this.errorOccured$.emit(errInfo);
     }
 
-    public handleHttpError(error) {
+    public handleHttpError(error: HttpErrorResponse) {
         const errorInfo = new ErrorInfo(JSON.stringify(error));
 
         if (error.status === 401) {

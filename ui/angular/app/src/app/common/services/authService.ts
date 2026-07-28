@@ -20,7 +20,7 @@ export class AuthService {
     private errorService = inject(ErrorService);
     private storageService = inject(StorageService);
 
-    currentAuth: AuthenticationDetails;
+    currentAuth: AuthenticationDetails | null = null;
 
     public authChanged$: EventEmitter<AuthenticationDetails>;
 
@@ -67,10 +67,11 @@ export class AuthService {
         }).subscribe({
             next: (data: any) => {
                 data.userName = loginInfo.userName;
-                this.currentAuth = data;
-                this.currentAuth.isAuth = true;
-                this.storageService.setLocalStorage('authorizationData', this.currentAuth);
-                this.authChanged$.emit(this.currentAuth);
+                const authData: AuthenticationDetails = data;
+                authData.isAuth = true;
+                this.currentAuth = authData;
+                this.storageService.setLocalStorage('authorizationData', authData);
+                this.authChanged$.emit(authData);
             },
             error: (err) => {
                 this.logService.log(JSON.stringify(err));
@@ -79,15 +80,17 @@ export class AuthService {
         });
     }
 
-    public clearAuthData(): void {
-        this.currentAuth = new AuthenticationDetails();
-        this.currentAuth.userName = '';
-        this.currentAuth.isAuth = false;
-        this.storageService.setLocalStorage('authorizationData', this.currentAuth);
+    public clearAuthData(): AuthenticationDetails {
+        const authData = new AuthenticationDetails();
+        authData.userName = '';
+        authData.isAuth = false;
+        this.currentAuth = authData;
+        this.storageService.setLocalStorage('authorizationData', authData);
+        return authData;
     }
 
     public logout(): void {
-        this.clearAuthData();
-        this.authChanged$.emit(this.currentAuth);
+        const authData = this.clearAuthData();
+        this.authChanged$.emit(authData);
     }
 }

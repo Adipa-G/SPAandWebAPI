@@ -15,7 +15,7 @@ import { RegisterService } from '../services/registerService';
 import { RegisterComponent } from './registerComponent';
 
 class MockRegisterService {
-    registrationInfo: RegistrationInfo;
+    registrationInfo!: RegistrationInfo;
 
     register(reg: RegistrationInfo) {
         this.registrationInfo = reg;
@@ -27,12 +27,14 @@ class MockRegisterService {
 }
 
 class MockErrorService {
-    handleHttpError(error: any): void {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    handleHttpError(): void {
     }
 }
 
 class MockRouter {
-    public navigate(route: string[]) {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    public navigate(): void {
     }
 }
 

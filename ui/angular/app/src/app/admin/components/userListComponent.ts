@@ -1,4 +1,4 @@
-﻿import { Component, inject } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 import { UserInfo } from '../../domain/admin/userInfo';
@@ -9,6 +9,7 @@ import { UserService } from '../services/userService';
 @Component({
     selector: 'admin-users',
     templateUrl: './userListComponent.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
@@ -17,7 +18,7 @@ export class UserListComponent {
     private userService = inject(UserService);
 
     orderAndPage: OrderAndPage;
-    errorMessage: string;
+    errorMessage = '';
     users: UserInfo[];
     totalCount: number;
 

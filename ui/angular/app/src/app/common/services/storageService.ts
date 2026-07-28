@@ -12,18 +12,18 @@ export class StorageService {
         this.logService = logService;
     }
 
-    public getCookie(name): string {
+    public getCookie(name: string): string {
         const value = "; " + document.cookie;
         const parts = value.split("; " + name + "=");
         if (parts.length === 2) {
-            return parts.pop().split(";").shift();
+            return parts.pop()?.split(";").shift() ?? '';
         }
-        return null;
+        return '';
     }
 
-    public getLocalStorage<T>(key: string): T {
+    public getLocalStorage<T>(key: string): T | null {
         const text: any = localStorage.getItem(key);
-        let data: T;
+        let data: T | null;
         try {
             data = JSON.parse(text) as T;
         } catch (error) {

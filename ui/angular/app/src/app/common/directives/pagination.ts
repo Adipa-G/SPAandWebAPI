@@ -1,4 +1,4 @@
-﻿import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 
@@ -20,16 +20,17 @@ import { OrderAndPage } from '../../domain/common/orderAndPage';
         '         <i class="fa fa-angle-right"></i>&nbsp;' +
         '     </button>' +
         '</div>',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
 export class Pagination implements OnChanges {
-    @Input('pagination') pageOptions: OrderAndPage;
-    @Input('total-count') totalCount: number;
+    @Input('pagination') pageOptions!: OrderAndPage;
+    @Input('total-count') totalCount!: number;
     @Output('page-changed') pageChanged = new EventEmitter<OrderAndPage>();
 
     start = 1;
-    totalPages: number;
+    totalPages = 0;
 
     public pageClick(pageNumber: number): void {
         if (pageNumber > this.start + 4 && this.start <= this.totalPages) {
@@ -42,7 +43,7 @@ export class Pagination implements OnChanges {
         this.pageChanged.emit(this.pageOptions);
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges() {
         this.setPages();
     }
 

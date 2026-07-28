@@ -1,7 +1,7 @@
 ﻿export class AuthenticationDetails {
-    isAuth : boolean;
-    userName: string;
-    access_token: string;
-    expires_in: string;
-    token_type:string;
+    isAuth = false;
+    userName = '';
+    access_token = '';
+    expires_in = '';
+    token_type = '';
 }

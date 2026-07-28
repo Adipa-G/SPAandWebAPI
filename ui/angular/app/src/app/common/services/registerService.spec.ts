@@ -11,7 +11,7 @@ import { LogService } from '../services/logService';
 import { StorageService } from '../services/storageService';
 
 import { RegisterService } from './registerService';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 describe('RegisterService', () => {
     let constants: Constants;
@@ -29,7 +29,7 @@ describe('RegisterService', () => {
                 LogService,
                 RegisterService,
                 StorageService,
-                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClient(withXhr(), withInterceptorsFromDi()),
                 provideHttpClientTesting()
             ]
         });

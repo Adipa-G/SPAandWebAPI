@@ -1,4 +1,4 @@
-﻿import { Component, inject } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
 import { LogMessageInfo } from '../../domain/admin/logMessageInfo';
@@ -10,6 +10,7 @@ import { ServerLogService } from "../services/serverLogService";
 @Component({
     selector: 'log-messages',
     templateUrl: './logMessagesComponent.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 
@@ -19,7 +20,7 @@ export class LogMessagesComponent {
     private utilsService = inject(UtilsService);
 
     filter: LogMessageFilter;
-    errorMessage: string;
+    errorMessage = '';
     logLevels: string[];
     loggers: string[];
     logMessages: LogMessageInfo[];
