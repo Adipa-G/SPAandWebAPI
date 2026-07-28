@@ -1,14 +1,14 @@
 ﻿import { Component, ChangeDetectionStrategy, computed, input } from '@angular/core';
 
 @Component({
-    selector: '[pretty-print]',
+    selector: 'app-pretty-print',
     template: '<pre>{{prettyPrintOutput()}}</pre>',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true
 })
 
 export class PrettyPrint {
-    readonly sourceStr = input.required<string>({ alias: "pretty-print" });
+    readonly sourceStr = input.required<string>();
     readonly format = input<string>();
 
     readonly prettyPrintOutput = computed(() => {

@@ -1,5 +1,4 @@
 ﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -25,8 +24,7 @@ describe('LoginComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [FormsModule],
-            declarations: [LoginComponent],
+            imports: [LoginComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: AuthService, useValue: authService }

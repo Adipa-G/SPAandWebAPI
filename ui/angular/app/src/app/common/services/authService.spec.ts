@@ -44,15 +44,20 @@ describe('AuthService', () => {
 
     it('when authenticate then should call service', fakeAsync(() => {
         const mockResponse = {
-            data: [
-                { userName: 'Picard' }
-            ]
+            access_token: 'token123',
+            token_type: 'Bearer',
+            expires_in: '3600'
         };
 
-        authService.authenticate(({} as any));
+        authService.authenticate({ userName: 'Picard', password: 'password' } as any);
 
         const req = httpTestingController.expectOne({ method: 'POST', url: 'connect/token' });
         req.flush(mockResponse);
+
+        expect(authService.currentAuth).toBeDefined();
+        expect(authService.currentAuth!.isAuth).toBe(true);
+        expect(authService.currentAuth!.userName).toBe('Picard');
+        expect(authService.currentAuth!.access_token).toBe('token123');
     }));
 
     it('when clearAuthData then reset auth', fakeAsync(() => {

@@ -1,9 +1,10 @@
 ﻿import { Component, ChangeDetectionStrategy, computed, input, output, signal } from '@angular/core';
+import { NgClass, NgFor } from '@angular/common';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 
 @Component({
-    selector: '[pagination]',
+    selector: 'app-pagination',
     template: '<div [hidden]="totalPages() <= 1" class="btn-group btn-group-sm" role="group">' +
         '     <button type="button" class="btn btn-default" [disabled]="pageOptions().pageNumber === 1" ' +
         '      (click)="pageClick(pageOptions().pageNumber - 1)">' +
@@ -21,13 +22,14 @@ import { OrderAndPage } from '../../domain/common/orderAndPage';
         '     </button>' +
         '</div>',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [NgClass, NgFor]
 })
 
 export class Pagination {
-    readonly pageOptions = input.required<OrderAndPage>({ alias: "pagination" });
-    readonly totalCount = input.required<number>({ alias: "total-count" });
-    readonly pageChanged = output<OrderAndPage>({ alias: 'page-changed' });
+    readonly pageOptions = input.required<OrderAndPage>();
+    readonly totalCount = input.required<number>();
+    readonly pageChanged = output<OrderAndPage>();
 
     readonly start = signal(1);
 

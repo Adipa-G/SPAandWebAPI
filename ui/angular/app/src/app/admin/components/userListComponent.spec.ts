@@ -61,7 +61,7 @@ describe('UserListComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [UserListComponent],
+            imports: [UserListComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: ErrorService, useValue: errorService },

@@ -29,7 +29,7 @@ describe('HomeComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [HomeComponent],
+            imports: [HomeComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: AuthService, useValue: authService }

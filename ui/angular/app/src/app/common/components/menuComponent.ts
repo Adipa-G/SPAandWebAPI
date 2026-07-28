@@ -1,5 +1,5 @@
 ﻿import { Component, OnDestroy, inject, ChangeDetectionStrategy, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
 
@@ -7,10 +7,11 @@ import { ErrorService } from '../services/errorService';
 import { AuthService } from '../services/authService';
 
 @Component({
-    selector: 'common-menu',
+    selector: 'app-common-menu',
     templateUrl: './menuComponent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [RouterLink]
 })
 
 export class MenuComponent implements OnDestroy {

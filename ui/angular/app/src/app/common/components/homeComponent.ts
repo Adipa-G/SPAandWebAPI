@@ -5,10 +5,10 @@ import {AuthenticationDetails} from '../../domain/auth/authenticationDetails';
 import {AuthService} from '../services/authService';
 
 @Component({
-    selector: 'common-home',
+    selector: 'app-common-home',
     templateUrl: './homeComponent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true
 })
 
 export class HomeComponent implements OnDestroy {

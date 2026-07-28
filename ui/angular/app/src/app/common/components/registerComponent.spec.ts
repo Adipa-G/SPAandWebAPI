@@ -1,6 +1,4 @@
-﻿import { FormsModule } from '@angular/forms';
-
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -49,8 +47,7 @@ describe('RegisterComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [FormsModule],
-            declarations: [RegisterComponent],
+            imports: [RegisterComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: RegisterService, useValue: regervice },

@@ -3,17 +3,17 @@
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 
 @Component({
-    selector: '[sort-header]',
-    template: '<span (click)=\'headerClick()\' class=\'sort-table-header\'>{{text()}}&nbsp;<i class=\'fa {{sortIcon()}}\'></i></span>',
+    selector: 'app-sort-header',
+    template: '<span (click)=\'headerClick()\' (keyup.enter)=\'headerClick()\' tabindex=\'0\' role=\'button\' class=\'sort-table-header\'>{{text()}}&nbsp;<i class=\'fa {{sortIcon()}}\'></i></span>',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true
 })
 
 export class SortHeader {
     readonly text = input.required<string>();
-    readonly orderField = input.required<string>({ alias: "order-field" });
-    readonly orderOptions = input.required<OrderAndPage>({ alias: "sort-header" });
-    readonly orderChanged = output<OrderAndPage>({ alias: 'order-changed' });
+    readonly orderField = input.required<string>();
+    readonly orderOptions = input.required<OrderAndPage>();
+    readonly orderChanged = output<OrderAndPage>();
 
     readonly sortIcon = computed(() => {
         const orderField = this.orderField();

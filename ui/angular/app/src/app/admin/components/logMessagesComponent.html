@@ -31,20 +31,18 @@
   <div class="col-md-4 offset-md-2">
     <label for="fromDateLocal" class="form-label">Date From</label>
     <div class="mb-3">
-      <input type="text" id="fromDateLocal" name="fromDateLocal"
+      <input type="date" id="fromDateLocal" name="fromDateLocal"
         [(ngModel)]="filter.fromDateLocal"
         class="form-control"
-        placeholder="yyyy-MM-dd"
         (ngModelChange)="updateView(filter)"/>
     </div>
   </div>
   <div class="col-md-4">
     <label for="toDateLocal" class="form-label">Date To</label>
     <div class="mb-3">
-      <input type="text" id="toDateLocal" name="toDateLocal"
+      <input type="date" id="toDateLocal" name="toDateLocal"
         [(ngModel)]="filter.toDateLocal"
         class="form-control"
-        placeholder="yyyy-MM-dd"
         (ngModelChange)="updateView(filter)"/>
     </div>
   </div>
@@ -56,16 +54,16 @@
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-            <th [sort-header]="filter" order-field="LogTimestamp" text="Time" (order-changed)="updateView($event)"></th>
-            <th [sort-header]="filter" order-field="Logger" text="Logger" (order-changed)="updateView($event)"></th>
-            <th [sort-header]="filter" order-field="Level" text="Level" (order-changed)="updateView($event)"></th>
+            <th><app-sort-header [orderOptions]="filter" [orderField]="'LogTimestamp'" text="Time" (orderChanged)="updateView($event)"></app-sort-header></th>
+            <th><app-sort-header [orderOptions]="filter" [orderField]="'Logger'" text="Logger" (orderChanged)="updateView($event)"></app-sort-header></th>
+            <th><app-sort-header [orderOptions]="filter" [orderField]="'Level'" text="Level" (orderChanged)="updateView($event)"></app-sort-header></th>
             <th>Details</th>
           </tr>
         </thead>
         <tbody>
           @for (log of logMessages(); track log.id) {
             <tr>
-              <td [utc-to-local]="log.logTimestamp"></td>
+              <td><app-utc-to-local [utcTimeStr]="log.logTimestamp"></app-utc-to-local></td>
               <td>{{ log.logger }}</td>
               <td>{{ log.level }}</td>
               <td>
@@ -81,6 +79,6 @@
         </tbody>
       </table>
     </div>
-    <div [pagination]="filter" [total-count]="totalCount()" (page-changed)="updateView($event)"></div>
+    <div><app-pagination [pageOptions]="filter" [totalCount]="totalCount()" (pageChanged)="updateView($event)"></app-pagination></div>
   </div>
 </div>

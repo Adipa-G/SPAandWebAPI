@@ -1,6 +1,6 @@
 ﻿import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -59,12 +59,13 @@ describe('MenuComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [MenuComponent],
+            imports: [MenuComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: AuthService, useValue: authService },
                 { provide: ErrorService, useValue: errorService },
-                { provide: Router, useValue: router }
+                { provide: Router, useValue: router },
+                { provide: ActivatedRoute, useValue: {} }
             ]
         }).compileComponents();
     }));

@@ -6,11 +6,15 @@ import { UserInfo } from '../../domain/admin/userInfo';
 import { ErrorService } from '../../common/services/errorService';
 import { UserService } from '../services/userService';
 
+import { SortHeader } from '../../common/directives/sortHeader';
+import { Pagination } from '../../common/directives/pagination';
+
 @Component({
-    selector: 'admin-users',
+    selector: 'app-admin-users',
     templateUrl: './userListComponent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [SortHeader, Pagination]
 })
 
 export class UserListComponent {

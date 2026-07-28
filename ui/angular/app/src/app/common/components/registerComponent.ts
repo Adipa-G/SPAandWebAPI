@@ -1,4 +1,5 @@
 ﻿import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 
@@ -9,10 +10,11 @@ import { RegisterService } from '../services/registerService';
 
 
 @Component({
-    selector: 'common-signup',
+    selector: 'app-common-signup',
     templateUrl: './registerComponent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [FormsModule]
 })
 
 export class RegisterComponent {

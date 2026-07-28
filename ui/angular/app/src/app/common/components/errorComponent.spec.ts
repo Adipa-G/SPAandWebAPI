@@ -25,7 +25,7 @@ describe('ErrorComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [ErrorComponent],
+            imports: [ErrorComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: ErrorService, useValue: errorService }

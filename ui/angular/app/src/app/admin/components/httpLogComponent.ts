@@ -1,4 +1,5 @@
 ﻿import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
@@ -8,11 +9,17 @@ import { ErrorService } from '../../common/services/errorService';
 import { UtilsService } from "../../common/services/utilsService";
 import { ServerLogService } from "../services/serverLogService";
 
+import { SortHeader } from '../../common/directives/sortHeader';
+import { UtcToLocal } from '../../common/directives/utcToLocal';
+import { PrettyPrint } from '../../common/directives/prettyPrint';
+import { Pagination } from '../../common/directives/pagination';
+
 @Component({
-    selector: 'http-logs',
+    selector: 'app-http-logs',
     templateUrl: './httpLogComponent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [FormsModule, SortHeader, UtcToLocal, PrettyPrint, Pagination]
 })
 
 export class HttpLogComponent {

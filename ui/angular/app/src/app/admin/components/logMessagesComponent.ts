@@ -1,4 +1,5 @@
 ﻿import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
@@ -8,11 +9,16 @@ import { ErrorService } from '../../common/services/errorService';
 import { UtilsService } from "../../common/services/utilsService";
 import { ServerLogService } from "../services/serverLogService";
 
+import { SortHeader } from '../../common/directives/sortHeader';
+import { UtcToLocal } from '../../common/directives/utcToLocal';
+import { Pagination } from '../../common/directives/pagination';
+
 @Component({
-    selector: 'log-messages',
+    selector: 'app-log-messages',
     templateUrl: './logMessagesComponent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [FormsModule, SortHeader, UtcToLocal, Pagination]
 })
 
 export class LogMessagesComponent {

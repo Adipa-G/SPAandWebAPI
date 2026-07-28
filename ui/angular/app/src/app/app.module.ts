@@ -18,48 +18,26 @@ import { RegisterService } from './common/services/registerService';
 import { StorageService } from './common/services/storageService';
 import { UtilsService } from './common/services/utilsService';
 
-import { SortHeader } from "./common/directives/sortHeader";
-import { Pagination } from "./common/directives/pagination";
-import { UtcToLocal } from "./common/directives/utcToLocal";
-import { PrettyPrint } from "./common/directives/prettyPrint";
-
 import { MenuComponent } from './common/components/menuComponent';
-import { HomeComponent } from './common/components/homeComponent';
 import { ErrorComponent } from './common/components/errorComponent';
-import { LoginComponent } from './common/components/loginComponent';
-import { RegisterComponent } from './common/components/registerComponent';
 
 //admin
 import { ServerLogService } from './admin/services/serverLogService';
 import { UserService } from './admin/services/userService';
 
-import { UserListComponent } from './admin/components/userListComponent';
-import { HttpLogComponent } from './admin/components/httpLogComponent';
-import { LogMessagesComponent } from './admin/components/logMessagesComponent';
-
 import { routing } from './app.routing';
 
 @NgModule({
     declarations: [
-        SortHeader,
-        Pagination,
-        UtcToLocal,
-        PrettyPrint,
-        MenuComponent,
-        HomeComponent,
-        ErrorComponent,
-        LoginComponent,
-        RegisterComponent,
-        UserListComponent,
-        HttpLogComponent,
-        LogMessagesComponent,
         AppComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         CommonModule,
         FormsModule,
         RouterModule,
-        routing], providers: [
+        routing,
+        MenuComponent,
+        ErrorComponent], providers: [
             AuthService,
             Constants,
             ErrorService,

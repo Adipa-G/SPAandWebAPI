@@ -26,11 +26,10 @@
     <div class="col-md-4 offset-md-2">
       <label for="fromDateLocal">Date From</label>
       <div class="mb-3">
-        <input type="text"
+        <input type="date"
           id="fromDateLocal"
           [(ngModel)]="filter.fromDateLocal"
           class="form-control"
-          placeholder="yyyy-MM-dd"
           (ngModelChange)="updateView(filter)" />
         </div>
 
@@ -38,11 +37,10 @@
       <div class="col-md-4">
         <label for="toDateLocal">Date To</label>
         <div class="mb-3">
-          <input type="text"
+          <input type="date"
             id="toDateLocal"
             [(ngModel)]="filter.toDateLocal"
             class="form-control"
-            placeholder="yyyy-MM-dd"
             (ngModelChange)="updateView(filter)" />
           </div>
         </div>
@@ -53,18 +51,18 @@
             <table class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
-                  <th [sort-header]="filter" order-field="CalledOn" text="Time" (order-changed)="updateView($event)"></th>
-                  <th [sort-header]="filter" order-field="TrackingId" text="Tracking Id" (order-changed)="updateView($event)"></th>
-                  <th [sort-header]="filter" order-field="RequestIdentity" text="Caller" (order-changed)="updateView($event)"></th>
-                  <th [sort-header]="filter" order-field="StatusCode" text="Status" (order-changed)="updateView($event)"></th>
-                  <th [sort-header]="filter" order-field="CallDuration" text="Duration(s)" (order-changed)="updateView($event)"></th>
+                  <th><app-sort-header [orderOptions]="filter" [orderField]="'CalledOn'" text="Time" (orderChanged)="updateView($event)"></app-sort-header></th>
+                  <th><app-sort-header [orderOptions]="filter" [orderField]="'TrackingId'" text="Tracking Id" (orderChanged)="updateView($event)"></app-sort-header></th>
+                  <th><app-sort-header [orderOptions]="filter" [orderField]="'RequestIdentity'" text="Caller" (orderChanged)="updateView($event)"></app-sort-header></th>
+                  <th><app-sort-header [orderOptions]="filter" [orderField]="'StatusCode'" text="Status" (orderChanged)="updateView($event)"></app-sort-header></th>
+                  <th><app-sort-header [orderOptions]="filter" [orderField]="'CallDuration'" text="Duration(s)" (orderChanged)="updateView($event)"></app-sort-header></th>
                   <th>Details</th>
                 </tr>
               </thead>
               <tbody>
                 @for (log of httpLogs(); track log.id) {
                   <tr>
-                    <td [utc-to-local]="log.calledOn"></td>
+                    <td><app-utc-to-local [utcTimeStr]="log.calledOn"></app-utc-to-local></td>
                     <td>{{ log.trackingId }}</td>
                     <td>{{ log.caller }}</td>
                     <td>{{ log.status }}</td>
@@ -76,17 +74,17 @@
                         <dt class="col-sm-1">Url</dt>
                         <dd class="col-sm-11">{{ log.requestUri }}</dd>
                         <dt class="col-sm-1">Request</dt>
-                        <dd class="col-sm-11" [pretty-print]="log.request"></dd>
+                        <dd class="col-sm-11"><app-pretty-print [sourceStr]="log.request"></app-pretty-print></dd>
                         <dt class="col-sm-1">Response</dt>
-                        <dd class="col-sm-11" [pretty-print]="log.response"></dd>
+                        <dd class="col-sm-11"><app-pretty-print [sourceStr]="log.response"></app-pretty-print></dd>
                         <dt class="col-sm-1" [hidden]="log.showHeaders">Headers</dt>
                         <dd class="col-sm-11" [hidden]="log.showHeaders">
                           <button type="button" class="btn btn-sm btn-success" (click)="toggleHeaders(log)">Show</button>
                         </dd>
                         <dt class="col-sm-1" [hidden]="!log.showHeaders">Request Headers</dt>
-                        <dd class="col-sm-11" [pretty-print]="log.requestHeaders" [hidden]="!log.showHeaders"></dd>
+                        <dd class="col-sm-11" [hidden]="!log.showHeaders"><app-pretty-print [sourceStr]="log.requestHeaders"></app-pretty-print></dd>
                         <dt class="col-sm-1" [hidden]="!log.showHeaders">Response Headers</dt>
-                        <dd class="col-sm-11" [pretty-print]="log.responseHeaders"  [hidden]="!log.showHeaders"></dd>
+                        <dd class="col-sm-11" [hidden]="!log.showHeaders"><app-pretty-print [sourceStr]="log.responseHeaders"></app-pretty-print></dd>
                       </dl>
                     </td>
                   </tr>
@@ -94,5 +92,5 @@
               </tbody>
             </table>
           </div>
-          <div [pagination]="filter" [total-count]="totalCount()" (page-changed)="updateView($event)"></div></div>
+          <div><app-pagination [pageOptions]="filter" [totalCount]="totalCount()" (pageChanged)="updateView($event)"></app-pagination></div></div>
         </div>

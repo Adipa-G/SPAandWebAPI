@@ -6,10 +6,10 @@ import { ErrorInfo } from '../../domain/errorInfo';
 import { ErrorService } from '../services/errorService';
 
 @Component({
-    selector: 'common-error',
+    selector: 'app-common-error',
     templateUrl: './errorComponent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true
 })
 
 export class ErrorComponent implements OnDestroy {

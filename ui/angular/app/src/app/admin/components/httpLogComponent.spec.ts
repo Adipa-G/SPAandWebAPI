@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 
 import { ErrorService } from '../../common/services/errorService';
 import { UtilsService } from '../../common/services/utilsService';
+import { Constants } from '../../common/services/constants';
 import { ServerLogService } from '../services/serverLogService';
 
 import { HttpLogComponent } from './httpLogComponent';
@@ -64,12 +65,13 @@ describe('HttpLogComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [HttpLogComponent],
+            imports: [HttpLogComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: ErrorService, useValue: errorService },
                 { provide: UtilsService, useValue: utilsService },
-                { provide: ServerLogService, useValue: serverLogService }
+                { provide: ServerLogService, useValue: serverLogService },
+                Constants
             ]
         }).compileComponents();
     }));
