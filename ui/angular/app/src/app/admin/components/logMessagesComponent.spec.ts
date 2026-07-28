@@ -41,10 +41,12 @@ class MockServerLogService {
         const result = {
             results: [
                 {
+                    'id': 1,
                     'level': 'Error',
                     'text': 'this is an error'
                 },
-                {
+                {   
+                    'id': 2,
                     'level': 'Info',
                     'text': 'this is an info'
                 }

@@ -24,9 +24,10 @@
   </div>
   <div class="row">
     <div class="col-md-4 offset-md-2">
-      <label>Date From</label>
+      <label for="fromDateLocal">Date From</label>
       <div class="mb-3">
         <input type="text"
+          id="fromDateLocal"
           [(ngModel)]="filter.fromDateLocal"
           class="form-control"
           placeholder="yyyy-MM-dd"
@@ -35,9 +36,10 @@
 
       </div>
       <div class="col-md-4">
-        <label>Date To</label>
+        <label for="toDateLocal">Date To</label>
         <div class="mb-3">
           <input type="text"
+            id="toDateLocal"
             [(ngModel)]="filter.toDateLocal"
             class="form-control"
             placeholder="yyyy-MM-dd"
