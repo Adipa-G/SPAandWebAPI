@@ -7,10 +7,10 @@ export class Constants {
     }
 
     public getShortDateFormat(): string {
-        return 'YYYY-MM-DD';
+        return 'yyyy-MM-dd';
     }
 
     public getServerDateFormat(): string {
-        return 'YYYY-MM-DDTHH:mm:ss';
+        return "yyyy-MM-dd'T'HH:mm:ss";
     }
 }

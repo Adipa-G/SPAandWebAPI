@@ -1,5 +1,5 @@
 ﻿import { Component, inject, ChangeDetectionStrategy, computed, input } from '@angular/core';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 import { Constants } from "../../common/services/constants";
 
@@ -16,7 +16,7 @@ export class UtcToLocal {
     readonly utcTimeStr = input.required<string>();
 
     readonly localTimeStr = computed(() => {
-        const localTime = moment.utc(this.utcTimeStr()).toDate();
-        return moment(localTime).format(this.constants.getServerDateFormat());
+        const utcTime = DateTime.fromISO(this.utcTimeStr(), { zone: 'utc' });
+        return utcTime.toLocal().toFormat(this.constants.getServerDateFormat());
     });
 }

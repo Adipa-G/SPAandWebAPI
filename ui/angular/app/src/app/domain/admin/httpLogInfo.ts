@@ -1,7 +1,7 @@
 ﻿export class HttpLogInfo {
     id = 0;
     trackingId = '';
-    calledOn = '';
+    logTimestamp = '';
     caller = '';
     requestIdentity = '';
     verb = '';

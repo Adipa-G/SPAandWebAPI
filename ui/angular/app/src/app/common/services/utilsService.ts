@@ -1,5 +1,5 @@
 ﻿import { Injectable, inject } from '@angular/core';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 import { Constants } from '../../common/services/constants';
 
@@ -18,12 +18,11 @@ export class UtilsService {
             return '';
         }
 
-        const momentDate = moment(date, this.constants.getShortDateFormat());
-        const result = momentDate.utc().format(this.constants.getServerDateFormat());
-
-        if (result === 'Invalid date') {
+        const localDate = DateTime.fromFormat(date, this.constants.getShortDateFormat());
+        if (!localDate.isValid) {
             return '';
         }
-        return result;
+
+        return localDate.toUTC().toFormat(this.constants.getServerDateFormat());
     }
 }

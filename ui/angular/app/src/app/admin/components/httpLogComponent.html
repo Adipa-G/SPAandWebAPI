@@ -62,7 +62,7 @@
               <tbody>
                 @for (log of httpLogs(); track log.id) {
                   <tr>
-                    <td><app-utc-to-local [utcTimeStr]="log.calledOn"></app-utc-to-local></td>
+                    <td><app-utc-to-local [utcTimeStr]="log.logTimestamp"></app-utc-to-local></td>
                     <td>{{ log.trackingId }}</td>
                     <td>{{ log.caller }}</td>
                     <td>{{ log.status }}</td>
