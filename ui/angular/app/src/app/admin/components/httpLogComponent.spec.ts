@@ -79,19 +79,19 @@ describe('HttpLogComponent', () => {
     });
 
     it('when constructed then set initial values', (done) => {
-        expect(comp.logLevels.length).toBe(2);
+        expect(comp.logLevels().length).toBe(2);
         expect(comp.filter).toBeDefined();
         expect(comp.filter.fromDate).toBe('11/11/2011');
         expect(comp.filter.toDate).toBe('11/11/2011');
-        expect(comp.totalCount).toBe(2);
-        expect(comp.httpLogs.length).toBe(2);
+        expect(comp.totalCount()).toBe(2);
+        expect(comp.httpLogs().length).toBe(2);
         done();
     });
 
     it('when updateView then set values', (done) => {
         (comp as any).filter = null;
-        comp.totalCount = 0;
-        comp.httpLogs = [];
+        comp.totalCount.set(0);
+        comp.httpLogs.set([]);
 
         const filter = comp.initFilter();
         comp.updateView(filter);
@@ -99,8 +99,8 @@ describe('HttpLogComponent', () => {
         expect(comp.filter).toBeDefined();
         expect(comp.filter.fromDate).toBe('11/11/2011');
         expect(comp.filter.toDate).toBe('11/11/2011');
-        expect(comp.totalCount).toBe(2);
-        expect(comp.httpLogs.length).toBe(2);
+        expect(comp.totalCount()).toBe(2);
+        expect(comp.httpLogs().length).toBe(2);
         done();
     });
 });

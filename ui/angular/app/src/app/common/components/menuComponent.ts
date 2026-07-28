@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, OnDestroy, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationDetails } from '../../domain/auth/authenticationDetails';
@@ -9,7 +9,7 @@ import { AuthService } from '../services/authService';
 @Component({
     selector: 'common-menu',
     templateUrl: './menuComponent.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
@@ -18,7 +18,7 @@ export class MenuComponent implements OnDestroy {
     private authService = inject(AuthService);
     private errorService = inject(ErrorService);
 
-    currentAuth: AuthenticationDetails;
+    currentAuth = signal(new AuthenticationDetails());
 
     authChangedSubscription: any;
     authErrorSubscription: any;
@@ -31,12 +31,10 @@ export class MenuComponent implements OnDestroy {
         this.router = router;
         this.authChangedSubscription = authService.authChanged$.subscribe(auth => this.onAuthChanged(auth));
         this.authErrorSubscription = errorService.authErrorOccured$.subscribe(() => this.onAuthError());
-
-        this.currentAuth = new AuthenticationDetails();
     }
 
     onAuthChanged(auth: AuthenticationDetails): void {
-        if (this.currentAuth.isAuth !== auth.isAuth) {
+        if (this.currentAuth().isAuth !== auth.isAuth) {
             if (auth.isAuth) {
                 this.router.navigate(['/userList']);
             } else {
@@ -44,12 +42,12 @@ export class MenuComponent implements OnDestroy {
             }
         }
 
-        this.currentAuth = auth;
+        this.currentAuth.set(auth);
     }
 
     onAuthError(): void {
         this.authService.clearAuthData();
-        this.currentAuth = new AuthenticationDetails();
+        this.currentAuth.set(new AuthenticationDetails());
         this.router.navigate(['/login']);
     }
 

@@ -1,30 +1,30 @@
-﻿import { Component, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, ChangeDetectionStrategy, computed, input } from '@angular/core';
 
 @Component({
     selector: '[pretty-print]',
-    template: '<pre>{{prettyPrintOutput}}</pre>',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    template: '<pre>{{prettyPrintOutput()}}</pre>',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
-export class PrettyPrint implements OnChanges {
-    @Input('pretty-print') sourceStr!: string;
-    @Input() format?: string;
+export class PrettyPrint {
+    readonly sourceStr = input.required<string>({ alias: "pretty-print" });
+    readonly format = input<string>();
 
-    prettyPrintOutput = '';
-
-    ngOnChanges() {
-        if (!this.sourceStr) {
-            return;
+    readonly prettyPrintOutput = computed(() => {
+        const sourceStr = this.sourceStr();
+        if (!sourceStr) {
+            return '';
         }
 
-        const fixedStr = this.sourceStr.replace(/Bearer [^\s]*/g, "Bearer (token)");
+        const fixedStr = sourceStr.replace(/Bearer [^\s]*/g, "Bearer (token)");
 
         try {
-
-            if (!this.format || this.format.toLowerCase() === 'json') {
-                this.prettyPrintOutput = JSON.stringify(JSON.parse(fixedStr), null, 2);
+            const format = this.format();
+            if (!format || format.toLowerCase() === 'json') {
+                return JSON.stringify(JSON.parse(fixedStr), null, 2);
             }
+            return '';
         } catch {
             try {
                 let result = '';
@@ -43,10 +43,10 @@ export class PrettyPrint implements OnChanges {
                     }
                     result += chr;
                 }
-                this.prettyPrintOutput = result;
+                return result;
             } catch {
-                this.prettyPrintOutput = fixedStr;
+                return fixedStr;
             }
         }
-    }
+    });
 }

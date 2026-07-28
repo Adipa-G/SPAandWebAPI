@@ -7,7 +7,7 @@ import { AuthService } from '../services/authService';
 @Component({
     selector: 'common-login',
     templateUrl: './loginComponent.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 

@@ -6,7 +6,7 @@
         [(ngModel)]="filter.logLevel"
         (ngModelChange)="updateView(filter)">
         <option [value]=""></option>
-        @for (level of logLevels; track level) {
+        @for (level of logLevels(); track level) {
           <option [value]="level">{{level}}</option>
         }
       </select>
@@ -19,7 +19,7 @@
         [(ngModel)]="filter.logger"
         (ngModelChange)="updateView(filter)">
         <option [value]=""></option>
-        @for (logger of loggers; track logger) {
+        @for (logger of loggers(); track logger) {
           <option [value]="logger">{{logger}}</option>
         }
       </select>
@@ -56,14 +56,14 @@
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-            <th [sort-header]="filter" order-field="LogTimestamp" text="Time" (order-changed)="updateView(filter)"></th>
-            <th [sort-header]="filter" order-field="Logger" text="Logger" (order-changed)="updateView(filter)"></th>
-            <th [sort-header]="filter" order-field="Level" text="Level" (order-changed)="updateView(filter)"></th>
+            <th [sort-header]="filter" order-field="LogTimestamp" text="Time" (order-changed)="updateView($event)"></th>
+            <th [sort-header]="filter" order-field="Logger" text="Logger" (order-changed)="updateView($event)"></th>
+            <th [sort-header]="filter" order-field="Level" text="Level" (order-changed)="updateView($event)"></th>
             <th>Details</th>
           </tr>
         </thead>
         <tbody>
-          @for (log of logMessages; track log) {
+          @for (log of logMessages(); track log.id) {
             <tr>
               <td [utc-to-local]="log.logTimestamp"></td>
               <td>{{ log.logger }}</td>
@@ -81,6 +81,6 @@
         </tbody>
       </table>
     </div>
-    <div [pagination]="filter" [total-count]="totalCount" (page-changed)="updateView(filter)"></div>
+    <div [pagination]="filter" [total-count]="totalCount()" (page-changed)="updateView($event)"></div>
   </div>
 </div>

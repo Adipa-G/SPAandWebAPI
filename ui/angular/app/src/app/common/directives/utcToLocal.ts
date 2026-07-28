@@ -1,30 +1,22 @@
-﻿import { Component, OnChanges, Input, inject, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy, computed, input } from '@angular/core';
 import moment from 'moment';
 
 import { Constants } from "../../common/services/constants";
 
 @Component({
     selector: '[utc-to-local]',
-    template: '{{localTimeStr}}',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    template: '{{localTimeStr()}}',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
-export class UtcToLocal implements OnChanges {
+export class UtcToLocal {
     private constants = inject<Constants>(Constants);
 
-    @Input('utc-to-local') utcTimeStr!: string;
+    readonly utcTimeStr = input.required<string>({ alias: "utc-to-local" });
 
-    localTimeStr = '';
-
-    constructor() {
-        const constants = this.constants;
-
-        this.constants = constants;
-    }
-
-    ngOnChanges() {
-        const localTime = moment.utc(this.utcTimeStr).toDate();
-        this.localTimeStr = moment(localTime).format(this.constants.getServerDateFormat());
-    }
+    readonly localTimeStr = computed(() => {
+        const localTime = moment.utc(this.utcTimeStr()).toDate();
+        return moment(localTime).format(this.constants.getServerDateFormat());
+    });
 }

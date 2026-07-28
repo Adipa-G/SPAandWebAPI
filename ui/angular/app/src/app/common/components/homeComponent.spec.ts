@@ -51,7 +51,7 @@ describe('HomeComponent', () => {
     it('when onAuthChanged then set', (done) => {
         comp.onAuthChanged(new AuthenticationDetails());
 
-        expect(comp.currentAuth).toBeDefined();
+        expect(comp.currentAuth()).toBeDefined();
         done();
     });
 });

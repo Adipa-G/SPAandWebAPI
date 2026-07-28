@@ -17,7 +17,7 @@ import { ServerLogService } from './admin/services/serverLogService';
     providers: [Constants, UtilsService, StorageService, LogService, ErrorService,
         AuthService, HttpClientWrapper, RegisterService, UserService, ServerLogService],
     templateUrl: './app.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 

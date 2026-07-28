@@ -1,5 +1,6 @@
-﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 
+import { OrderAndPage } from '../../domain/common/orderAndPage';
 import { HttpLogFilter } from '../../domain/admin/httpLogFilter';
 import { HttpLogInfo } from '../../domain/admin/httpLogInfo';
 
@@ -10,7 +11,7 @@ import { ServerLogService } from "../services/serverLogService";
 @Component({
     selector: 'http-logs',
     templateUrl: './httpLogComponent.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
@@ -20,10 +21,10 @@ export class HttpLogComponent {
     private utilsService = inject(UtilsService);
 
     filter: HttpLogFilter;
-    errorMessage = '';
-    logLevels: string[];
-    httpLogs: HttpLogInfo[];
-    totalCount: number;
+    errorMessage = signal('');
+    logLevels = signal<string[]>([]);
+    httpLogs = signal<HttpLogInfo[]>([]);
+    totalCount = signal(0);
 
     constructor() {
         const errorService = this.errorService;
@@ -33,9 +34,6 @@ export class HttpLogComponent {
         this.errorService = errorService;
         this.serverLogService = serverLogService;
         this.utilsService = utilsService;
-        this.logLevels = [];
-        this.httpLogs = [];
-        this.totalCount = 0;
 
         this.filter = this.initFilter();
         this.initializeView();
@@ -44,28 +42,28 @@ export class HttpLogComponent {
     initializeView() {
         this.serverLogService.getLogLevels().subscribe({
             next: (data: any) => {
-                this.logLevels = data;
+                this.logLevels.set(data);
             },
             error: (err) => {
-                this.errorMessage = JSON.stringify(err);
+                this.errorMessage.set(JSON.stringify(err));
                 this.errorService.handleHttpError(err);
             }
         });
         this.updateView(this.filter);
     }
 
-    updateView(httpLogFilter: HttpLogFilter) {
-        this.filter = httpLogFilter;
+    updateView(orderAndPage: OrderAndPage) {
+        this.filter = { ...this.filter, ...orderAndPage };
         this.filter.fromDate = this.utilsService.dateToUtcServerFormat(this.filter.fromDateLocal);
         this.filter.toDate = this.utilsService.dateToUtcServerFormat(this.filter.toDateLocal);
 
         this.serverLogService.getLogHttp(this.filter).subscribe({
             next: (data: any) => {
-                this.httpLogs = data.results;
-                this.totalCount = data.totalCount;
+                this.httpLogs.set(data.results);
+                this.totalCount.set(data.totalCount);
             },
             error: (err) => {
-                this.errorMessage = JSON.stringify(err);
+                this.errorMessage.set(JSON.stringify(err));
                 this.errorService.handleHttpError(err);
             }
         });

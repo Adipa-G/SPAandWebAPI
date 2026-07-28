@@ -78,22 +78,22 @@ describe('UserListComponent', () => {
 
     it('when constructed then set initial values', (done) => {
         expect(comp.orderAndPage).toBeDefined();
-        expect(comp.users.length).toBe(2);
-        expect(comp.totalCount).toBe(2);
+        expect(comp.users().length).toBe(2);
+        expect(comp.totalCount()).toBe(2);
         done();
     });
 
     it('when updateView then set values', (done) => {
         (comp as any).orderAndPage = null;
-        comp.totalCount = 0;
-        comp.users = [];
+        comp.totalCount.set(0);
+        comp.users.set([]);
 
         const filter = comp.initOrderAndPagingDetails();
         comp.updateView(filter);
 
         expect(comp.orderAndPage).toBeDefined();
-        expect(comp.totalCount).toBe(2);
-        expect(comp.users.length).toBe(2);
+        expect(comp.totalCount()).toBe(2);
+        expect(comp.users().length).toBe(2);
         done();
     });
 
@@ -103,8 +103,8 @@ describe('UserListComponent', () => {
         comp.deleteUser('rikerwt');
         tick(1000);
 
-        expect(comp.totalCount).toBe(1);
-        expect(comp.users.length).toBe(1);
+        expect(comp.totalCount()).toBe(1);
+        expect(comp.users().length).toBe(1);
     }));
 
     it('when deleteUser error then not remove user', fakeAsync(() => {
@@ -113,8 +113,8 @@ describe('UserListComponent', () => {
         comp.deleteUser('rikerwt');
         tick(1000);
 
-        expect(comp.totalCount).toBe(2);
-        expect(comp.users.length).toBe(2);
+        expect(comp.totalCount()).toBe(2);
+        expect(comp.users().length).toBe(2);
         expect(errorService.errorCount).toBe(1);
     }));
 });

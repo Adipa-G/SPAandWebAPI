@@ -1,4 +1,4 @@
-﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 
@@ -11,7 +11,7 @@ import { RegisterService } from '../services/registerService';
 @Component({
     selector: 'common-signup',
     templateUrl: './registerComponent.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
@@ -21,7 +21,7 @@ export class RegisterComponent {
     private registerService = inject(RegisterService);
 
     regInfo: RegistrationInfo;
-    success = false;
+    success = signal(false);
 
     constructor() {
         const router = this.router;
@@ -37,7 +37,7 @@ export class RegisterComponent {
     register() {
         this.registerService.register(this.regInfo).subscribe({
             next: () => {
-                this.success = true;
+                this.success.set(true);
                 const t = timer(5000);
                 t.subscribe(() => this.router.navigate(['/login']));
             },

@@ -1,4 +1,4 @@
-﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 
 import { OrderAndPage } from '../../domain/common/orderAndPage';
 import { UserInfo } from '../../domain/admin/userInfo';
@@ -9,7 +9,7 @@ import { UserService } from '../services/userService';
 @Component({
     selector: 'admin-users',
     templateUrl: './userListComponent.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
@@ -18,9 +18,9 @@ export class UserListComponent {
     private userService = inject(UserService);
 
     orderAndPage: OrderAndPage;
-    errorMessage = '';
-    users: UserInfo[];
-    totalCount: number;
+    errorMessage = signal('');
+    users = signal<UserInfo[]>([]);
+    totalCount = signal(0);
 
     constructor() {
         const errorService = this.errorService;
@@ -28,8 +28,6 @@ export class UserListComponent {
 
         this.errorService = errorService;
         this.userService = userService;
-        this.users = [];
-        this.totalCount = 0;
 
         this.orderAndPage = this.initOrderAndPagingDetails();
         this.updateView(this.orderAndPage);
@@ -39,11 +37,11 @@ export class UserListComponent {
         this.orderAndPage = orderAndPage;
         this.userService.getUsers(this.orderAndPage).subscribe({
             next: (data: any) => {
-                this.users = data.results;
-                this.totalCount = data.totalCount;
+                this.users.set(data.results);
+                this.totalCount.set(data.totalCount);
             },
             error: (err) => {
-                this.errorMessage = JSON.stringify(err);
+                this.errorMessage.set(JSON.stringify(err));
                 this.errorService.handleHttpError(err);
             }
         });
@@ -61,16 +59,16 @@ export class UserListComponent {
     deleteUser(userName: string): void {
         this.userService.deleteUser(userName).subscribe({
             complete: () => {
-                for (let i = 0; i < this.users.length; i++) {
-                    if (this.users[i].userName === userName) {
-                        this.users.splice(i, 1);
-                        this.totalCount--;
-                        break;
-                    }
+                const idx = this.users().findIndex(u => u.userName === userName);
+                if (idx >= 0) {
+                    const updatedUsers = [...this.users()];
+                    updatedUsers.splice(idx, 1);
+                    this.users.set(updatedUsers);
+                    this.totalCount.update(count => count - 1);
                 }
             },
             error: (err) => {
-                this.errorMessage = JSON.stringify(err);
+                this.errorMessage.set(JSON.stringify(err));
                 this.errorService.handleHttpError(err);
             }
         });

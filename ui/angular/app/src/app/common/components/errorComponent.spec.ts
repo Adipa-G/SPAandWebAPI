@@ -47,7 +47,7 @@ describe('ErrorComponent', () => {
     it('when onError then push error', (done) => {
         comp.onError(new ErrorInfo('stuffed'));
 
-        expect(comp.currentErrors.length).toBe(1);
+        expect(comp.currentErrors().length).toBe(1);
         done();
     });
 });

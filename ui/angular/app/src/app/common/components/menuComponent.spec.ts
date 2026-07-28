@@ -82,8 +82,9 @@ describe('MenuComponent', () => {
     });
 
     it('when onAuthChanged and not authenticated anymore then goto home', (done) => {
-        comp.currentAuth = new AuthenticationDetails();
-        comp.currentAuth.isAuth = true;
+        const initialAuth = new AuthenticationDetails();
+        initialAuth.isAuth = true;
+        comp.currentAuth.set(initialAuth);
 
         const auth = new AuthenticationDetails();
         auth.isAuth = false;
@@ -95,8 +96,9 @@ describe('MenuComponent', () => {
     });
 
     it('when onAuthChanged and authenticated then goto userlist', (done) => {
-        comp.currentAuth = new AuthenticationDetails();
-        comp.currentAuth.isAuth = false;
+        const initialAuth = new AuthenticationDetails();
+        initialAuth.isAuth = false;
+        comp.currentAuth.set(initialAuth);
 
         const auth = new AuthenticationDetails();
         auth.isAuth = true;
@@ -112,7 +114,7 @@ describe('MenuComponent', () => {
 
         expect(router.currentRoute[0]).toBe('/login');
         expect(authService.authCleard).toBe(true);
-        expect(comp.currentAuth).toBeDefined();
+        expect(comp.currentAuth()).toBeDefined();
         done();
     });
 

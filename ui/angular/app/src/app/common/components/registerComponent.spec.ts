@@ -69,7 +69,7 @@ describe('RegisterComponent', () => {
     it('when register then call service', (done) => {
         comp.register();
 
-        expect(comp.success).toBe(true);
+        expect(comp.success()).toBe(true);
         done();
     });
 });

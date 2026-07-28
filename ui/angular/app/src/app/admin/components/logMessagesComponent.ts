@@ -1,5 +1,6 @@
-﻿import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 
+import { OrderAndPage } from '../../domain/common/orderAndPage';
 import { LogMessageFilter } from '../../domain/admin/logMessageFilter';
 import { LogMessageInfo } from '../../domain/admin/logMessageInfo';
 
@@ -10,7 +11,7 @@ import { ServerLogService } from "../services/serverLogService";
 @Component({
     selector: 'log-messages',
     templateUrl: './logMessagesComponent.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
@@ -20,11 +21,11 @@ export class LogMessagesComponent {
     private utilsService = inject(UtilsService);
 
     filter: LogMessageFilter;
-    errorMessage = '';
-    logLevels: string[];
-    loggers: string[];
-    logMessages: LogMessageInfo[];
-    totalCount: number;
+    errorMessage = signal('');
+    logLevels = signal<string[]>([]);
+    loggers = signal<string[]>([]);
+    logMessages = signal<LogMessageInfo[]>([]);
+    totalCount = signal(0);
 
     constructor() {
         const errorService = this.errorService;
@@ -34,10 +35,6 @@ export class LogMessagesComponent {
         this.errorService = errorService;
         this.serverLogService = serverLogService;
         this.utilsService = utilsService;
-        this.logLevels = [];
-        this.loggers = [];
-        this.logMessages = [];
-        this.totalCount = 0;
 
         this.filter = this.initFilter();
         this.initializeView();
@@ -46,20 +43,20 @@ export class LogMessagesComponent {
     initializeView() {
         this.serverLogService.getLogLevels().subscribe({
             next: (data: any) => {
-                this.logLevels = data;
+                this.logLevels.set(data);
             },
             error: (err) => {
-                this.errorMessage = JSON.stringify(err);
+                this.errorMessage.set(JSON.stringify(err));
                 this.errorService.handleHttpError(err);
             }
         });
 
         this.serverLogService.getLoggers().subscribe({
             next: (data: any) => {
-                this.loggers = data;
+                this.loggers.set(data);
             },
             error: (err) => {
-                this.errorMessage = JSON.stringify(err);
+                this.errorMessage.set(JSON.stringify(err));
                 this.errorService.handleHttpError(err);
             }
         });
@@ -67,18 +64,18 @@ export class LogMessagesComponent {
         this.updateView(this.filter);
     }
 
-    updateView(logMessageFilter: LogMessageFilter) {
-        this.filter = logMessageFilter;
+    updateView(orderAndPage: OrderAndPage) {
+        this.filter = { ...this.filter, ...orderAndPage };
         this.filter.fromDate = this.utilsService.dateToUtcServerFormat(this.filter.fromDateLocal);
         this.filter.toDate = this.utilsService.dateToUtcServerFormat(this.filter.toDateLocal);
 
         this.serverLogService.getLogMessages(this.filter).subscribe({
             next: (data: any) => {
-                this.logMessages = data.results;
-                this.totalCount = data.totalCount;
+                this.logMessages.set(data.results);
+                this.totalCount.set(data.totalCount);
             },
             error: (err) => {
-                this.errorMessage = JSON.stringify(err);
+                this.errorMessage.set(JSON.stringify(err));
                 this.errorService.handleHttpError(err);
             }
         });

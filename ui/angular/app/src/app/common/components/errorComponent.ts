@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
+﻿import { Component, OnDestroy, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { timer } from 'rxjs';
 
 import { ErrorInfo } from '../../domain/errorInfo';
@@ -8,14 +8,14 @@ import { ErrorService } from '../services/errorService';
 @Component({
     selector: 'common-error',
     templateUrl: './errorComponent.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 
 export class ErrorComponent implements OnDestroy {
     private errorService = inject(ErrorService);
 
-    currentErrors: ErrorInfo[] = [];
+    currentErrors = signal<ErrorInfo[]>([]);
     subscription: any;
 
     constructor() {
@@ -23,11 +23,11 @@ export class ErrorComponent implements OnDestroy {
 
         this.subscription = errorService.errorOccured$.subscribe(error => this.onError(error));
         const t = timer(10000, 10000);
-        t.subscribe(() => this.currentErrors.splice(this.currentErrors.length - 1, 1));
+        t.subscribe(() => this.currentErrors.update(errors => errors.slice(0, -1)));
     }
 
     onError(error: ErrorInfo): void {
-        this.currentErrors.push(error);
+        this.currentErrors.update(errors => [...errors, error]);
     }
 
     ngOnDestroy() {
